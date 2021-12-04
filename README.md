@@ -33,3 +33,5 @@ Few elements in your citrix home lab may be based on core editions of the window
 
 Good starting point for the automated answer file is this link: (https://www.windowscentral.com/how-create-unattended-media-do-automated-installation-windows-10), it will help you creating the correct structure, and give you some bit of understanding, how does those windows popping up during the installation, reflects the xml structure. UEFI needs 4 partitions, BIOS boot 2.
 This blog is also great help (https://taylor.dev/how-to-create-an-automated-install-for-windows-server-2019/)
+
+Once the VM's are installed, if you search for particular KB or Cummulative update, like the one for .NET those can be found here (https://www.catalog.update.microsoft.com/Search.aspx?q=windows%20Server%202016%20framework)
