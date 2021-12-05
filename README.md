@@ -42,8 +42,9 @@ Atomizing actions within your scripts is your way to go, do not put to much of f
 Starting from scratch will cost you a great amount of effort, so take the benefit of community work and great guys which shares with us their knowledge and efforts produced very often in nights, and dozen of attempts to make it work. Frequently, what they share is extra work, brought to us apart from their regular full time jobs.<br>
 It may be hard to start directly from IaC (Infrastructure as Code), but there are products like Hydration Kits (https://www.deploymentresearch.com/hydration-kit-for-windows-server-2019-sql-server-2017-and-configmgr-current-branch/) along with some customizations like (https://github.com/JM2K69/HydrationKit).
 If you prefer staying the purist, then your option is DSC (Desired State Configuration), there are plenty of modules available behind a bit of a learning curve. It's worth spending some time with it, as it brings idempotency, it scales quite well and once you get handy with it your lab, it can be consumed in Azure.<br><br>
-** AD - Ask the Directory Services Team ** (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)<br>
+** AD - Ask the Directory Services Team ** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)<br>
 ** Carl Webster Active Directory Presentations ** - (https://carlwebster.com/category/conference-presentations/)<br>
+** GPO Automation ** - (https://jm2k69.github.io/2020/02/GPO-from-zero-to-hero-GPO-and-PowerShell.html)
 ** Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
 ** WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
 
