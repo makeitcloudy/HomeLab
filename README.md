@@ -66,6 +66,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 
 **Supportive channels which can help you gaining structuralized content are**:<br><br>
 https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
+https://www.youtube.com/ - search for the sesoins of Cláudio Rodrigues, in youtube you'll have to follow his name with BriForum suffix, otherwise you'll be shown with non relevant materials, time is passing by fast, but in context of EUC this guy had and has very much to say - referencing video from 2012 (https://www.youtube.com/watch?v=msK6n7049ig). It's a pity he is no longer a regular EUC contractor, as it was very interesting to read his opinions comming from the field. This session from 10y ago is really good even though it is almost an extinct spieces ;).
 
 **Community shares**
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
