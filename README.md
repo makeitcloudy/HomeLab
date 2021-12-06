@@ -75,6 +75,6 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 * Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise
 * Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc
-* Julien Mooren - (https://citrixguyblog.com) - he was my inspiration to fork his AutomatedRDS release back in 2017
+* Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer
 * Lee Jeffries - https://www.leeejeffries.com/blog/
