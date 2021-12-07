@@ -94,7 +94,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 + https://runasradio.com/<br>
 
 **Conferences**<br>
-+ https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haaverstein, with fabolous speakers and presentations
++ https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haaverstein, with fabolous speakers and presentations<br>
 + https://cloudcamp.ie/<br>
 
 **Community shares**<br>
@@ -108,10 +108,11 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
-* Trond Eirik Haavarstein - (https://xenappblog.com/)
-* Marco Zimmermann - (http://marcozimmermann.com/)
-* Matthias Schlimm - (eucweb.com)
+* Trond Eirik Haavarstein - (https://xenappblog.com/)<br>
+* Marco Zimmermann - (http://marcozimmermann.com/)<br>
+* Matthias Schlimm - (eucweb.com)<br>
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
+* René Bigler - (https://dreadysblog.com/)<br>
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer<br>
 * Lee Jeffries - https://www.leeejeffries.com/blog/<br>
 
