@@ -74,6 +74,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 **Product documentation**<br>
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
 ** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)
+** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)
 
 **Books**<br>
 + https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf<br>
@@ -137,5 +138,7 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 
 **tools**
 + ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)
++ CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)
++ WizTree - (https://diskanalyzer.com/) - TreeSize alternative, which is just faster
 
 It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.
