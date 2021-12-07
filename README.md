@@ -61,6 +61,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** AD / GPO Troubleshooting ** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)
 ** Image Preparation ** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life <br>
 ** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)<br>
+** Image Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)<br>
 ** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles<br>
 ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
 ** WMI / CMI is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)<br>
@@ -102,7 +103,8 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 + https://cloudcamp.ie/<br>
 
 **Community shares**<br>
-* There is an interesting mission behind the scenes - https://www.go-euc.com/<br>
+* MyCugc with all the webinars recoreded - (https://www.mycugc.org/events/webinars)<br>
+* There is an interesting mission behind the scenes - (https://www.go-euc.com/)<br>
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Building Carl Webster lab - (https://carlwebster.com/01-building-websters-lab-v2-introduction/ | https://carlwebster.com/building-websters-lab-v2-pdf/) - his guide contains 1335 pages. Imagine how much of an errort was made to bring this to life. It's available for free...<br>
 * Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise. It will also help installing the product itslef.<br>
@@ -114,7 +116,8 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Kristin Griffin - (https://www.rdsgurus.com/author/grokker99/) - her contribution in RDS area seems to be not that well known, but still she brought added value value to the EUC community<br>
 * Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
-* Daniel Fehler - (https://virtualfeller.com/)
+* James Kindon - (https://github.com/JamesKindon | https://jkindon.com/)<br>
+* Daniel Fehler - (https://virtualfeller.com/)<br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
 * Trond Eirik Haavarstein - (https://xenappblog.com/)<br>
 * Marco Zimmermann - (http://marcozimmermann.com/)<br>
