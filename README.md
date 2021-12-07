@@ -73,7 +73,8 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 **Books**<br>
 + https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf<br>
 + https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide<br>
-+ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *month of launches series*
++ https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge is helpfull for citrix guy*
++ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, turns out to be helpful from time to time*
 + https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
 + https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
 + https://leanpub.com/the-dsc-book<br>
@@ -81,6 +82,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 + https://leanpub.com/thebigbookofpowershellerrorhandling<br>
 + https://leanpub.com/powershell101<br>
 + https://leanpub.com/azurebicep<br>
++ https://www.amazon.com/Byte-Sized-design-principles-architectural-recommendations/dp/1797692100<br>
 
 **Supportive channels which can help you gaining structuralized content**<br>
 + https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
@@ -106,6 +108,9 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.<br>
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
+* Freek Berson - (https://github.com/fberson | http://microsoftplatform.blogspot.com/) - his blog post are great to lay down the foreground for Citrix which is nothing else than RDS (Remote Desktop Services), it seems to be good idea to start with Terminal Services and RDS which help structualize knowledge needed for a Citrix guy<br>
+* Kristin Griffin - (https://www.rdsgurus.com/author/grokker99/) - her contribution in RDS area seems to be not that well known, but still she brought added value value to the EUC community<br>
+* Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
 * Trond Eirik Haavarstein - (https://xenappblog.com/)<br>
