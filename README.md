@@ -112,5 +112,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Lee Jeffries - https://www.leeejeffries.com/blog/<br>
 
 **.**<br>
-+ https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
-+ https://www.cloudflare.com/ - can bring great improvement for your web services
++ https://freedns.afraid.org/subdomain/ - fantastic freeDNS service<br>
++ https://www.cloudflare.com/ - can bring great improvement for your web services<br>
+
+It's impossible to list all names, and link in one place, but it is a good starting point. The question which remains is the order to lay this down constructively.
