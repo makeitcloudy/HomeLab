@@ -73,6 +73,9 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 **Books**<br>
 + https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf<br>
 + https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide<br>
++ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *month of launches series*
++ https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
++ https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
 + https://leanpub.com/the-dsc-book<br>
 + https://leanpub.com/pesterbook<br>
 + https://leanpub.com/thebigbookofpowershellerrorhandling<br>
