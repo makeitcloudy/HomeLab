@@ -115,4 +115,4 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 + https://freedns.afraid.org/subdomain/ - fantastic freeDNS service<br>
 + https://www.cloudflare.com/ - can bring great improvement for your web services<br>
 
-It's impossible to list all names, and link in one place, but it is a good starting point. The question which remains is the order to lay this down constructively.
+It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory.
