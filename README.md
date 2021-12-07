@@ -74,7 +74,7 @@ https://www.youtube.com/user/briforum - BriForum sessions may be a great foregro
 https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
 
 **Community shares**
-* There is an interesting mission behind the scenes - https://www.go-euc.com/
+* There is an interesting mission behind the scenes - https://www.go-euc.com/<br>
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 * Building Carl Webster lab - (https://carlwebster.com/01-building-websters-lab-v2-introduction/ | https://carlwebster.com/building-websters-lab-v2-pdf/) - his guide contains 1335 pages. Imagine how much of an errort was made to bring this to life. It's available for free...
 * Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise. It will also help installing the product itslef.
