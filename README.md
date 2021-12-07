@@ -67,7 +67,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
 ** WMI / CMI is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)<br>
 
-** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/)
+** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
 
 ** Hybrid / Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
 ** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
