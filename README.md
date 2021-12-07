@@ -135,4 +135,7 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 + https://freedns.afraid.org/subdomain/ - fantastic freeDNS service<br>
 + https://www.cloudflare.com/ - can bring great improvement for your web services<br>
 
+**tools**
++ ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)
+
 It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.
