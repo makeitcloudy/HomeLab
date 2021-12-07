@@ -137,8 +137,12 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 + https://www.cloudflare.com/ - can bring great improvement for your web services<br>
 
 **tools**
-+ ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)
-+ CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)
-+ WizTree - (https://diskanalyzer.com/) - TreeSize alternative, which is just faster
++ ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)<br>
++ CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)<br>
++ Ninite - (https://ninite.com/) - Install and Update your apps at once<br>
++ BoxStarter - (https://boxstarter.org/)<br>
++ WizTree - (https://diskanalyzer.com/) - TreeSize alternative, which is just faster<br>
++ Glaswire - (https://www.glasswire.com/)<br>
++ Shut up 10 - (https://www.oo-software.com/en/shutup10)<br>
 
 It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.
