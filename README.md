@@ -67,7 +67,12 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
 ** WMI / CMI is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)<br>
 
-** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)
+**Product documentation**<br>
+** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
+
+**Books**<br>
+https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf<br>
+https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide<br>
 
 **Supportive channels which can help you gaining structuralized content**<br>
 + https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
