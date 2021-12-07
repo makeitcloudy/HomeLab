@@ -72,31 +72,31 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
 https://www.youtube.com/ - search for the sesoins of Cláudio Rodrigues, in youtube you'll have to follow his name with BriForum suffix, otherwise you'll be shown with non relevant materials, time is passing by fast, but in context of EUC this guy had and has very much to say - referencing video from 2012 (https://www.youtube.com/watch?v=msK6n7049ig). It's a pity he is no longer a regular EUC contractor, as it was very interesting to read his opinions comming from the field. This session from 10y ago is really good even though it is almost an extinct spieces ;). <br>
 https://www.youtube.com/user/briforum - BriForum sessions may be a great foreground for a newcomer, there is dozens of details shared by EUC (End User Computing) engaged colleagues, which can help laying down some foreground for the newer knowledge. Bare in mind that the products by itself didn't changed that much. It's rather the Access Layer which is evolving by prism of Authorization, Authentication and Zero Trust.<br>
-https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
+https://github.com/yt-dlp/yt-dlp - this will support your youtube activities<br><br>
 
 **Podcast**<br>
-https://www.eucdigest.com/episodes/
-https://cloudskills.fm/
-https://runasradio.com/
+https://www.eucdigest.com/episodes/<br>
+https://cloudskills.fm/<br>
+https://runasradio.com/<br><br>
 
 **Conferences**<br>
-https://cloudcamp.ie/
+https://cloudcamp.ie/<br><br>
 
-**Community shares**
+**Community shares**<br>
 * There is an interesting mission behind the scenes - https://www.go-euc.com/<br>
-Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
-* Building Carl Webster lab - (https://carlwebster.com/01-building-websters-lab-v2-introduction/ | https://carlwebster.com/building-websters-lab-v2-pdf/) - his guide contains 1335 pages. Imagine how much of an errort was made to bring this to life. It's available for free...
-* Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise. It will also help installing the product itslef.
-* Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture. 
-* Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.
-* Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.
-* Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active
-* Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)
-* Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset
-* Dennis Mohrmann - (https://github.com/Mohrpheus78/)
-* George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer
-* Lee Jeffries - https://www.leeejeffries.com/blog/
+Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
+* Building Carl Webster lab - (https://carlwebster.com/01-building-websters-lab-v2-introduction/ | https://carlwebster.com/building-websters-lab-v2-pdf/) - his guide contains 1335 pages. Imagine how much of an errort was made to bring this to life. It's available for free...<br>
+* Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise. It will also help installing the product itslef.<br>
+* Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture.<br>
+* Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.<br>
+* Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
+* Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
+* Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
+* Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
+* Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
+* George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer<br>
+* Lee Jeffries - https://www.leeejeffries.com/blog/<br><br>
 
-**.**
+**.**<br>
 https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
 https://www.cloudflare.com/ - can bring great improvement for your web services
