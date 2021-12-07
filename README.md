@@ -75,12 +75,12 @@ https://www.youtube.com/user/briforum - BriForum sessions may be a great foregro
 https://github.com/yt-dlp/yt-dlp - this will support your youtube activities<br><br>
 
 **Podcast**<br>
-https://www.eucdigest.com/episodes/<br>
-https://cloudskills.fm/<br>
-https://runasradio.com/<br><br>
++ https://www.eucdigest.com/episodes/<br>
++ https://cloudskills.fm/<br>
++ https://runasradio.com/<br><br>
 
 **Conferences**<br>
-https://cloudcamp.ie/<br><br>
++ https://cloudcamp.ie/<br><br>
 
 **Community shares**<br>
 * There is an interesting mission behind the scenes - https://www.go-euc.com/<br>
@@ -98,5 +98,5 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Lee Jeffries - https://www.leeejeffries.com/blog/<br><br>
 
 **.**<br>
-https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
-https://www.cloudflare.com/ - can bring great improvement for your web services
++ https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
++ https://www.cloudflare.com/ - can bring great improvement for your web services
