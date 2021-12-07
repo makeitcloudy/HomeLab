@@ -76,6 +76,9 @@ https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
 **Podcast**<br>
 https://www.eucdigest.com/episodes/
 
+**Conferences**<br>
+https://cloudcamp.ie/
+
 **Community shares**
 * There is an interesting mission behind the scenes - https://www.go-euc.com/<br>
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
