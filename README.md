@@ -83,5 +83,6 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)
+* Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer
 * Lee Jeffries - https://www.leeejeffries.com/blog/
