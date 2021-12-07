@@ -4,3 +4,6 @@ Cloud is the mindset. That's it.<br>
 
 **twitter**
 hashtags: #RDmi #MSWVD https://twitter.com/search?q=%23MSWVD&src=typed_query&f=top
+
+**youtube**
++ channels like Microsoft Mechanics, Microsoft Ignite may help you to grasp some knowledge
