@@ -139,6 +139,7 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 **tools**
 + ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)<br>
 + CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)<br>
++ Chocolatey - (https://chocolatey.org/ | https://github.com/chocolatey/choco)
 + Ninite - (https://ninite.com/) - Install and Update your apps at once<br>
 + BoxStarter - (https://boxstarter.org/)<br>
 + WizTree - (https://diskanalyzer.com/) - TreeSize alternative, which is just faster<br>
