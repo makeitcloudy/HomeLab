@@ -76,6 +76,8 @@ https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
 
 **Podcast**<br>
 https://www.eucdigest.com/episodes/
+https://cloudskills.fm/
+https://runasradio.com/
 
 **Conferences**<br>
 https://cloudcamp.ie/
@@ -94,3 +96,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer
 * Lee Jeffries - https://www.leeejeffries.com/blog/
+
+**.**
+https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
+https://www.cloudflare.com/ - can bring great improvement for your web services
