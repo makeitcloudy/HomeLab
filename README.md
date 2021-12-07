@@ -75,19 +75,19 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** Cloud / Azure - Thomas Maurer and his prep guide for the entry exam which open the doors for AZ-104, and AZ-140 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
 
 **Product documentation**<br>
-+ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
-+ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery
++ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch<br<
++ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
-** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)
-** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)
+** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)<br>
+** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)<br>
 
 **Books**<br>
 + https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf<br>
 + https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide<br>
-+ https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge is helpfull for citrix guy*
-+ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, turns out to be helpful from time to time*
-+ https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
-+ https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
++ https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge is helpfull for citrix guy*<br>
++ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, turns out to be helpful from time to time*<br>
++ https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*<br>
++ https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*<br>
 + https://leanpub.com/the-dsc-book<br>
 + https://leanpub.com/pesterbook<br>
 + https://leanpub.com/thebigbookofpowershellerrorhandling<br>
@@ -120,6 +120,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.<br>
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
+* MsFreaks - (https://msfreaks.wordpress.com/)<br>
 * Freek Berson - (https://github.com/fberson | http://microsoftplatform.blogspot.com/) - his blog post are great to lay down the foreground for Citrix which is nothing else than RDS (Remote Desktop Services), it seems to be good idea to start with Terminal Services and RDS which help structualize knowledge needed for a Citrix guy<br>
 * Kristin Griffin - (https://www.rdsgurus.com/author/grokker99/) - her contribution in RDS area seems to be not that well known, but still she brought added value value to the EUC community<br>
 * Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
@@ -144,11 +145,11 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 **tools**
 + ShareX - (https://getsharex.com/) - will help you with screen capture, and producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)<br>
 + CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)<br>
-+ Chocolatey - (https://chocolatey.org/ | https://github.com/chocolatey/choco)
++ Chocolatey - (https://chocolatey.org/ | https://github.com/chocolatey/choco)<br>
 + Ninite - (https://ninite.com/) - Install and Update your apps at once<br>
 + BoxStarter - (https://boxstarter.org/)<br>
 + WizTree - (https://diskanalyzer.com/) - TreeSize alternative, which is just faster<br>
 + Glaswire - (https://www.glasswire.com/)<br>
 + Shut up 10 - (https://www.oo-software.com/en/shutup10)<br>
 
-It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.
+It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.<br>
