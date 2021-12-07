@@ -66,6 +66,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)<br>
 ** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles<br>
 ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
+** WMI / CMI is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)
 
 **Supportive channels which can help you gaining structuralized content**<br><br>
 https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
