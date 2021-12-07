@@ -70,6 +70,8 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
 ** RDS ** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before<br>
 
+** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together, to help you out<br>
+
 ** Hybrid / Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
 ** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
 ** Cloud / WVD - Travis Roberts has his course on Udemy - VWD from zero to hero, as well as on youtube - (https://www.youtube.com/playlist?list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
