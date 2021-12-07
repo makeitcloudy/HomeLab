@@ -1,6 +1,6 @@
 # AutomatedCitrix
 
-Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll neve know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.<br>
+Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll never know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.<br>
 
 Okay so you decided to spend some time with this product, but you do not want spend too much of your precious time with setting up the vm's at first place..
 You may ask, where to start, well the knowledge is scattered over the internet, it's just perfectly schattered into pieces, there are few well known places which tries to accomodate the most important details in one place, one of them is Carl Stalhood (https://www.carlstalhood.com/), he rocks. It all goes with experience, but still the best way to learn something is to give it a spin and at least try and fail, without giving up.<br>
