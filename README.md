@@ -75,6 +75,8 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** Cloud / Azure - Thomas Maurer and his prep guide for the entry exam which open the doors for AZ-104, and AZ-140 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
 
 **Product documentation**<br>
++ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
++ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
 ** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)
 ** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)
@@ -94,7 +96,6 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 + https://www.amazon.com/Byte-Sized-design-principles-architectural-recommendations/dp/1797692100<br>
 
 **Supportive channels which can help you gaining structuralized content**<br>
-+ https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery - Technet Gallery
 + https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, helping you going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same things and topics as many times until your subscription expires.<br>
 + https://www.youtube.com/ - search for the sesoins of Cláudio Rodrigues, in youtube you'll have to follow his name with BriForum suffix, otherwise you'll be shown with non relevant materials, time is passing by fast, but in context of EUC this guy had and has very much to say - referencing video from 2012 (https://www.youtube.com/watch?v=msK6n7049ig). It's a pity he is no longer a regular EUC contractor, as it was very interesting to read his opinions comming from the field. This session from 10y ago is really good even though it is almost an extinct spieces ;). <br>
 + https://www.youtube.com/user/briforum - BriForum sessions may be a great foreground for a newcomer, there is dozens of details shared by EUC (End User Computing) engaged colleagues, which can help laying down some foreground for the newer knowledge. Bare in mind that the products by itself didn't changed that much. It's rather the Access Layer which is evolving by prism of Authorization, Authentication and Zero Trust.<br>
