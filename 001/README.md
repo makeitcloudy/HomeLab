@@ -1,1 +1,2 @@
-.
+Citrix Hypervisor formely XenServer is redhat based.
+Citrix ADC formely Netscaler is FreeBSD based. There is great online documentation for BSD, never the less on top of that there is logic produced by Citrix who bought this product if I'm not mistaken in 2005 from some really skilled guy, who introduced the NetScaler engine. BSD knowledge may help you anyway, never the less there are quirks comming from Citrix. ADC stands with binding, you will bind a lot of objects to make it work.
