@@ -61,7 +61,7 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 ** AD / GPO Troubleshooting ** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)<br>
 ** Image Preparation ** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life <br>
 ** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)<br>
-** Image Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)<br>
+** Logon Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)<br>
 ** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles<br>
 ** Applications ** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
 ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
