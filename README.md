@@ -54,8 +54,8 @@ If you prefer staying the purist, then your option is DSC, there are plenty of m
 
 **(009)** When you consider Hybrid scenario and falling apart from regular love shared with CVAD by getting closer to WVD, get a bit familiar with storage solutions on Azure with the Azure Ephemeral Disks - (https://getnerdio.com/academy/azure-ephemeral-os-disks-what-are-they-and-how-do-they-benefit-msps/). Nerdio should also ring the bell, there are great guys behind the scenes. Freek Berson shines here again with his bicep, which will make your life easier with ARM templates (https://github.com/Azure/bicep).<br>
 
-**(010)** Actually besides trying EverGreen in your lab, along with appMasking from FSlogix, I do not have very much to say about that layer in context of lab.<br>
-**(011)** There is a great book which will explain the GPU virtualization topic written by Jan Hendrik Meier - GPU Powered VDI (https://www.amazon.com/GPU-powered-VDI-Virtual-Desktops/dp/1983043311), and interesting blogpost series available one (https://www.poppelgaard.com/blog).
+**(010)** Actually besides trying EverGreen in your lab, along with appMasking from FSlogix, I do not have very much to say about that layer in context of lab.<br><br>
+**(011)** There is a great book which will explain the GPU virtualization topic written by Jan Hendrik Meier - GPU Powered VDI (https://www.amazon.com/GPU-powered-VDI-Virtual-Desktops/dp/1983043311), and interesting blogpost series available one (https://www.poppelgaard.com/blog).<br><br>
 
 ** AD / AD - Ask the Directory Services Team ** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)<br>
 ** AD / Carl Webster Active Directory Presentations ** - (https://carlwebster.com/category/conference-presentations/)<br>
