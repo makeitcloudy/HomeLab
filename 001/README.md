@@ -10,3 +10,7 @@ Another option is to go with Vmware Player or Vmware Workstation, you can constr
 
 As it goes for the automation, there is XenServer SDK available, which also talks with XCP-ng. If you spin a lot of machines on Vmware Workstation, there is Vmxtoolkit (https://github.com/bottkars/vmxtoolkit), which may help you getting released from a need of clicking through the GUI to bring the skeleton for the VM, or mounting the iso's and other things. It is really usefull.<br>
 The integration between Hyper-V and DSC is great, there is a bit of learning curve but it pays off once you setup your little framework.<br>
+
+**#Compute Layer**<br><br>
+Try sticking with Intel when you go bare metal with type 1 virtualization. AMD will be okay in case you go type 2. There are plenty of xeon's which will suffice, especially the L series, will be friendly by prism of energy getting utilized.<br> Within the bios settings of your motherboard try using the Energy Efficient option, it will slow down your CPU, and limir the power draw significantly. With regular Citrix labbing you won't see that much difference which is worth paying more for energy. Newer xeon series are more energy efficient, but those also cost more. From time to time there are great deals and bargains, keep your eyes opened ;).<br>
+If you go with type 2, then the settings on the windows 10 for the choosen power plan overwrites what you have set on the motherboard, so you can construct your own plan.<br> 
