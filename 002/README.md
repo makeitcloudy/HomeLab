@@ -1,1 +1,1 @@
-
+In case you don't yet have the skills to configure the network appropriatelly, as your experience come from different layers, it's not an issue to remain virtual within your network. At the end it may become a bit more difficult, but it all depends what you got used to. Remember that all the traffic will be processed through your compute layer and the CPU will be shared between the VM's and the network traffic. Never the less that should not be an issue for a homelab.<br>
