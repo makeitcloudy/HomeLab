@@ -3,4 +3,12 @@ In case you don't yet have the skills to configure the network appropriatelly, a
 
 For a home lab it's suffient, where your Management, VM traffic and Storage traffic goes over ethernet. Stick with SFP+ ports if possible, dual port cars would give you the possibilities to have more extensive scenarios for the network topology, but if the price is the case, then you can stick with sing port card, intel based or mellanox wchih is well recognized by the hypervisors, and desktop operating systems if you decide to follow the type 2 virtualization with the route of vmware player or workstation.<br>
 
-Try using the card which support SR-IOV.
+Try using the card which support SR-IOV (https://www.youtube.com/watch?v=EJyOeT0XGcA).<br>
+To get some deeper network skills, you may support yourself with:
++ Eve-NG<br>
++ GNS3<br>
++ still with regular hypervisors and it's vswitches you can configure topologies which will help you as well, never the less with abovementioned products, the end user experience will be much easier, as those products are dedicated for such usecases.<br>
+
+As it goes for the firewall the pfsense will do the trick, it can be virtualized, the only drawback is that it is fully GUI based, and I'm not aware about configuring it via console, so you have to click to make it work. But the firewall configuration in home lab does not tend to be extremely dynamic, so you'll survive. The benefits are there, for instance it can terminate your VPN, as with the Citrix ADC Freemium, if I'm not wrong you'll get option to setup 5 VPN SSL connections, where with pfsense you can get the OpenVPN, and other functionalities which comes with the plugins or are available out of the box.<br>
+There are people who are towards OPNSense and there is also other groups who opt for VyOS or IpFire.<br>
+Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.<br>
