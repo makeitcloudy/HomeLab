@@ -5,8 +5,8 @@ For a home lab it's suffient, where your Management, VM traffic and Storage traf
 
 Try using the card which support SR-IOV (https://www.youtube.com/watch?v=EJyOeT0XGcA).<br>
 To get some deeper network skills, you may support yourself with:
-+ Eve-NG<br>
-+ GNS3<br>
++ Eve-NG - The Network Berg gives a great introduction here (https://www.youtube.com/watch?v=nZq6bA5Cc_o&list=PLJ7SGFemsLl1ZSsdcdYqeCFDM71dz97XS)<br>
++ GNS3 - David Bombal will give you helpfull hand on youtube<br>
 + still with regular hypervisors and it's vswitches you can configure topologies which will help you as well, never the less with abovementioned products, the end user experience will be much easier, as those products are dedicated for such usecases.<br>
 
 As it goes for the firewall the pfsense will do the trick, it can be virtualized, the only drawback is that it is fully GUI based, and I'm not aware about configuring it via console, so you have to click to make it work. But the firewall configuration in home lab does not tend to be extremely dynamic, so you'll survive. The benefits are there, for instance it can terminate your VPN, as with the Citrix ADC Freemium, if I'm not wrong you'll get option to setup 5 VPN SSL connections, where with pfsense you can get the OpenVPN, and other functionalities which comes with the plugins or are available out of the box.<br>
