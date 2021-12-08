@@ -19,3 +19,8 @@ If you go with type 2, then the settings on the windows 10 for the choosen power
 **Storage** - keep the balance between spinning drives HDD and SSD's. Invest in RAID, and reliable disks, unless you reached the IaC (Infrastructure as Code) level and you treat VM's like cattle not pets. HHD will be helpfull for the scenarios where you generate a lot of traffic, and you repeat that excercise due to some inconvenience which holds you back. SSD's and NVME's, will save your time, when you work on gold images or similar topics.<br>
 Storage tiering is your friend, be generous for this layer.<br>
 **Cooling** - try to arange it this way that it is quiet and reliable. You may invent your own way of cooling the system down, remember about dust filters, but here only imagination can stop you, unless your preference is to buy something from the market.<br>
+
+Inspirations can be found here:
++ https://www.servethehome.com/ - invaluable amount of helpful content
++ https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys can be an inspiration
++ https://www.reddit.com/r/homelab/ - remember that each usecase is different
