@@ -85,7 +85,7 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
 
 **Product documentation**<br>
-+ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch<br<
++ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch<br>
 + Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
 ** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)<br>
@@ -117,6 +117,7 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + https://runasradio.com/<br>
 
 **Conferences**<br>
++ https://www.youtube.com/c/PowerShellConferenceEU - PowerShell source, apart from that search for Jeffrey Snover presentations, they way he describes things is straightforward and intelligeble, which proofs his well understanding of the topic ;)<br>
 + https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haaverstein, with fabolous speakers and presentations<br>
 + https://cloudcamp.ie/<br>
 
