@@ -1,3 +1,6 @@
+https://github.com/xapi-project/xen-api-sdk/tree/master/powershell
+https://github.com/xapi-project/xen-api-sdk/blob/master/powershell/autogen/samples/AutomatedTestCore.ps1
+
 Start-Process "https://workspace-guru.com/2017/11/12/scripting-citrix-xenserver-powershell-command-line/"
 Start-Process "https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/" #watek jak zrobic maszyne UEFI boot
 Start-Process "https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-machines-created-with-powershell-api" #watek jak zrobic maszyne UEFI boot
