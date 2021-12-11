@@ -111,6 +111,11 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + https://www.youtube.com/user/briforum - BriForum sessions may be a great foreground for a newcomer, there is dozens of details shared by EUC (End User Computing) engaged colleagues, which can help laying down some foreground for the newer knowledge. Bare in mind that the products by itself didn't changed that much. It's rather the Access Layer which is evolving by prism of Authorization, Authentication and Zero Trust.<br>
 + https://github.com/yt-dlp/yt-dlp - this will support your youtube activities<br><br>
 
+**Places which will help you a lot, but a bit more scattered**<br>
++ https://www.reddit.com/r/Citrix/<br>
++ https://stackoverflow.com/<br>
++ https://serverfault.com/<br><br>
+
 **Podcast**<br>
 + https://www.eucdigest.com/episodes/<br>
 + https://cloudskills.fm/<br>
