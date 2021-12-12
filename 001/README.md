@@ -33,5 +33,5 @@ Storage tiering is your friend, be generous for this layer.<br>
 
 Inspirations can be found here:<br>
 + https://www.servethehome.com/ - invaluable amount of helpful content<br>
-+ https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys can be an inspiration<br>
++ https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys shares material of great quality in topics like pfsense, freenas, etc<br>
 + https://www.reddit.com/r/homelab/ - remember that each usecase is different<br>
