@@ -1,6 +1,6 @@
 #Hypervisor Layer<br><br>
 
-**disclaimer** - *code available within those sections in majority won't be idempotent and won't stop you from causing damage on your existing configuration, never the less it will greatly reduce the amount of clicks, during the time when machines will be recreated*.<br><br>
+**disclaimer** - *in majority the code available within those sections won't be idempotent and won't stop you from causing damage on your existing configuration, never the less it will greatly reduce the amount of clicks, during the time when machines will be recreated*.<br><br>
 
 Citrix Hypervisor formely XenServer is redhat based. There is free distribution called CentOS, having much in common with redhat, if you get some skills with it, it will help you with transition, in case this turns out to be your way. XenServer is closed so you won't install any packages on top of it, xcp-ng will allow you doing it. Xen's xe api is in use to interact with the hypervisor, or querrying details, for the management apart from the API available products are: XenCenter, Admin Center (xcp-ng), XOA (xcp-ng)<.br>
 Citrix ADC formely Netscaler is FreeBSD based. There is great online documentation for BSD, never the less on top of that there is logic produced by Citrix who bought this product if I'm not mistaken in 2005 from some skilled guy, who introduced the NetScaler engine. BSD knowledge may help you anyway, never the less there are quirks comming from Citrix ADC, it stands with binding, you will bind a lot of objects to make it work.<br>
