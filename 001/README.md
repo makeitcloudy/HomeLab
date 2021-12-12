@@ -16,10 +16,10 @@ The integration between Hyper-V and DSC is great, there is a bit of learning cur
 
 **Hypervisor automation**<br><br>
 + https://github.com/ZachThurmond/Automated-XenServer-Labs - AXL github repo<br><br>
-+ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-1-understanding-the-requirements - AXL documentation 1 (there is something wrong with indexing and when you try to navigate over the menu on their webpage it is showing error 404, but those links should poiny your correctly)<br>
-+ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-2-creating-a-custom-iso - AXL documentation part 2<br>
-+ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-3-unlimited-vm-creation - AXL documentation part 3<br>
-+ https://www.criticaldesign.net/post/automating-lab-buildouts-with-xenserver-powershell-part-4-roles-features-and-other-components - AXL documentation part 4<br>
++ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-1-understanding-the-requirements<br>
++ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-2-creating-a-custom-iso<br>
++ https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-3-unlimited-vm-creation<br>
++ https://www.criticaldesign.net/post/automating-lab-buildouts-with-xenserver-powershell-part-4-roles-features-and-other-components<br>
 
 
 **#Compute Layer**<br><br>
