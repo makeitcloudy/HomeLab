@@ -91,7 +91,7 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
 
 **Product documentation**<br>
-+ Citrix Githib - https://github.com/citrix<br>
++ Citrix Github - https://github.com/citrix<br>
 + The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch<br>
 + Powershell gallery - https://www.powershellgallery.com/<br>
 + Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
