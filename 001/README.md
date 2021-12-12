@@ -11,6 +11,10 @@ Another option is to go with Vmware Player or Vmware Workstation, you can constr
 As it goes for the automation, there is XenServer SDK available, which also talks with XCP-ng. If you spin a lot of machines on Vmware Workstation, there is Vmxtoolkit (https://github.com/bottkars/vmxtoolkit), which may help you getting released from a need of clicking through the GUI to bring the skeleton for the VM, or mounting the iso's and other things. It is really usefull.<br>
 The integration between Hyper-V and DSC is great, there is a bit of learning curve but it pays off once you setup your little framework.<br>
 
+**Hypervisor automation**<br><br>
+* https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-3-unlimited-vm-creation<br> - ALX documentation
+* 
+
 **#Compute Layer**<br><br>
 Try sticking with Intel when you go bare metal with type 1 virtualization. AMD will be okay in case you go type 2.<br>
 **CPU** - There are plenty of xeon's which will suffice, especially the L series, will be friendly by prism of energy getting utilized.<br> Within the bios settings of your motherboard try using the Energy Efficient option, it will slow down your CPU, and limir the power draw significantly. With regular Citrix labbing you won't see that much difference which is worth paying more for energy. Newer xeon series are more energy efficient, but those also cost more. From time to time there are great deals and bargains, keep your eyes opened ;).<br>
@@ -20,7 +24,7 @@ If you go with type 2, then the settings on the windows 10 for the choosen power
 Storage tiering is your friend, be generous for this layer.<br>
 **Cooling** - try to arange it this way that it is quiet and reliable. You may invent your own way of cooling the system down, remember about dust filters, but here only imagination can stop you, unless your preference is to buy something from the market.<br>
 
-Inspirations can be found here:
-+ https://www.servethehome.com/ - invaluable amount of helpful content
-+ https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys can be an inspiration
-+ https://www.reddit.com/r/homelab/ - remember that each usecase is different
+Inspirations can be found here:<br>
++ https://www.servethehome.com/ - invaluable amount of helpful content<br>
++ https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys can be an inspiration<br>
++ https://www.reddit.com/r/homelab/ - remember that each usecase is different<br>
