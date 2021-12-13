@@ -95,7 +95,8 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)<br>
 + The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch<br>
 + Powershell gallery - https://www.powershellgallery.com/<br>
-+ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br><br>
++ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
++ XCP-ng documentation - https://xcp-ng.org/docs/<br><br>
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)<br>
 ** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)<br>
 ** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)<br>
