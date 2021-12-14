@@ -68,6 +68,9 @@ $VmParam = @{
     NetworkName             = @("Pool-wide eth0","Pool-wide eth1") #VM Network operations
 }
 
+#Start-Process "https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/"
+#Start-Process "https://docs.citrix.com/en-us/citrix-hypervisor/vms/troubleshoot.html#troubleshoot-uefi-and-secure-boot-problems-on-windows-vms"
+
 $newVMParamHash = @{
     NameLabel        = $VmParam.VMName
     MemoryTarget     = $VmParam.VMRAM
