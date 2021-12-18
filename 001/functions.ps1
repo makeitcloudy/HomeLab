@@ -182,7 +182,7 @@ Function Get-PLXenSR {
         $WarningPreference = "Continue"
         $VerbosePreference = "Continue"
         $InformationPreference = "Continue"
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Enumerating names of storage repositories dedicated for VMs."
         $startDate = Get-Date
     }
 
@@ -484,9 +484,9 @@ Function Get-PLXenIsoLibrary {
                     SRIsoUUID = $_.uuid
                     SRIsoNameLabel = $_.name_label
                     SRIsoNameDescription = $_.name_description
-                    SRIsoVirtualAllocation = $_.virtual_allocation
-                    SRIsoPhysicalUtilization = $_.physical_utilization
-                    SRIsoPhysicalSize = $_.physical_size
+                    SRIsoVirtualAllocationGB = [int32]($_.virtual_allocation / 1GB)
+                    SRIsoPhysicalUtilizationGB = [int32]($_.physical_utilization / 1GB)
+                    SRIsoPhysicalSizeGB = [int32]($_.physical_size / 1GB)
                     SRIsoType = $_.type
                     SRIsoContentType = $_.content_type
                     SRIsoShared = $_.shared
@@ -540,15 +540,20 @@ Function Get-PLXenIso {
 
     Process {
         try {
+            $all = $SRName.ForEach({Get-XenSR -Name $_ | Select-Object -ExpandProperty VDIs})
+        }
+        catch {
+            Write-Error "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Error with all."
+        }
+        try {
+        #leave the Allocation and utilization in default values dont' convert them here into GB with default /1GB
+        #if you do it in regular basis without extra checks it will throw erors
+        #perform the action somewhere else with Select-Object and expressions on the output of the function
         #$allIso = (Get-XenSR -Name $_ | Select-Object -ExpandProperty VDIs | Get-XenVDI | Where-Object {$_.name_label -match ".iso"})
-         $all = $SRName.ForEach({Get-XenSR -Name $_ | Select-Object -ExpandProperty VDIs})
-         $allIso = $all | Get-XenVDI | Where-Object {$_.name_label -match ".iso"}
+        $allIso = $all | Get-XenVDI | Where-Object {$_.name_label -match ".iso"}
             $isoDetails = @()
             $allIso.ForEach({
                 $SR = (Get-XenSR $_.SR)
-                #(Get-XenSR $_.SR).name_label
-                #(Get-XenSR $_.SR).name_description
-                #Get-XenSR $_.SR
                 $obj = [PSCustomObject]@{
                     SRUUID = $SR.uuid
                     SRNameLabel = $SR.name_label
@@ -564,7 +569,6 @@ Function Get-PLXenIso {
                     IsoPhysicalUtilization = $_.physical_utilisation
                     IsoReadOnly = $_.read_only
                     IsoIsToolsIso = $_.is_tools_iso
-
                 }
                 $isoDetails += $obj
             })
