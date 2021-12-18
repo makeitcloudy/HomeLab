@@ -176,11 +176,7 @@ Function Get-PLXenSR {
 #>
     
     [CmdletBinding()]
-    Param (
-        [Parameter(Mandatory = $true,Position = 0,ValueFromPipelineByPropertyName=$true)]
-        [ValidateNotNullOrEmpty()]
-        $ConnectionBroker
-    )
+    Param ()
 
     Begin {
         $WarningPreference = "Continue"
