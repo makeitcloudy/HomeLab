@@ -1,3 +1,3 @@
-.
-https://github.com/PowerShell/DscResources
-https://github.com/dsccommunity/TheDSCBookCode
+.<br>
+https://github.com/PowerShell/DscResources<br>
+https://github.com/dsccommunity/TheDSCBookCode<br>
