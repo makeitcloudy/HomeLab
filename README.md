@@ -87,6 +87,7 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 ** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
 ** Cloud / WVD - Travis Roberts has his course on Udemy - VWD from zero to hero, as well as on youtube - (https://www.youtube.com/playlist?list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
 ** Cloud / Azure - Thomas Maurer study guides:<br>
++ 2022 Azure study guide - (https://www.thomasmaurer.ch/2022/01/how-to-learn-microsoft-azure-in-2022/)<br>
 this should be a sufficient amount of knowledge to be prepared for studying to AZ-140<br>
 + AZ-900 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
 + AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
