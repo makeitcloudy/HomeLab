@@ -182,3 +182,5 @@ Many of abovementioned EUC experts, links on their blogs to great tools which he
 
 It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.<br>
 Keep calm and do puzzles (https://www.redbubble.com/shop/jackson+pollock+jigsaw-puzzles).<br>
+<br>
+https://gist.github.com/tansei<br>
