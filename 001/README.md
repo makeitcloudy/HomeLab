@@ -45,4 +45,4 @@ Inspirations can be found here:<br>
 
 **Windows**<br>
 + XenServer 8.2 tools integrates well with Desktop and Server operating systems<br>
-+ based on my experience at least two restarts are needed, then the hypervisor recognizes that all components of the tools are in place<br>
++ based on my experience at least two restarts are needed, then the hypervisor recognizes that all components of the tools are in place, once completed 'Vm tools instelled sucesfully' pops up<br>
