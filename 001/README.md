@@ -37,7 +37,7 @@ Inspirations can be found here:<br>
 + https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys shares material of great quality in topics like pfsense, freenas, etc<br>
 + https://www.reddit.com/r/homelab/ - remember that each usecase is different<br>
 
-**# Installation of XenTools **<br><br>
+**#Installation of XenTools**<br><br>
 **Linux**<br>
 + XenServer 8.2 tools from Citrix does not recognize the Centos Stream 8 properly<br>
 + Xcp-ng 8.2 tools does not have this issue<br>
