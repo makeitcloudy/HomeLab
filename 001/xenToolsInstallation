@@ -1,13 +1,20 @@
 # in case of fresh installation of
 # CentOS 6/7/8, RHEL 6/7/8
 # cat /etc/centos-release
-# mount the guest-tools.iso from xcp-ng
+# mount the guest-tools.iso from xcp-ng or mount Citrix Hypervisor tools
 
 mkdir /media/iso
 blkid
 mount /dev/sr0 /media/iso
+# xcp-ng tools properly recognize the linux operating system
 bash /media/iso/Linux/install.sh
 # you should now reboot your virtual machine
+reboot
+
+# in case Citrix Hypervisor tools are used
+cp /media/iso/CitrixHypervisor-LinuxGuestTools-7.20.2-1.tar.gz  .
+tar -xzf CitrixHypervisor-LinuxGuestTools-7.20.2-1.tar.gz
+bash LinuxGuestTools-7.20.2-1/install.sh -d centos -m 8
 reboot
 
 # then within the xcp-ng Center or any other console you should see in the General tab of the vm
