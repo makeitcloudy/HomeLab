@@ -39,7 +39,7 @@ Inspirations can be found here:<br>
 
 **#Installation of XenTools**<br><br>
 **Linux**<br>
-+ XenServer 8.2 tools from Citrix does not recognize the Centos Stream 8 properly<br>
++ XenServer 8.2 tools from Citrix does not recognize the Centos Stream 8 properly, never the less executing it this way do the trick [install.sh -d centos -m 8]<br>
 + Xcp-ng 8.2 tools does not have this issue<br>
 + in case you use linux operating systems for your core services within the lab - use the Xcp-ng tools, the installation is straightforward (https://xen-orchestra.com/blog/install-xenserver-tools-in-your-vm/)<br>
 
