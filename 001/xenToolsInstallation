@@ -13,3 +13,13 @@ reboot
 # then within the xcp-ng Center or any other console you should see in the General tab of the vm
 # Virtulization state: Optimized (version 7.20 installed)
 # that's it
+
+# set proper timezone
+timedatectl
+ls -l /etc/localtime
+timedatectl list-timezones
+timedatectl set-timezone Europe/Warsaw
+timedatectl
+
+# right after that step configure the NTP client on your vm that it has proper time,
+# unless you rely on vmtools synchronization
