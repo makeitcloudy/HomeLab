@@ -37,12 +37,12 @@ Inspirations can be found here:<br>
 + https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys shares material of great quality in topics like pfsense, freenas, etc<br>
 + https://www.reddit.com/r/homelab/ - remember that each usecase is different<br>
 
-**# Installation of XenTools **
-**** Linux ****
+**# Installation of XenTools **<br><br>
+**Linux**<br>
 + XenServer 8.2 tools from Citrix does not recognize the Centos Stream 8 properly<br>
 + Xcp-ng 8.2 tools does not have this issue<br>
 + in case you use linux operating systems for your core services within the lab - use the Xcp-ng tools, the installation is straightforward (https://xen-orchestra.com/blog/install-xenserver-tools-in-your-vm/)<br>
 
-**** Windows ****
+**Windows**<br>
 + XenServer 8.2 tools integrates well with Desktop and Server operating systems<br>
 + based on my experience at least two restarts are needed, then the hypervisor recognizes that all components of the tools are in place<br>
