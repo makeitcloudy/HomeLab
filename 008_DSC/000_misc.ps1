@@ -67,25 +67,4 @@ Get-Item -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WSMAN\Client'
 Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WSMAN\Client'
 Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WSMAN\Client' |Select-Object -ExpandProperty trusted_hosts
 
-# in order to be succesful with launching RSAT tools especially when your user on your device does not go
-# hand in hand with the user name on the server side, navigate on the mgmt node to following location
-Invoke-Item -Path 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools'
-# the start menu in windows 10 in that context left much to be desired that's why in order to launch 
-# RSAT tool navigate to abovementioned location
-
-
-# in order to be sucesfull with opening the mmc DNS towards your server (still in workgroup)
-# Start Server Manager with regular user context
-Invoke-Item -Path "C:\Windows\system32\ServerManager.exe"
-Invoke-Item -Path "$env:SystemRoot\system32\ServerManager.exe"
-# in the dashboard create Server Group
-# once the server group is created, edit it, and add the FQDN dns entry of the machine you'd like to manage
-# in our case there is a pihole within the infrastructure, when very first entries can be created so there
-# is no need to use hosts file on the system which plays your mgmt node (not domain joined)
-# right click on the added server and hit the [Managed As]
-# put [IP address of the dns server]\Administrator along with the password or [FQDN\Administrator] = [dns.lab\Administrator]
-# if the authentication went succesfully then within the server manager some details like events and performance counters are displayed
-# within the RMB (right mouse button) you'll be shown with the possibilities of the remote snapins which can be run
-# in our case DNS role is installed so DNS Manager is available
-# as it is not configured there are neither forward nor reverse lookup zones
 #endregion
