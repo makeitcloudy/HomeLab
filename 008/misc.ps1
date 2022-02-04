@@ -31,3 +31,26 @@ w32tm /query /source
 Get-NetAdapterBinding -ComponentID ms_tcpip6 | fl *
 Disable-NetAdapterBinding -Name (Get-NetAdapter).Name -ComponentID ms_tcpip6
 #endregion
+
+#region windows server - firewall configuration - RSAT
+get-command -Noun NetFirewallRule
+Get-NetFirewallRule | Where-Object {$_.Action -eq 'Allow'} | Out-GridView
+Get-NetFirewallRule | Where-Object {$_.DisplayGroup -match 'remote management'} | Out-GridView
+
+# Start-Process 'https://docs.microsoft.com/en-us/windows-server/administration/server-core/server-core-manage'
+
+#To allow all MMC snap-ins to connect, run the following command:
+Enable-NetFirewallRule -DisplayGroup "Windows Remote Management"
+#To allow only specific MMC snap-ins to connect, run the following:
+Enable-NetFirewallRule -DisplayGroup "<rulegroup>"
+#MMC snap-in 	                            Rule group
+#Event Viewer 	                            Remote Event Log Management
+#Services 	                                Remote Service Management
+#Shared Folders 	                        File and Printer Sharing
+#Task Scheduler 	                        Performance Logs and Alerts, File and Printer Sharing
+#Disk Management 	                        Remote Volume Management
+#Windows Firewall and Advanced Security 	Windows Firewall Remote Management
+
+#Some MMC snap-ins don't have a corresponding rule group that allows them to connect through the firewall.
+#However, enabling the rule groups for Event Viewer, Services, or Shared Folders will allow most other snap-ins to connect.
+#endregion
