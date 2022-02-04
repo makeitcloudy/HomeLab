@@ -11,4 +11,9 @@ To get some deeper network skills, you may support yourself with:
 
 As it goes for the firewall the pfsense will do the trick, it can be virtualized, the only drawback is that it is fully GUI based, and I'm not aware about configuring it via console, so you have to click to make it work. But the firewall configuration in home lab does not tend to be extremely dynamic, so you'll survive. The benefits are there, for instance it can terminate your VPN, as with the Citrix ADC Freemium, if I'm not wrong you'll get option to setup 5 VPN SSL connections, where with pfsense you can get the OpenVPN, and other functionalities which comes with the plugins or are available out of the box.<br>
 There are people who are towards OPNSense and there is also other groups who opt for VyOS or IpFire.<br>
-Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.<br>
+Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.<br><br>
+
+**#Psfsense**<br><br>
+
+Lawrence - pfsense playlist - https://www.youtube.com/watch?v=fsdm5uc_LsU&list=PLjGQNuuUzvmsuXCoj6g6vm1N-ZeLJso6o<br>
+very much of this can be applied to the homelab.<br>
