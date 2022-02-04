@@ -11,12 +11,17 @@ $rsatTool.foreach({
 # windows 10 install missing RSAT tools
 Get-WindowsCapability -Name RSAT* -Online | Where-Object {$_.State -eq 'NotPresent'} | Add-WindowsCapability -Online
 
+#Looks like MMC snapins communicates over the winRM and DCOM+
+#f.e for the succesfull launch of the mmc DNS add trusted hosts entry for the sucesfull winRm connectivity
+Get-Item WSMan:\localhost\Client\TrustedHosts
+Set-Item WSMan:\localhost\Client\TrustedHosts -Concatenate -Value "dns.lab" -Force #run this elevated on the server which is your management node
+## https://www.powershellgallery.com/packages/SecurityFever/2.5.0/Content/Functions%5CTrustedHost%5CRemove-TrustedHost.ps1
+
 # in order to be succesful with launching RSAT tools especially when your user on your device does not go
 # hand in hand with the user name on the server side, navigate on the mgmt node to following location
 Invoke-Item -Path 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Administrative Tools'
 # the start menu in windows 10 in that context left much to be desired that's why in order to launch 
 # RSAT tool navigate to abovementioned location
-
 
 # in order to be sucesfull with opening the mmc DNS towards your server (still in workgroup)
 # Start Server Manager with regular user context
