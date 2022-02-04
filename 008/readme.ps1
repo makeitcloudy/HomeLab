@@ -1,1 +1,33 @@
 Start-Process "https://adamtheautomator.com/powershell-scheduled-task/"
+
+#region NTP client configuration
+Start-Process "C:\Windows\System32\rundll32.exe" -ArgumentList 'C:\Windows\System32\shell32.dll,Control_RunDLL C:\Windows\System32\timedate.cpl'
+Get-Service | Where-Object {$_.Name -eq 'W32Time'}
+Set-Service -Name W32Time -StartupType Automatic -Verbose
+#Get-Service -Name W32Time | fl *
+# run in elevated command prompt
+w32tm /config "/manualpeerlist:[InternalNtpDnsEntry],0x8 0.pl.pool.ntp.org,0xa 1.pl.pool.ntp.org,0xa 2.pl.pool.ntp.org,0xa" /syncfromflags:manual /reliable:no /update
+#w32tm /config "/manualpeerlist:[InternalNtpDnsEntry],0x8 0.pl.pool.ntp.org,0xa 1.pl.pool.ntp.org,0xa 2.pl.pool.ntp.org,0xa" /syncfromflags:manual /reliable:no /update
+#w32tm /config /syncfromflags:MANUAL /reliable:yes
+#  syncfromflags:<source> - sets what sources the NTP client should
+#    sync from. <source> should be a comma separated list of
+#    these keywords (not case sensitive):
+#      MANUAL - sync from peers in the manual peer list
+#      DOMHIER - sync from an AD DC in the domain hierarchy
+#      NO - sync from none
+#      ALL - sync from both manual and domain peers
+
+#  reliable:(YES|NO) - set whether this machine is a reliable time source.
+#    This setting is only meaningful on domain controllers.
+#      YES - this machine is a reliable time service
+#      NO - this machine is not a reliable time service
+w32tm /query /peers
+w32tm /query /source
+#endregion
+
+#region disable IPv6 on the network link of the vm
+# assumption that VM has only one network adapter, if not bring simple foreach here
+(Get-NetAdapter).Name
+Get-NetAdapterBinding -ComponentID ms_tcpip6 | fl *
+Disable-NetAdapterBinding -Name (Get-NetAdapter).Name -ComponentID ms_tcpip6
+#endregion
