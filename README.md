@@ -157,6 +157,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Daniel Fehler - (https://virtualfeller.com/)<br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
 * Trond Eirik Haavarstein - (https://xenappblog.com/)<br>
+* John Billekens - (https://blog.j81.nl/)<br>
 * Marco Zimmermann - (http://marcozimmermann.com/)<br>
 * Matthias Schlimm - (https://eucweb.com/)<br>
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
