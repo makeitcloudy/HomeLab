@@ -168,6 +168,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 Many of abovementioned EUC experts, links on their blogs to great tools which help you with your daily work, and reveal knowledge, which you'll never get on the trainings guarateed by the vendor, exposing their experience from the field. There are many more, please forgive me I can not enumerate them all here. Depending from the area, many are CTP's or MVP's, but there are also grey eminence personas who share valuable information.
 
 **.**<br>
++ https://feedly.com/ - RSS agregator<br>
 + https://freedns.afraid.org/subdomain/ - fantastic freeDNS service<br>
 + https://www.cloudflare.com/ - can bring great improvement for your web services<br>
 
