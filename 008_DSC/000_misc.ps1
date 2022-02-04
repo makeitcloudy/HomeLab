@@ -54,6 +54,8 @@ Enable-NetFirewallRule -DisplayGroup "<rulegroup>"
 #Some MMC snap-ins don't have a corresponding rule group that allows them to connect through the firewall.
 #However, enabling the rule groups for Event Viewer, Services, or Shared Folders will allow most other snap-ins to connect.
 
+#Looks like MMC snapins communicates over the winRM and DCOM+
+#f.e for the succesfull launch of the mmc DNS add trusted hosts entry for the sucesfull winRm connectivity
 Get-Item WSMan:\localhost\Client\TrustedHosts
 Set-Item WSMan:\localhost\Client\TrustedHosts -Concatenate -Value "dns.lab" -Force #run this elevated on the server which is your management node
 Set-Item WSMan:\localhost\Client\TrustedHosts -Concatenate -Value "mgmt.lab" -Force #run this elevated on the server which plays the DNS role
