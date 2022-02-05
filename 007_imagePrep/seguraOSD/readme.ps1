@@ -5,6 +5,10 @@
 # when you change it it throws an error message mentioned here: https://github.com/OSDeploy/OSDBuilder/issues/72
 # thats why the main C drive is 100GB in side to collect all the images
 
+#2022.02.05 - SeguraOSD has limited support with Windows 2012R2 - seems the easiest way would be to path this OS with
+# WSUS offline and create a template out of it, and provision VM's this way, it seems to be the least bumpy road comparing
+# to updating the image with OSD, unless you already have an MDT or another way, but then what you are doing here ;)
+
 Find-Module -Name $osdBuilderModuleName -AllVersions | Out-GridView
 Find-Module -Name $osdModuleName -AllVersions | Out-GridView
 
