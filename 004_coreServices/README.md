@@ -10,7 +10,7 @@ Citrix lab survive with the traffic being sent over HTTP, never the less the gre
 Apart from that Application layer is challenging, but the most interesting and important is the Access Layer. Getting to know the HTTP protocol, and the meandres of HTTPS, a performing a bit of excercises with SSL offloading will help.<br>
 
 **#AD**<br><br>
-https://carlwebster.com/downloads/<br>
+https://carlwebster.com/downloads/download-category/pdfs/<br>
 
 **#GPO**<br><br>
 https://github.com/cognitionIT/ADMXReader<br>
