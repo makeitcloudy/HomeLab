@@ -45,6 +45,6 @@ $PathToOscdimg = 'C:\Program Files\Windows AIK\Tools\PETools'
 **# Instead of pointing to normal efisys.bin, use the *_noprompt* instead**<br>
 $BootData='2#p0,e,b"{0}"#pEF,e,b"{1}"' -f "$ISOMediaFolder\boot\etfsboot.com","$ISOMediaFolder\efi\Microsoft\boot\efisys_noprompt.bin"
 
-**# re-master Windows ISO - so it runs without press any key prompt
+**# re-master Windows ISO - so it runs without press any key prompt**<br>
 Start-Process -FilePath "$PathToOscdimg\oscdimg.exe" -ArgumentList @("-bootdata:$BootData",'-u2','-udfver102',"$ISOMediaFolder","$ISOFile") -PassThru -Wait -NoNewWindow
-  </code>
+</code>
