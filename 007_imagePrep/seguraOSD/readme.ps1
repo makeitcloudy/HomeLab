@@ -86,7 +86,7 @@ New-Item -Path 'C:\OSDBuilder' -ItemType Directory -Verbose
 Get-Item -Path 'C:\OSDBuilder'
 
 $partition | Add-PartitionAccessPath -AccessPath 'C:\OSDBuilder'
-$partition | Remove-PartitionAccessPath -AccessPath 'C:\OSDBuilder' -Verbose
+#$partition | Remove-PartitionAccessPath -AccessPath 'C:\OSDBuilder' -Verbose
 Get-Command -Noun PartitionAccessPath
 #endregion
 
