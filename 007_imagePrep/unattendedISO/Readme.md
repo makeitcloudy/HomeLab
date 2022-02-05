@@ -22,7 +22,7 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 **#Removing "press any key" prompts for GPT/UEFI Windows install**<br>
 + Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)<br>
 + Oscdimg details which gives more insight than the MS documentation (https://oofhours.com/2021/12/25/how-does-uefi-boot-from-a-cd/)<br>
-+ howto is avaialble here (https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html)<br<
++ howto is avaialble here (https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html)<br>
 
 1. https://gist.github.com/misheska/2af4f9d17206326889b44c3c1f50e277#file-copywindowsiso-ps1<br>
 2. https://gist.github.com/misheska/035c52cf7e7a47087c013cd346d9d5d1#file-nopromptswitch-ps1<br>
