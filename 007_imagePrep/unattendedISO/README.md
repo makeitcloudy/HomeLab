@@ -10,7 +10,7 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + UEFI boot has their implications on the PVS (DHCP options, and TFTP boot)<br>
 + Passwords within the unattended.xml file have Base64 encoding within passwords stored for users<br>
 + Unattended iso may require your attention, to press any key to Boot from CD or DVD..., this can be changed with oscdimg, by pointing towards noprompt efi file<br><br>
-+ RENAME autounattend-ServerOS.xml to autounattend.xml and you are good to go for unatended installation of Windows Server operating system<br>
++ RENAME *autounattend-ServerOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system<br>
 
 **# SeguraOSD**<br>
 + SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations.<br>
