@@ -139,6 +139,9 @@ this should be a sufficient amount of knowledge to be prepared for studying to A
 + https://cloudcamp.ie/<br>
 
 **Community shares**<br>
+* World of EUC slack - (https://t.co/EVrMXepANH)<br>
+* World of EUC discord - (https://t.co/zE0QTpANZQ)<br>
+* EUC weekly digest - (https://www.carlstalhood.com/category/euc-weekly-digest/)<br>
 * MyCugc with all the webinars recoreded - (https://www.mycugc.org/events/webinars)<br>
 * There is an interesting mission behind the scenes - (https://www.go-euc.com/)<br>
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
