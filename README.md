@@ -150,6 +150,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture.<br>
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.<br>
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
+* Manuel Winkel - (https://www.deyda.net/index.php/en/<br>
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
 * MsFreaks - (https://msfreaks.wordpress.com/)<br>
 * Freek Berson - (https://github.com/fberson | http://microsoftplatform.blogspot.com/) - his blog post are great to lay down the foreground for Citrix which is nothing else than RDS (Remote Desktop Services), it seems to be good idea to start with Terminal Services and RDS which help structualize knowledge needed for a Citrix guy<br>
