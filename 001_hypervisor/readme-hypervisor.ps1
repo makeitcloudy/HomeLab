@@ -2,8 +2,8 @@ https://github.com/xapi-project/xen-api-sdk/tree/master/powershell
 https://github.com/xapi-project/xen-api-sdk/blob/master/powershell/autogen/samples/AutomatedTestCore.ps1
 
 Start-Process "https://workspace-guru.com/2017/11/12/scripting-citrix-xenserver-powershell-command-line/"
-Start-Process "https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/" #watek jak zrobic maszyne UEFI boot
-Start-Process "https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-machines-created-with-powershell-api" #watek jak zrobic maszyne UEFI boot
+Start-Process "https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/" #thread how to create UEFI boot vm
+Start-Process "https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-machines-created-with-powershell-api" #thread how to create UEFI boot vm
 
 Start-Process 'http://bisbd.blogspot.com/2020/09/modifying-citrix-hypervisor-xenserver.html' #HVM-boot-params
 Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html#guest-uefi-boot-and-secure-boot'
@@ -15,8 +15,6 @@ Start-Process 'https://github.com/xapi-project/xen-api-sdk/blob/master/powershel
 Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html' #UEFI machines on XenServer
 
 #XS NFS shares
-Start-Process 'https://www.linuxtechi.com/setup-nfs-server-on-centos-8-rhel-8/'
-Start-Process 'https://www.linuxbabe.com/redhat/set-up-samba-server-on-centos-8-rhel-8-for-file-sharing'
 Start-Process 'https://computingforgeeks.com/add-and-use-iso-library-storage-repository-xen-xcp-ng/'
 
 #CPU topology
