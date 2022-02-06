@@ -5,6 +5,9 @@
 
 #region Administrator Password
 #region Administrator Password - base64 encode
+# this string is used in the xml section - Microsoft-Windows-Shell-Setup
+# in <UserAccounts> -> <AdministratorPassword>
+# the key here is to add the AdministratorPassword string at the end of the regular password - it seems this is parsed by the installation engine this way
 $administratorPassword = 'AdministratorPassword'
 $encodedAdministratorPassword = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes(('{0}AdministratorPassword' -f $administratorPassword)))
 #endregion
@@ -17,6 +20,9 @@ Write-Output "Decoded_Text_is:" $administratorPassword
 
 #region User Password
 #region User Password - base64 encode
+# current string is used in the xml section - Microsoft-Windows-Shell-Setup
+# in <LocalAccounts> -> <LocalAccount wcm:action="add"> -> <Password>
+# the key here is to add the PAssword string at the end of the regular password, so it can be processed properly by the installation engine
 $autoLogonPassword = 'labUserPassword'
 $encodedAutoLogonPassword = [System.Convert]::ToBase64String([System.Text.Encoding]::Unicode.GetBytes(('{0}Password' -f $autoLogonPassword)))
 #endregion
