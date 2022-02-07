@@ -83,15 +83,6 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 ** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together, to help you out<br>
 
-** Hybrid / Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
-** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
-** Cloud / WVD - Travis Roberts has his course on Udemy - VWD from zero to hero, as well as on youtube - (https://www.youtube.com/playlist?list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
-** Cloud / Azure - Thomas Maurer study guides:<br>
-+ 2022 Azure study guide - (https://www.thomasmaurer.ch/2022/01/how-to-learn-microsoft-azure-in-2022/)<br>
-this should be a sufficient amount of knowledge to be prepared for studying to AZ-140<br>
-+ AZ-900 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
-+ AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
-
 **Product documentation**<br>
 + Citrix Github - https://github.com/citrix<br>
 + Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)<br>
@@ -172,8 +163,6 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 
 Many of abovementioned EUC experts, links on their blogs to great tools which help you with your daily work, and reveal knowledge, which you'll never get on the trainings guarateed by the vendor, exposing their experience from the field. There are many more, please forgive me I can not enumerate them all here. Depending from the area, many are CTP's or MVP's, but there are also grey eminence personas who share valuable information.<br>
 
-* onboard to Azure - https://github.com/johnthebrit/CertificationMaterials<br>
-
 **.**<br>
 + https://feedly.com/ - RSS agregator<br>
 + https://freedns.afraid.org/subdomain/ - fantastic freeDNS service<br>
@@ -193,3 +182,16 @@ It's impossible to list all names of great people who produce the valuable conte
 Keep calm and do puzzles (https://www.redbubble.com/shop/jackson+pollock+jigsaw-puzzles).<br>
 <br>
 https://gist.github.com/tansei<br>
+
+**Hybrid / Azure**<br>
+** Hybrid / Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
+** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
+** Cloud / WVD - Travis Roberts has his course on Udemy - VWD from zero to hero, as well as on youtube - (https://www.youtube.com/playlist?list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
+** Cloud / Azure - Thomas Maurer study guides:<br>
++ 2022 Azure study guide - (https://www.thomasmaurer.ch/2022/01/how-to-learn-microsoft-azure-in-2022/)<br>
+this should be a sufficient amount of knowledge to be prepared for studying to AZ-140<br>
++ AZ-900 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
++ AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
+* onboard to Azure - https://github.com/johnthebrit/CertificationMaterials<br>
+* Azure trainings by John Savil - (https://www.youtube.com/c/NTFAQGuy/playlists)<br>
+* Azure Virtual Desktop by Travis Roberts - (https://www.youtube.com/c/TravisRoberts/playlists | https://www.youtube.com/watch?v=V8PjtCTTT6c&list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
