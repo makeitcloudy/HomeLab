@@ -194,6 +194,7 @@ https://gist.github.com/tansei<br>
 this should be a sufficient amount of knowledge to be prepared for studying to AZ-140<br>
 + AZ-900 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
 + AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
++ AZ-104 - (https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/)<br>
 * onboard to Azure - https://github.com/johnthebrit/CertificationMaterials<br>
 * Azure trainings by John Savil - (https://www.youtube.com/c/NTFAQGuy/playlists)<br>
 * Azure Virtual Desktop by Travis Roberts - (https://www.youtube.com/c/TravisRoberts/playlists | https://www.youtube.com/watch?v=V8PjtCTTT6c&list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
