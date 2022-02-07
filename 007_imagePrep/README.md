@@ -4,6 +4,7 @@
 + in case you do not have a code in hand, and need to prepare something within the GUI, use regular mstsc instead of the console view built into the xen / xcp-ng - within local area network, you won't see much of difference, never the less perspective gonna change in remote usecase scenario<br><br>
 
 **#Windows Customized default by Aaron Parker**
++ https://twitter.com/stealthpuppy/status/1470912249464197128<br>
 + https://stealthpuppy.com/image-customise/<br>
 
 **#Pvs**<br>
