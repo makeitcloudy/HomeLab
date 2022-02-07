@@ -9,3 +9,6 @@
 
 **#Pvs**<br>
 + https://www.carlstalhood.com/pvs-master-device-preparation/<br>
+
+**#UPM / FSLogix**<br>
++ https://jkindon.com/citrix-upm-and-fslogix-containers/<br>
