@@ -157,6 +157,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Kristin Griffin - (https://www.rdsgurus.com/author/grokker99/) - her contribution in RDS area seems to be not that well known, but still she brought added value value to the EUC community<br>
 * Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
+* James Ranklin - (https://james-rankin.com/) - amazing content is produced by James, no doubts<br>
 * James Kindon - (https://github.com/JamesKindon | https://jkindon.com/)<br>
 * Daniel Fehler - (https://virtualfeller.com/)<br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
