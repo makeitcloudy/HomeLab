@@ -193,6 +193,7 @@ https://gist.github.com/tansei<br>
 + 2022 Azure study guide - (https://www.thomasmaurer.ch/2022/01/how-to-learn-microsoft-azure-in-2022/)<br>
 this should be a sufficient amount of knowledge to be prepared for studying to AZ-140<br>
 + AZ-900 - (https://www.thomasmaurer.ch/2020/03/az-900-study-guide-microsoft-azure-fundamentals-2021/)<br>
++ AZ-900 - (https://microsoftlearning.github.io/AZ-900T0x-MicrosoftAzureFundamentals/)<br>
 + AZ-104 - (https://www.thomasmaurer.ch/2020/03/az-104-study-guide-azure-administrator/)<br>
 + AZ-104 - (https://microsoftlearning.github.io/AZ-104-MicrosoftAzureAdministrator/)<br>
 * onboard to Azure - https://github.com/johnthebrit/CertificationMaterials<br>
