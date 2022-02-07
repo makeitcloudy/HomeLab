@@ -159,7 +159,8 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
 * René Bigler - (https://dreadysblog.com/)<br>
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer<br>
-* Lee Jeffries - https://www.leeejeffries.com/blog/<br>
+* Lee Jeffries - (https://www.leeejeffries.com/blog/)<br>
+* Ravikanth C - (https://github.com/rchaganti) - in context of DSC, great source, if I'm not mistaken he had authored one of the DSC books available<br>
 
 Many of abovementioned EUC experts, links on their blogs to great tools which help you with your daily work, and reveal knowledge, which you'll never get on the trainings guarateed by the vendor, exposing their experience from the field. There are many more, please forgive me I can not enumerate them all here. Depending from the area, many are CTP's or MVP's, but there are also grey eminence personas who share valuable information.<br>
 
@@ -184,8 +185,9 @@ Keep calm and do puzzles (https://www.redbubble.com/shop/jackson+pollock+jigsaw-
 https://gist.github.com/tansei<br>
 
 **Hybrid / Azure**<br>
-** Hybrid / Trond advises for building hybrid scenarios ** - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
-** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer ** - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
+** Why should you become Azure certified - (https://www.thomasmaurer.ch/2019/08/why-you-should-become-microsoft-azure-certified/)<br>
+** Hybrid / Trond advises for building hybrid scenarios - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)<br>
+** Cloud / WVD (Windows Virtual Desktop) - AIB | (Azure Image Builder) vs Packer - (https://www.youtube.com/channel/UCjUtHlDsAIasXffpiORfwUA) and (https://github.com/JimMoyle/YouTube-WVD-Image-Deployment)<br>
 ** Cloud / WVD - Travis Roberts has his course on Udemy - VWD from zero to hero, as well as on youtube - (https://www.youtube.com/playlist?list=PLnWpsLZNgHzXMtKjaQJf4Rn64W86nUDv1)<br>
 ** Cloud / Azure - Thomas Maurer study guides:<br>
 + 2022 Azure study guide - (https://www.thomasmaurer.ch/2022/01/how-to-learn-microsoft-azure-in-2022/)<br>
