@@ -20,7 +20,10 @@ The integration between Hyper-V and DSC is great, there is a bit of learning cur
 + https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-2-creating-a-custom-iso<br>
 + https://www.criticaldesign.net/post/automating-lab-builds-with-xenserver-powershell-part-3-unlimited-vm-creation<br>
 + https://www.criticaldesign.net/post/automating-lab-buildouts-with-xenserver-powershell-part-4-roles-features-and-other-components<br><br>
-+ https://github.com/santiagocardenas/xenserver-powershell-scripts/blob/master/Set-XenServerVMResources.ps1<br>
+
++ https://github.com/santiagocardenas/xenserver-powershell-scripts/blob/master/Set-XenServerVMResources.ps1<br><
++ https://www.citrix.com/blogs/2014/09/10/scripting-automating-vm-operations-on-xenserver-using-powershell/<br>
++ https://www.citrix.com/blogs/2017/12/01/scripting-citrix-xenserver-with-powershell-and-command-line/<br>
 
 
 **#Compute Layer**<br><br>
