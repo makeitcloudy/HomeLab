@@ -128,7 +128,11 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 + https://www.youtube.com/c/PowerShellConferenceEU - PowerShell source, apart from that search for Jeffrey Snover presentations, they way he describes things is straightforward and intelligeble, which proofs his well understanding of the topic ;)<br>
 + https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haaverstein, with fabolous speakers and presentations<br>
 + https://cloudcamp.ie/<br>
-
+<br>
+**Community shares - lab approaches***<br>
+* Carl Webster Lab - (https://carlwebster.com/building-websters-lab-v2/)<br>
+* Nicolas Ignoto - (https://www.citrixguru.com/category/lab/)<br>
+<br>
 **Community shares**<br>
 * World of EUC slack - (https://t.co/EVrMXepANH)<br>
 * World of EUC discord - (https://t.co/zE0QTpANZQ)<br>
