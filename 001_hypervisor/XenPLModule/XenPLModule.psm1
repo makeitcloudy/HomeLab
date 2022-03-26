@@ -963,7 +963,7 @@ Function New-PLXenVM
         [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [Alias("VmParameter")]
-        [PScustomObject[]]$VmParam,
+        [PScustomObject]$VmParam,
 
         [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$false)]
         [ValidateNotNullOrEmpty()]
@@ -978,6 +978,7 @@ Function New-PLXenVM
 
     BEGIN
     {
+        Write-Verbose "$($VMParam.VMName) - $Firmware - $SecureBoot"
         #region Xen Automation - CREATE VM - INITIALIZE - RUN THIS EVERY TIME UPFRONT OF VM CREATION - default template, VM param hashtable
         $xenDefaultTemplate = Get-PLXenTemplate -Type default -Verbose #get all default templates comming with the hypervisor
         #create an object which contains all default templates, and their regex, actually this is the same value pre and suffixed with (\ and \)
@@ -1140,6 +1141,7 @@ Function New-PLXenVM
 
         #region Xen Automation - CREATE VM - Create disk object for the VM placeholder
         $xenSr = Get-XenSR -Name $VmParam.VMSR
+        Write-Verbose "$($VmParam.VMName) - $($VmParam.VMSR) - $($xenSr.name_label) - $VMDiskDescription"
         New-XenVDI -NameLabel $VMDiskName -VirtualSize ($VmParam.VMDiskGB * 1073741824) -SR $xenSr -Type user -NameDescription $VMDiskDescription -Verbose
         #New-XenVDI -NameLabel ("{0}-{1}" -f $VmParam.VMName, "OsStorage") -VirtualSize ($VmParam.VMDiskGB * 1073741824) -SR $SR -Type user -NameDescription $VMDiskDescription -Verbose
         #New-XenVDI -NameLabel $VMDiskName -VirtualSize $VMDiskBytes -SR $SR -Type user -NameDescription $VMDiskDescription -Verbose
@@ -1150,6 +1152,7 @@ Function New-PLXenVM
         #If there are two VMs with the same name of hypervisor level, then below code does work properly
         $xenVm = Get-XenVM -Name $VmParam.VMName
         $xenVdi = Get-XenVDI -Name $VMDiskName
+        Write-Verbose "$($xenVM.name_label) - $VMDiskName"
         New-XenVBD -VM $xenVm.opaque_ref -VDI $xenVdi.opaque_ref -Type Disk -mode RW -Userdevice 0 #add disk to the VM 
         #New-XenVBD -VM $xenVm.opaque_ref -VDI $xenVdi.opaque_ref -Type Disk -mode RW -Userdevice 0 -Unpluggable $true -Bootable $true #przetestowac 2022.01.04
         #New-XenVBD -VM $xenVm.opaque_ref -VDI $xenVdi.opaque_ref -Type Disk -mode RW -Userdevice 2 #add disk to the VM as device ID 2
@@ -1244,7 +1247,7 @@ Function Start-PLXenVM
         try {
             $ComputerName.ForEach({
                 Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Starting VM: $_"
-                Invoke-XenVM -Name $_ -XenAction Start -Async
+                Invoke-XenVM -Name $_ -XenAction Start -Async -Verbose
             })
         }
         catch {
@@ -1311,16 +1314,16 @@ Description example 3.
     PROCESS
     {
         try {
-            if($Force){
-                $ComputerName.ForEach({
-                    Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Starting VM: $_"
-                    Invoke-XenVM -Name $_ -XenAction HardShutdown -Async
-                })
-            }
-            
             $ComputerName.ForEach({
-                Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Shutting down VM: $_"
-                Invoke-XenVM -Name $_ -XenAction CleanShutdown -Async
+                if($Force){
+                    Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Shutting down VM: $_ the hard way"
+                    Invoke-XenVM -Name $_ -XenAction HardShutdown -Async -Verbose
+
+                }
+                else {
+                    Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Shutting down VM: $_ the regular way"
+                    Invoke-XenVM -Name $_ -XenAction CleanShutdown -Async -Verbose
+                }
             })
         }
         catch {
@@ -1369,17 +1372,18 @@ Function Restart-PLXenVM
     PROCESS
     {
         try {
-            if($Force){
-                $ComputerName.ForEach({
-                Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Restarting VM: $_"
-                Invoke-XenVm -Name $_ -XenAction HardReboot -Async
-                })
-            }
-            
             $ComputerName.ForEach({
-                Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Restarting VM: $_"
-                Invoke-XenVm -Name $_ -XenAction CleanReboot -Async
-            })
+                if($Force)
+                {
+                    Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Restarting VM: $_"
+                    Invoke-XenVm -Name $_ -XenAction HardReboot -Async -Verbose
+                }
+                else
+                {
+                    Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Restarting VM: $_"
+                    Invoke-XenVm -Name $_ -XenAction CleanReboot -Async -Verbose
+                }
+             })
         }
         catch {
             Write-Error "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Error when restarting VM: $_"
