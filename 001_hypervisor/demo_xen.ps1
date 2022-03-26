@@ -1,6 +1,9 @@
 #Requires -RunAsAdministrator
-# TEN KOD JEST PISANY NA LAPTOK - tutaj tez testowany
 Get-ChildItem $env:USERPROFILE\Downloads\* -Include *.jnlp | Remove-Item -Verbose
+
+##https://github.com/AveYo/MediaCreationTool.bat
+##https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019
+##https://github.com/joeldidier/Bootable-Windows-ISO-Creator
 
 #region Xen Automation - 2022 - INITIALIZE
 #region Xen Automation - 2022 - INITIALIZE - Variables Modules, DSC, functions, passwords
@@ -491,43 +494,87 @@ Get-PLXenNetwork -Verbose | Sort-Object NetworkBridge
 #endregion
 #endregion
 
-#region Xen Automation - VM - CREATE
-#New-PLXenVM -VmParam ($vmArray | Where-Object {$_.VMName -match $vmNameRegex}) -Firmware uefi -SecureBoot False -Verbose
+$vmNameRegex = "dcLab"
+$vmName = @('dcLab-NOK','dcLab-OK')
+$vmName = @('_authoring')
+
+$vmNameRegex = "fs|dc"
+$vmName = @('_mgmt','_authoring','dc01','dc02')
+#show all VMs parameters defined in the current configuration
+$vmArray.VMName
+$vmArray | Select-Object VMName,@{Name='RAMGB';Expression={$_.VMRAM/1GB}},@{Name='DiskGB';Expression={$_.VMDiskGB}},VMSR,MAC,NetworkName,VMSKU,HVMBootPolicy,VMBootISO,VMDescription | Out-GridView
+$vmArray | Where-Object {$_.VMName -match 'fs'} | Select-Object VMName
+
+
+Start-PLXenVM -VMName $vmName -Verbose
+$vmArray | Where-Object {$_.VMName -match 'fs'} | Select-Object VMName | Start-PLXenVM -Verbose
+$vmArray | Where-Object {$_.VMName -match 'dc'} | Select-Object VMName | Start-PLXenVM -Verbose
+$vmArray | Where-Object {$_.VMName -match $vmNameRegex} | Select-Object VMName | Start-PLXenVM -Verbose
+
+#region Xen Automation - VM - CREATE FROM SCRATCH
+##New-PLXenVM -VmParam ($vmArray | Where-Object {$_.VMName -match $vmNameRegex}) -Firmware uefi -SecureBoot False -Verbose
+
+#make sure that there is no duplicates of the VM disks 
+#if threre is more than one disk within the same name, below commands will throw an error
 foreach ($vm in ($vmArray | Where-Object {$_.VMName -match $vmNameRegex})){
-    New-PLXenVM -VmParam $Vm -Firmware uefi -SecureBoot False -Verbose # Variable initialization are within the begin section of New-PLXenVm
+    New-PLXenVM -VmParam $vm -Firmware uefi -SecureBoot False -Verbose # Variable initialization are within the begin section of New-PLXenVm
 }
 
-New-PLXenVM -VmParam $VmParam -Firmware uefi -SecureBoot True -Verbose # Variable initialization are within the begin section of New-PLXenVm
-#New-PLXenVM -VmParam $VmParam -Firmware bios -Verbose # Variable initialization are within the begin section of New-PLXenVm
+#New-PLXenVM -VmParam $VmParam -Firmware uefi -SecureBoot True -Verbose 
+#New-PLXenVM -VmParam $VmParam -Firmware bios -Verbose
 #endregion
 
 #region Xen Automation - VM - Start VM
-Invoke-XenVM -Name $VmParam.VMName -XenAction Start -Async
+foreach ($vm in ($vmArray | Where-Object {$_.VMName -match $vmNameRegex})){
+    #New-PLXenVM -VmParam $vm -Firmware uefi -SecureBoot False -Verbose # Variable initialization are within the begin section of New-PLXenVm
+    Invoke-XenVM -Name $vm.VMName -XenAction Start -Async -Verbose
+}
 #endregion
 
-#region Xen Automation - VM - MODIFY - change boot order, autoPowerOn
-#Start-Process 'https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/'
+#region Xen Automation - START STOP RESTART VM
 $allXenVm = (Get-XenVM | Where-Object { $_.is_a_template -eq $False -and !($_.other_config.default_template) -and $_.is_a_snapshot -eq $False} | Sort-Object -Property name_label).name_label
 $xenVm = $allXenVm | Where-Object {$_ -match $vmNameRegex}
 $xenVm = foreach($element in ($allXenVm | Where-Object {$_ -match $vmNameRegex})){
     Get-XenVM -Name $element
 }
 
-Set-PLXenVM -VMName $xenVm.name_label -BootOrder c -Verbose
-Set-PLXenVM -VMName $xenVm.name_label -BootOrder cd -Verbose
-Set-PLXenVM -VMNameRegex $vmNameRegex -BootOrder c -Verbose
-Set-PLXenVM -VMNameRegex $vmNameRegex -BootOrder dc -Verbose
+#$xenVM.name_label
+#$vm | Start-PLXenVM -Verbose
+Start-PLXenVM -VMName $xenVM.name_label -Verbose
+
+#$vm | Restart-PLXenVM -Verbose
+Restart-PLXenVM -VMName $xenVM.name_label -Verbose
+#Restart-PLXenVM -VMName $xenVM.name_label -Force -Verbose
+
+#$vm | Stop-PLXenVM -Verbose
+Stop-PLXenVM -VMName $xenVM.name_label -Verbose
+#$vm | Stop-PLXenVM -Force -Verbose
+Stop-PLXenVM -VMName $xenVM.name_label -Force -Verbose
+#endregion
+
+#region Xen Automation - VM - MODIFY - change boot order, autoPowerOn
+#Start-Process 'https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/'
+$allXenVm = (Get-XenVM | Where-Object { $_.is_a_template -eq $False -and !($_.other_config.default_template) -and $_.is_a_snapshot -eq $False} | Sort-Object -Property name_label).name_label
+#$xenVm = $allXenVm | Where-Object {$_ -match $vmNameRegex}
+$xenVm = foreach($element in ($allXenVm | Where-Object {$_ -match $vmNameRegex})){
+    Get-XenVM -Name $element
+}
+
+#Set-PLXenVM -VMName $xenVm.name_label -BootOrder c -Verbose
+#Set-PLXenVM -VMName $xenVm.name_label -BootOrder cd -Verbose
+#Set-PLXenVM -VMNameRegex $vmNameRegex -BootOrder c -Verbose
+#Set-PLXenVM -VMNameRegex $vmNameRegex -BootOrder dc -Verbose
 Set-PLXenVM -VMNameRegex $vmNameRegex -BootOrder cdn -Verbose
 
-Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn $True -Verbose
-Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn $False -Verbose
-Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn 0 -Verbose
-Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn 1 -Verbose
-Set-PLXenVM -VMNameRegex $vmNameRegex -AutoPowerOn $True -Verbose
-Set-PLXenVM -VMNameRegex $vmNameRegex -AutoPowerOn $False -Verbose
+#Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn $True -Verbose
+#Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn $False -Verbose
+#Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn 0 -Verbose
+#Set-PLXenVM -VMName $xenVM.name_label -AutoPowerOn 1 -Verbose
+#Set-PLXenVM -VMNameRegex $vmNameRegex -AutoPowerOn $True -Verbose
+#Set-PLXenVM -VMNameRegex $vmNameRegex -AutoPowerOn $False -Verbose
 
-#region Xen Automation - VM - MODIFY - change boot order
-$vm = ($vmArray | Where-Object {$_.VMName -match $vmNameRegex} | Select-Object @{Name="Name";Expression={$_.VMName}}).foreach{
+#region Xen Automation - VM - MODIFY - RELICT - change boot order
+$xenVm = ($vmArray | Where-Object {$_.VMName -match $vmNameRegex} | Select-Object @{Name="Name";Expression={$_.VMName}}).foreach{
         Get-XenVM -Name $_.Name
 }
 
@@ -544,18 +591,18 @@ $bootParams = @{order = 'cdn'}
 #$bootParams = @{order = "dc"; firmware = "bios"}
 
 #Modify the VMthat it starts from hard drive or dvd
-foreach($element in $vm){
+foreach($element in $xenVm){
     Set-XenVM -VM $element -HVMBootParams $bootParams -Verbose
     #xe vm-param-set uuid=<UUID> HVM-boot-params:order=ndc
 }
 #Set-XenVM -VM (Get-XenVM -Name 'bootOrder') -HVMBootParams $bootParams
 #endregion
 
-#region Xen Automation - VM - MODIFY - change autostart
+#region Xen Automation - VM - MODIFY - RELICT - change autostart
 #Modify the VM that it autostarts with the Hypervisor
 $otherConfig = @{auto_poweron = 'true'}
 $otherConfig = @{auto_poweron = 'false'}
-foreach($element in $vm){
+foreach($element in $xenVm){
     Set-XenVM -VM $element -OtherConfig $otherConfig -Verbose
 }
 #endregion
@@ -591,23 +638,6 @@ foreach($element in ($vmArray | Where-Object {$_.VMName -match $vmNameRegex})){
 #endregion
 
 #endregion
-
-$vmNameRegex = "dcLab"
-$vmName = @('dcLab-NOK','dcLab-OK')
-$vmName = @('_authoring')
-
-$vmNameRegex = "fs|dc"
-$vmName = @('_mgmt','_authoring','dc01','dc02')
-#show all VMs parameters defined in the current configuration
-$vmArray.VMName
-$vmArray | Select-Object VMName,@{Name='RAMGB';Expression={$_.VMRAM/1GB}},@{Name='DiskGB';Expression={$_.VMDiskGB}},VMSR,MAC,NetworkName,VMSKU,HVMBootPolicy,VMBootISO,VMDescription | Out-GridView
-$vmArray | Where-Object {$_.VMName -match 'fs'} | Select-Object VMName
-
-
-Start-PLXenVM -VMName $vmName -Verbose
-$vmArray | Where-Object {$_.VMName -match 'fs'} | Select-Object VMName | Start-PLXenVM -Verbose
-$vmArray | Where-Object {$_.VMName -match 'dc'} | Select-Object VMName | Start-PLXenVM -Verbose
-$vmArray | Where-Object {$_.VMName -match $vmNameRegex} | Select-Object VMName | Start-PLXenVM -Verbose
 
 #region Xen Automation - VM Operations - EJECT iso / XenTools / Snapshot
 $allXenVm = (Get-XenVM | Where-Object { $_.is_a_template -eq $False -and !($_.other_config.default_template) -and $_.is_a_snapshot -eq $False} | Sort-Object -Property name_label).name_label
@@ -665,6 +695,8 @@ $allxenVm = $allXenVm | Where-Object {$_.name_label -match $vmNameRegex}
 (($allXenVm | Select-Object -ExpandProperty guest_metrics | Get-XenVMGuestMetrics).networks.'0/ipv4/0')
 #endregion
 #endregion
+
+#2022.03.25 - tutaj skonczylem
 
 #region Xen Automation - MODIFY VM
 #region Xen Automation - MODIFY VM - Xen-SetServerVmResources
@@ -816,6 +848,11 @@ $xenVm | Remove-XenVM
 #endregion
 
 #region Xen Automation - KILL VM - sprawdzic po co ta czesc czy da sie to zintegrowac z REMOVE VM
+$allXenVm = (Get-XenVM | Where-Object { $_.is_a_template -eq $False -and !($_.other_config.default_template) -and $_.is_a_snapshot -eq $False} | Sort-Object -Property name_label).name_label
+$xenVm = $allXenVm | Where-Object {$_ -match $vmNameRegex}
+$xenVm = foreach($element in ($allXenVm | Where-Object {$_ -match $vmNameRegex})){
+    Get-XenVM -Name $element
+}
 $xenVm = Get-XenVM -Name $VmParam.VMName
 #region Xen Automation - KILL VM - EJECT iso from the DVD bay
 #Get-XenVm -Name $VmParam.VMName | Select-Object -ExpandProperty VBDs | Get-XenVBD | Where-Object { $_.type -eq "CD" } | Invoke-XenVBD -XenAction Eject #eject ISO
@@ -841,17 +878,4 @@ $xenVm | Remove-XenVM #usun VMke
 #Get-XenVM -Name $VmParam.VMName | Remove-XenVM -Confirm:$true #remove VM, it looks like it does not confirm the action, on the prompt you'll get the UUID of VM not it's name, don't be surprised
 $xenVm | Remove-XenVM -Confirm:$true #remove VM, it looks like it does not confirm the action, on the prompt you'll get the UUID of VM not it's name, don't be surprised
 #endregion
-#endregion
-
-#region Xen Automation - START STOP RESTART VM
-#$vm | Start-PLXenVM -Verbose
-Start-PLXenVM -VMName $VmParam.VMName -Verbose
-#$vm | Restart-PLXenVM -Verbose
-Restart-PLXenVM -VMName $VmParam.VMName -Verbose
-#$vm | Stop-PLXenVM -Verbose
-Stop-PLXenVM -VMName $VmParam.VMName -Verbose
-#$vm | Stop-PLXenVM -Force -Verbose
-Stop-PLXenVM -VMName $VmParam.VMName -Force -Verbose
-#endregion
-
 #endregion
