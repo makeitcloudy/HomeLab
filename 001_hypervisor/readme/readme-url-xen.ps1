@@ -13,7 +13,7 @@ Start-Process 'https://github.com/ZachThurmond/Automated-XenServer-Labs/blob/mas
 Start-Process 'https://github.com/xapi-project/xen-api-sdk/blob/master/powershell/autogen/samples/AutomatedTestCore.ps1'
 
 Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html' #UEFI machines on XenServer
-
+Start-Process 'https://xenbits.xen.org/docs/unstable/man/xl.cfg.5.html' #HVMBootParams UEFI and BIOS
 #XS NFS shares
 Start-Process 'https://computingforgeeks.com/add-and-use-iso-library-storage-repository-xen-xcp-ng/'
 
