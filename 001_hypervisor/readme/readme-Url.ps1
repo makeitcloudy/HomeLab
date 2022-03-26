@@ -5,7 +5,7 @@ Start-Process "https://workspace-guru.com/2017/11/12/scripting-citrix-xenserver-
 Start-Process "https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/" #thread how to create UEFI boot vm
 Start-Process "https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-machines-created-with-powershell-api" #thread how to create UEFI boot vm
 
-Start-Process 'http://bisbd.blogspot.com/2020/09/modifying-citrix-hypervisor-xenserver.html' #HVM-boot-params
+Start-Process 'http://bisbd.blogspot.com/2020/09/modifying-citrix-hypervisor-xenserver.html' #HVM-boot-params - Modifying Citrix Hypervisor (Xenserver) Guest VM boot order from Command Line
 Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html#guest-uefi-boot-and-secure-boot'
 Start-Process 'https://xcp-ng.org/docs/cli_reference.html#low-level-list-commands'
 
