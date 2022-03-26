@@ -1,4 +1,4 @@
-#function from one of the citrix folks github - Set-XenServerVMResources
+#source: https://github.com/santiagocardenas/xenserver-powershell-scripts/blob/master/Set-XenServerVMResources.ps1
 <#
     .SYNOPSIS
         Modifies the resources of a XenServer VM.
