@@ -7,6 +7,7 @@ Start-Process "https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-m
 
 Start-Process 'http://bisbd.blogspot.com/2020/09/modifying-citrix-hypervisor-xenserver.html' #HVM-boot-params - Modifying Citrix Hypervisor (Xenserver) Guest VM boot order from Command Line
 Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html#guest-uefi-boot-and-secure-boot'
+Start-Process 'https://docs.citrix.com/en-us/citrix-hypervisor/vms/troubleshoot.html' #How do I run Windows debug on a Secure Boot VM?
 Start-Process 'https://xcp-ng.org/docs/cli_reference.html#low-level-list-commands'
 
 Start-Process 'https://github.com/ZachThurmond/Automated-XenServer-Labs/blob/master/AXL.ps1'
