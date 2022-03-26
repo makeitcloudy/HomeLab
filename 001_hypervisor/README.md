@@ -17,3 +17,5 @@ https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 # XenPLModule
 
 **4.** Copy the XenPLModule into the same location as the one mentioned for XenServerPSModule
+```
+  Import-Module XenPLModule
