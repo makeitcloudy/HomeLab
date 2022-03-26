@@ -131,7 +131,8 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 **Community shares - lab approaches**<br>
 * Carl Webster Lab - (https://carlwebster.com/building-websters-lab-v2/)<br>
-* Nicolas Ignoto - (https://www.citrixguru.com/category/lab/)<br><br>
+* Nicolas Ignoto - (https://www.citrixguru.com/category/lab/)<br>
+* https://mybrokencomputer.net/t/setup-a-citrix-home-lab-in-sixty-minutes/28<br><br>
 
 **Community shares**<br>
 * World of EUC slack - (https://t.co/EVrMXepANH)<br>
