@@ -1,4 +1,49 @@
 #region Xen Functions
+function Example-Example {
+<#
+.SYNOPSIS
+.DESCRIPTION
+.PARAMETER One
+.PARAMETER Two
+.EXAMPLE
+.EXAMPLE
+.LINK
+#>
+    
+    [CmdletBinding()]
+    Param
+    (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ParameterName
+    )
+
+    BEGIN
+    {
+        $WarningPreference = "Continue"
+        $VerbosePreference = "Continue"
+        $InformationPreference = "Continue"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
+        $startDate = Get-Date
+    }
+
+    PROCESS
+    {
+        try {
+
+        }
+        catch {
+
+        }
+    }
+
+    END
+    {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
 Function Connect-PLXen
 {
 <#
@@ -911,13 +956,24 @@ Function New-PLXenVM
 #ToDo:
 #add Firmware parameter will it be uefi or bios
 #add BootOrder parameter to define in which order the drives are being set
+#hvmbootparams: https://xenbits.xen.org/docs/unstable/man/xl.cfg.5.html
 
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
         [Alias("VmParameter")]
-        [PScustomObject[]]$VmParam
+        [PScustomObject[]]$VmParam,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$false)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet("uefi","bios")]
+        [String]$Firmware,
+
+        [Parameter(Mandatory=$false,Position=2,ValueFromPipelineByPropertyName=$false)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet("False","True","Auto")]
+        [String]$SecureBoot='False'
     )
 
     BEGIN
@@ -965,27 +1021,110 @@ Function New-PLXenVM
             $vmEvalExpirationDate = (Get-Date (Get-Date ).AddDays(90) -format "yyyyMMdd")
         }
 
-        $newVMParamHash = @{
-            NameLabel               = $VmParam.VMName
-            NameDescription         = "$($VmParam.VMDescription) - evaluation expires - $vmEvalExpirationDate"
-            MemoryTarget            = $VmParam.VMRAM
-            MemoryStaticMax         = $VmParam.VMRAM
-            MemoryDynamicMax        = $VmParam.VMRAM
-            MemoryDynamicMin        = $VmParam.VMRAM
-            MemoryStaticMin         = $VmParam.VMRAM
-            VCPUsMax                = $VmParam.VMCPU
-            VCPUsAtStartup          = $VmParam.VMCPU
-            HVMBootPolicy           = $VmParam.HVMBootPolicy
-            HVMBootParams           = @{order = "dc"; firmware = "uefi"} #boot order dvd, harddrive, firmware uefi
-            HVMShadowMultiplier     = $VmParam.HVMShadowMultiplier
-            UserVersion             = $VmParam.UserVersion
-            ActionsAfterReboot      = $VmParam.ActionsAfterReboot
-            ActionsAfterCrash       = $vmParam.ActionsAfterCrash
-            ReferenceLabel          = ($vmSourceTemplateObject.XenTemplateObject).reference_label
-            HardwarePlatformVersion = $VmParam.HardwarePlatformVersion
-            Platform                = @{ 'cores-per-socket' = "$($VmParam.VMCPU)"; hpet = "true"; pae = "true"; vga = "std"; nx = "true"; viridian_time_ref_count = "true"; apic = "true"; viridian_reference_tsc = "true"; viridian = "true"; acpi = "1" }
-            OtherConfig             = @{ base_template_name = ($vmSourceTemplateObject.XenTemplateObject).reference_label }
-        }
+            switch ($Firmware)
+            {
+                'bios'
+                {
+                    $newVMParamHash = @{
+                        NameLabel               = $VmParam.VMName
+                        NameDescription         = "$($VmParam.VMDescription) - evaluation expires - $vmEvalExpirationDate"
+                        MemoryTarget            = $VmParam.VMRAM
+                        MemoryStaticMax         = $VmParam.VMRAM
+                        MemoryDynamicMax        = $VmParam.VMRAM
+                        MemoryDynamicMin        = $VmParam.VMRAM
+                        MemoryStaticMin         = $VmParam.VMRAM
+                        VCPUsMax                = $VmParam.VMCPU
+                        VCPUsAtStartup          = $VmParam.VMCPU
+                        HVMBootPolicy           = $VmParam.HVMBootPolicy
+                        HVMBootParams           = @{order = "dc"; firmware = "bios"} #boot order dvd, harddrive, firmware bios
+                        HVMShadowMultiplier     = $VmParam.HVMShadowMultiplier
+                        UserVersion             = $VmParam.UserVersion
+                        ActionsAfterReboot      = $VmParam.ActionsAfterReboot
+                        ActionsAfterCrash       = $vmParam.ActionsAfterCrash
+                        ReferenceLabel          = ($vmSourceTemplateObject.XenTemplateObject).reference_label
+                        HardwarePlatformVersion = $VmParam.HardwarePlatformVersion
+                        Platform                = @{ 'cores-per-socket' = "$($VmParam.VMCPU)"; hpet = "true"; pae = "true"; vga = "std"; nx = "true"; viridian_time_ref_count = "true"; apic = "true"; viridian_reference_tsc = "true"; viridian = "true"; acpi = "1" }
+                        OtherConfig             = @{ base_template_name = ($vmSourceTemplateObject.XenTemplateObject).reference_label }
+                    }
+                }
+                'uefi'
+                {
+                    if($SecureBoot -match 'False')
+                    {
+                        $newVMParamHash = @{
+                            NameLabel               = $VmParam.VMName
+                            NameDescription         = "$($VmParam.VMDescription) - evaluation expires - $vmEvalExpirationDate"
+                            MemoryTarget            = $VmParam.VMRAM
+                            MemoryStaticMax         = $VmParam.VMRAM
+                            MemoryDynamicMax        = $VmParam.VMRAM
+                            MemoryDynamicMin        = $VmParam.VMRAM
+                            MemoryStaticMin         = $VmParam.VMRAM
+                            VCPUsMax                = $VmParam.VMCPU
+                            VCPUsAtStartup          = $VmParam.VMCPU
+                            HVMBootPolicy           = $VmParam.HVMBootPolicy
+                            HVMBootParams           = @{order = "dc"; firmware = "uefi"} #boot order dvd, harddrive, firmware uefi
+                            HVMShadowMultiplier     = $VmParam.HVMShadowMultiplier
+                            UserVersion             = $VmParam.UserVersion
+                            ActionsAfterReboot      = $VmParam.ActionsAfterReboot
+                            ActionsAfterCrash       = $vmParam.ActionsAfterCrash
+                            ReferenceLabel          = ($vmSourceTemplateObject.XenTemplateObject).reference_label
+                            HardwarePlatformVersion = $VmParam.HardwarePlatformVersion
+                            Platform                = @{ secureboot="false"; 'cores-per-socket' = "$($VmParam.VMCPU)"; hpet = "true"; pae = "true"; vga = "std"; nx = "true"; viridian_time_ref_count = "true"; apic = "true"; viridian_reference_tsc = "true"; viridian = "true"; acpi = "1" }
+                            OtherConfig             = @{ base_template_name = ($vmSourceTemplateObject.XenTemplateObject).reference_label }
+                        }
+                    }
+                    elseif ($SecureBoot -match 'True')
+                    {
+                        $newVMParamHash = @{
+                            NameLabel               = $VmParam.VMName
+                            NameDescription         = "$($VmParam.VMDescription) - evaluation expires - $vmEvalExpirationDate"
+                            MemoryTarget            = $VmParam.VMRAM
+                            MemoryStaticMax         = $VmParam.VMRAM
+                            MemoryDynamicMax        = $VmParam.VMRAM
+                            MemoryDynamicMin        = $VmParam.VMRAM
+                            MemoryStaticMin         = $VmParam.VMRAM
+                            VCPUsMax                = $VmParam.VMCPU
+                            VCPUsAtStartup          = $VmParam.VMCPU
+                            HVMBootPolicy           = $VmParam.HVMBootPolicy
+                            HVMBootParams           = @{order = "dc"; firmware = "uefi"} #boot order dvd, harddrive, firmware uefi
+                            HVMShadowMultiplier     = $VmParam.HVMShadowMultiplier
+                            UserVersion             = $VmParam.UserVersion
+                            ActionsAfterReboot      = $VmParam.ActionsAfterReboot
+                            ActionsAfterCrash       = $vmParam.ActionsAfterCrash
+                            ReferenceLabel          = ($vmSourceTemplateObject.XenTemplateObject).reference_label
+                            HardwarePlatformVersion = $VmParam.HardwarePlatformVersion
+                            Platform                = @{ secureboot="true"; 'cores-per-socket' = "$($VmParam.VMCPU)"; hpet = "true"; pae = "true"; vga = "std"; nx = "true"; viridian_time_ref_count = "true"; apic = "true"; viridian_reference_tsc = "true"; viridian = "true"; acpi = "1" }
+                            OtherConfig             = @{ base_template_name = ($vmSourceTemplateObject.XenTemplateObject).reference_label }
+                        }
+                    }
+                    elseif ($SecureBoot -match 'Auto')
+                    {
+                        $newVMParamHash = @{
+                            NameLabel               = $VmParam.VMName
+                            NameDescription         = "$($VmParam.VMDescription) - evaluation expires - $vmEvalExpirationDate"
+                            MemoryTarget            = $VmParam.VMRAM
+                            MemoryStaticMax         = $VmParam.VMRAM
+                            MemoryDynamicMax        = $VmParam.VMRAM
+                            MemoryDynamicMin        = $VmParam.VMRAM
+                            MemoryStaticMin         = $VmParam.VMRAM
+                            VCPUsMax                = $VmParam.VMCPU
+                            VCPUsAtStartup          = $VmParam.VMCPU
+                            HVMBootPolicy           = $VmParam.HVMBootPolicy
+                            HVMBootParams           = @{order = "dc"; firmware = "uefi"} #boot order dvd, harddrive, firmware uefi
+                            HVMShadowMultiplier     = $VmParam.HVMShadowMultiplier
+                            UserVersion             = $VmParam.UserVersion
+                            ActionsAfterReboot      = $VmParam.ActionsAfterReboot
+                            ActionsAfterCrash       = $vmParam.ActionsAfterCrash
+                            ReferenceLabel          = ($vmSourceTemplateObject.XenTemplateObject).reference_label
+                            HardwarePlatformVersion = $VmParam.HardwarePlatformVersion
+                            Platform                = @{ secureboot="auto"; 'cores-per-socket' = "$($VmParam.VMCPU)"; hpet = "true"; pae = "true"; vga = "std"; nx = "true"; viridian_time_ref_count = "true"; apic = "true"; viridian_reference_tsc = "true"; viridian = "true"; acpi = "1" }
+                            OtherConfig             = @{ base_template_name = ($vmSourceTemplateObject.XenTemplateObject).reference_label }
+                        }
+                    }
+
+                }
+            }
+
         #endregion
     }
 
@@ -1387,51 +1526,6 @@ Function Remove-PLXenSnapshotVM
                 Write-Error "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Error when removing snapshot: $($_-$SnapshotName)"
             }
         })
-    }
-
-    END
-    {
-        $endDate = Get-Date
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
-    }
-}
-
-function Example-Example {
-<#
-.SYNOPSIS
-.DESCRIPTION
-.PARAMETER One
-.PARAMETER Two
-.EXAMPLE
-.EXAMPLE
-.LINK
-#>
-    
-    [CmdletBinding()]
-    Param
-    (
-        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
-        [ValidateNotNullOrEmpty()]
-        $ParameterName
-    )
-
-    BEGIN
-    {
-        $WarningPreference = "Continue"
-        $VerbosePreference = "Continue"
-        $InformationPreference = "Continue"
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
-        $startDate = Get-Date
-    }
-
-    PROCESS
-    {
-        try {
-
-        }
-        catch {
-
-        }
     }
 
     END
