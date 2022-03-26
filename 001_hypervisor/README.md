@@ -6,14 +6,14 @@ https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 
 Once downloaded into your management node (in case it is windows based) extract zip file<br>
 ```
-  $env:USERPROFILE\Documents\WindowsPowerShell\Modules<br>
-  $env:PROGRAMFILES\WindowsPowerShell\Modules<br>
-  $env:SystemRoot\system32\WindowsPowerShell\v1.0\Modules<br>
+  $env:USERPROFILE\Documents\WindowsPowerShell\Modules
+  $env:PROGRAMFILES\WindowsPowerShell\Modules
+  $env:SystemRoot\system32\WindowsPowerShell\v1.0\Modules
 ```
 **3.** Import the Module
-
+```
   Import-Module XenServerPSModule
-
+```
 # XenPLModule
 
 Copy the XenPLModule into the same location as the one mentioned for XenServerPSModule
