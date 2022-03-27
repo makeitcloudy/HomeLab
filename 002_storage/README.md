@@ -1,3 +1,4 @@
+Centos will play the role of NFS and SMB share, as well as the place where the self signed certificates will be created.<br><br>
 **#Setup NFS and SMB on CentOS for the XCP-ng Storage Repository**
 
 **1.** Download Centos ISO (x86_64) - https://www.centos.org/download/<br>
@@ -27,10 +28,22 @@ Default location where the guest tools are located is:
 ```
 **2.** Install Centos
 + https://docs.centos.org/en-US/centos/install-guide/
++ https://forketyfork.medium.com/centos-8-installation-error-setting-up-base-repository-4a64e7eb2e72
++ In case you pick CentOS8 (looks like the CentOS8 reaches end of life on 31.01.2022) during the installation you are asked about the Installation source as for now (2022.03.27) put following entry as the installation source
+```
+https://vault.centos.org/8.5.2111/BaseOS/x86_64/os/
+```
+Another option would be to download the latest release of CentOS which is supported.
++ As software installation pick Server without GUI.
 
-**3.** Create NFS Share
+**3.** Install XCP-ng guest tools
+
+**4.** Create NFS Share
 + NFS share will be used to as a storage repository for the iso
 + NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.
 
-**4.** Create SMB Share
+**5.** Create SMB Share
 + Samba share will be convinient for transfering data between windows VM's once those are built
+
+**6.** OpenSSL - certificates
++
