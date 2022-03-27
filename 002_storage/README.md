@@ -218,11 +218,18 @@ mkdir -p /labdata/smb_share/labIso
 ```
 chmod -R 0770 /labdata/smb_share/labIso
 chown -R root:labusers /labdata/smb_share/labIso/
+
+chmod -R 0770 /labdata/nfs_share/labIso
+chown -R root:labusers /labdata/nfs_share/labIso/
 ```
-+ configure SE linux context
++ configure SE linux context (repeat the 2nd and 3rd command for each share)
 ```
+setsebool -P samba_export_all_ro=1 samba_export_all_rw=1
 semanage fcontext -at samba_share_t "/labdata/smb_share/labIso(/.*)?"
 restorecon /labdata/smb_share/labIso
+
+semanage fcontext -at samba_share_t "/labdata/nfs_share/labIso(/.*)?"
+restorecon /labdata/nfs_share/labIso
 ```
 + configure samba
 ```
