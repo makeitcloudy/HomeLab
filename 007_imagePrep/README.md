@@ -23,7 +23,7 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + Unattended xml are compatible across operating systems (tested the same xml on 2016, 2019 2022 and it works), same applies for desktop operating systems (never the less I have not tested compatibility of the xml between windows 7, 8.1 and 10), still any version of w10 handle the desktop unattended xml file.<br><br>
 
 **# SeguraOSD**<br>
-+ SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations.
++ SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations (https://osdbuilder.osdeploy.com/).
 + I'm not recommending installing the SeguraOSD on the authoring/mgmt node, as it needs plenty amount of disk space to perform updating the images. Preferably SeguraOSD tooling is installed on another VM, as DISM which is being used undearneath, does not really take the benefit of what the CPU can offer, and as per my understanding is single threaded. Based on the observation, updating one image, from the iso downloaded from microsoft webpage, requires around 20GB, the image is copied in few places, as well as at the end the iso is created. The VM could have 1vCPU, RAM 4GB (8GB preffered), and 20GB multiplied by amount of images you'd like the SeguraOSD to process.
 + If you do not like expanding your C drive, the easiest way would be mounting another drive as folder on the operating system level, as 
 + Updating the image, takes roughly between 1 and 1,5 hour.
@@ -96,6 +96,72 @@ New-OSBMediaIso
 ```
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
++ Once the Iso is ready it is stored within the location
+```
+O:\OSDBuilder\OSBuilds\Windows Server 2019 Datacenter Evaluation x64 1809 17763.2686\ISO\Server 10.0.17763.2686.iso
+```
++ Mount the iso
++ Copy it's content to some location of the filesystem (2022.03.27 - not sure if this step is really necessary, need to test it)
++ drop the autounattended.xml file respectively for server/desktop uefi/bios
++ run following command (try to follow this https://www.deploymentresearch.com/a-good-iso-file-is-a-quiet-iso-file/) - as of 2022.03.27 - not tested yet, used anothe way of doing this which did the trick
+```
+<#
+.Synopsis
+    Sample script for Deployment Research
+    For UEFI Deployments, modifies a WinPE ISO to not ask for "Press Any Key To Boot From..."
+
+.DESCRIPTION
+    Created: 2020-01-10
+    Version: 1.0
+     
+    Author : Johan Arwidmark
+    Twitter: @jarwidmark
+    Blog   : https://deploymentresearch.com
+ 
+    Disclaimer: This script is provided "AS IS" with no warranties, confers no rights and 
+    is not supported by the author or DeploymentArtist..
+
+.NOTES
+    Requires Windows ADK 10 to be installed
+
+.EXAMPLE
+    N/A
+#>
+
+# Settings
+$WinPE_Architecture = "amd64" # Or x86
+$WinPE_InputISOfile = "C:\ISO\Zero Touch WinPE 10 x64.iso"
+$WinPE_OutputISOfile = "C:\ISO\Zero Touch WinPE 10 x64 - NoPrompt.iso"
+ 
+$ADK_Path = "C:\Program Files (x86)\Windows Kits\10\Assessment and Deployment Kit"
+$WinPE_ADK_Path = $ADK_Path + "\Windows Preinstallation Environment"
+$OSCDIMG_Path = $ADK_Path + "\Deployment Tools" + "\$WinPE_Architecture\Oscdimg"
+
+# Validate locations
+If (!(Test-path $WinPE_InputISOfile)){ Write-Warning "WinPE Input ISO file does not exist, aborting...";Break}
+If (!(Test-path $ADK_Path)){ Write-Warning "ADK Path does not exist, aborting...";Break}
+If (!(Test-path $WinPE_ADK_Path)){ Write-Warning "WinPE ADK Path does not exist, aborting...";Break}
+If (!(Test-path $OSCDIMG_Path)){ Write-Warning "OSCDIMG Path does not exist, aborting...";Break}
+
+# Mount the Original ISO (WinPE_InputISOfile) and figure out the drive-letter
+Mount-DiskImage -ImagePath $WinPE_InputISOfile
+$ISOImage = Get-DiskImage -ImagePath $WinPE_InputISOfile | Get-Volume
+$ISODrive = [string]$ISOImage.DriveLetter+":"
+
+# Create a new bootable WinPE ISO file, based on the Original ISO, but using efisys_noprompt.bin instead
+$BootData='2#p0,e,b"{0}"#pEF,e,b"{1}"' -f "$OSCDIMG_Path\etfsboot.com","$OSCDIMG_Path\efisys_noprompt.bin"
+   
+$Proc = Start-Process -FilePath "$OSCDIMG_Path\oscdimg.exe" -ArgumentList @("-bootdata:$BootData",'-u2','-udfver102',"$ISODrive\","`"$WinPE_OutputISOfile`"") -PassThru -Wait -NoNewWindow
+if($Proc.ExitCode -ne 0)
+{
+    Throw "Failed to generate ISO with exitcode: $($Proc.ExitCode)"
+}
+
+# Dismount the Original ISO
+Dismount-DiskImage -ImagePath $WinPE_InputISOfile
+```
+
+
 + Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)<br>
 + Oscdimg details which gives more insight than the MS documentation (https://oofhours.com/2021/12/25/how-does-uefi-boot-from-a-cd/)<br>
 + howto is avaialble here (https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html)<br>
