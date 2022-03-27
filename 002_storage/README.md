@@ -84,7 +84,12 @@ yum install /media/iso/Linux/xe-guest-utilities-7.20.0-9.x86_64.rpm
 ```
 umount /media/iso
 ```
-**5.** Add extra drive for the NFS and SMB storage
+**5.** Disable IPv6
+```
+nmcli connection modify eth0 ipv6.method ignore
+```
+
+**6.** Add extra drive for the NFS and SMB storage
 + here there is an assumption that on your management node, you have XenOrchestra or XCP-ng center installed
 + launch the GUI and add the extra drive to the vm - put at least 80GB for your further convinience, guest-tools are already installed so the drive will be immediatelly visible in the OS, in my case the drive has been added as LVM
 + list block devices and run fdisk - to see what the drive has been bound with
@@ -112,7 +117,11 @@ nano /etc/fstab
 ```
 UUID=[UUID from ll /dev/disk/by-uuid]       /labdata        ext4    defaults,nosuid,noatime,nodiratime      0       0
 ```
-+ install the nfs client
+
+**6.** Create NFS Share
++ NFS share will be used to as a iso storage repository on XCP-ng<br>
++ NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.<br>
++ install the nfs-utils
 ```
 dnf install nfs-utils -y
 ```
@@ -125,15 +134,54 @@ systemctl enable nfs-server.service
 ```
 systemctl status nfs-server.service
 ```
-+ indicate the version of the nfs protocol (it is visible within the second column)
-nfs deamon configuration: /etc/nfs.conf
-nfs mount configuration : /etc/nfsmount.conf 
++ indicate the version of the nfs protocol (it is visible within the second column)<br>
+nfs deamon configuration: /etc/nfs.conf<br>
+nfs mount configuration : /etc/nfsmount.conf <br>
 ```
 rpcinfo -p | grep nfs
 ```
-**6.** Create NFS Share
-+ NFS share will be used to as a storage repository for the iso
-+ NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.
++ create directory for for the NFS share
+```
+mkdir -p /labdata/nfs_share/labIso
+chmod -R 777 /labdata/nfs_share/labIso/
+```
++ restart nfs service
+```
+restart nfs-utils.service
+```
++ edit the exports file<br>
+add entries for each subnet towards which you'd like to expose the nfs share<br>
+it is also possible to expose the nfs share towards each client respectively<br>
+**rw** - *This stands for read/write. It grants read and write permissions to the NFS share.*<br>
+**sync** - *The parameter requires the writing of the changes on the disk first before any other operation can be carried out.*<br>
+**no_all_squash** - *This will map all the UIDs & GIDs from the client requests to identical UIDS and GIDs residing on the NFS server.*<br>
+**root_squash** - *The attribute maps requests from the root user on the client-side to an anonymous UID / GID.*<br>
+```
+/labdata/nfs_share/labIso/ 172.16.X.0/24(rw,sync,no_all_squash,root_squash)
+/labdata/nfs_share/labIso/ 172.16.X.0/24(rw,sync,no_all_squash,root_squash)
+#/labdata/nfs_share/labIso/ 172.16.X.253(rw,sync,no_all_squash,root_squash)
+```
++ export the folder
+**-a** - *option implies that all the directories will be exported*<br>
+**-r** - *stands for re-exporting all directories and finally*<br>
+**-v** - *flag displays verbose output*<br>
+```
+exportfs -arv
+```
++ confirm the export list
+```
+exportfs -s
+```
++ configure the firewall rules for NFS server
+```
+firewall-cmd --permanent --add-service=nfs
+firewall-cmd --permanent --add-service=rpc-bind
+firewall-cmd --permanent --add-service=mountd
+```
++ reload the firewall changes for the effect to take place
+```
+firewall-cmd --reload
+```
 
 **7.** Create SMB Share
 + Samba share will be convinient for transfering data between windows VM's once those are built
