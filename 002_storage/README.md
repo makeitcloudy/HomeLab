@@ -26,17 +26,56 @@ Default location where the guest tools are located is:
 ```
 /opt/xensource/packages/iso/
 ```
-**2.** Install Centos
+**2.** Install CentOS
 + https://docs.centos.org/en-US/centos/install-guide/
 + https://forketyfork.medium.com/centos-8-installation-error-setting-up-base-repository-4a64e7eb2e72
-+ In case you pick CentOS8 (looks like the CentOS8 reaches end of life on 31.01.2022) during the installation you are asked about the Installation source as for now (2022.03.27) put following entry as the installation source
++ In case you pick CentOS8 (looks like the CentOS8 reaches end of life on 31.12.2021 - https://www.centos.org/centos-linux-eol/) during the installation you are asked about the Installation source as for now (2022.03.27) put following entry as the installation source
 ```
 https://vault.centos.org/8.5.2111/BaseOS/x86_64/os/
 ```
 Another option would be to download the latest release of CentOS which is supported.
 + As software installation pick Server without GUI.
 
+**3.** Update CentOS
+(2022.03.27) - for CentOS 8
+```
+cd /etc/yum.repos.d/
+sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+yum update -y
+yum upgrade
+```
+
 **3.** Install XCP-ng guest tools
++ login via ssh
++ list block devices
+```
+blkid
+```
+in my case it turned out to be
+```
+/dev/sr0: BLOCK_SIZE="2048" UUID="2021-06-23-12-19-51-00" LABEL="XCP-ng Tools" TYPE="iso9660"
+```
++ create mount point
+```
+mkdir /media/iso 
+```
++ mount CD/DVD
+```
+mount /dev/sr0 /media/iso/
+```
+or
+```
+mount /dev/cdrom /media/iso/
+```
++ get the content of the mounted directory
+```
+ls /media/iso/
+```
++ install guest tools
+```
+yum install /media/iso/Linux/xe-guest-utilities-7.20.0-9.x86_64.rpm
+```
 
 **4.** Create NFS Share
 + NFS share will be used to as a storage repository for the iso
