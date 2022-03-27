@@ -10,16 +10,19 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + UEFI boot has their implications on the PVS (DHCP options, and TFTP boot)<br>
 + Passwords within the unattended.xml file have Base64 encoding within passwords stored for users<br>
 + Unattended iso may require your attention, to press any key to Boot from CD or DVD..., this can be changed with oscdimg, by pointing towards noprompt efi file<br><br>
-+ RENAME *autounattend-uefi-ServerOS.xml* or *autounattend-bios-ServerOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system<br>
-+ RENAME *autounattend-uefi-DesktopOS.xml* or *autounattend-bios-DesktopOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Desktop** operating system<br>
++ RENAME *autounattend-uefi-ServerOS.xml* or *autounattend-bios-ServerOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system
++ RENAME *autounattend-uefi-DesktopOS.xml* or *autounattend-bios-DesktopOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Desktop** operating system
 + *Be aware that passwords stored in autounattend.xml are stored unencrypted, never the less still the goal is to automate your deployment of the gold image, in your lab this way that those needs zero attention during installation. Once those are provisioned, and you got access to the vm over the network, those can be changed with DSC or via winRM*<br><br>
++ WSIM is a bit of overhead for preparing simple xml file which helps creating the unattended iso, never the less if you create it for the first time and do not have any building blocks, it's really helpfull.
++ Unattended xml are compatible across operating systems (tested the same xml on 2016, 2019 2022 and it works), same applies for desktop operating systems 
 
 **# SeguraOSD**<br>
-+ SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations.<br>
-+ I'm not recommending installing the SeguraOSD on the authoring/mgmt node, as it needs plenty amount of disk space to perform updating the images. Preferably SeguraOSD tooling is installed on another VM, as DISM which is being used undearneath, does not really take the benefit of what the CPU can offer, and as per my understanding is single threaded. Based on the observation, updating one image, from the iso downloaded from microsoft webpage, requires around 20GB, the image is copied in few places, as well as at the end the iso is created. The VM could have 1vCPU, RAM 4GB (8GB preffered), and 20GB multiplied by amount of images you'd like the SeguraOSD to process.<br>
++ SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations.
++ I'm not recommending installing the SeguraOSD on the authoring/mgmt node, as it needs plenty amount of disk space to perform updating the images. Preferably SeguraOSD tooling is installed on another VM, as DISM which is being used undearneath, does not really take the benefit of what the CPU can offer, and as per my understanding is single threaded. Based on the observation, updating one image, from the iso downloaded from microsoft webpage, requires around 20GB, the image is copied in few places, as well as at the end the iso is created. The VM could have 1vCPU, RAM 4GB (8GB preffered), and 20GB multiplied by amount of images you'd like the SeguraOSD to process.
 + If you do not like expanding your C drive, the easiest way would be mounting another drive as folder on the operating system level, as 
-+ Updating the image, takes roughly between 1 and 1,5 hour.<br>
-+ If I'm not mistaken and recall properly it also requires the ADK to be installed, so it can create the iso file.<br>
++ Updating the image, takes roughly between 1 and 1,5 hour.
++ OSDBuilder does support Server 2012R2 under following conditions (https://osdbuilder.osdeploy.com/docs/legacy/windows-server-2012-r2)
++ If I'm not mistaken and recall properly it also requires the ADK to be installed, so it can create the iso file.
 + Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br><br>
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
