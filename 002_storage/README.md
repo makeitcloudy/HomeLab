@@ -80,7 +80,10 @@ or
 ```
 yum install /media/iso/Linux/xe-guest-utilities-7.20.0-9.x86_64.rpm
 ```
-
++ unmount iso
+```
+umount /media/iso
+```
 **4.** Create NFS Share
 + NFS share will be used to as a storage repository for the iso
 + NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.
