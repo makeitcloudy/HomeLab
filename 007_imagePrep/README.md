@@ -29,7 +29,8 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + Updating the image, takes roughly between 1 and 1,5 hour.
 + OSDBuilder does support Server 2012R2 under following conditions (https://osdbuilder.osdeploy.com/docs/legacy/windows-server-2012-r2)
 + It requires the ADK to be installed, so it can create the iso file with oscdimg.exe.
-+ Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br><br>
++ Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br>
+
 **# Install OSDBuilder on your image servicing vm**
 + Install module
 ```
