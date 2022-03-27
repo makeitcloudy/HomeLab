@@ -1,8 +1,8 @@
 **#Setup NFS and SMB on CentOS for the XCP-ng Storage Repository**
 
-**1.** Download Centos ISO (x86_64)
-https://www.centos.org/download/
-As there is no ISO repository you should directly download the iso into the XCP-ng 
+**1.** Download Centos ISO (x86_64)<br>
+https://www.centos.org/download/<br>
++ As there is no ISO repository you should directly download the iso into the XCP-ng<br>
 https://linuxconfig.org/how-to-add-iso-image-storage-repository-on-xenserver-7-linux
 ```
 mkdir /var/opt/ISO_IMAGES
