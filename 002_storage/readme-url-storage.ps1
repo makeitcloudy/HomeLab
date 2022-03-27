@@ -6,6 +6,7 @@ Start-Process 'https://www.youtube.com/watch?v=MeltFN-bXrQ' #LearnLinuxTV #LVM D
 
 #NFS and samba on centos
 Start-Process 'https://www.howtoforge.com/nfs-server-and-client-on-centos-7'
-
 Start-Process 'https://www.linuxtechi.com/setup-nfs-server-on-centos-8-rhel-8/'
+
+Start-Process 'https://www.howtoforge.com/how-to-install-samba-server-on-centos-8/'
 Start-Process 'https://www.linuxbabe.com/redhat/set-up-samba-server-on-centos-8-rhel-8-for-file-sharing'
