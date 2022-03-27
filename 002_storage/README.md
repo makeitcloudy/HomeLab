@@ -1,7 +1,6 @@
 **#Setup NFS and SMB on CentOS for the XCP-ng Storage Repository**
 
-**1.** Download Centos ISO (x86_64)<br>
-https://www.centos.org/download/<br>
+**1.** Download Centos ISO (x86_64) - https://www.centos.org/download/<br>
 + As there is no ISO repository you should directly download the iso into the XCP-ng<br>
 https://linuxconfig.org/how-to-add-iso-image-storage-repository-on-xenserver-7-linux
 ```
@@ -9,16 +8,15 @@ mkdir /var/opt/ISO_IMAGES
 cd /var/opt/ISO_IMAGES
 wget [pick the url from https://www.centos.org/download/mirrors/]
 ```
-Create Storage repository
++ Create Storage repository
 ```
 xe sr-create name-label=ISO_IMAGES_LOCAL type=iso device-config:location=/var/opt/ISO_IMAGES device-config:legacy_mode=true content-type=iso
 ```
-Output will give you the UUID of the created storage repository
-
++ Output will give you the UUID of the created storage repository
 ```
 xe sr-list
 ```
-List your storage repository
++ List your storage repository
 ```
 xe pbd-list sr-uuid=[UUID of the /var/opt/ISO_IMAGES]
 ```
