@@ -143,7 +143,7 @@ rpcinfo -p | grep nfs
 + create directory for for the NFS share
 ```
 mkdir -p /labdata/nfs_share/labIso
-chmod -R 777 /labdata/nfs_share/labIso/
+chmod -R 775 /labdata/nfs_share/labIso/
 ```
 + restart nfs service
 ```
@@ -219,7 +219,7 @@ mkdir -p /labdata/smb_share/labIso
 chmod -R 0770 /labdata/smb_share/labIso
 chown -R root:labusers /labdata/smb_share/labIso/
 
-chmod -R 0770 /labdata/nfs_share/labIso
+chmod -R 0775 /labdata/nfs_share/labIso
 chown -R root:labusers /labdata/nfs_share/labIso/
 ```
 + configure SE linux context (repeat the 2nd and 3rd command for each share)
