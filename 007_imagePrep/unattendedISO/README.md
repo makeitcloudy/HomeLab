@@ -10,8 +10,8 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + UEFI boot has their implications on the PVS (DHCP options, and TFTP boot)<br>
 + Passwords within the unattended.xml file have Base64 encoding within passwords stored for users<br>
 + Unattended iso may require your attention, to press any key to Boot from CD or DVD..., this can be changed with oscdimg, by pointing towards noprompt efi file<br><br>
-+ RENAME *autounattend-ServerOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system<br>
-+ RENAME *autounattend-DesktopOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system<br>
++ RENAME *autounattend-uefi-ServerOS.xml* or *autounattend-bios-ServerOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Server** operating system<br>
++ RENAME *autounattend-uefi-DesktopOS.xml* or *autounattend-bios-DesktopOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Desktop** operating system<br>
 + *Be aware that passwords stored in autounattend.xml are stored unencrypted, never the less still the goal is to automate your deployment of the gold image, in your lab this way that those needs zero attention during installation. Once those are provisioned, and you got access to the vm over the network, those can be changed with DSC or via winRM*<br><br>
 
 **# SeguraOSD**<br>
