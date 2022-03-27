@@ -1,3 +1,9 @@
+**# Download iso files**<br>
++ at this stage you downloaded the iso files with (https://github.com/AveYo/MediaCreationTool.bat) and drop them on the nfs storage repository, which is exposed via nfs and smb for your management node. It will help you downloading Windows10 iso files. You can rename the bat file instead of using the GUI, and the execution of such .bat file, will launch the download (unless you have 8GB of space left on your hard drive).
+```
+enterpriseN iso 21H2 MediaCreationTool.bat
+```
+
 **# Creating unattended updated iso which become sources for the virtual machines**<br><br>
 + Microsoft iso which can be sources for current excercise, can be found here (https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019)<br><br>
 
