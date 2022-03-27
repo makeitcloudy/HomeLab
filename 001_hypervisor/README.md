@@ -1,6 +1,8 @@
 # XenServer SDK
 
-**1.** Get the XCP-ng or XenServer installed on one of your nodes.<br>
+**0.** Get the XCP-ng or XenServer installed on one of your nodes.<br>
+
+**1.** Download the XenServer SDK<br>
 https://github.com/citrix/xenserver-sdk/blob/master/docs/index.md<br>
 https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 
@@ -20,11 +22,12 @@ https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 ```
   Import-Module XenPLModule
 ```
+Module wraps the XenServerPSModule with a bunch of functions which brings the functionality towards VM's provisioning 
 **5.** List the commands available within the XenPLModule
 ```
   Get-Command -Module XenPLModule
 ```
-**6.** Start using the commands
+**6.** Start using the commandlets
   - enumerate the iso available on your iso storage
   - enumerte vm details like network IP and MAC, vcpu, storage etc
   - create the VM skeletons, bios, uefi, uefi secure boot, equipped with disks and dvd drives
