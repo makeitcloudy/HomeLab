@@ -30,6 +30,49 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + OSDBuilder does support Server 2012R2 under following conditions (https://osdbuilder.osdeploy.com/docs/legacy/windows-server-2012-r2)
 + It requires the ADK to be installed, so it can create the iso file with oscdimg.exe.
 + Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br><br>
+**# Install OSDBuilder on your image servicing vm**
++ Install module
+```
+Install-Module -Name OSDBuilder
+```
++ Import module
+```
+Import-Module OSDBuilder
+```
++ Get details about the version and it's configuration
+```
+Import-Module OSDBuilder
+```
++ it would be wise to store the OSDBuilder efforts on second drive which is attached to your servicing VM (it make sense to split your management/authoring node, from the image servicing machine), in case you consider servicing 2016, 2019, 2022 and windows 10, then plan at least 180GB, especially under the condition when you rewrite the updated iso with the autounattended.xml files.
+```
+Get-OSDBuilder -SetHome O:\OSDBuilder
+```
++ create paths (it will prepare the structure of the folders, for your OSMedia, OSBuilds, updates, and other elements like ISO)
+```
+Get-OSDBuilder -CreatePaths
+```
+**# Update image with OSDBuilder - first time**
++ mount the iso file which is planned to be updated with the latest updates
+```
+$isoWindows2016ImagePath = 'C:\LabResourcesIso\org\w2k16.iso'
+Mount-DiskImage -ImagePath $isoWindows2016ImagePath -StorageType ISO -Verbose
+```
++ Import a supported Operating System into the OSDBuilder OSImport directory
+```
+Import-OSMedia -Update -BuildNetFX
+```
++ Apply the updates
+```
+Update-OSMedia -Download -Execute
+```
++ Burn Iso
+```
+New-OSBMediaIso
+```
++ *The iso produced here is ready to be used, **as the source** to drop autounattended.xml file into it, **and reburn it again** for unattended installations*
+
+**# Update image with OSDBuilder - subsequent update**
++
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
 + Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)<br>
