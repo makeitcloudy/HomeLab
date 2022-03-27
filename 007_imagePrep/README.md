@@ -29,7 +29,8 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + Updating the image, takes roughly between 1 and 1,5 hour.
 + OSDBuilder does support Server 2012R2 under following conditions (https://osdbuilder.osdeploy.com/docs/legacy/windows-server-2012-r2)
 + It requires the ADK to be installed, so it can create the iso file with oscdimg.exe.
-+ Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br>
++ Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.
++ Quick Start Guide Windows 10 WaaS Servicing Updates via OSDBuilder - (https://www.moderndeployment.com/quick-start-guide-windows-10-waas-servicing-updates-via-osdbuilder/)<br>
 
 **# Install OSDBuilder on your image servicing vm**
 + Install module
@@ -73,7 +74,15 @@ New-OSBMediaIso
 + *The iso produced here is ready to be used, **as the source** to drop autounattended.xml file into it, **and reburn it again** for unattended installations*
 
 **# Update image with OSDBuilder - subsequent update**
-+
++ Update OSDBuilder first (provided you are working with fresh supported operating system)
+```
+OSDBuilder -UpdateModule
+```
++ Get the OS Media - it will list the names of the media which has been processed by OSDBuilder on current servicing node
+```
+Get-OSMedia | Where-Object {$_.MediaTYpe -match 'OSMedia'} | Select-Object MediaType,ModifiedTime,SuperSeded,NeedsUpdate,Revision,Updates,Name
+```
+
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
 + Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)<br>
