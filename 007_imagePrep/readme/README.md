@@ -1,1 +1,21 @@
-.
+**#Unattended.xml**<br>
++ worth to configure the unatended file this way that for your destkop OS which follows the modern management idea, and acts as a authoring machine for your DSC configurations, preconfigure it this way that there is user which can be used to login via RDP to the newly provisioned machine, it will benefit especially when your lab is in remote location (over VPN).<br>
++ the overall performance and end user experience in case you manipulate over the GUI is much better when the RDP is in use than the VNC. RDP is not a preffered way, it can be easily disabled anytime, never the less it may bring benefit in case you'd like to run sconfig, over the VPN wire, using the built in VNC within the xcpn-ng.<br>
++ in case you do not have a code in hand, and need to prepare something within the GUI, use regular mstsc instead of the console view built into the xen / xcp-ng - within local area network, you won't see much of difference, never the less perspective gonna change in remote usecase scenario<br><br>
+
+**#Windows Customized default by Aaron Parker**
++ https://twitter.com/stealthpuppy/status/1470912249464197128<br>
++ https://stealthpuppy.com/image-customise/<br>
+
+**#Lockdown Published Desktop with WEM and GPO**
++ https://schrameyersite.wordpress.com/2022/02/19/lockdown/<br>
+
+**#UberAgent by Helge Klein**
++ https://helgeklein.com/blog/citrix-cvad-virtual-apps-desktops-network-connection-target-hosts/<br>
++ https://uberagent.com/download/<br>
+
+**#Pvs**<br>
++ https://www.carlstalhood.com/pvs-master-device-preparation/<br>
+
+**#UPM / FSLogix**<br>
++ https://jkindon.com/citrix-upm-and-fslogix-containers/<br>
