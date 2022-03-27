@@ -82,7 +82,18 @@ OSDBuilder -UpdateModule
 ```
 Get-OSMedia | Where-Object {$_.MediaTYpe -match 'OSMedia'} | Select-Object MediaType,ModifiedTime,SuperSeded,NeedsUpdate,Revision,Updates,Name
 ```
-
++ Run this to install latest updates - your OSMedia builds are located in OSDBuilder\OSMedia, abovementioned commandlet list them all for you
+```
+Update-OSMedia -Name 'Windows Server 2019 Datacenter Evaluation x64 1809 17763.2686' -Download -Execute
+```
++ Create build out of updated media
+```
+New-OSBuild -Name 'Windows Server 2019 Datacenter Evaluation x64 1809 17763.2686' -Download -EnableNetFX -Execute -CreateISO
+```
++ Burn Iso
+```
+New-OSBMediaIso
+```
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
 + Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)<br>
