@@ -275,5 +275,10 @@ systemctl restart smb
 ```
 testparm
 ```
++ configure firewall rules and reload firewall
+```
+firewall-cmd --add-service=samba --zone=public --permanent
+firewall-cmd --reload
+```
 **8.** OpenSSL - certificates
 +
