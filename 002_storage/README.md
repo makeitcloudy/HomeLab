@@ -22,7 +22,7 @@ List your storage repository
 xe pbd-list sr-uuid=[UUID of the /var/opt/ISO_IMAGES]
 ```
 **2.** Install Centos
-+ https://docs.centos.org/en-US/centos/install-guide/
++ https://docs.centos.org/en-US/centos/install-guide/<br>
 **3.** Create NFS Share
 + NFS share will be used to as a storage repository for the iso
 + NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.
