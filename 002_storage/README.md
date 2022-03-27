@@ -20,7 +20,7 @@ xe sr-list
 ```
 xe pbd-list sr-uuid=[UUID of the /var/opt/ISO_IMAGES]
 ```
-
+This option should give you enough space to have one iso, which is your starting point for the NFS share, which will play a role of your NFS ISO Storage Repository for the further VM provisioning the the ISO files storage.
 **2.** Install Centos
 + https://docs.centos.org/en-US/centos/install-guide/
 
