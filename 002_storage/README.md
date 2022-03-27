@@ -184,7 +184,96 @@ firewall-cmd --reload
 ```
 
 **7.** Create SMB Share
-+ Samba share will be convinient for transfering data between windows VM's once those are built
+Samba share will be convinient for transfering data between windows VM's once those are built
++ install samba package
+```
+dnf install samba samba-common samba-client -y
+```
++ start and enable SMB service
+```
+systemctl start smb
+systemctl enable smb
+```
++ check the service status
+```
+systemctl status smb
+```
++ create group
+```
+groupadd [groupName]
+```
++ add user to the group (repeat this for all users who should have access to the smb shares)
+```
+useradd -g [groupName] [userName]
+```
++ set the SMB password
+```
+smbpasswd -a [userName]
+```
++ create private share directory
+```
+mkdir -p /labdata/smb_share/labIso
+```
++ set the permissions and ownership on the filesystem level
+```
+chmod -R 0770 /labdata/smb_share/labIso
+chown -R root:labusers /labdata/smb_share/labIso/
+```
++ configure SE linux context
+```
+semanage fcontext -at samba_share_t "/labdata/smb_share/labIso(/.*)?"
+restorecon /labdata/smb_share/labIso
+```
++ configure samba
+```
+mv /etc/samba/smb.conf /etc/samba/smb.conf.bak
+nano /etc/samba/smb.conf
+```
++ put following content into the /etc/samba/smb.conf
+```
+[global]
+workgroup = WORKGROUP
+dos charset = cp850
+unix charset = ISO-8859-1
 
+log level = 2
+dns proxy = no
+map to guest = Bad User
+netbios name = SAMBA-SERVER
+security = USER
+server string = Samba Server %v
+ntlm auth = true
+disable spoolss = yes
+min protocol = SMB2
+wins support = No
+#idmap config * : backend = tbd
+
+
+[labIso-nfs]
+comment = nfs share xenserver
+inherit acls = Yes
+path = /labdata/nfs_share/labIso
+valid users = @[groupName] root
+guest ok = no
+writable = yes
+browsable = yes
+
+[labIso-smb]
+comment = smb share xenserver
+inherit acls = Yes
+path = /labdata/smb_share/labIso
+valid users = @[groupName] root
+guest ok = no
+writable = yes
+browsable = yes
+```
++ save and restart the smb service
+```
+systemctl restart smb
+```
++ test samba configuration
+```
+testparm
+```
 **8.** OpenSSL - certificates
 +
