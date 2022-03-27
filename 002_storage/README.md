@@ -1,4 +1,5 @@
 **#Setup NFS and SMB on CentOS for the XCP-ng Storage Repository**
+
 **1.** Download Centos ISO (x86_64)
 https://www.centos.org/download/
 As there is no ISO repository you should directly download the iso into the XCP-ng 
