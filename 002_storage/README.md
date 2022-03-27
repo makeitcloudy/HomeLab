@@ -46,7 +46,7 @@ yum update -y
 yum upgrade
 ```
 
-**3.** Install XCP-ng guest tools
+**4.** Install XCP-ng guest tools
 + login via ssh
 + list block devices
 ```
@@ -84,12 +84,59 @@ yum install /media/iso/Linux/xe-guest-utilities-7.20.0-9.x86_64.rpm
 ```
 umount /media/iso
 ```
-**4.** Create NFS Share
+**5.** Add extra drive for the NFS and SMB storage
++ here there is an assumption that on your management node, you have XenOrchestra or XCP-ng center installed
++ launch the GUI and add the extra drive to the vm - put at least 80GB for your further convinience, guest-tools are already installed so the drive will be immediatelly visible in the OS, in my case the drive has been added as LVM
++ list block devices and run fdisk - to see what the drive has been bound with
+```
+blkid
+fdisk -l
+```
++ create directory for the drive
+```
+mkdir /labdata
+```
++ format filesystem (https://access.redhat.com/articles/3129891 - How to Choose Your Red Hat Enterprise Linux File System)
+```
+/sbin/mkfs.ext4 -L /labdata /dev/xvdb
+```
++ list the drives and get it's uuid
+```
+ll /dev/disk/by-uuid/
+```
++ edit fstab
+```
+nano /etc/fstab
+```
++ add following line for permanent mount (https://www.howtoforge.com/reducing-disk-io-by-mounting-partitions-with-noatime)
+```
+UUID=[UUID from ll /dev/disk/by-uuid]       /labdata        ext4    defaults,nosuid,noatime,nodiratime      0       0
+```
++ install the nfs client
+```
+dnf install nfs-utils -y
+```
++ start and enable nfs to be up across reboots
+```
+systemctl start nfs-server.service
+systemctl enable nfs-server.service
+```
++ confirm that the nfs is up
+```
+systemctl status nfs-server.service
+```
++ indicate the version of the nfs protocol (it is visible within the second column)
+nfs deamon configuration: /etc/nfs.conf
+nfs mount configuration : /etc/nfsmount.conf 
+```
+rpcinfo -p | grep nfs
+```
+**6.** Create NFS Share
 + NFS share will be used to as a storage repository for the iso
 + NFS share for the XCP-ng can be running on the XCP-ng itself, never the less to make use of it, the VM will have to be run once the hypervisor is up, and once the ISO SR is already create, it will have to be repaired after each hypervisor start or reboot.
 
-**5.** Create SMB Share
+**7.** Create SMB Share
 + Samba share will be convinient for transfering data between windows VM's once those are built
 
-**6.** OpenSSL - certificates
+**8.** OpenSSL - certificates
 +
