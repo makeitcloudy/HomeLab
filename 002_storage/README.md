@@ -74,6 +74,10 @@ ls /media/iso/
 ```
 + install guest tools
 ```
+bash /media/iso/Linux/install.sh
+```
+or
+```
 yum install /media/iso/Linux/xe-guest-utilities-7.20.0-9.x86_64.rpm
 ```
 
