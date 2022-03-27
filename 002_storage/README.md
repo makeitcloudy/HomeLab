@@ -13,7 +13,9 @@ Create Storage repository
 xe sr-create name-label=ISO_IMAGES_LOCAL type=iso device-config:location=/var/opt/ISO_IMAGES device-config:legacy_mode=true content-type=iso
 ```
 Output will give you the UUID of the created storage repository
+
 List your storage repository
+
 ```
 xe sr-list
 ```
