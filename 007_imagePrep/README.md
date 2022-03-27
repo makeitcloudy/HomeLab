@@ -14,7 +14,7 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + RENAME *autounattend-uefi-DesktopOS.xml* or *autounattend-bios-DesktopOS.xml* to *autounattend.xml* and you are good to go for unatended installation of **Windows Desktop** operating system
 + *Be aware that passwords stored in autounattend.xml are stored unencrypted, never the less still the goal is to automate your deployment of the gold image, in your lab this way that those needs zero attention during installation. Once those are provisioned, and you got access to the vm over the network, those can be changed with DSC or via winRM*<br><br>
 + WSIM is a bit of overhead for preparing simple xml file which helps creating the unattended iso, never the less if you create it for the first time and do not have any building blocks, it's really helpfull.
-+ Unattended xml are compatible across operating systems (tested the same xml on 2016, 2019 2022 and it works), same applies for desktop operating systems 
++ Unattended xml are compatible across operating systems (tested the same xml on 2016, 2019 2022 and it works), same applies for desktop operating systems (never the less I have not tested compatibility of the xml between windows 7, 8.1 and 10), still any version of w10 handle the desktop unattended xml file.<br><br>
 
 **# SeguraOSD**<br>
 + SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations.
@@ -22,7 +22,7 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + If you do not like expanding your C drive, the easiest way would be mounting another drive as folder on the operating system level, as 
 + Updating the image, takes roughly between 1 and 1,5 hour.
 + OSDBuilder does support Server 2012R2 under following conditions (https://osdbuilder.osdeploy.com/docs/legacy/windows-server-2012-r2)
-+ If I'm not mistaken and recall properly it also requires the ADK to be installed, so it can create the iso file.
++ It requires the ADK to be installed, so it can create the iso file with oscdimg.exe.
 + Machine which is used to burn the image with oscdimg, should have at least such amount of space to keep two iso's. First is the one copied from the mounted iso, second one is the iso burned with the oscdimg.<br><br>
 
 **# Removing "press any key" prompts for GPT/UEFI Windows install**<br>
