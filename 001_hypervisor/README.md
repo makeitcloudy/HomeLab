@@ -1,12 +1,12 @@
 # XenServer SDK
 
-**0.** Get the XCP-ng or XenServer installed on one of your nodes.<br>
+**0.** Get the XCP-ng or XenServer installed on one of your nodes.
 
 **1.** Download the XenServer SDK<br>
 https://github.com/citrix/xenserver-sdk/blob/master/docs/index.md<br>
 https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 
-**2.** Once downloaded into your management node (in case it is windows based) extract zip file<br>
+**2.** Once downloaded into your management node (in case it is windows based) extract zip file
 ```
   $env:USERPROFILE\Documents\WindowsPowerShell\Modules
   $env:PROGRAMFILES\WindowsPowerShell\Modules
@@ -22,7 +22,8 @@ https://developer-docs.citrix.com/projects/citrix-hypervisor-sdk/en/latest/<br>
 ```
   Import-Module XenPLModule
 ```
-Module wraps the XenServerPSModule with a bunch of functions which brings the functionality towards VM's provisioning 
+Module wraps the XenServerPSModule with a bunch of functions which brings the functionality towards VM's provisioning
+
 **5.** List the commands available within the XenPLModule<br>
 ```
   Get-Command -Module XenPLModule
