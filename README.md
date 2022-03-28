@@ -1,3 +1,4 @@
+*the idea behind this project is to help new commers, as well as people who consider the way of automating deployment of the microsoft stack within their labs. it's one man effort, who is trying to glue together the community shares comming from other EUC members in one place. As of 2022.03 the initiative is still ongoing, there could be bugs, but still there is plenty of usefull code which can be used for anyone who is keen on learning.*<br><br>
 # AutomatedCitrix
 
 Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll never know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.<br>
