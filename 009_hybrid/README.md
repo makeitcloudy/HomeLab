@@ -8,4 +8,5 @@ Onboard to azure - Certification Materials - https://github.com/johnthebrit/Cert
 hashtags: #RDmi #MSWVD https://twitter.com/search?q=%23MSWVD&src=typed_query&f=top
 
 **youtube**
-+ channels like Microsoft Mechanics, Microsoft Ignite may help you to grasp some knowledge
++ channels like Microsoft Mechanics, Microsoft Ignite may help you to grasp some knowledge<br>
++ 4ndersonLin - https://github.com/4ndersonLin/awesome-cloud-security
