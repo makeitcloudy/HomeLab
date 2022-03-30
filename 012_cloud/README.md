@@ -9,3 +9,7 @@ Where to start<br>
 * https://twitter.com/disruptthecloud
 * https://linktr.ee/disruptthecloud
 * https://learntocloud.guide/#/
+
+
+#**Microsoft shares**<br>
+* https://docs.microsoft.com/en-us/learn/modules/introduction-to-devops/
