@@ -1,4 +1,4 @@
-#**Community shares**
+#**Community shares**<br>
 Where to start<br>
 * https://www.youtube.com/c/TheAzurePodcast
 * https://100daysofcloud.com/
