@@ -133,7 +133,7 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 **Automated Lab provisioning**<br>
 + https://github.com/VirtualEngine/Lability<br>
 + https://github.com/pluralsight/PS-AutoLab-Env<br>
-+ https://github.com/ZachThurmond/Automated-XenServer-Labs<br><br<
++ https://github.com/ZachThurmond/Automated-XenServer-Labs<br><br>
 
 **Community shares - lab approaches**<br>
 * Carl Webster Lab - (https://carlwebster.com/building-websters-lab-v2/)<br>
