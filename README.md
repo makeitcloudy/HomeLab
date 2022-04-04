@@ -141,7 +141,7 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 * EUC weekly digest - (https://www.carlstalhood.com/category/euc-weekly-digest/)<br>
 * MyCugc with all the webinars recoreded - (https://www.mycugc.org/events/webinars)<br>
 * There is an interesting mission behind the scenes - (https://www.go-euc.com/)<br>
-* ViaMonstra Academy - (https://academy.viamonstra.com/collections)<br>
+* ViaMonstra Academy - (https://academy.viamonstra.com/collections)<br><br>
 Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Building Carl Webster lab - (https://carlwebster.com/01-building-websters-lab-v2-introduction/ | https://carlwebster.com/building-websters-lab-v2-pdf/) - his guide contains 1335 pages. Imagine how much of an errort was made to bring this to life. It's available for free...<br>
 * Carl Stalhood - (https://www.carlstalhood.com/about-carl-stalhood/) - great resources and fair amount of links to different places which may help you getting up to speed, and solving many of the issues which may arise. It will also help installing the product itslef.<br>
@@ -165,6 +165,7 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * John Billekens - (https://blog.j81.nl/)<br>
 * Marco Zimmermann - (http://marcozimmermann.com/)<br>
 * Matthias Schlimm - (https://eucweb.com/)<br>
+* Jonathan Pitre - (https://github.com/JonathanPitre)<br>
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
 * René Bigler - (https://dreadysblog.com/)<br>
 * George Spiers - (https://www.jgspiers.com/) - his blog will help you getting handy with NetScaler and topics on your OS layer<br>
