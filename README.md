@@ -148,17 +148,14 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Claudio Rodriguez - (http://blog.wtslabs.com/), apart from that there were RAS university initiative (http://ras.euc.university/) - but for some reason this is no longer active<br>
 * Freek Berson - (https://github.com/fberson | http://microsoftplatform.blogspot.com/) - his blog post are great to lay down the foreground for Citrix which is nothing else than RDS (Remote Desktop Services), it seems to be good idea to start with Terminal Services and RDS which help structualize knowledge needed for a Citrix guy<br>
 * MsFreaks - (https://msfreaks.wordpress.com/)<br>
-* Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture.<br>
-
+* Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture.<br><br>
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.<br>
 * Jonathan Pitre - (https://github.com/JonathanPitre)<br>
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)<br>
 * Trond Erik Haavarstein - (https://xenappblog.com/ | https://github.com/Haavarstein/Applications)<br>
-* Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br>
-
+* Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br><br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
-* Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
-
+* Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br><br>
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
 * James Kindon - (https://github.com/JamesKindon | https://jkindon.com/)<br>
 * James Ranklin - (https://james-rankin.com/) - amazing content is produced by James, no doubts<br>
