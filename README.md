@@ -127,7 +127,7 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 **Conferences**<br>
 + https://www.youtube.com/c/PowerShellConferenceEU - PowerShell source, apart from that search for Jeffrey Snover presentations, they way he describes things is straightforward and intelligeble, which proofs his well understanding of the topic ;)<br>
-+ https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haaverstein, with fabolous speakers and presentations<br>
++ https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haavarstein, with fabolous speakers and presentations<br>
 + https://cloudcamp.ie/<br><br>
 
 **Automated Lab provisioning**<br>
