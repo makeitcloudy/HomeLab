@@ -131,6 +131,7 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 + https://cloudcamp.ie/<br><br>
 
 **Automated Lab provisioning**<br>
++ https://github.com/PlagueHO/LabBuilder<br>
 + https://github.com/VirtualEngine/Lability<br>
 + https://github.com/pluralsight/PS-AutoLab-Env<br>
 + https://github.com/ZachThurmond/Automated-XenServer-Labs<br><br>
