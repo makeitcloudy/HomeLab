@@ -161,7 +161,8 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood<br>
 * Trond Erik Haavarstein - (https://xenappblog.com/ | https://github.com/Haavarstein/Applications)<br>
 * Guy Leech - (https://twitter.com/guyrleech) - there is no better place to be inspired in powershell area ;)<br><br>
 * Johannes Norz - (https://norz.at/blog | https://www.wonderkitchen.tech/) - here you can benefit for your Citrix ADC skilset<br>
-* Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br><br>
+* Esther Barthel - (https://github.com/cognitionit) - if you are interested in REST API, Nitro for Citrix ADC and topics around automation, she is the one to follow<br>
+* Julian Jakob - (https://www.julianjakob.com/)<br><br>
 * Julien Mooren - (https://citrixguyblog.com | https://github.com/citrixguyblog) - he was my inspiration to fork his AutomatedRDS release back in 2017.<br>
 * James Kindon - (https://github.com/JamesKindon | https://jkindon.com/)<br>
 * James Ranklin - (https://james-rankin.com/) - amazing content is produced by James, no doubts<br>
