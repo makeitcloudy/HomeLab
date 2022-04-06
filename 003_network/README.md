@@ -13,7 +13,8 @@ As it goes for the firewall the pfsense will do the trick, it can be virtualized
 There are people who are towards OPNSense and there is also other groups who opt for VyOS or IpFire.<br>
 Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.<br><br>
 
-**#Psfsense**<br><br>
+**#Firewall**<br><br>
 
++ OpenBSD FAQ - https://www.openbsd.org/faq/pf/
 + Lawrence - pfsense playlist - https://www.youtube.com/watch?v=fsdm5uc_LsU&list=PLjGQNuuUzvmsuXCoj6g6vm1N-ZeLJso6o<br>
 very much of this can be applied to the homelab, especially when there is no physical devices and the functions like firewall, routing, VPN are virtualized.<br>
