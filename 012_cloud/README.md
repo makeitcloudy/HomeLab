@@ -10,6 +10,7 @@ Where to start<br>
 * https://linktr.ee/disruptthecloud<br>
 * https://learntocloud.guide/#/<br><br>
 * https://www.youtube.com/c/TechMindFactory - Identity<br>
+* https://www.youtube.com/channel/UCnuefkX0Sx4PTy07jyvvL9A/videos - Andrei Pavlitchouk<br>
 
 #**Microsoft shares**<br>
 * https://docs.microsoft.com/en-us/learn/modules/introduction-to-devops/
