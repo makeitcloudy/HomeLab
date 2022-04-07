@@ -10,6 +10,7 @@ Where to start<br>
 * https://linktr.ee/disruptthecloud
 * https://learntocloud.guide/#/
 
+* https://www.youtube.com/c/TechMindFactory - Identity
 
 #**Microsoft shares**<br>
 * https://docs.microsoft.com/en-us/learn/modules/introduction-to-devops/
