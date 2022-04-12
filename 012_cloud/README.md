@@ -15,3 +15,6 @@ Where to start<br>
 
 #**Microsoft shares**<br>
 * https://docs.microsoft.com/en-us/learn/modules/introduction-to-devops/
+
+#**bicep*<br>
+* https://www.youtube.com/watch?v=Cvbr-pI6G0o - Freek Berson, Esther Barthel<br>
