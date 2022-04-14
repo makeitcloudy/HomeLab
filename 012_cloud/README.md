@@ -16,7 +16,7 @@ Where to start<br>
 #**Microsoft shares**<br>
 * https://docs.microsoft.com/en-us/learn/modules/introduction-to-devops/<br>
 
-#**bicep*<br>
+#**bicep**<br>
 * https://www.youtube.com/watch?v=Cvbr-pI6G0o - Freek Berson, Esther Barthel
 * https://www.cloudninja.nu/post/2021/05/getting-started-with-azure-and-terraform-part-1/ - Martin Therkelsen
 * https://www.cloudninja.nu/post/2021/06/getting-started-with-github-actions-and-bicep-part-1/ - Martin Therkelsen
