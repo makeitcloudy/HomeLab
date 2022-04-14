@@ -18,5 +18,6 @@ Where to start<br>
 
 #**bicep**<br>
 * https://www.youtube.com/watch?v=Cvbr-pI6G0o - Freek Berson, Esther Barthel
+* https://github.com/Azure/bicep/releases/tag/v0.5.6
 * https://www.cloudninja.nu/post/2021/05/getting-started-with-azure-and-terraform-part-1/ - Martin Therkelsen
 * https://www.cloudninja.nu/post/2021/06/getting-started-with-github-actions-and-bicep-part-1/ - Martin Therkelsen
