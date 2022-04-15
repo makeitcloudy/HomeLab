@@ -7,3 +7,5 @@ Start-Process 'https://citrixguyblog.com/2019/03/19/osdbuilder-reference-image-o
 
 Start-Process 'https://github.com/larytet/auto-win/tree/master/autounattend' #unattended xml bios and uefi for windows 10
 Start-Process 'https://github.com/Mohrpheus78/Citrix/tree/main/PVS%20Admin%20Toolkit' #PVS Admin Toolkit
+
+Start-Process 'https://flexxible.com/automating-msix-packaging-with-powershell/' #MSIX packaging
