@@ -15,3 +15,6 @@ Start-Process 'https://looking-glass.io/wiki/Installation_on_other_distributions
 Start-Process 'https://bestofcpp.com/repo/DualCoder-vgpu_unlock'
 
 Start-Process 'https://www.youtube.com/watch?v=wEhvQEyiOwI'
+
+Start-Process 'https://github.com/VGPU-Community-Drivers/Merged-Rust-Drivers'
+Start-Process 'https://gitlab.com/polloloco/vgpu-5.15'
