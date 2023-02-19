@@ -1,5 +1,7 @@
-**# Download iso files**<br>
+**# Download iso files**
+
 + at this stage you downloaded the iso files with (https://github.com/AveYo/MediaCreationTool.bat) and drop them on the nfs storage repository, which is exposed via nfs and smb for your management node. It will help you downloading Windows10 iso files. You can rename the bat file instead of using the GUI, and the execution of such .bat file, will launch the download (unless you have 8GB of space left on your hard drive).
+
 ```
 enterpriseN iso 21H2 MediaCreationTool.bat
 ```
@@ -7,7 +9,8 @@ enterpriseN iso 21H2 MediaCreationTool.bat
 **# Creating unattended updated iso which become sources for the virtual machines**<br><br>
 + Microsoft iso which can be sources for current excercise, can be found here (https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019)<br><br>
 
-**# Unattended.xml**<br>
+**# Unattended.xml**
+
 Windows System Image Manager is your way to go (WSIM). It's part of the Windows Assesment and Deployment kit (ADK).<br>
 ADK is available here: (https://docs.microsoft.com/en-us/windows-hardware/get-started/adk-install). It can be installed on your windows 10 device, where the RSAT tools are already available, which is also your authoring (DSC) and managment node. Following blog post, explains how to preapare the image for the unattended installation (https://taylor.dev/how-to-create-an-automated-install-for-windows-server-2019/). In our scenario, the overall outcome is really simple, not too much customizations, as the further config will happen on the DSC level, and the iso is supposed to be as generic as possible.<br>
 WSIM will create files with .clg extension, which are worth to be collected for further projects if any.<br>
@@ -22,7 +25,8 @@ Some details how the UEFI works can be found here (https://www.happyassassin.net
 + WSIM is a bit of overhead for preparing simple xml file which helps creating the unattended iso, never the less if you create it for the first time and do not have any building blocks, it's really helpfull.
 + Unattended xml are compatible across operating systems (tested the same xml on 2016, 2019 2022 and it works), same applies for desktop operating systems (never the less I have not tested compatibility of the xml between windows 7, 8.1 and 10), still any version of w10 handle the desktop unattended xml file.<br><br>
 
-**# SeguraOSD**<br>
+**# SeguraOSD**
+
 + SeguraOSD tools produce iso, updated with latest updates comming from Microsoft, which can be used as bare image for your lab VM installations (https://osdbuilder.osdeploy.com/).
 + I'm not recommending installing the SeguraOSD on the authoring/mgmt node, as it needs plenty amount of disk space to perform updating the images. Preferably SeguraOSD tooling is installed on another VM, as DISM which is being used undearneath, does not really take the benefit of what the CPU can offer, and as per my understanding is single threaded. Based on the observation, updating one image, from the iso downloaded from microsoft webpage, requires around 20GB, the image is copied in few places, as well as at the end the iso is created. The VM could have 1vCPU, RAM 4GB (8GB preffered), and 20GB multiplied by amount of images you'd like the SeguraOSD to process.
 + If you do not like expanding your C drive, the easiest way would be mounting another drive as folder on the operating system level, as 
@@ -170,8 +174,9 @@ Dismount-DiskImage -ImagePath $WinPE_InputISOfile
 2. https://gist.github.com/misheska/035c52cf7e7a47087c013cd346d9d5d1#file-nopromptswitch-ps1<br>
 3. https://gist.github.com/misheska/2c3b032eaf529b1b5176bfa1560a10d5#file-createnopromptiso-ps1<br>
 
-**# Valuable materials**<br>
-+ https://www.deploymentresearch.com/w10guide-thankyou/<br>
-+ https://www.windowscentral.com/how-create-unattended-media-do-automated-installation-windows-10<br><br>
-+ https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html<br><br>
-+ https://www.deploymentresearch.com/a-good-iso-file-is-a-quiet-iso-file/<br><br>
+**# Valuable materials**
+
++ https://www.deploymentresearch.com/w10guide-thankyou/
++ https://www.windowscentral.com/how-create-unattended-media-do-automated-installation-windows-10
++ https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html
++ https://www.deploymentresearch.com/a-good-iso-file-is-a-quiet-iso-file/
