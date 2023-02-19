@@ -173,3 +173,5 @@ Dismount-DiskImage -ImagePath $WinPE_InputISOfile
 **# Valuable materials**<br>
 + https://www.deploymentresearch.com/w10guide-thankyou/<br>
 + https://www.windowscentral.com/how-create-unattended-media-do-automated-installation-windows-10<br><br>
++ https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html<br><br>
++ https://www.deploymentresearch.com/a-good-iso-file-is-a-quiet-iso-file/<br><br>
