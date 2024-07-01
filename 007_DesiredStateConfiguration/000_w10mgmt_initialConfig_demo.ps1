@@ -1,4 +1,20 @@
-#region - initialize variables - always run
+#region - run once - prerequisites for the DSC to work properly
+#region w10mgmt - initial checks
+update-help
+Get-ExecutionPolicy
+Get-Service -Name WinRM #stopped
+Test-WSMan -ComputerName localhost #can not connect 
+#Get-Item WSMan:\localhost\Client\TrustedHosts #winRM is not running hence error during execution
+#endregion
+
+#region WinRM configuration
+Set-NetConnectionProfile -NetworkCategory Private
+Enable-PSRemoting
+Get-Item WSMan:\localhost\Client\TrustedHosts #empty
+#endregion
+#endregion
+
+#region - initialize variables
 #region - initialize variables - DSC structure
 $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration'
 $dsc_000_w10mgmt_InitialConfig_FolderName  = '000_w10mgmt_initialConfig'
@@ -6,9 +22,6 @@ $dsc_000_w10mgmt_InitialConfig_FileName    = '000_w10mgmt_initialConfig_demo.ps1
 
 $dscCodeRepo_000_w10mgmt_initialConfig_url = $dscCodeRepoUrl,$dsc_000_w10mgmt_InitialConfig_FolderName -join '/'
 
-$w10mgmt_initalConfig_ps1_url              = $dscCodeRepo_000_w10mgmt_initialConfig_url,$dsc_000_w10mgmt_InitialConfig_FileName -join '/'
-
-$documentsFolder                           = $("$env:USERPROFILE\Documents")
 $downloadsFolder                           = $("$env:USERPROFILE\Downloads")
 $certificate_FolderName                    = '__certificate'
 
@@ -80,9 +93,8 @@ $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$"
 $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
 
 #endregion
-#endregion
 
-#region - create folder structure - create path for DSC outputs
+#region - initialize variables - create folder structure
 # create folder to store the DSC configuration
 # TODO: change the folder creation to Desired State Configuration
 
@@ -134,37 +146,24 @@ else {
 
 # set the location to the path where the DSC configuration is stored
 Set-Location -Path $dscConfigDirectoryPath
+#endregion
 
+#region - download the powershell functions and configuration
 # download the helper functions and DSC configurations
 
-Invoke-WebRequest -Uri $w10mgmt_initalConfig_ps1_url -OutFile $documentsFolder
+Invoke-WebRequest -Uri $newSelfsignedCertificateExGithubUrl -OutFile $newSelfSignedCertificateExFullPath
 
 Invoke-WebRequest -Uri $configData_psd1_url -OutFile $configData_psd1_FullPath
 Invoke-WebRequest -Uri $configureLCM_ps1_url -OutFile $configureLCM_ps1_FullPath
 Invoke-WebRequest -Uri $configureNode_ps1_url -OutFile $configureNode_ps1_FullPath
 
-Invoke-WebRequest -Uri $newSelfsignedCertificateExGithubUrl -OutFile $newSelfSignedCertificateExFullPath
+#endregion
+
 Test-Path -Path $newSelfSignedCertificateExFullPath
 . $newSelfSignedCertificateExFullPath
-
-#region demo
 $env:COMPUTERNAME
 
-#region w10mgmt - initial checks
-update-help
-Get-ExecutionPolicy
-Get-Service -Name WinRM #stopped
-Test-WSMan -ComputerName localhost #can not connect 
-#Get-Item WSMan:\localhost\Client\TrustedHosts #winRM is not running hence error during execution
-#endregion
-
-#region WinRM configuration
-Set-NetConnectionProfile -NetworkCategory Private
-Enable-PSRemoting
-Get-Item WSMan:\localhost\Client\TrustedHosts #empty
-#endregion
-
-#region 001 - DSC - demo
+#region DSC - Install Missing modules
 # double check if this is a best practice
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
 
@@ -194,8 +193,6 @@ Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
 #Get-Module -ListAvailable -Name 'PSDesiredStateConfiguration' | Uninstall-Module
 #Get-Module -ListAvailable -Name 'PSDesiredStateConfiguration' | Remove-Module
 
-
-#region DSC - Install Missing modules
 # if the modules are not installed then
 # the execution of 
 #
@@ -214,28 +211,27 @@ Install-Module -Name 'NetworkingDsc' -RequiredVersion 9.0.0 -Force -AllowClobber
 #Get-Module -Name ComputerManagementDsc -ListAvailable #v1.1
 #endregion
 
-
-#region DSC - creation of the self signed certificate
+#region DSC - Self signed certificate preparation
 New-SelfsignedCertificateEx @selfSignedCertificate
 
 Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificateFullPath -Force
-#endregion
-
-# 3. export certificate (with Private key) to C:\DscPrivateKey.pfx
-
+#export certificate (with Private key) to C:\DscPrivateKey.pfx
 #Get-ChildItem -Path Cert:\LocalMachine\My\ | where{$_.Thumbprint -eq "4eeee9dca7dd5ccf70e47e46ac1128ddddbbb321"} | Export-PfxCertificate -FilePath "$env:USERPROFILE\Documents\dscSelfSignedCertificate\mypfx.pf" -Password $mypwd
 Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificateFullPath -Password $mypwd
 
 #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd
 #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
+#endregion
 
+#region DSC - Configuration data certificate thumbprint update
 # now modify the ConfigData.psd1
 # * update the CertificateFile location if needed
 # * update the Thumbprint
 (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)}).Thumbprint | clip
 psedit $configData_psd1_FullPath
 #endregion
-#endregion
+
+
 
 #region - run once - LCM - configure certificate thumbprint
 # Import the configuration data
@@ -258,6 +254,8 @@ Set-DscLocalConfigurationManager -Path $dscConfigLCMDirectoryPath -Verbose
 Get-DscLocalConfigurationManager -CimSession localhost
 #endregion
 
+
+
 #region - run anytime - Import Configuration Data - run DsC NodeInitialConfig
 $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
 #$ConfigData.AllNodes
@@ -266,7 +264,6 @@ $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
 #psedit $configureNode_ps1_FullPath
 #. .\ConfigureNode.ps1
 . $configureNode_ps1_FullPath
-
 
 # Generate the MOF files and apply the configuration
 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
