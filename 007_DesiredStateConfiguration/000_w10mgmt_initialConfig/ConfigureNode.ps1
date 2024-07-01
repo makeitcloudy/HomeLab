@@ -47,13 +47,13 @@ Configuration NodeInitialConfig {
         DnsServerAddress DnsSettings {
             Address       = $Node.DNSServers
             AddressFamily = 'IPv4'
-            InterfaceAlias = 'Eth'
+            InterfaceAlias = 'Ethernet 2'
             DependsOn = "[Computer]RenameComputerName"
         }
 
         NetAdapterBinding DisableIPv6
         {
-            InterfaceAlias = 'Eth'
+            InterfaceAlias = 'Ethernet 2'
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
         }
@@ -75,7 +75,5 @@ Configuration NodeInitialConfig {
         #    Ensure = "Present"
         #    #DependsOn = "[WindowsFeature]InstallPSRemoting"
         #}
-
-
     }
 }
