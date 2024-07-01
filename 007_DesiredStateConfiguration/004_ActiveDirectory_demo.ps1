@@ -13,7 +13,7 @@ $dscConfigDataFileName              = "ConfigData.psd1"
 $dscConfigDataPath                  = Join-Path -Path $dscConfigPath -ChildPath $dscConfigDataFileName
 
 # Provide credentials for DSC to use
-$AdminUsername                      = "labuser"
+$AdminUsername                      = "administrator"
 $AdminPassword                      = ConvertTo-SecureString "Password1$" -AsPlainText -Force
 $AdminCredential                    = New-Object System.Management.Automation.PSCredential ($AdminUsername, $AdminPassword)
 
@@ -36,10 +36,28 @@ $dscSelfSignedPfxCertificateName     = $dscSelfSignedCertificateName,'pfx' -join
 Set-Location -Path $dscConfigPath
 #endregion
 
-
 #region DSC - prereq - localhost - modules for the DSC to work
-# 2024 TODO:
-# * add commandlets which search the PSgallery for the DSC
+#region DSC - optional - helper commands to find DSC Resources
+Find-DscResource -tag dsc
+Find-DscResource -Filter "Firewall"
+Find-DscResource -Name Firewall
+
+Get-Module -Name NetworkingDsc -ListAvailable
+Get-Module -Name ComputerManagementDsc -ListAvailable
+Get-Module -Name ActiveDirectoryDsc -ListAvailable
+
+$moduleName = 'NetworkingDsc'
+Find-Module $moduleName | Tee-Object -Variable m
+$m | Format-list Author,PublishedDate,ProjectUri,Description
+$m.AdditionalMetadata.DscResources
+Start-Process $m.ProjectUri
+Start-Process ("https://www.powershellgallery.com/packages?q=",$m.Name -join '')
+
+Find-Module -Name $moduleName -AllVersions
+
+Get-DscResource -Module NetworkingDsc
+Get-DscResource DnsServerAddress -Syntax
+#endregion
 
 #region DSC - prereq - localhost - OPTION 1 - install with function
 $modules = @{
@@ -58,6 +76,10 @@ Install-Modules -modules $modules
 Install-Module -Name ActiveDirectoryDsc -RequiredVersion '6.4.0' -Repository PSGallery -Force -AllowClobber
 Install-Module -Name NetworkingDsc -RequiredVersion '9.0.0'-Repository PSGallery -Force -AllowClobber
 Install-Module -Name ComputerManagementDsc -RequiredVersion '9.0.0' -Repository PSGallery -Force -AllowClobber
+
+Get-Module -Name NetworkingDsc -ListAvailable
+Get-Module -Name ComputerManagementDsc -ListAvailable
+Get-Module -Name ActiveDirectoryDsc -ListAvailable
 #endregion
 #endregion
 
@@ -116,27 +138,48 @@ $AdminUsername                      = "administrator"
 $AdminPassword                      = ConvertTo-SecureString "Password1$" -AsPlainText -Force
 $AdminCredential                    = New-Object System.Management.Automation.PSCredential ($AdminUsername, $AdminPassword)
 
-$dc01 = New-PSSession -ComputerName '10.2.134.201' -Name 'dc01_core' -Credential $AdminCredential
-$dc02 = New-PSSession -ComputerName '10.2.134.202' -Name 'dc02_core' -Credential $AdminCredential
+$SafemodeAdministratorName     = 'Administrator'
+$SafemodeAdministratorPassword = ConvertTo-SecureString "Password1$" -AsPlainText -Force
+$SafemodeAdministratorCred     = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorName, $SafemodeAdministratorPassword)
 
-Invoke-Command -Session $dc01 -ScriptBlock {$env:computername}
-Invoke-Command -Session $dc02 -ScriptBlock {$env:computername}
+$domainAdministratorName       = 'lab\Administrator'
+$domainAdministratorPassword   = ConvertTo-SecureString "Password1$" -AsPlainText -Force
+$domainAdministratorCred       = New-Object System.Management.Automation.PSCredential ($domainAdministratorName, $domainAdministratorPassword)
 
-HADC -ConfigurationData C:\Users\labuser\Documents\dsc_configuration\ad\ConfigurationData.psd1 `
+$adUserName                    = 'Test.User'
+$adUserPassword                = ConvertTo-SecureString "Password1$" -AsPlainText -Force
+$adUserCredential              = New-Object System.Management.Automation.PSCredential ($adUserName, $adUserPassword)
+
+#$dc01 = New-PSSession -ComputerName '10.2.134.201' -Name 'dc01_core' -Credential $AdminCredential
+#$dc02 = New-PSSession -ComputerName '10.2.134.202' -Name 'dc02_core' -Credential $AdminCredential
+
+#Invoke-Command -Session $dc01 -ScriptBlock {$env:computername}
+#Invoke-Command -Session $dc02 -ScriptBlock {$env:computername}
+
+$ConfigData = Import-PowerShellDataFile -Path $dscConfigDataPath
+
+. C:\Users\labuser\Documents\dsc_config_domainControllers\HADC.ps1
+
+HADC -ConfigurationData C:\Users\labuser\Documents\dsc_config_domainControllers\ConfigData.psd1 `
     -SafemodeAdministratorCred (Get-Credential -UserName Administrator -Message "Enter Domain Safe Mode Administrator Password") `
     -DomainAdministratorCred (Get-Credential -UserName lab\administrator -Message "Enter Domain Administrator Credential") `
     -ADUserCred (Get-Credential -UserName Test.User -Message "Enter AD User Credential")
 
+HADC -ConfigurationData C:\Users\labuser\Documents\dsc_config_domainControllers\ConfigData.psd1 `
+    -SafemodeAdministratorCred $SafemodeAdministratorCred `
+    -DomainAdministratorCred $domainAdministratorCred `
+    -ADUserCred $adUserCredential
+
 # Make sure that LCM is set to continue configuration after reboot.
-Set-DSCLocalConfigurationManager -Path .\HADC –Verbose
+Set-DSCLocalConfigurationManager -Path .\HADC –Verbose -Credential $AdminCredential
+
+# Start DSC Configuration
+Start-DscConfiguration -Path C:\Users\labuser\Documents\dsc_config_domainControllers\HADC -Verbose -Wait -Force -Credential $AdminCredential
 #endregion
 
 #region DSC
 Find-DSCResource | Where-Object {$_.Name -like "ActiveDirectory"}
-
-.\HADC.ps1
-
-Start-DscConfiguration -Path "$env:USERPROFILE\Documents\dsc_configuration\ad\HADC" -Wait -Verbose -Force
+#endregion
 
 #endregion
 
