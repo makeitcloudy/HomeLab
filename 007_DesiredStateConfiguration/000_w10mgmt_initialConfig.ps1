@@ -47,6 +47,7 @@ Get-Item WSMan:\localhost\Client\TrustedHosts #empty
 #endregion
 
 #region 001 - DSC - demo
+# double check if this is a best practice
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
 
 Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
@@ -77,13 +78,13 @@ Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
 
 #region - always run - initialize variables
 #region initialize variables - DSC
-$drive                              = 'Z:'
-$dscConfigFolder                    = 'DSCConfigs'
+$drive                              = 'C:'
+$dscConfigFolder                    = 'dscConfig'
 # DSC mof files full path
 $dscConfigFullPath                  = Join-Path -Path $drive -ChildPath $dscConfigFolder
 
 # DSC configuration location
-$dscConfigPath                      = "$env:USERPROFILE\Documents\dsc_config_w10mgmt\"
+$dscConfigPath                      = "$env:SYSTEMDRIVE\dscConfig\_w10mgmt\"
 # DSC configuration data file - stored in the same directory as DSC configuration
 $dscConfigDataFileName              = "ConfigData.psd1"
 # DSC configuration data file full path
