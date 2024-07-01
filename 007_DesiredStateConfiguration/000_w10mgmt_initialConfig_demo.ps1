@@ -29,6 +29,9 @@ $dscSelfSignedCertificateName              = 'dscSelfSignedCertificate'
 $dscSelfSignedCerCertificateName           = $dscSelfSignedCertificateName,'cer' -join '.'
 $dscSelfSignedPfxCertificateName           = $dscSelfSignedCertificateName,'pfx' -join '.'
 
+$newSelfSignedCertificateExFileName        = 'New-SelfSignedCertificateEx.ps1'
+$newSelfsignedCertificateExGithubUrl       = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateExFileName -join '/'
+
 $selfSignedCertificate                     = @{
     Subject                                = "CN=${ENV:ComputerName}"
     EKU                                    = 'Document Encryption'
@@ -61,37 +64,27 @@ $dscConfigDirectoryPath                    = Join-Path -Path "$env:SYSTEMDRIVE" 
 $dscConfigCertificateDirectoryPath         = Join-Path -Path $dscConfigDirectoryPath -ChildPath $certificate_FolderName
 $dscConfigOutputDirectoryPath              = Join-Path -Path $dscConfigDirectoryPath -ChildPath $dscOutput_FolderName
 $dscConfigNodeDirectoryPath                = Join-Path -Path $dscConfigDirectoryPath -ChildPath $nodeName
-$dscConfig_000_w10mgmt_InitialConfig_Path = Join-Path -Path $dscConfigNodeDirectoryPath -ChildPath $dsc_000_w10mgmt_InitialConfig_FolderName
+$dscConfig_000_w10mgmt_InitialConfig_Path =  Join-Path -Path $dscConfigNodeDirectoryPath -ChildPath $dsc_000_w10mgmt_InitialConfig_FolderName
 
 $configData_psd1_FullPath                  = Join-Path -Path $dscConfig_000_w10mgmt_InitialConfig_Path -ChildPath $configData_psd1_fileName
 $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfig_000_w10mgmt_InitialConfig_Path -ChildPath $configureLCM_ps1_fileName 
 $configureNode_ps1_FullPath                = Join-Path -Path $dscConfig_000_w10mgmt_InitialConfig_Path -ChildPath $configureNode_ps1_fileName
 
-
 $newSelfSignedCertificateExFullPath        = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $newSelfSignedCertificateExFileName
+$dscSelfSignedCerCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedCerCertificateName
+$dscSelfSignedPfxCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedPfxCertificateName
 
 $dscConfigLCMDirectoryPath                 = Join-Path -Path $dscConfigOutputDirectoryPath -ChildPath $lcm_FolderName
 #endregion
 
-#region - initialize variables - New-SelfSignedCertificateEx.ps1 function
-$mypwd                                     = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
-
-$newSelfSignedCertificateExFileName        = 'New-SelfSignedCertificateEx.ps1'
-$newSelfsignedCertificateExGithubUrl       = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateExFileName -join '/'
-
-$dscSelfSignedCerCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedCerCertificateName
-$dscSelfSignedPfxCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedPfxCertificateName
-
-#TODO: change the computername earlier - maybe at the point of time of the creation of the folders structure or right after the installation of VMtools - before first initial reboot
-
-#endregion
-
 #region - initialize variables - credentials
-# Provide credentials for DSC to use
+# local administartor on the localhost
 $localNodeAdminUsername                    = "labuser"
 $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
 $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
 
+# creds for PFX self signed cert
+$mypwd                                     = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
 #endregion
 
 #region - initialize variables - create folder structure
