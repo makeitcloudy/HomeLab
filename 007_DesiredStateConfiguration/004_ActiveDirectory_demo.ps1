@@ -4,7 +4,19 @@
 # 3. download 004_ActiveDirectory_demo.ps1 to $env:USERPROFILE\Documents folder
 
 # https://www.cloudninja.nu/post/2021/02/using-azure-dsc-to-configure-a-new-active-directory-domain/
+
 # https://medium.com/@emilfabrice/deploy-active-directory-with-dsc-c06bd8bf3a64
+# https://gist.githubusercontent.com/fabricesemti80/a776b85767df3453f253a5a773437214/raw/3f685583c3563b1b7f376d366730529590ae41a7/New-ADDSC.ps1
+# https://gist.githubusercontent.com/fabricesemti80/a776b85767df3453f253a5a773437214/raw/6b0dd9a340e3d1c5c898e6b5e04e90e427fd6498/New-ADDSC.psm1
+
+# TARGET NODE - NETBIOS
+# https://techbits.io/the-netbios-name-ad-is-already-in-use/
+
+# netbios settings - change from enabled to disabled - windows server 2022
+# ipconfig /all | findstr "NetBIOS"
+# wmic NICConfig where TcpipNetbiosOptions=0 call SetTcpipNetbios 2
+
+
 
 #region - initialize variables - DSC structure
 $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration'
@@ -97,14 +109,14 @@ Get-DscResource PendingReboot -Syntax
 Find-DscResource -tag dsc
 Find-DscResource -Filter "Firewall"
 Find-DscResource -Filter "xPendingReboot"
-Find-DscResource -Name Firewall
+Find-DscResource -Name Firewall #available in ModuleName - NetworkingDsc
 
 Get-Module -Name PSDscResources -ListAvailable
 Get-Module -Name PSDesiredStateConfiguration -ListAvailable
 Get-Module -Name NetworkingDsc -ListAvailable
 Get-Module -Name ComputerManagementDsc -ListAvailable
 Get-Module -Name ActiveDirectoryDsc -ListAvailable
-
+Get-Module -Name FirewallDsc -ListAvailable
 
 $moduleName = 'NetworkingDsc'
 Find-Module $moduleName | Tee-Object -Variable m
@@ -115,11 +127,18 @@ Start-Process ("https://www.powershellgallery.com/packages?q=",$m.Name -join '')
 
 Find-Module -Name $moduleName -AllVersions
 
-Get-DscResource -Module NetworkingDsc
+Get-DscResource -Module NetworkingDsc #show available resources
 Get-DscResource DnsServerAddress -Syntax
 Get-DscResource Computer -Syntax
 
+Get-DscResource IPAddress -Syntax
+Get-DscResource IPAddressOption -Syntax
+Get-DscResource DefaultGatewayAddress -Syntax
+Get-DscResource Netbios -Syntax
+Get-DscResource HostsFile -Syntax
+Get-DscResource NetIPInterface -Syntax
 
+Get-DscResource Firewall -Syntax
 #endregion
 
 #region downloads the configuration
@@ -132,7 +151,7 @@ Invoke-WebRequest -Uri $configureNode_ps1_url -OutFile $configureNode_ps1_FullPa
 $modules = @{
     'ActiveDirectoryDsc'    = '6.4.0'
     'NetworkingDsc'         = '9.0.0'
-    'ComputerManagementDsc' = '9.0.0'
+    'ComputerManagementDsc' = '9.1.0'
 }
 
 # AutomatedLab - contains functions which are crucial for the whole logic to work properly
@@ -144,38 +163,50 @@ Install-Modules -modules $modules
 #region DSC - prereq - localhost - OPTION 2 - install manually
 Install-Module -Name ActiveDirectoryDsc -RequiredVersion '6.4.0' -Repository PSGallery -Force -AllowClobber
 Install-Module -Name NetworkingDsc -RequiredVersion '9.0.0'-Repository PSGallery -Force -AllowClobber
-Install-Module -Name ComputerManagementDsc -RequiredVersion '9.0.0' -Repository PSGallery -Force -AllowClobber
+Install-Module -Name ComputerManagementDsc -RequiredVersion '9.1.0' -Repository PSGallery -Force -AllowClobber
 
 Get-Module -Name NetworkingDsc -ListAvailable
 Get-Module -Name ComputerManagementDsc -ListAvailable
 Get-Module -Name ActiveDirectoryDsc -ListAvailable
+
+$moduleName = 'ComputerManagementDsc'
+Get-DscResource -Module $moduleName
+Find-Module -Name $moduleName -AllVersions
+#Get-Command -Noun Module
+#Uninstall-Module -Name $moduleName -RequiredVersion 9.0.0
+#Get-Module -Name $moduleName -ListAvailable
+
 #endregion
 #endregion
 
-#region chec winRM connectivity
+#region DSC - prereq - remote node - run 4 steps in one go
+#region DSC - prereq - remote node - check winRM connectivity
 Get-PSSession |Remove-PSSession
-#$dc01 = New-PSSession -ComputerName '10.2.134.201' -Name 'dc01_core' -Credential $AdminCredential
-#$dc02 = New-PSSession -ComputerName '10.2.134.202' -Name 'dc02_core' -Credential $AdminCredential
 
-$dc01 = New-PSSession -ComputerName 'dc01' -Name 'dc01_core' -Credential $AdminCredential
-$dc02 = New-PSSession -ComputerName 'dc02' -Name 'dc02_core' -Credential $AdminCredential
+Get-Item WSMan:\localhost\Client\TrustedHosts
+#Set-Item WSMan:\localhost\Client\TrustedHosts -Concatenate -Value '10.2.134.201'
+$dc01 = New-PSSession -ComputerName '10.2.134.201' -Name 'dc01_core' -Credential $AdminCredential
+$dc02 = New-PSSession -ComputerName '10.2.134.202' -Name 'dc02_core' -Credential $AdminCredential
+
+# no DNS entries on your network device / DNS server
+#$dc01 = New-PSSession -ComputerName 'dc01' -Name 'dc01_core' -Credential $AdminCredential
+#$dc02 = New-PSSession -ComputerName 'dc02' -Name 'dc02_core' -Credential $AdminCredential
 
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {$env:computername}
 #endregion
 
-
-#region DSC - prereq - remote node - copy the self signed certificate to local machine certificate store
+#region DSC - prereq - remote node - create folder structure for DSC Configuration
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {New-Item -Path ${using:dscConfigDirectoryPath} -ItemType Directory}
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {New-Item -Path ${using:dscConfigCertificateDirectoryPath} -ItemType Directory}
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Test-Path -Path ${using:dscConfigCertificateDirectoryPath}}
+#endregion
 
+#region DSC - prereq - remote node - copy certificate to the target node
 #check if the certificate is in place
 Test-Path -Path $dscSelfSignedPfxCertificateFullPath
 
 Copy-Item -ToSession $dc01 -Path $dscSelfSignedPfxCertificateFullPath -Destination $dscSelfSignedPfxCertificateFullPath
 Copy-Item -ToSession $dc02 -Path $dscSelfSignedPfxCertificateFullPath -Destination $dscSelfSignedPfxCertificateFullPath
-
-
 #endregion
 
 #region DSC - prereq - remote node - import pfx certificate
@@ -184,8 +215,9 @@ Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Import-PfxCertificate -FilePat
 #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd
 #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
 #endregion
+#endregion
 
-#region DSC - prereq - remote node - modules for the DSC to work
+#region DSC - prereq - remote node - modules for the DSC to work - pick OPTION 0
 #region DSC - prereq - remote node - OPTION 0 - invoke the installation remotelly via winRM session
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force}
 #Invoke-Command -Session $dc02 -ScriptBlock {Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force}
@@ -193,7 +225,7 @@ Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Install-PackageProvider -Name 
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {
     Install-Module -Name ActiveDirectoryDsc -RequiredVersion '6.4.0' -Repository PSGallery -Force
     Install-Module -Name NetworkingDsc -RequiredVersion '9.0.0' -Repository PSGallery -Force
-    Install-Module -Name ComputerManagementDsc -RequiredVersion '9.0.0' -Repository PSGallery -Force
+    Install-Module -Name ComputerManagementDsc -RequiredVersion '9.1.0' -Repository PSGallery -Force
 }
 
 Invoke-Command -Session $dc01,$dc02 -ScriptBlock {
@@ -227,8 +259,7 @@ Install-Module -Name ComputerManagementDsc -RequiredVersion '9.0.0' -Repository 
 (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)}).Thumbprint | clip
 psedit $configData_psd1_FullPath
 
-#region - LCM - NOT NEEDED HERE
-#region - run once - LCM - configure certificate thumbprint
+#region - NOT NEEDED HERE - LCM - the LCM is configured internally within the configuration - configure certificate thumbprint
 # Import the configuration data
 #$ConfigData = .\ConfigData.psd1
 $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
@@ -247,7 +278,6 @@ Set-DscLocalConfigurationManager -Path $(Join-Path -Path $dscConfigFullPath -Chi
 # for the CIM sessions to work the WIMrm should be configured first
 Get-DscLocalConfigurationManager -CimSession localhost
 #endregion
-#endregion
 
 #endregion
 
@@ -265,21 +295,34 @@ psedit $configureNode_ps1_FullPath
 #    -OutPutPath $dscConfigOutputDirectoryPath
 
 ConfigureAD -ConfigurationData $ConfigData `
+    -ManagementNodeIPv4Address '10.2.134.239' `
     -SafemodeAdministratorCred $SafemodeAdministratorCred `
     -DomainAdministratorCred $domainAdministratorCred `
     -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $AdminCredential
 
+ConfigureAD -ConfigurationData $ConfigData `
+    -ManagementNodeIPv4Address '10.2.134.239' `
+    -SafemodeAdministratorCred $SafemodeAdministratorCred `
+    -DomainAdministratorCred $domainAdministratorCred `
+    -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $domainAdministratorCred -Verbose
+
 # Make sure that LCM is set to continue configuration after reboot.
 #Set-DSCLocalConfigurationManager -Path .\HADC –Verbose -Credential $AdminCredential
 Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -Verbose -Credential $AdminCredential
+#Get-Item WSMan:\localhost\Client\TrustedHosts
 
-Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
-Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus}
-Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Stop-DscConfiguration -Force}
+#Invoke-Command -Session $dc01 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
+#Invoke-Command -Session $dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
+
+#Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
+#Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus}
+#Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Stop-DscConfiguration -Force}
 
 # Start DSC Configuration
 #Start-DscConfiguration -Path C:\Users\labuser\Documents\dsc_config_domainControllers\HADC -Verbose -Wait -Force -Credential $AdminCredential
 Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $AdminCredential
+
+Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $domainAdministratorCred
 #endregion
 
 #region DSC

@@ -4,6 +4,9 @@ Configuration ConfigureAD
     param
     (
         [Parameter(Mandatory)] 
+        [String]$ManagementNodeIPv4Address, 
+
+        [Parameter(Mandatory)] 
         [pscredential]$SafemodeAdministratorCred, 
 
         [Parameter(Mandatory)] 
@@ -15,7 +18,7 @@ Configuration ConfigureAD
 
     # Import DSC Resources
     Import-DscResource -ModuleName 'ActiveDirectoryDSC' -ModuleVersion 6.4.0
-    Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.0.0
+    Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
     Import-DscResource -ModuleName 'NetworkingDsc' -ModuleVersion 9.0.0
     
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration' -ModuleVersion 1.1
@@ -26,25 +29,13 @@ Configuration ConfigureAD
         # Configure LCM to allow Windows to automatically reboot if needed. Note: NOT recommended for production!
         LocalConfigurationManager
         {
+            ConfigurationMode = 'ApplyAndMonitor'
             # Set this to $true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default (recommended for PRODUCTION servers) value is $false.
             RebootNodeIfNeeded = $true
+            RefreshMode = 'Push'
             # The thumbprint of a certificate used to secure credentials passed in a configuration.
             CertificateId = $node.Thumbprint
-        }
-
-        NetAdapterBinding DisableIPv6
-        {
-            InterfaceAlias = $Node.InterfaceAlias
-            ComponentId    = 'ms_tcpip6'
-            State          = 'Disabled'
-        }
-
-        DnsServerAddress DnsSettings {
-            AddressFamily  = 'IPv4'
-            InterfaceAlias = $Node.InterfaceAlias
-            Address        = $Node.DNSServers
-            #Address       = '10.2.134.201'
-            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+            
         }
 
         FirewallProfile DomainFirewallOff
@@ -56,7 +47,7 @@ Configuration ConfigureAD
         FirewallProfile PublicFirewallOff
         {
             Name    = 'Public'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
         FirewallProfile PrivateFirewallOff
@@ -65,10 +56,60 @@ Configuration ConfigureAD
             Enabled = 'False'
         }
 
+        Firewall 'AllowWinRMHTTPin' {
+            Name          = 'Allow-WinRM-HTTP-In'
+            DisplayName   = 'Windows Remote Management (HTTP-In)'
+            Direction     = 'Inbound'
+            Action        = 'Allow'
+            Enabled       = 'True'
+            Protocol      = 'TCP'
+            LocalPort     = '5985'
+            RemoteAddress = $managementNodeIPv4Address
+            Ensure        = 'Present'
+            Profile       = ('Domain', 'Private')
+            #Profile       = ('Domain', 'Private', 'Public')
+        }
+
+        NetAdapterBinding DisableIPv6
+        {
+            InterfaceAlias = $Node.InterfaceAlias
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+        }
+
+        NetBios DisableNetBios
+        {
+            InterfaceAlias = $Node.InterfaceAlias
+            Setting = 'Disable'
+        }
+
+        IPAddress IPv4Address {
+            AddressFamily       = 'IPv4'
+            InterfaceAlias      = $Node.InterfaceAlias
+            IPAddress           = $Node.IPV4Address
+            KeepExistingAddress = $true
+            DependsOn           = '[NetAdapterBinding]DisableIPv6'
+        }
+
+        DefaultGatewayAddress IPv4DefaultGateway {
+            AddressFamily  = 'IPv4'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DefaultGatewayAddress
+            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+        }
+
+        DnsServerAddress IPv4DnsSettings {
+            AddressFamily  = 'IPv4'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DNSServers
+            #Address       = '10.2.134.201'
+            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+        }
+
         # Rename the computer
         Computer RenameComputer {
-            Name       = $node.NodeName
-            DependsOn  = '[DnsServerAddress]DnsSettings'
+            Name       = $node.ComputerName
+            DependsOn  = '[DnsServerAddress]IPv4DnsSettings'
         }
 
         # Reboot after renaming
@@ -126,7 +167,7 @@ Configuration ConfigureAD
             # RebootRetryCount     = 2
             # RetryCount           = 10
             # RetryIntervalSec     = 60
-            DependsOn    = '[ADDomain]DomainSetup'
+            DependsOn              = '[ADDomain]DomainSetup'
         }
 
 #        ADDomainController FirstDC
@@ -196,6 +237,37 @@ Configuration ConfigureAD
             CertificateId      = $node.Thumbprint
         }
 
+        FirewallProfile DomainFirewallOff
+        {
+            Name    = 'Domain'
+            Enabled = 'False'
+        }
+
+        FirewallProfile PublicFirewallOff
+        {
+            Name    = 'Public'
+            Enabled = 'True'
+        }
+
+        FirewallProfile PrivateFirewallOff
+        {
+            Name    = 'Private'
+            Enabled = 'False'
+        }
+
+        Firewall 'AllowWinRMHTTPin' {
+            Name          = 'Allow-WinRM-HTTP-In'
+            DisplayName   = 'Windows Remote Management (HTTP-In)'
+            Direction     = 'Inbound'
+            Action        = 'Allow'
+            Enabled       = 'True'
+            Protocol      = 'TCP'
+            LocalPort     = '5985'
+            RemoteAddress = $nodeName.managementNodeIPv4Address
+            Profile       = ('Domain', 'Private')
+            Ensure        = 'Present'
+        }
+
         NetAdapterBinding DisableIPv6
         {
             InterfaceAlias = $Node.InterfaceAlias
@@ -203,17 +275,40 @@ Configuration ConfigureAD
             State          = 'Disabled'
         }
 
-        DnsServerAddress DnsSettings {
+        NetBios DisableNetBios
+        {
+            InterfaceAlias = $Node.InterfaceAlias
+            Setting = 'Disable'
+        }
+
+        IPAddress IPv4Address {
+            AddressFamily       = 'IPv4'
+            InterfaceAlias      = $Node.InterfaceAlias
+            IPAddress           = $Node.IPV4Address
+            KeepExistingAddress = $true
+            DependsOn           = '[NetAdapterBinding]DisableIPv6'
+        }
+
+        DefaultGatewayAddress IPv4DefaultGateway {
+            AddressFamily  = 'IPv4'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DefaultGatewayAddress
+            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+        }
+
+        DnsServerAddress IPv4DnsSettings {
             AddressFamily  = 'IPv4'
             InterfaceAlias = $Node.InterfaceAlias
             Address        = $Node.DNSServers
             DependsOn      = '[NetAdapterBinding]DisableIPv6'
         }
 
+        
+
         # Rename Computer using ComputerManagementDsc
         Computer RenameComputer {
-            Name       = $node.NodeName
-            DependsOn  = '[DnsServerAddress]DnsSettings'
+            Name       = $node.ComputerName
+            DependsOn  = '[DnsServerAddress]IPv4DnsSettings'
         }
 
         # Reboot after renaming
@@ -246,8 +341,7 @@ Configuration ConfigureAD
         {
             DomainName  = $Node.DomainName
             Credential  = $DomainAdministratorCred
-            #RetryCount = $Node.RetryCount
-            WaitTimeout = $Node.RetryIntervalSec
+            WaitTimeout = $Node.WaitTimeout
             DependsOn   = '[WindowsFeature]ADDSInstall'
         }
 
