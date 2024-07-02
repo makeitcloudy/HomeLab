@@ -254,7 +254,7 @@ Install-Module -Name ComputerManagementDsc -RequiredVersion '9.0.0' -Repository 
 
 #endregion
 #endregion
-
+        
 #region DSC - LCM 
 # now modify the ConfigData.psd1
 # * update the CertificateFile location if needed
@@ -284,12 +284,40 @@ Get-DscLocalConfigurationManager -CimSession localhost
 
 #endregion
 
+
+
+
+#region DSC - RUN IT!
 $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
 #Write-Output $configData_psd1_FullPath
 #$ConfigData.AllNodes
 . $configureNode_ps1_FullPath
 psedit $configureNode_ps1_FullPath
 
+ConfigureAD -ConfigurationData $ConfigData `
+    -AdministratorCred $AdminCredential `
+    -DomainAdministratorCred $domainAdministratorCred `
+    -SafemodeAdministratorCred $SafemodeAdministratorCred `
+    -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $AdminCredential -Verbose
+
+#Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -Verbose -Credential $AdminCredential
+
+#region DSC - LCM - run it !
+$nodesAD = @('10.2.134.201','10.2.134.202')
+$nodesAD.foreach({
+    $tempCimSession = New-CimSession -ComputerName $_ -Credential $AdminCredential
+    Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -CimSession $tempCimSession -Verbose
+    Get-DscLocalConfigurationManager -CimSession $tempCimSession -Verbose
+})
+#endregion
+
+#run this twice
+# 1st. to execute the code until reboot (ip, netbios, rename)
+# 2nd. to run the code which needs to proceed after the reboot
+Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $AdminCredential
+
+Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $domainAdministratorCred
+#endregion
 
 #ConfigureAD -ConfigurationData $configData_psd1_FullPath `
 #    -SafemodeAdministratorCred (Get-Credential -UserName Administrator -Message "Enter Domain Safe Mode Administrator Password") `
@@ -297,11 +325,13 @@ psedit $configureNode_ps1_FullPath
 #    -ADUserCred (Get-Credential -UserName Test.User -Message "Enter AD User Credential") `
 #    -OutPutPath $dscConfigOutputDirectoryPath
 
-ConfigureAD -ConfigurationData $ConfigData `
-    -ManagementNodeIPv4Address '10.2.134.239' `
-    -SafemodeAdministratorCred $SafemodeAdministratorCred `
-    -DomainAdministratorCred $domainAdministratorCred `
-    -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $AdminCredential
+
+
+#_old
+#ConfigureAD -ConfigurationData $ConfigData `
+#    -SafemodeAdministratorCred $SafemodeAdministratorCred `
+#    -DomainAdministratorCred $domainAdministratorCred `
+#    -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $AdminCredential
 
 ConfigureAD -ConfigurationData $ConfigData `
     -ManagementNodeIPv4Address '10.2.134.239' `
@@ -325,8 +355,8 @@ Invoke-command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus -Ci
 # Test-NetConnection -ComputerName '10.2.134.201' -Port 5985 # port is opened
 # Invoke-command -ComputerName '10.2.134.201' -ScriptBlock {$ENV:ComputerName} -Credential $AdminCredential - does not work anymore
 
-#Invoke-Command -Session $dc01 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
-#Invoke-Command -Session $dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
+Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
+
 
 #Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
 #Invoke-Command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus}

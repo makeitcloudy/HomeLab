@@ -6,12 +6,13 @@
         @{
             # NodeName "*" = apply this properties to all nodes that are members of AllNodes array.
             Nodename                    = '*'
-            InterfaceAlias              = 'Ethernet 2'
-            managementNodeIPv4Address   = '10.2.134.239'
+            InterfaceAlias              = 'Eth0'
+            ManagementNodeIPv4Address   = '10.2.134.239'
 
             # Name of the remote domain. If no parent name is specified, this is the fully qualified domain name for the first domain in the forest.
             DomainName                  = 'lab.local'
-            DomainNetbiosName           = 'LAB'
+            #DomainNetbiosName           = 'LAB'
+            SiteName                    = 'lab-Site'
             DomainMode                  = 'WinThreshold'
             ForestMode                  = 'WinThreshold'
             
@@ -35,7 +36,7 @@
 
         @{
             Nodename              = '10.2.134.201'
-            Role                  = 'FirstDomainController'
+            Role                  = 'PrimaryDomainController'
             ComputerName          = 'dc01'
             IPV4Address           = '10.2.134.201/24'
             DefaultGatewayAddress = '10.2.134.254'
@@ -52,7 +53,7 @@
             IPV4Address           = '10.2.134.202/24'
             DefaultGatewayAddress = '10.2.134.254'
             DNSServers            = @('10.2.134.201')
-            
+            IsGlobalCatalog       = $true
         }
     )
 }

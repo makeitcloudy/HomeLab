@@ -3,17 +3,24 @@ Configuration ConfigureAD
 {
     param
     (
-        [Parameter(Mandatory)] 
-        [String]$ManagementNodeIPv4Address, 
+        [Parameter(Position = 0, Mandatory = $true)] 
+        [pscredential]$AdministratorCred,
 
-        [Parameter(Mandatory)] 
-        [pscredential]$SafemodeAdministratorCred, 
+        [Parameter(Position = 1, Mandatory = $true)] 
+        [pscredential]$DomainAdministratorCred,
 
-        [Parameter(Mandatory)] 
-        [pscredential]$DomainAdministratorCred, 
+        [Parameter(Position = 2, Mandatory = $true)] 
+        [pscredential]$SafemodeAdministratorCred,
 
-        [Parameter(Mandatory)] 
-        [pscredential]$ADUserCred
+        [Parameter(Position =3, Mandatory = $true)] 
+        [pscredential]$ADUserCred,
+
+        [array]$featureName = @(
+            'RSAT-AD-PowerShell',
+            'RSAT-ADDS',
+            'RSAT-ADDS-Tools',
+            'RSAT-ADLDS'
+        )
     )
 
     # Import DSC Resources
@@ -24,7 +31,7 @@ Configuration ConfigureAD
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration' -ModuleVersion 1.1
     #Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
 
-    Node $AllNodes.Where{$_.Role -eq 'FirstDomainController'}.Nodename
+    Node $AllNodes.Where{$_.Role -eq 'PrimaryDomainController'}.Nodename
     {
         # Configure LCM to allow Windows to automatically reboot if needed. Note: NOT recommended for production!
         LocalConfigurationManager
@@ -38,25 +45,25 @@ Configuration ConfigureAD
             
         }
 
-        FirewallProfile DomainFirewallOff
+        FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
             Enabled = 'False'
         }
 
-        FirewallProfile PublicFirewallOff
+        FirewallProfile PublicFirewall
         {
             Name    = 'Public'
             Enabled = 'True'
         }
 
-        FirewallProfile PrivateFirewallOff
+        FirewallProfile PrivateFirewall
         {
             Name    = 'Private'
             Enabled = 'False'
         }
 
-        Firewall 'AllowWinRMHTTPin' {
+        Firewall AllowWinRMHTTPin {
             Name          = 'Allow-WinRM-HTTP-In'
             DisplayName   = 'Windows Remote Management (HTTP-In)'
             Direction     = 'Inbound'
@@ -66,10 +73,15 @@ Configuration ConfigureAD
             LocalPort     = '5985'
             # ammend it by the parameter - for some reason it does not work this time that's why statically assigned
             #RemoteAddress = '10.2.134.239'
-            RemoteAddress = $managementNodeIPv4Address
+            RemoteAddress = $Node.ManagementNodeIPv4Address
             Ensure        = 'Present'
             Profile       = ('Domain', 'Private')
             #Profile       = ('Domain', 'Private', 'Public')
+        }
+
+        NetAdapterName InterfaceRename
+        {
+            NewName = $Node.InterfaceAlias
         }
 
         NetAdapterBinding DisableIPv6
@@ -77,27 +89,29 @@ Configuration ConfigureAD
             InterfaceAlias = $Node.InterfaceAlias
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         NetBios DisableNetBios
         {
             InterfaceAlias = $Node.InterfaceAlias
-            Setting = 'Disable'
+            Setting        = 'Disable'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
-        IPAddress IPv4Address {
+        IPAddress IPv4StaticAddress {
             AddressFamily       = 'IPv4'
             InterfaceAlias      = $Node.InterfaceAlias
             IPAddress           = $Node.IPV4Address
-            KeepExistingAddress = $true
-            DependsOn           = '[NetAdapterBinding]DisableIPv6'
+            #KeepExistingAddress = $true
+            DependsOn           = '[NetAdapterName]InterfaceRename'
         }
 
         DefaultGatewayAddress IPv4DefaultGateway {
             AddressFamily  = 'IPv4'
             InterfaceAlias = $Node.InterfaceAlias
             Address        = $Node.DefaultGatewayAddress
-            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         DnsServerAddress IPv4DnsSettings {
@@ -105,7 +119,7 @@ Configuration ConfigureAD
             InterfaceAlias = $Node.InterfaceAlias
             Address        = $Node.DNSServers
             #Address       = '10.2.134.201'
-            DependsOn      = '[NetAdapterBinding]DisableIPv6'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         # Rename the computer
@@ -116,8 +130,10 @@ Configuration ConfigureAD
 
         # Reboot after renaming
         PendingReboot RebootAfterRename {
-            Name      = 'RebootAfterRename'
-            DependsOn = '[Computer]RenameComputer'
+            Name                        = 'RebootAfterRename'
+            SkipWindowsUpdate           = $true
+            SkipComponentBasedServicing = $true
+            DependsOn                   = '[Computer]RenameComputer'
         }
 
         # Install Windows Feature [Active Directory Domain Services].
@@ -136,16 +152,14 @@ Configuration ConfigureAD
             DependsOn = '[PendingReboot]RebootAfterRename'
         }
 
-        # Create AD Domain specified in HADCServerConfigData.
-        #ADDomain FirstDomainController {
-        #    DomainName = $node.DomainName
-        #
-        #    DomainNetbiosName             = $Node.DomainNetbiosName
-        #    DomainMode                    = $Node.DomainMode
-        #    ForestMode                    = $Node.ForestMode
-        #    Credential                    = $DomainAdministratorCred
-        #    SafemodeAdministratorPassword = $SafemodeAdministratorCred
-        #}
+        foreach ($feature in $featureName){
+            WindowsFeature $feature
+            {
+                Ensure = 'Present'
+                Name = $feature
+                DependsOn = '[WindowsFeature]ADDSFeatureInstall'
+            }
+        }
         
         ADDomain DomainSetup
         {
@@ -153,7 +167,7 @@ Configuration ConfigureAD
             DomainNetbiosName             = $Node.DomainNetbiosName
             ForestMode                    = $Node.ForestMode
             DomainMode                    = $Node.DomainMode
-            Credential                    = $DomainAdministratorCred
+            Credential                    = $AdministratorCred
             SafemodeAdministratorPassword = $SafemodeAdministratorCred
             DatabasePath                  = $Node.DatabasePath
             LogPath                       = $Node.LogPath
@@ -166,45 +180,12 @@ Configuration ConfigureAD
             DomainName             = $Node.DomainName
             Credential             = $DomainAdministratorCred
             RestartCount           = 2
-            SiteName               = 'lab-Site'
+            SiteName               = $Node.SiteName
             # RebootRetryCount     = 2
             # RetryCount           = 10
             # RetryIntervalSec     = 60
             DependsOn              = '[ADDomain]DomainSetup'
         }
-
-#        ADDomainController FirstDC
-#        {
-#            # Name of the remote domain. If no parent name is specified, this is the fully qualified domain name for the first domain in the forest.
-#            DomainName                    = $Node.DomainName
-#            InstallDns                    = $true
-#
-#            # Credentials used to query for domain existence.
-#            Credential                    = $DomainAdministratorCred
-#            # Password for the administrator account when the computer is started in Safe Mode.
-#            SafemodeAdministratorPassword = $SafemodeAdministratorCred
-#            # Specifies the fully qualified, non-Universal Naming Convention (UNC) path to a directory on a fixed disk of the local computer that contains the domain database (optional).
-#            DatabasePath                  = $Node.DatabasePath
-#            # Specifies the fully qualified, non-UNC path to a directory on a fixed disk of the local computer where the log file for this operation will be written (optional).
-#            LogPath                       = $Node.DatabasePath
-#            # Specifies the fully qualified, non-UNC path to a directory on a fixed disk of the local computer where the Sysvol file will be written. (optional)
-#            SysvolPath                    = $Node.DatabasePath
-#            # DependsOn specifies which resources depend on other resources, and the LCM ensures that they are applied in the correct order, regardless of the order in which resource instances are defined.
-#            DependsOn                     = '[WindowsFeature]ADDSInstall'
-#        }
-
-        # Wait until AD Domain is created.
-#        WaitForADDomain 'WaitForDomainInstall'
-#        {
-#            DomainName           = $Node.DomainName
-#
-#           Credential           = $DomainAdministratorCred
-#            # Maximum number of retries to check for the domain's existence.
-#            #RetryCount          = $Node.RetryCount
-#            # Interval to check for the domain's existence.
-#            WaitTimeout          = $Node.RetryIntervalSec
-#            DependsOn            = '[ADDomainController]FirstDC'
-#        }
 
         # Enable Recycle Bin.
         ADOptionalFeature RecycleBin
@@ -214,7 +195,7 @@ Configuration ConfigureAD
             EnterpriseAdministratorCredential = $DomainAdministratorCred
             # Fully qualified domain name of forest to enable Active Directory Recycle Bin.
             ForestFQDN                        = $Node.DomainName
-            DependsOn                         = '[WaitForADDomain]WaitForDomainInstall'
+            DependsOn                         = '[ADDomain]DomainSetup', '[WindowsFeature]ADDSFeatureInstall'
         }
 
         # Create AD User "Test.User".
@@ -231,28 +212,32 @@ Configuration ConfigureAD
 
     Node $AllNodes.Where{$_.Role -eq 'SubsequentDomainController'}.Nodename
     {
+
         # Configure LCM to allow Windows to automatically reboot if needed. Note: NOT recommended for production!
         LocalConfigurationManager
         {
-		    # Set this to $true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default (recommended for PRODUCTION servers) value is $false.
+            ConfigurationMode = 'ApplyAndMonitor'
+            # Set this to $true to automatically reboot the node after a configuration that requires reboot is applied. Otherwise, you will have to manually reboot the node for any configuration that requires it. The default (recommended for PRODUCTION servers) value is $false.
             RebootNodeIfNeeded = $true
-		    # The thumbprint of a certificate used to secure credentials passed in a configuration.
-            CertificateId      = $node.Thumbprint
+            RefreshMode = 'Push'
+            # The thumbprint of a certificate used to secure credentials passed in a configuration.
+            CertificateId = $node.Thumbprint
+            
         }
-
-        FirewallProfile DomainFirewallOff
+        
+        FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
             Enabled = 'False'
         }
 
-        FirewallProfile PublicFirewallOff
+        FirewallProfile PublicFirewall
         {
             Name    = 'Public'
             Enabled = 'True'
         }
 
-        FirewallProfile PrivateFirewallOff
+        FirewallProfile PrivateFirewall
         {
             Name    = 'Private'
             Enabled = 'False'
@@ -266,9 +251,14 @@ Configuration ConfigureAD
             Enabled       = 'True'
             Protocol      = 'TCP'
             LocalPort     = '5985'
-            RemoteAddress = $managementNodeIPv4Address
+            RemoteAddress = $Node.ManagementNodeIPv4Address
             Profile       = ('Domain', 'Private')
             Ensure        = 'Present'
+        }
+
+        NetAdapterName InterfaceRename
+        {
+            NewName = $Node.InterfaceAlias
         }
 
         NetAdapterBinding DisableIPv6
@@ -276,12 +266,14 @@ Configuration ConfigureAD
             InterfaceAlias = $Node.InterfaceAlias
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         NetBios DisableNetBios
         {
             InterfaceAlias = $Node.InterfaceAlias
-            Setting = 'Disable'
+            Setting        = 'Disable'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         IPAddress IPv4Address {
@@ -307,16 +299,15 @@ Configuration ConfigureAD
         }
 
         DnsConnectionSuffix SetDnsSuffix {
-            InterfaceAlias = $Node.InterfaceAlias
+            InterfaceAlias           = $Node.InterfaceAlias
             ConnectionSpecificSuffix = 'lab.local'
-            Ensure = 'Present'
+            Ensure                   = 'Present'
             
             UseSuffixWhenRegistering = $true
-            RegisterThisConnectionsAddress = $true
+            #RegisterThisConnectionsAddress = $true
             DependsOn = '[NetAdapterBinding]DisableIPv6'
         }
         
-
         # Rename Computer using ComputerManagementDsc
         Computer RenameComputer {
             Name       = $node.ComputerName
@@ -326,19 +317,11 @@ Configuration ConfigureAD
         # Reboot after renaming
         # PendingReboot using ComputerManagementDsc
         PendingReboot RebootAfterRename {
-            Name                        = 'RebootAfterRename'
+            Name                        = $Node.ComputerName
             SkipWindowsUpdate           = $true
             SkipComponentBasedServicing = $true
             DependsOn                   = '[Computer]RenameComputer'
         }
-
-        # Install Windows Feature AD Domain Services.
-        #WindowsFeature DNSInstall
-        #{
-        #    Ensure    = 'Present'
-        #    Name      = 'DNS'
-        #    DependsOn = '[PendingReboot]RebootAfterRename'
-        #}
 
         # Install Windows Feature AD Domain Services.
         WindowsFeature ADDSInstall
@@ -348,13 +331,23 @@ Configuration ConfigureAD
             DependsOn = '[PendingReboot]RebootAfterRename'
         }
 
+        foreach ($feature in $featureName){
+            WindowsFeature $feature
+            {
+                Ensure = 'Present'
+                Name = $feature
+                DependsOn = '[WindowsFeature]ADDSInstall'
+            }
+        }
+
         # Ensure that the Active Directory Domain Services feature is installed.
         WaitForADDomain WaitForDomainInstall
         {
             DomainName  = $Node.DomainName
             Credential  = $DomainAdministratorCred
-            WaitTimeout = $Node.WaitTimeout
-            DependsOn   = '[WindowsFeature]ADDSInstall'
+            RestartCount = 2
+            #WaitTimeout = $Node.WaitTimeout
+            DependsOn   = '[DnsServerAddress]IPv4DnsSettings','[WindowsFeature]ADDSInstall'
         }
 
         # Ensure that the AD Domain is present before the second domain controller is added.
@@ -382,8 +375,8 @@ Configuration ConfigureAD
             DatabasePath                  = $Node.DatabasePath
             LogPath                       = $Node.LogPath
             SysvolPath                    = $Node.SysvolPath
-            SiteName                      = 'Lab-Site'
-            IsGlobalCatalog               = $true
+            #SiteName                      = 'Lab-Site'
+            IsGlobalCatalog               = $Node.IsGlobalCatalog
                         
             #PsDscRunAsCredential can only be used for the composite resource
             #PsDscRunAsCredential          = $DomainAdministratorCred
@@ -391,5 +384,5 @@ Configuration ConfigureAD
             #DependsOn                     = "[ADDomain]SecondDC"
         }
 
-    }
+    }    
 }
