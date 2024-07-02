@@ -64,6 +64,8 @@ Configuration ConfigureAD
             Enabled       = 'True'
             Protocol      = 'TCP'
             LocalPort     = '5985'
+            # ammend it by the parameter - for some reason it does not work this time that's why statically assigned
+            #RemoteAddress = '10.2.134.239'
             RemoteAddress = $managementNodeIPv4Address
             Ensure        = 'Present'
             Profile       = ('Domain', 'Private')
@@ -263,7 +265,7 @@ Configuration ConfigureAD
             Enabled       = 'True'
             Protocol      = 'TCP'
             LocalPort     = '5985'
-            RemoteAddress = $nodeName.managementNodeIPv4Address
+            RemoteAddress = $managementNodeIPv4Address
             Profile       = ('Domain', 'Private')
             Ensure        = 'Present'
         }

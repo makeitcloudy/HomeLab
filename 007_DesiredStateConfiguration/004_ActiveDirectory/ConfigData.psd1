@@ -11,7 +11,7 @@
 
             # Name of the remote domain. If no parent name is specified, this is the fully qualified domain name for the first domain in the forest.
             DomainName                  = 'lab.local'
-            DomainNetbiosName           = 'lab'
+            DomainNetbiosName           = 'LAB'
             DomainMode                  = 'WinThreshold'
             ForestMode                  = 'WinThreshold'
             

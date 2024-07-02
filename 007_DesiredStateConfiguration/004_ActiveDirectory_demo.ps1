@@ -309,7 +309,18 @@ ConfigureAD -ConfigurationData $ConfigData `
 # Make sure that LCM is set to continue configuration after reboot.
 #Set-DSCLocalConfigurationManager -Path .\HADC –Verbose -Credential $AdminCredential
 Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -Verbose -Credential $AdminCredential
+#Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -Verbose -Credential (Get-Credential -UserName '.\administrator' -Message 'x')
 #Get-Item WSMan:\localhost\Client\TrustedHosts
+
+
+Get-PSSession | Remove-PSSession
+$dc01 = New-PSSession -ComputerName '10.2.134.201' -Name 'dc01_core' -Credential (Get-Credential -UserName 'dc01\administrator' -Message 'x')
+$dc02 = New-PSSession -ComputerName '10.2.134.202' -Name 'dc02_core' -Credential (Get-Credential -UserName 'dc02\administrator' -Message 'x')
+
+Invoke-command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus -CimSession localhost} 
+
+# Test-NetConnection -ComputerName '10.2.134.201' -Port 5985 # port is opened
+# Invoke-command -ComputerName '10.2.134.201' -ScriptBlock {$ENV:ComputerName} -Credential $AdminCredential - does not work anymore
 
 #Invoke-Command -Session $dc01 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
 #Invoke-Command -Session $dc02 -ScriptBlock {Get-DscLocalConfigurationManager -CimSession localhost}
