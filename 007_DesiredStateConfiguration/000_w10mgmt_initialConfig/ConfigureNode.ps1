@@ -3,10 +3,11 @@ Configuration NodeInitialConfig {
         [Parameter(Mandatory = $true)]
         [pscredential]$AdminCredential
     )
-
-    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
+    
     Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
     Import-DscResource -ModuleName 'NetworkingDsc' -ModuleVersion 9.0.0
+
+    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
 
     Node $AllNodes.NodeName {
         #LocalConfigurationManager {
@@ -15,6 +16,28 @@ Configuration NodeInitialConfig {
         #    RefreshMode = 'Push'
         #    AllowModuleOverWrite = $true
         #}
+
+        NetAdapterBinding DisableIPv6
+        {
+            InterfaceAlias = 'Ethernet 2'
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+        }
+
+        # Set DNS Client Server Address using NetworkingDsc
+        DnsServerAddress DnsSettings {
+            
+            AddressFamily  = 'IPv4'
+            Address        = $Node.DNSServers
+            InterfaceAlias = $Node.InterfaceAlias
+            DependsOn      = "[NetAdapterBinding]DisableIPv6"
+        }
+
+        Service WinRm {
+            Name        = 'WinRM'
+            StartupType = 'Automatic'
+            State       = 'Running'
+        }
 
         Script SetTrustedHosts {
             GetScript = {
@@ -29,33 +52,20 @@ Configuration NodeInitialConfig {
                 $currentTrustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
                 $currentTrustedHosts -eq $using:Node.TrustedHosts
             }
+            DependsOn = '[Service]WinRm'
         }
 
         # Rename Computer using ComputerManagementDsc
-        Computer RenameComputerName {
-            Name = $Node.ComputerName
+        Computer RenameComputer {
+            Name       = $Node.ComputerName
             Credential = $AdminCredential
+            DependsOn = '[Script]SetTrustedHosts'
         }
-
-        Service WinRm {
-            Name = 'WinRM'
-            StartupType = 'Automatic'
-            State = 'Running'
-        }
-
-        # Set DNS Client Server Address using NetworkingDsc
-        DnsServerAddress DnsSettings {
-            Address       = $Node.DNSServers
-            AddressFamily = 'IPv4'
-            InterfaceAlias = 'Ethernet 2'
-            DependsOn = "[Computer]RenameComputerName"
-        }
-
-        NetAdapterBinding DisableIPv6
-        {
-            InterfaceAlias = 'Ethernet 2'
-            ComponentId    = 'ms_tcpip6'
-            State          = 'Disabled'
+        
+        # PendingReboot using ComputerManagementDsc
+        PendingReboot RebootAfterRename {
+            Name      = 'RebootAfterRename'
+            DependsOn = '[Computer]RenameComputer'
         }
 
         # Set Trusted Hosts

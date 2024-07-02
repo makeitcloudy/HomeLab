@@ -14,7 +14,7 @@ Get-Item WSMan:\localhost\Client\TrustedHosts #empty
 #endregion
 #endregion
 
-#region - initialize variables
+#region - Initialize variables
 #region - initialize variables - DSC structure
 $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration'
 $dsc_000_w10mgmt_InitialConfig_FolderName  = '000_w10mgmt_initialConfig'
@@ -141,7 +141,7 @@ else {
 Set-Location -Path $dscConfigDirectoryPath
 #endregion
 
-#region - download the powershell functions and configuration
+#region - Download the powershell functions and configuration
 # download the helper functions and DSC configurations
 
 Invoke-WebRequest -Uri $newSelfsignedCertificateExGithubUrl -OutFile $newSelfSignedCertificateExFullPath
@@ -152,11 +152,11 @@ Invoke-WebRequest -Uri $configureNode_ps1_url -OutFile $configureNode_ps1_FullPa
 
 #endregion
 
-Test-Path -Path $newSelfSignedCertificateExFullPath
-. $newSelfSignedCertificateExFullPath
-$env:COMPUTERNAME
+#Test-Path -Path $newSelfSignedCertificateExFullPath
+#. $newSelfSignedCertificateExFullPath
+#$env:COMPUTERNAME
 
-#region DSC - Install Missing modules
+#region DSC - Install missing modules
 # double check if this is a best practice
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
 
@@ -216,7 +216,7 @@ Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $
 #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
 #endregion
 
-#region DSC - Configuration data certificate thumbprint update
+#region DSC - Certificate thumbprint update - ConfigData.psd1
 # now modify the ConfigData.psd1
 # * update the CertificateFile location if needed
 # * update the Thumbprint
@@ -225,8 +225,7 @@ psedit $configData_psd1_FullPath
 #endregion
 
 
-
-#region - run once - LCM - configure certificate thumbprint
+#region - run once - LCM - Ammend certificate thumbprint
 # Import the configuration data
 #$ConfigData = .\ConfigData.psd1
 $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
@@ -248,8 +247,7 @@ Get-DscLocalConfigurationManager -CimSession localhost
 #endregion
 
 
-
-#region - run anytime - Import Configuration Data - run DsC NodeInitialConfig
+#region DSC - run anytime - Start Configuration
 $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
 #$ConfigData.AllNodes
 #psedit $dscConfigDataPath
@@ -262,5 +260,6 @@ $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
 NodeInitialConfig -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutputDirectoryPath -Verbose
 
-Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Wait -Verbose -Force
+#Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Wait -Verbose -Force
+Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
 #endregion
