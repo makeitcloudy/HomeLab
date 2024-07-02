@@ -161,11 +161,12 @@ Configuration ConfigureAD
             DependsOn                     = '[WindowsFeature]ADDSFeatureInstall'
         }
 
-        WaitForADDomain 'WaitForDomainInstall'
+        WaitForADDomain WaitForDomainInstall
         {
             DomainName             = $Node.DomainName
             Credential             = $DomainAdministratorCred
             RestartCount           = 2
+            SiteName               = 'lab-Site'
             # RebootRetryCount     = 2
             # RetryCount           = 10
             # RetryIntervalSec     = 60
@@ -217,7 +218,7 @@ Configuration ConfigureAD
         }
 
         # Create AD User "Test.User".
-        ADUser ADUser
+        ADUser TestUser
         {
             DomainName  = $Node.DomainName
             Credential  = $DomainAdministratorCred
@@ -305,6 +306,15 @@ Configuration ConfigureAD
             DependsOn      = '[NetAdapterBinding]DisableIPv6'
         }
 
+        DnsConnectionSuffix SetDnsSuffix {
+            InterfaceAlias = $Node.InterfaceAlias
+            ConnectionSpecificSuffix = 'lab.local'
+            Ensure = 'Present'
+            
+            UseSuffixWhenRegistering = $true
+            RegisterThisConnectionsAddress = $true
+            DependsOn = '[NetAdapterBinding]DisableIPv6'
+        }
         
 
         # Rename Computer using ComputerManagementDsc
@@ -348,14 +358,38 @@ Configuration ConfigureAD
         }
 
         # Ensure that the AD Domain is present before the second domain controller is added.
-        ADDomainController SecondDC
+
+#        ADDomain SecondDC
+#        {
+#            DomainName                    = $Node.DomainName
+#            DomainNetbiosName             = $Node.DomainNetbiosName
+#            ForestMode                    = $Node.ForestMode
+#            DomainMode                    = $Node.DomainMode
+#            Credential                    = $DomainAdministratorCred
+#            SafemodeAdministratorPassword = $SafemodeAdministratorCred
+#            DatabasePath                  = $Node.DatabasePath
+#            LogPath                       = $Node.LogPath
+#            SysvolPath                    = $Node.SysvolPath
+#            DependsOn                     = '[WaitForADDomain]WaitForDomainInstall'
+#        }
+
+        ADDomainController SecondDCController
         {
             DomainName                    = $Node.DomainName
             Credential                    = $DomainAdministratorCred
             SafemodeAdministratorPassword = $SafemodeAdministratorCred
             InstallDns                    = $true
+            DatabasePath                  = $Node.DatabasePath
+            LogPath                       = $Node.LogPath
+            SysvolPath                    = $Node.SysvolPath
+            SiteName                      = 'Lab-Site'
+            IsGlobalCatalog               = $true
+                        
+            #PsDscRunAsCredential can only be used for the composite resource
+            #PsDscRunAsCredential          = $DomainAdministratorCred
             DependsOn                     = '[WaitForADDomain]WaitForDomainInstall'
-            
+            #DependsOn                     = "[ADDomain]SecondDC"
         }
+
     }
 }

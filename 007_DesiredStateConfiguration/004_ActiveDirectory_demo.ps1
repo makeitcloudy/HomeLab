@@ -88,7 +88,8 @@ $SafemodeAdministratorName     = 'Administrator'
 $SafemodeAdministratorPassword = ConvertTo-SecureString "Password1$" -AsPlainText -Force
 $SafemodeAdministratorCred     = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorName, $SafemodeAdministratorPassword)
 
-$domainAdministratorName       = 'lab\Administrator'
+#https://community.spiceworks.com/t/dns-issue-i-have-to-enter-fqdn-to-join-domain-but-why/636506/10
+$domainAdministratorName       = 'lab.local\Administrator'
 $domainAdministratorPassword   = ConvertTo-SecureString "Password1$" -AsPlainText -Force
 $domainAdministratorCred       = New-Object System.Management.Automation.PSCredential ($domainAdministratorName, $domainAdministratorPassword)
 
@@ -139,6 +140,8 @@ Get-DscResource HostsFile -Syntax
 Get-DscResource NetIPInterface -Syntax
 
 Get-DscResource Firewall -Syntax
+Get-DscResource DnsClientGlobalSetting -Syntax
+Get-DscResource DnsConnectionSuffix -Syntax
 #endregion
 
 #region downloads the configuration
@@ -331,6 +334,10 @@ Invoke-command -Session $dc01,$dc02 -ScriptBlock {Get-DscConfigurationStatus -Ci
 
 # Start DSC Configuration
 #Start-DscConfiguration -Path C:\Users\labuser\Documents\dsc_config_domainControllers\HADC -Verbose -Wait -Force -Credential $AdminCredential
+
+#run this twice
+# 1st. to execute the code until reboot (ip, netbios, rename)
+# 2nd. to run the code which needs to proceed after the reboot
 Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $AdminCredential
 
 Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Verbose -Wait -Force -Credential $domainAdministratorCred
