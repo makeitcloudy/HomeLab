@@ -415,8 +415,8 @@ PROCESS
 END
 {
     #^ Verify status of the configuration
-    $state = (Test-DscConfiguration -Path C:\dsc\AD)
-    Write-Host $($state.ResourcesNotInDesiredState | Format-Table -AutoSize -Wrap | Out-String) -ForegroundColor Red
-    Write-Host $($state.ResourcesInDesiredState | Format-Table -AutoSize -Wrap | Out-String) -ForegroundColor Green
-    Write-Warning 'Please review resources displayed in RED!'
+    #$state = (Test-DscConfiguration -Path $dscOutputADDS_DirectoryPath)
+    #Write-Host $($state.ResourcesNotInDesiredState | Format-Table -AutoSize -Wrap | Out-String) -ForegroundColor Red
+    #Write-Host $($state.ResourcesInDesiredState | Format-Table -AutoSize -Wrap | Out-String) -ForegroundColor Green
+    #Write-Warning 'Please review resources displayed in RED!'
 }

@@ -285,52 +285,6 @@ configuration DomainFirstDC {
             RenameDefaultFirstSiteName = $true
             DependsOn                  = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
         }
-
-        #foreach ($site in $NODE.AdditionalSites)
-        #{
-        #    ADReplicationSite $site
-        #    {
-        #        Ensure    = 'Present'
-        #        Name      = $site
-        #        DependsOn = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
-        #    }
-        #}
-
-        # # site replications
-        #ADReplicationSiteLink 'PrimarySitelink'
-        #{
-        #    Name                          = 'PrimarySitelink'
-        #    SitesIncluded                 = $NODE.SitelinkPrimaryMembers
-        #    Cost                          = 100
-        #    ReplicationFrequencyInMinutes = 15
-        #    Ensure                        = 'Present'
-        #}
-
-        #ADReplicationSiteLink 'SecondarySitelink'
-        #{
-        #    Name                          = 'SecondarySitelink'
-        #    SitesIncluded                 = $NODE.SitelinkSecondaryMembers
-        #    Cost                          = 159
-        #    ReplicationFrequencyInMinutes = 20
-        #    Ensure                        = 'Present'
-        #}
-
-        # # site subnets
-        #ADReplicationSubnet 'Lab-OY_10.2.134.0/24'
-        #{
-        #    Name        = '10.2.134.0/24'
-        #    Site        = 'Lab-OY'
-        #    Location    = 'Olivers Yard DC'
-        #    Description = 'Infrastructure Management Subnet'
-        #}
-
-        #ADReplicationSubnet 'Lab-SH_10.3.134.0/24'
-        #{
-        #    Name        = '10.3.134.0/24'
-        #    Site        = 'Lab-SH'
-        #    Location    = 'Shoreditch DC'
-        #    Description = 'Infrastructure Management Subnet'
-        #}
     }
 
 }
