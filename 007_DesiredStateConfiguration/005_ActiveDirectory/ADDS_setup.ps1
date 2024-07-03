@@ -90,16 +90,16 @@ $AdministratorPassword                      = 'Password1$'
 $AdministratorPasswordSecureString          = ConvertTo-SecureString $AdministratorPassword -AsPlainText -Force
 $AdministratorCred                          = New-Object System.Management.Automation.PSCredential ($AdministratorUserName, $AdministratorPasswordSecureString)
 
-#$SafemodeAdministratorUserName             = 'Administrator'
-#$SafemodeAdministratorPassword             = 'Password1$'
-#$SafemodeAdministratorPasswordSecureString = ConvertTo-SecureString $SafemodeAdministratorPassword -AsPlainText -Force
-#$SafemodeAdministratorCred                 = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorUserName, $SafemodeAdministratorPasswordSecureString)
+$SafemodeAdministratorUserName             = 'Administrator'
+$SafemodeAdministratorPassword             = 'Password1$'
+$SafemodeAdministratorPasswordSecureString = ConvertTo-SecureString $SafemodeAdministratorPassword -AsPlainText -Force
+$SafemodeAdministratorCred                 = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorUserName, $SafemodeAdministratorPasswordSecureString)
 
 
-#$domainAdministratorUserName               = 'lab.local\Administrator'
-#$domainAdministratorPassword               = 'Password1$'
-#$domainAdministratorPasswordSecureString   = ConvertTo-SecureString $domainAdministratorPassword -AsPlainText -Force
-#$domainAdministratorCred                   = New-Object System.Management.Automation.PSCredential ($domainAdministratorUserName, $domainAdministratorPasswordSecureString)
+$domainAdministratorUserName               = 'lab.local\Administrator'
+$domainAdministratorPassword               = 'Password1$'
+$domainAdministratorPasswordSecureString   = ConvertTo-SecureString $domainAdministratorPassword -AsPlainText -Force
+$domainAdministratorCred                   = New-Object System.Management.Automation.PSCredential ($domainAdministratorUserName, $domainAdministratorPasswordSecureString)
 
 #if (-not $AdministratorCred){
 #    $AdministratorCred = (Get-Credential -Message "Enter new domain's credential")
@@ -381,11 +381,7 @@ PROCESS
         DomainFirstDC -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
             -DomainCredential $AdministratorCred `
-            -SafemodePassword $AdministratorCred
-            #-NetAdapterName 'Ethernet0'
-            #-DomainCredential $domainCred `
-            #-SafemodePassword $domainCred `
-            
+            -SafemodePassword $AdministratorCred  
     }
     else
     {
@@ -393,12 +389,9 @@ PROCESS
         #^ Generate configuration MOF files for the additional DCs
         DomainAdditionalDCs -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
-            -DomainCredential $AdministratorCred `
-            -SafemodePassword $AdministratorCred
-            #-NetAdapterName 'Ethernet0'
+            -DomainCredential $domainAdministratorCred `
+            -SafemodePassword $SafemodeAdministratorCred
     }
-
-
 
     #^ Configure the LCM
     # LCM is included within the configuration
