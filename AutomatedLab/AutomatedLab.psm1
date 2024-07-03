@@ -14,7 +14,7 @@ function Install-Modules
     )
     if ( -not(Get-PSRepository -ErrorAction SilentlyContinue | Where-Object { $_.Name -like '*psgallery*' }) )
     {
-        Write-Host -fore Magenta '>> Fixing PsGallery, please wait... <<'
+        Write-Warning -fore Magenta '>> Fixing PsGallery, please wait... <<'
         [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
         Register-PSRepository -Default -Verbose
     }
@@ -24,13 +24,13 @@ function Install-Modules
         $installedModule = Get-Module -Name $moduleName -ListAvailable -ErrorAction SilentlyContinue | Where-Object { $_.Version -eq $desiredVersion }
         if ($null -eq $installedModule)
         {
-            Write-Host "$moduleName version $desiredVersion is not installed on $($Env:COMPUTERNAME). Installing..."
+            Write-Warning "$moduleName version $desiredVersion is NOT yet installed on $($Env:COMPUTERNAME). Installing..."
             Install-Module -Name $moduleName -RequiredVersion $desiredVersion -Force -Confirm:$false
-            Write-Host "$moduleName version $desiredVersion has been installed on $($Env:COMPUTERNAME)."
+            Write-Information "$moduleName version $desiredVersion has been installed on $($Env:COMPUTERNAME)."
         }
         else
         {
-            Write-Host "$moduleName version $desiredVersion is already installed on $($Env:COMPUTERNAME)." -ForegroundColor Green
+            Write-Verbose "$moduleName version $desiredVersion is already installed on $($Env:COMPUTERNAME)." -ForegroundColor Green
         }
     }
 }

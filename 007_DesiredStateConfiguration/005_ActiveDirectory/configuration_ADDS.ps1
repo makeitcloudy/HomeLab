@@ -99,41 +99,80 @@ configuration DomainFirstDC {
         # * NETWORKING
         NetAdapterName InterfaceRename
         {
-            NewName = $NetAdapterName
+            NewName = $Node.InterfaceAlias
         }
+
+        NetAdapterBinding DisableIPv6
+        {
+            InterfaceAlias = $Node.InterfaceAlias
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+
+        #NetBios DisableNetBios
+        #{
+        #    InterfaceAlias = $Node.InterfaceAlias
+        #    Setting        = 'Disable'
+        #    DependsOn      = '[NetAdapterName]InterfaceRename'
+        #}
 
         IPAddress StaticIP
         {
-            InterfaceAlias = $NetAdapterName
+            InterfaceAlias = $Node.InterfaceAlias
             AddressFamily  = 'IPv4'
             IPAddress      = $NODE.IPv4Address
             DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
+        DefaultGatewayAddress IPv4DefaultGateway {
+            AddressFamily  = 'IPv4'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DefaultGatewayAddress
+            DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+
         DnsServerAddress SetDnsServer
         {
-            InterfaceAlias = $NetAdapterName
+            InterfaceAlias = $Node.InterfaceAlias
             AddressFamily  = 'IPv4'
             Address        = $NODE.DNSServers
             DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
-        FirewallProfile DomainFirewallOff
+        FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
             Enabled = 'False'
         }
 
-        FirewallProfile PublicFirewallOff
+        FirewallProfile PublicFirewall
         {
             Name    = 'Public'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
-        FirewallProfile PrivateFirewallOff
+        FirewallProfile PrivateFirewall
         {
             Name    = 'Private'
-            Enabled = 'False'
+            Enabled = 'True'
+        }
+
+        Firewall AllowWinRMHTTPin {
+            Name          = 'Allow-WinRM-HTTP-In'
+            DisplayName   = 'Windows Remote Management (HTTP-In)'
+            Direction     = 'Inbound'
+            Action        = 'Allow'
+            Enabled       = 'True'
+            Protocol      = 'TCP'
+            LocalPort     = '5985'
+            # ammend it by the parameter - for some reason it does not work this time that's why statically assigned
+            #RemoteAddress = '10.2.134.239'
+            RemoteAddress = $Node.ManagementNodeIPv4Address
+            Ensure        = 'Present'
+            Profile       = ('Domain', 'Private')
+            #Profile       = ('Domain', 'Private', 'Public')
+            DependsOn = '[FirewallProfile]DomainFirewall','[FirewallProfile]PrivateFirewall'
         }
 
         # * INSTALL FEATURES
@@ -247,51 +286,51 @@ configuration DomainFirstDC {
             DependsOn                  = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
         }
 
-        foreach ($site in $NODE.AdditionalSites)
-        {
-            ADReplicationSite $site
-            {
-                Ensure    = 'Present'
-                Name      = $site
-                DependsOn = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
-            }
-        }
+        #foreach ($site in $NODE.AdditionalSites)
+        #{
+        #    ADReplicationSite $site
+        #    {
+        #        Ensure    = 'Present'
+        #        Name      = $site
+        #        DependsOn = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
+        #    }
+        #}
 
         # # site replications
-        ADReplicationSiteLink 'PrimarySitelink'
-        {
-            Name                          = 'PrimarySitelink'
-            SitesIncluded                 = $NODE.SitelinkPrimaryMembers
-            Cost                          = 100
-            ReplicationFrequencyInMinutes = 15
-            Ensure                        = 'Present'
-        }
+        #ADReplicationSiteLink 'PrimarySitelink'
+        #{
+        #    Name                          = 'PrimarySitelink'
+        #    SitesIncluded                 = $NODE.SitelinkPrimaryMembers
+        #    Cost                          = 100
+        #    ReplicationFrequencyInMinutes = 15
+        #    Ensure                        = 'Present'
+        #}
 
-        ADReplicationSiteLink 'SecondarySitelink'
-        {
-            Name                          = 'SecondarySitelink'
-            SitesIncluded                 = $NODE.SitelinkSecondaryMembers
-            Cost                          = 159
-            ReplicationFrequencyInMinutes = 20
-            Ensure                        = 'Present'
-        }
+        #ADReplicationSiteLink 'SecondarySitelink'
+        #{
+        #    Name                          = 'SecondarySitelink'
+        #    SitesIncluded                 = $NODE.SitelinkSecondaryMembers
+        #    Cost                          = 159
+        #    ReplicationFrequencyInMinutes = 20
+        #    Ensure                        = 'Present'
+        #}
 
         # # site subnets
-        ADReplicationSubnet 'London-OY_10.2.134.0/24'
-        {
-            Name        = '10.2.134.0/24'
-            Site        = 'London-OY'
-            Location    = 'Olivers Yard DC'
-            Description = 'Infrastructure Management Subnet'
-        }
+        #ADReplicationSubnet 'Lab-OY_10.2.134.0/24'
+        #{
+        #    Name        = '10.2.134.0/24'
+        #    Site        = 'Lab-OY'
+        #    Location    = 'Olivers Yard DC'
+        #    Description = 'Infrastructure Management Subnet'
+        #}
 
-        ADReplicationSubnet 'London-SH_10.24.29.0/24'
-        {
-            Name        = '10.2.134.0/24'
-            Site        = 'London-SH'
-            Location    = 'Shoreditch DC'
-            Description = 'Infrastructure Management Subnet'
-        }
+        #ADReplicationSubnet 'Lab-SH_10.3.134.0/24'
+        #{
+        #    Name        = '10.3.134.0/24'
+        #    Site        = 'Lab-SH'
+        #    Location    = 'Shoreditch DC'
+        #    Description = 'Infrastructure Management Subnet'
+        #}
     }
 
 }
@@ -307,7 +346,6 @@ configuration DomainAdditionalDCs {
         [Parameter(Position = 3, Mandatory = $true)]
         [PSCredential]$SafemodePassword,
         [Parameter(Position = 4)]
-        [String]$NetAdapterName = 'Ethernet0',
         [array]$featureNames = @(
             'RSAT-AD-PowerShell',
             'RSAT-ADDS',
