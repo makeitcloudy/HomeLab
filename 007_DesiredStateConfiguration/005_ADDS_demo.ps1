@@ -334,7 +334,7 @@ PROCESS
                 InterfaceAlias              = 'Eth0'
 
                 DomainName                  = 'lab.local' #FIXME: your domain FQDN
-                DomainNetbiosName           = 'corp' #FIXME: your domain NetBIOS
+                DomainNetbiosName           = 'mot' #FIXME: your domain NetBIOS
                 Thumbprint                  = $selfSignedCertificateThumbprint
                 CertificateFile             = $dscSelfSignedCerCertificate_FullPath
                 NTDSPath                    = 'C:\Windows\NTDS'
