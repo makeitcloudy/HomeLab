@@ -11,5 +11,5 @@ Invoke-WebRequest -Uri $uri -OutFile $outDirectoryFullPath
 #psedit $outDirectoryFullPath
 
 if(Test-Path -Path $outDirectoryFullPath){
-    & $outDirectoryFullPath -Computername $env:COMPUTERNAME
+    & $outDirectoryFullPath
 }
