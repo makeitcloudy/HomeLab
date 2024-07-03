@@ -42,8 +42,8 @@ param (
     #$CurrentPath = (Split-Path -Parent $PSCommandPath),
     # Required modules
     
-    [Parameter(Position = 0, Mandatory = $false)]
-    [String]$computerName = 'dc01',
+    [Parameter(Position = 0, Mandatory = $true)]
+    [String]$computerName = 'dc01'
 
     #[Parameter(Mandatory = $false)]
     #$modules = @{
