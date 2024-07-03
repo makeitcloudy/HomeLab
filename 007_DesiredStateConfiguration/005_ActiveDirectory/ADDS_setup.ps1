@@ -42,8 +42,8 @@ param (
     #$CurrentPath = (Split-Path -Parent $PSCommandPath),
     # Required modules
     
-    [Parameter(Position = 0, Mandatory = $true)]
-    [String]$computerName = 'dc01'
+    #[Parameter(Position = 0, Mandatory = $true)]
+    #[String]$computerName = 'dc01'
 
     #[Parameter(Mandatory = $false)]
     #$modules = @{
@@ -374,9 +374,9 @@ PROCESS
     # load the configuration into memory for it's execution
     . $dscConfigLocalhostADDS_ps1_FullPath
 
-    if ($ENV:ComputerName -match $computerName)
+    if ($ENV:ComputerName -match 'dc01')
     {
-        Write-Output "first"
+        Write-Output "$env:ComputerName - Role: RootDomainController"
         #^ Generate configuration MOF files for the first DC
         DomainFirstDC -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
@@ -389,7 +389,7 @@ PROCESS
     }
     else
     {
-        Write-Output "second"
+        Write-Output "$env:ComputerName - Role: MemberDomainController"
         #^ Generate configuration MOF files for the additional DCs
         DomainAdditionalDCs -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
