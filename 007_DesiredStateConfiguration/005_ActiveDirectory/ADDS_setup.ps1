@@ -186,7 +186,7 @@ $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_Dir
 #endregion
 
 #region Initialize Variables - Configuration - ADDS
-$dscConfigLocalhostADDS_ps1_FileName       = 'configuration_ADDS.ps1'
+$dscConfigLocalhostADDS_ps1_FileName       = 'ADDS_configuration.ps1'
 
 $dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
 $dscConfigLocalhostADDS_ps1_GithubUrl      = $dscConfigLocalhostADDS_GithubUrl,$dscConfigLocalhostADDS_ps1_FileName -join '/'
@@ -330,7 +330,7 @@ PROCESS
                 InterfaceAlias              = 'Eth0'
 
                 DomainName                  = 'lab.local' #FIXME: your domain FQDN
-                DomainNetbiosName           = 'mot' #FIXME: your domain NetBIOS
+                DomainNetbiosName           = 'mot'       #FIXME: your domain NetBIOS
                 Thumbprint                  = $selfSignedCertificateThumbprint
                 CertificateFile             = $dscSelfSignedCerCertificate_FullPath
                 NTDSPath                    = 'C:\Windows\NTDS'
@@ -341,37 +341,31 @@ PROCESS
              }
 
             @{
-                NodeName                    = 'dc01' #FIXME
+                NodeName                    = 'dc01'                           #FIXME
                 Role                        = 'RootDomainController'
-                #NodeName                    = '10.2.134.201'
-                #ComputerName                = 'dc01'
                 IPV4Address                 = '10.2.134.201/24'
                 DefaultGatewayAddress       = '10.2.134.254'
                 DNSServers                  = '127.0.0.1', '1.1.1.1' #NOTE: Cloudflare IP is optional
                 # # domain settings -->
                 ComplexityEnabled           = $false
                 MinPasswordLength           = 8
-                FirstSite                   = 'Lab-Site' #FIXME: your first site's name
-                AdditionalSites             = @('Lab-SH', 'Lab-HQ', 'Lab-BR') #FIXME: additional sites
-                SitelinkPrimaryMembers      = @('Lab-OY', 'Lab-SH', 'Lab-HQ') #FIXME: optional
-                SitelinkSecondaryMembers    = @('Lab-SH', 'Lab-OY', 'Lab-BR') #FIXME: optional
-                NTPServer                   = '0.pl.pool.ntp.org' #FIXME: prefered NTP server
+                FirstSite                   = 'Lab-Site'                       #FIXME: your first site's name
+                #AdditionalSites             = @('Lab-SH', 'Lab-HQ', 'Lab-BR') #FIXME: additional sites
+                #SitelinkPrimaryMembers      = @('Lab-OY', 'Lab-SH', 'Lab-HQ') #FIXME: optional
+                #SitelinkSecondaryMembers    = @('Lab-SH', 'Lab-OY', 'Lab-BR') #FIXME: optional
+                NTPServer                   = '0.pl.pool.ntp.org'              #FIXME: prefered NTP server
                 FailOverNTPServers          = ('1.pl.pool.ntp.org','2.pl.pool.ntp.org')  #FIXME: alternative NTP server
-                #NTPServer                   = '10.13.36.4' #FIXME: prefered NTP server
-                #FailOverNTPServers          = ('10.13.36.7','time.windows.com')  #FIXME: alternative NTP server
             }
 
             @{
-                NodeName                    = 'dc02' #FIXME: additional DC
+                NodeName                    = 'dc02'                           #FIXME: additional DC
                 Role                        = 'MemberDomainController'
-                #NodeName                    = '10.2.134.202' #FIXME: additional DC
-                #ComputerName                = 'dc02' #FIXME: additional DC
-                IPV4Address                 = '10.2.134.202/24' #FIXME: additional DC IP
+                IPV4Address                 = '10.2.134.202/24'                #FIXME: additional DC IP
                 DefaultGatewayAddress       = '10.2.134.254'
-                DNSServers                  = '10.2.134.201', '1.1.1.1' #FIXME: first DC + any optional DNS servers
-                Site                        = 'Lab-Site' #FIXME: any valid site created on the first DC
+                DNSServers                  = '10.2.134.201', '1.1.1.1'        #FIXME: first DC + any optional DNS servers
+                Site                        = 'Lab-Site'                       #FIXME: any valid site created on the first DC
                 IsGlobalCatalog             = $true
-                NTPServer                   = '0.pl.pool.ntp.org' #FIXME: prefered NTP server
+                NTPServer                   = '0.pl.pool.ntp.org'              #FIXME: prefered NTP server
                 FailOverNTPServers          = ('3.pl.pool.ntp.org','time.windows.com') #FIXME: alternative NTP server
             }
         )
