@@ -381,8 +381,8 @@ PROCESS
         DomainFirstDC -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
             -DomainCredential $AdministratorCred `
-            -SafemodePassword $AdministratorCred `
-            -NetAdapterName 'Ethernet0'
+            -SafemodePassword $AdministratorCred
+            #-NetAdapterName 'Ethernet0'
             #-DomainCredential $domainCred `
             #-SafemodePassword $domainCred `
             
@@ -394,8 +394,8 @@ PROCESS
         DomainAdditionalDCs -ConfigurationData $configData `
             -OutputPath $dscOutputADDS_DirectoryPath `
             -DomainCredential $AdministratorCred `
-            -SafemodePassword $AdministratorCred `
-            -NetAdapterName 'Ethernet0'
+            -SafemodePassword $AdministratorCred
+            #-NetAdapterName 'Ethernet0'
     }
 
 

@@ -9,7 +9,6 @@ configuration DomainFirstDC {
         [Parameter(Position = 3, Mandatory = $true)]
         [PSCredential]$SafemodePassword,
         [Parameter(Position = 4)]
-        [String]$NetAdapterName = 'Ethernet0',
         [array]$featureNames = @(
             'RSAT-AD-PowerShell',
             'RSAT-ADDS',
@@ -380,12 +379,12 @@ configuration DomainAdditionalDCs {
         # * NETWORKING
         NetAdapterName InterfaceRename
         {
-            NewName = $NetAdapterName
+            NewName = $Node.InterfaceAlias
         }
 
         IPAddress StaticIP
         {
-            InterfaceAlias = $NetAdapterName
+            InterfaceAlias = $Node.InterfaceAlias
             AddressFamily  = 'IPv4'
             IPAddress      = $NODE.IPv4Address
             DependsOn      = '[NetAdapterName]InterfaceRename'
@@ -393,7 +392,7 @@ configuration DomainAdditionalDCs {
 
         DnsServerAddress SetDnsServer
         {
-            InterfaceAlias = $NetAdapterName
+            InterfaceAlias = $Node.InterfaceAlias
             AddressFamily  = 'IPv4'
             Address        = $NODE.DNSServers
             DependsOn      = '[NetAdapterName]InterfaceRename'
