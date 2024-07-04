@@ -6,6 +6,10 @@ Centos is used for NFS and SMB share, as well as the place where the self signed
 
 ## Links
 
+### Backup
+
+* bvckup2
+
 ### Linux Disk Management
 
 https://www.youtube.com/watch?v=HsRRX05f1L4 - #nerdOnTheStreet #Disk Management - Bash Basics (Linux CLI)

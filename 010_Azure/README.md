@@ -4,6 +4,7 @@
 
 Where to start
 
+* https://www.youtube.com/@MadeByGPS/videos - what is interesting is that she goes straight to the point, there is no marketing, and experience from the field
 * https://github.com/MichaelCade/90DaysOfDevOps
 * https://100daysofcloud.com/
 * https://github.com/100DaysOfCloud/100DaysOfCloud
@@ -12,7 +13,6 @@ Where to start
 
 ## Interesting content for new comers
 
-* https://www.youtube.com/c/MadeByGPS - what is interesting is that she goes straight to the point, there is no marketing, and experience from the field
 * https://twitter.com/disruptthecloud
 * https://linktr.ee/disruptthecloud
 * https://learntocloud.guide/#/
