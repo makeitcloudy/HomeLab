@@ -188,7 +188,7 @@ $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_Dir
 #region Initialize Variables - Configuration - ADDS
 $dscConfigLocalhostADDS_ps1_FileName       = 'ADDS_configuration.ps1'
 
-$dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
+$dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
 $dscConfigLocalhostADDS_ps1_GithubUrl      = $dscConfigLocalhostADDS_GithubUrl,$dscConfigLocalhostADDS_ps1_FileName -join '/'
 
 #C:\dsc\config\localhost\ActiveDirectory\New-ADDSC.ps1
@@ -236,7 +236,7 @@ Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFuncti
 
 # DSC Configuration: - localhost ADDS
 #configuration_ADDS.ps1
-#https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/configuration_ADDS.ps1
+#https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/configuration_ADDS.ps1
 Invoke-WebRequest -Uri $dscConfigLocalhostADDS_ps1_GithubUrl -OutFile $dscConfigLocalhostADDS_ps1_FullPath -Verbose
 
 #New-ADDSC.psm1
