@@ -2,6 +2,13 @@
 
 ## Links
 
+* **Windows Customized default by Aaron Parker** - https://twitter.com/stealthpuppy/status/1470912249464197128
+* **Windows Customized default by Aaron Parker** - https://stealthpuppy.com/image-customise/
+* **Lockdown Published Desktop with WEM and GPO** - https://schrameyersite.wordpress.com/2022/02/19/lockdown/
+* **UberAgent by Helge Klein** - https://helgeklein.com/blog/citrix-cvad-virtual-apps-desktops-network-connection-target-hosts/
+* **UberAgent by Helge Klein** - https://uberagent.com/download/
+* **Pvs** - https://www.carlstalhood.com/pvs-master-device-preparation/
+* **UPM / FSLogix** - https://jkindon.com/citrix-upm-and-fslogix-containers/<br>
 * https://www.deploymentresearch.com/w10guide-thankyou/
 * https://www.windowscentral.com/how-create-unattended-media-do-automated-installation-windows-10
 * https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html
@@ -103,6 +110,16 @@ New-OSBMediaIso
 
 ## Removing "press any key" prompts for GPT/UEFI Windows install
 
+### Links
+
+* Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)
+* Oscdimg details which gives more insight than the MS documentation (https://oofhours.com/2021/12/25/how-does-uefi-boot-from-a-cd/)
+* howto is avaialble here (https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html)
+
+
+1. https://gist.github.com/misheska/2af4f9d17206326889b44c3c1f50e277#file-copywindowsiso-ps1
+2. https://gist.github.com/misheska/035c52cf7e7a47087c013cd346d9d5d1#file-nopromptswitch-ps1
+3. https://gist.github.com/misheska/2c3b032eaf529b1b5176bfa1560a10d5#file-createnopromptiso-ps1
 
 ```powershell
 # Once the Iso is ready it is stored within the location
@@ -170,12 +187,3 @@ if($Proc.ExitCode -ne 0)
 # Dismount the Original ISO
 Dismount-DiskImage -ImagePath $WinPE_InputISOfile
 ```
-
-* Oscdimg documentation can be found here (https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/oscdimg-command-line-options)
-* Oscdimg details which gives more insight than the MS documentation (https://oofhours.com/2021/12/25/how-does-uefi-boot-from-a-cd/)
-* howto is avaialble here (https://williamlam.com/2016/06/quick-tip-how-to-create-a-windows-2016-iso-supporting-efi-boot-wo-prompting-to-press-a-key.html)
-
-
-1. https://gist.github.com/misheska/2af4f9d17206326889b44c3c1f50e277#file-copywindowsiso-ps1
-2. https://gist.github.com/misheska/035c52cf7e7a47087c013cd346d9d5d1#file-nopromptswitch-ps1
-3. https://gist.github.com/misheska/2c3b032eaf529b1b5176bfa1560a10d5#file-createnopromptiso-ps1

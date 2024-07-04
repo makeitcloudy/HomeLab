@@ -2,6 +2,10 @@
 
 Consider automating the deployment of the core elements which are the backbone of your VM infrastructure, like AD, GPO's, certificates and other stuff which will come into play, especially when in disposal of 180days evaluation products. Time is passing by fast, especially when you try to keep up in balance. Stil IaC (Infrastructure as a Code) which is your goal, requires a lot of work, and it does not often scales well, but stil better than manual clicks.
 
+## WinRM
+
+[winRM - over HTTPS](https://gist.github.com/gregjhogan/dbe0bfa277d450c049e0bbdac6142eed)
+
 ## Domain join
 
 * [powershellgallery.com](https://www.powershellgallery.com/packages/ComputerManagementDsc/6.2.0.0/Content/Examples%5CResources%5CComputer%5C2-JoinDomain.ps1) - Join Computer to the domain

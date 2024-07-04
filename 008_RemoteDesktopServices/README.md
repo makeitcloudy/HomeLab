@@ -1,5 +1,9 @@
 # RDS RDmi WVD AVD
 
+## Links
+
+* https://github.com/tansei/AutomatedRDS
+
 Remote Desktop Services can have it's own separate section, it's kind of big topic. Citrix was built on top of RDS, it brings some hooks on the kernel level, added plenty of functionalities which are not available within the pure RDS (which honestly is like a russian tank, it does not offer much, but it's kind of reliable up to some extend, if only configured properly). Proper configuration may be supported by the book mentioned within the main section of AutomatedCitrix repository.
 Citrix relies on protocol called HDX (ICA), where RDS is RDP based.
 

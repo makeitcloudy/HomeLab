@@ -1,4 +1,18 @@
-**#Unattended.xml**
+# Unattended
+
+## Links
+
+#unattended xml files for the LTSC iso's which can be downloaded from the microsoft webpage
+
+* [OSDBuilder howto](https://github.com/ibeerens/osdbuilder)
+* [Rufus - Increase time showing "Press any key to boot from USB" to e.g. 30 seconds](https://github.com/pbatard/rufus/issues/1077)
+* [offline servicing Windows Server 2012R2](https://serverfault.com/questions/979174/how-can-i-do-an-offline-update-of-a-new-windows-2012-r2-server)
+* https://citrixguyblog.com/2019/03/19/osdbuilder-reference-image-on-steroids/
+* [unattended xml bios and uefi for windows 10](https://github.com/larytet/auto-win/tree/master/autounattend)
+* [PVS Admin Toolkit](https://github.com/Mohrpheus78/Citrix/tree/main/PVS%20Admin%20Toolkit)
+* [MSIX packaging](https://flexxible.com/automating-msix-packaging-with-powershell/)
+
+## .
 
 + KMS key <Product Key> need to go hand in hand with the version of the Windows (https://learn.microsoft.com/en-us/windows/release-health/release-information)
 

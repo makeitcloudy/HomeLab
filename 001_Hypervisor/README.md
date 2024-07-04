@@ -17,6 +17,28 @@ Another option is to go with Vmware Player or Vmware Workstation, you can constr
 As it goes for the automation, there is XenServer SDK available, which also talks with XCP-ng. If you spin a lot of machines on Vmware Workstation, there is Vmxtoolkit (https://github.com/bottkars/vmxtoolkit), which may help you getting released from a need of clicking through the GUI to bring the skeleton for the VM, or mounting the iso's and other things. It is really usefull.<br>
 The integration between Hyper-V and DSC is great, there is a bit of learning curve but it pays off once you setup your little framework.
 
+## Links
+
+* https://github.com/xapi-project/xen-api-sdk/tree/master/powershell'
+* https://github.com/xapi-project/xen-api-sdk/blob/master/powershell/autogen/samples/AutomatedTestCore.ps1'
+* https://docs.citrix.com/en-us/citrix-hypervisor/command-line-interface.html' #Xen command line interface
+* https://workspace-guru.com/2017/11/12/scripting-citrix-xenserver-powershell-command-line/"
+* https://discussions.citrix.com/topic/414777-xenserver-boot-mode-uefi-boot-for-machines-created-with-powershell-api/" #thread how to create UEFI boot vm
+* https://xcp-ng.org/forum/topic/5180/xen-boot-mode-uefi-boot-for-machines-created-with-powershell-api" #thread how to create UEFI boot vm
+* http://bisbd.blogspot.com/2020/09/modifying-citrix-hypervisor-xenserver.html' #HVM-boot-params - Modifying Citrix Hypervisor (Xenserver) Guest VM boot order from Command Line
+* https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html#guest-uefi-boot-and-secure-boot'
+* https://docs.citrix.com/en-us/citrix-hypervisor/vms/troubleshoot.html' #How do I run Windows debug on a Secure Boot VM?
+* https://xcp-ng.org/docs/cli_reference.html#low-level-list-commands'
+* https://github.com/ZachThurmond/Automated-XenServer-Labs/blob/master/AXL.ps1'
+* https://github.com/xapi-project/xen-api-sdk/blob/master/powershell/autogen/samples/AutomatedTestCore.ps1'
+* https://docs.citrix.com/en-us/citrix-hypervisor/vms/windows.html' #UEFI machines on XenServer
+* https://xenbits.xen.org/docs/unstable/man/xl.cfg.5.html' #HVMBootParams UEFI and BIOS
+* https://computingforgeeks.com/add-and-use-iso-library-storage-repository-xen-xcp-ng/' - #XS NFS shares
+* https://docs.citrix.com/en-us/xencenter/7-1/vms-new-cpu-memory.html - #CPU topology
+* https://discussions.citrix.com/topic/379901-socket-with-cores-or-sockets-with-core/'
+* https://support.citrix.com/article/CTX126524'
+
+
 ## Hypervisor automation
 
 * https://github.com/ZachThurmond/Automated-XenServer-Labs - AXL github repo
@@ -46,19 +68,19 @@ Storage tiering is your friend, be generous for this layer.
 
 Inspirations can be found here:
 
-* https://www.servethehome.com/ - invaluable amount of helpful content<br>
-* https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys shares material of great quality in topics like pfsense, freenas, etc<br>
-* https://www.reddit.com/r/homelab/ - remember that each usecase is different<br>
+* https://www.servethehome.com/ - invaluable amount of helpful content
+* https://www.youtube.com/watch?v=q-jKs62b6Co - Lawrence Systems shares great tips and tricks, those guys shares material of great quality in topics like pfsense, freenas, etc
+* https://www.reddit.com/r/homelab/ - remember that each usecase is different
 
 ## Installation of XenTools
 
-**Linux**
+### Linux
 
 * XenServer 8.2 tools from Citrix does not recognize the Centos Stream 8 properly, never the less executing it this way do the trick *install.sh -d centos -m 8*
 * Xcp-ng 8.2 tools does not have this issue
 * in case you use linux operating systems for your core services within the lab - use the Xcp-ng tools, the installation is straightforward (https://xen-orchestra.com/blog/install-xenserver-tools-in-your-vm/)
 
-**Windows**
+### Windows
 
 * XenServer 8.2 tools integrates well with Desktop and Server operating systems
 * based on my experience at least two restarts are needed, then the hypervisor recognizes that all components of the tools are in place, once completed 'Vm tools instelled sucesfully' pops up

@@ -18,6 +18,12 @@ As it goes for the firewall the pfsense will do the trick, it can be virtualized
 There are people who are towards OPNSense and there is also other groups who opt for VyOS or IpFire.<br>
 Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.
 
+## Links
+
+* https://help.mikrotik.com/docs/
+* https://mikrotik.com/support
+* https://wiki.mikrotik.com/wiki/Main_Page
+
 ## Firewall
 
 * OpenBSD FAQ - https://www.openbsd.org/faq/pf/
