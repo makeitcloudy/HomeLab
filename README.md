@@ -2,7 +2,7 @@
 
 # HomeLab - XCP-ng, Linux, Microsoft stack, Citrix, Remote Desktop Services, Hybrid Scenarios
 
-Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll never know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.<br>
+Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll never know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.
 
 
 ## Links
@@ -45,7 +45,8 @@ As of the unattended xml creation, this blog is also worth reading (https://tayl
 
 Once the VM's are installed, if you search for particular KB or Cummulative update, like the one for .NET those can be found here (https://www.catalog.update.microsoft.com/Search.aspx?q=windows%20Server%202016%20framework)
 
-**(008)** Depending from the scenario, there are solutions which are worse and better match. Powershell for the rescue in MS world, that's for sure, still some products like MEM (Microsoft Endpoint Manager) may make it easier you to manage Microsoft Endpoints, MDT (Microsoft Deployment Toolkit) or modules brought by the communities within the PowerShell Gallery itself. First you need to find them, and get a bit of hands on experience, as not all of them are very well documented, never the less again in some cases getting them to know, will pay you off with some time savings.<br>
+**(008)** Depending from the scenario, there are solutions which are worse and better match. Powershell for the rescue in MS world, that's for sure, still some products like MEM (Microsoft Endpoint Manager) may make it easier you to manage Microsoft Endpoints, MDT (Microsoft Deployment Toolkit) or modules brought by the communities within the PowerShell Gallery itself. First you need to find them, and get a bit of hands on experience, as not all of them are very well documented, never the less again in some cases getting them to know, will pay you off with some time savings.
+
 Atomizing actions within your scripts is your way to go, do not put to much of features into one function / script, as it make your life harder. It's easier to say than do, but it will come with the pitfals made during your attempts. Let those objects created within your code be passed in the pipeline, and be consumed by another tool which fits the purpose.
 
 Starting from scratch will cost you a great amount of effort, so take the benefit of community work and great guys which shares with us their knowledge and efforts produced very often in nights, and dozen of attempts to make it work. Frequently, what they share is extra work, brought to us apart from their regular full time jobs.
@@ -61,22 +62,22 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 **(011)** There is a great book which will explain the GPU virtualization topic written by Jan Hendrik Meier - GPU Powered VDI (https://www.amazon.com/GPU-powered-VDI-Virtual-Desktops/dp/1983043311), and interesting blogpost series available one (https://www.poppelgaard.com/blog).
 
-* ** AD / AD - Ask the Directory Services Team ** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)
-* ** AD / Carl Webster Active Directory Presentations ** - (https://carlwebster.com/category/conference-presentations/)
-* ** AD / GPO Automation ** - (https://jm2k69.github.io/2020/02/GPO-from-zero-to-hero-GPO-and-PowerShell.html)
-* ** AD / GPO Automation ** - (https://carlwebster.com/creating-a-group-policy-using-microsoft-powershell-to-configure-the-authoritative-time-server/)
-* ** AD / GPO ** - (https://admx.help) | (https://pspeditor.azurewebsites.net/)
-* ** AD / GPO Troubleshooting ** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)
-* ** Image Preparation ** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life
-* ** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)
-* ** Logon Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)
-* ** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles
-* ** Applications ** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
-* ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him 
-* ** WMI/CIM is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)
-* ** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
-* ** RDS ** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before
-* ** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together
+* **AD / AD - Ask the Directory Services Team** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)
+* **AD / Carl Webster Active Directory Presentations** - (https://carlwebster.com/category/conference-presentations/)
+* **AD / GPO Automation** - (https://jm2k69.github.io/2020/02/GPO-from-zero-to-hero-GPO-and-PowerShell.html)
+* **AD / GPO Automation** - (https://carlwebster.com/creating-a-group-policy-using-microsoft-powershell-to-configure-the-authoritative-time-server/)
+* **AD / GPO** - (https://admx.help) | (https://pspeditor.azurewebsites.net/)
+* **AD / GPO Troubleshooting** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)
+* **Image Preparation** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life
+* **Image Preparation** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)
+* **Logon Optimization** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)
+* **Profiles** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles
+* **Applications** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
+* **OS Layer / Uber Agent** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him 
+* **WMI/CIM is your friend** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)
+* **RDS** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
+* **RDS** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before
+* **PVS vs Pester** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together
 
 ## Product documentation
 
@@ -84,12 +85,12 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 * Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)
 * The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
 * Powershell gallery - https://www.powershellgallery.com/
-* Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
+* Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery
 * XCP-ng documentation - https://xcp-ng.org/docs/
 
-** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)
-** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)
-** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)
+* *Citrix Tech Zone* - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)
+* *Citrix Supportability pack* - (https://support.citrix.com/article/CTX203082)
+* *Citrix Optimizer* - (https://support.citrix.com/article/CTX224676)
 
 ## Books
 
