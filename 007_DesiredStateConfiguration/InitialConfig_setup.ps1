@@ -20,7 +20,7 @@ function Set-InitialConfiguration {
         [ValidateNotNullOrEmpty()][ValidateSet("WorkGroup", "Domain")]
         [string]$Option,
 
-        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$false)]
+        [Parameter(Mandatory=$false,Position=2,ValueFromPipelineByPropertyName=$false)]
         [switch]$UpdatePowerShellHelp
     )
 
