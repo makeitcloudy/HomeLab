@@ -1,63 +1,11 @@
-*the idea behind this project is to help new commers, as well as people who consider the way of automating deployment of the microsoft stack within their labs. it's one man effort, who is trying to glue together the community shares comming from other EUC members in one place. As of 2022.03 the initiative is still ongoing, there could be bugs, but still there is plenty of usefull details and code which can be used for anyone who is keen on learning. I'm not a real dev, it's educational purposes only. Some of the ideas can be uesd in dev, uat or prod - the original purpose is home lab, to save some time. There are great alternative projects like Lability, LabBuilder, PS-AutoLab-Env, etc, here it is on XCP-ng.*
+*the idea behind this project is to help new commers, as well as people who consider the way of automating deployment of the microsoft stack within their labs. it's one man effort. As of 2024.07 the initiative is still ongoing. It's educational purposes in home lab. Automation included in the surrounding modules are meant to save time. There are great alternative projects like Lability, LabBuilder, PS-AutoLab-Env, etc, this one is based on XCP-ng.*
 
-# AutomatedCitrix
+# HomeLab - XCP-ng, Linux, Microsoft stack, Citrix, Remote Desktop Services, Hybrid Scenarios
 
 Some could say CVAD (Citrix Virtual Apps and Desktops), never the less I will stick with the first string from the product name only, as you'll never know when the current name become the relict of the past. Where the word Citrix is still with us since 20y.<br>
 
-Okay so you decided to spend some time with this product, but you do not want spend too much of your precious time with setting up the vm's at first place..
-You may ask, where to start, well the knowledge is scattered over the internet, it's just perfectly schattered into pieces, there are few well known places which tries to accomodate the most important details in one place, one of them is Carl Stalhood (https://www.carlstalhood.com/), he rocks. It all goes with experience, but still the best way to learn something is to give it a spin and at least try and fail, without giving up.
 
-Below are areas which should be taken into account, along with my attempt to give some insight to those of you who may be seeking for those type of details, and are curious about the possibilities. It does not gather are possibilities, as each scenario and homelab is different and there are so many possibilities that here I'm basing on my own experience.
-
-## 000 Miscellaneous
-
-In case it is not enough, there is a possibility for the GPU Virtualization, there are some geeks on the internet who perform this with regular Nvidia GTX cards, since Nvidia released drivers for GeForce GPU Passthrough for Windows Virtual Machine (Beta) (https://nvidia.custhelp.com/app/answers/detail/a_id/5173/~/geforce-gpu-passthrough-for-windows-virtual-machine-%28beta%29) it's a bit easier. If you think of going Tesla or Quaddro way you'll need extra licenses from nvidia.
-
-## 001_Hypervisor
- 
-Think of the hypervisor vendor, you'll bring into your lab. Your option may be xcp-ng (https://xcp-ng.org/). It's free, it's based on Xen. There is also Hyper-V Server 2019 LTSC (Long-Term Servicing Channel) also a good bet especially if one tend to stay in Microsoft Stack (according to some revelations this is the last free version of this product which is supported until 2029, so there is some time to evaluate Azure Stack HCI. Another option is might be Azure, but at the time of writing this, nested virtualization for the giant's world where we are with citrix is not very well suited with Azure Labs. If you count the cost of storage and compute, it may not be that cheap overall, especially if you spend time doing things manually. It seems that your first hard stop may be with the space on the storage. That's why for fresh home labbers I'm still opting for energy efficient solution (Intel Nuc or some new releases of Xeons) which is based on-premise. In my opinion clouds are towards contenerization and webservices which scales far better than virtual machine based scenarios.
-
-## 002 Storage
-
-Consider splitting your regular network for the VM traffic, that you end up with different possible scenarios for deployment (especially if you are interested with ending up with more than one site), and some specific use cases.
-
-## 003 Network 
-
-Consider 10G network connectivity for your storage, then the provisioning should be much faster. Unless you got it virtualized already, and you dont' have to take care about this aspect.
-
-## 005 Image Preparation
-
-Consider preparing the unattended iso's for the Server and Desktop OS'es - it will help you spinning up new vm's.
-
-## 006 Core Services
-
-### PKI
-
-Think about the PKI infrastructure, then you can get some hands on experience with FAS (Federated Authentication Services), TLS 1.x - and you'll gain some hands on experience with openSSL, and you can take the benefit of that piece for the regular RDS (Remote Desktop Infrastructure).
-
-## 007 Desired State Configuration
-
-Consider automating the deployment of the core elements which are the backbone of your VM infrastructure, like AD, GPO's, certificates and other stuff which will come into play, especially when in disposal of 180days evaluation products. Time is passing by fast, especially when you try to keep up in balance. Stil IaC (Infrastructure as a Code) which is your goal, requires a lot of work, and it does not often scales well, but stil better than manual clicks.
-
-## 008 Remote Desktop Services
-
- Spin up Remote Desktop Services Session Hosts, with the regular PVS (Citrix Provisioning Services) infrastructure (https://citrixguyblog.com/2021/10/07/citrix-pvs-deploy-microsoft-remote-desktop-session-hosts-with-citrix-provisioning-services/). Please check the licensing constrains, which will help you assessing which version of the PVS you may be utilizing for the usecase. There are/were some differences..
-
-## 009 Hybrid
-
-If you think about going hybrid for the WVD (Windows Virtual Desktop) usecase, bare in mind Azure Ephemeral Disks.
-
-## 010 Azure
-
-## 011 Citrix
-
-### Citrix NetScaler
-
-Consider the Freemium version of the Citrix Netscaler (Citrix ADC), starting version 13.0 of the product, the freemium version equals with the features previous standard releases, so it should at least give you the possibilities to get some hands on experience with SSL offloading, Load Balancing, Context switching, and some other interesting things, without a chance to set the Gateway for your CVAD infrastructure (https://docs.citrix.com/en-us/citrix-adc/13/deploying-vpx/deploy-vpx-faq.html#hypervisor). Let's see what the 2022 bring for home labbers as Citrix is promissing some improvements in that area, and some special licenses / options. Again you may remain with Citrix stack, unless decided that pfsense is your way to go, or another mixture of components.
-
-**010.** Applications - There is AppLayering from citrix, never the less let's be fair, I have not seen a vendor who is doing all the things right and have the best possible solutions to spin up the environment, especially considering such amount of usecases, and different angles. It has been said, if you decide to go with AppLayering then you should cover all your apps. The question is how much effort will that cost you comparing to other solutions available on the market like App-v or SCCM/MEM or rewriting those to be served as web apps. It's hard to suggest anything here, but bare in mind the binary methodology here 1 or 0. The worse thing you can do for yourself is to bring different ways of provisioning for your applicaiton layer. Keep it simple, and tend to use solutions which lasts.
-
-## Content
+## Links
 
 **(001)** Xcp-ng is based on RedHat, like regular XenServer is. In case you are still using windows desktop as your management station, there is an option called (https://github.com/xcp-ng/xenadmin/releases). Bare in mind that there are no toos available for windows VM which runs on top of xcp-ng, but in case you are so fortunate and have a mycitrix account, there is an option for you, to get rid of that issue, unless this is prevented. Apart from that if you decide to stick with the original stack, and you won't mix vmware, nutanix, or hyper-v with CVAD's, then you can take the benefit from the Citrix Hypervisor SDK (available in PowerShell) which will allow you automating the provisioning of the VM's, so you don't have to click within the XenCenter / XenAdmin Centre. The Xen API does not belong to the easiest one, especially if you decide to perform something a bit more complicated. Thankfully there are github projects like AXL wchich may make it easier to construct your own functions which are hopefully idempotent.
 
@@ -81,7 +29,7 @@ Apart from that there is a great resource for the FMA (Flexcast Management Archi
 
 **(007)** Unattended file, if this is home lab, you'll find plenty of examples in the internet with the GVLK keys (https://docs.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys), please do not follow them. If you decide constructing your xml answer file, leave this parameter blank, and focus on updating the .wim file with OSD from Mr. Segura (https://osdupdate.osdeploy.com/) - who brought this fantastic product which will save your time and make your life easier.
 
-*** OSBuilder *** - (https://osbuilder.osdeploy.com/docs)
+**OSBuilder** - (https://osbuilder.osdeploy.com/docs)
 
 Once you download the image of your LTSC windows release, it will contain Standard and Datacenter versions, in Core (no GUI - Graphical User Interface in windows) and Desktop Experience (GUI which you got used to during all the years). The sources can be downloaded from the Microsoft webpage (https://www.microsoft.com/en-us/evalcenter/evaluate-windows-server-2019), the downloaded iso will contain the .wim file. If you decide to use another ways, like Windows Media Creation Tool, then you'll end up with the iso or other format, which contain .esd file instead of .wim file. Up to my knowledge, you'll have to convert it to .wim if you'd like to make use of it in Windows ADK. ADK goes hand in hand with releases of windows, there is different verison of ADK for 2022, 2019, 2012R2 etc. ADK details can be found here (https://docs.microsoft.com/pl-pl/windows-hardware/get-started/what-s-new-in-kits-and-tools).
 
@@ -113,54 +61,54 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 **(011)** There is a great book which will explain the GPU virtualization topic written by Jan Hendrik Meier - GPU Powered VDI (https://www.amazon.com/GPU-powered-VDI-Virtual-Desktops/dp/1983043311), and interesting blogpost series available one (https://www.poppelgaard.com/blog).
 
-** AD / AD - Ask the Directory Services Team ** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)<br>
-** AD / Carl Webster Active Directory Presentations ** - (https://carlwebster.com/category/conference-presentations/)<br>
-** AD / GPO Automation ** - (https://jm2k69.github.io/2020/02/GPO-from-zero-to-hero-GPO-and-PowerShell.html)<br>
-** AD / GPO Automation ** - (https://carlwebster.com/creating-a-group-policy-using-microsoft-powershell-to-configure-the-authoritative-time-server/)
-** AD / GPO ** - (https://admx.help) | (https://pspeditor.azurewebsites.net/)<br>
-** AD / GPO Troubleshooting ** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)<br>
-** Image Preparation ** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life <br>
-** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)<br>
-** Logon Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)<br>
-** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles<br>
-** Applications ** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
-** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him <br><br>
-** WMI/CIM is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)<br>
+* ** AD / AD - Ask the Directory Services Team ** - (https://docs.microsoft.com/en-us/archive/blogs/askds/configuring-an-authoritative-time-server-with-group-policy-using-wmi-filtering)
+* ** AD / Carl Webster Active Directory Presentations ** - (https://carlwebster.com/category/conference-presentations/)
+* ** AD / GPO Automation ** - (https://jm2k69.github.io/2020/02/GPO-from-zero-to-hero-GPO-and-PowerShell.html)
+* ** AD / GPO Automation ** - (https://carlwebster.com/creating-a-group-policy-using-microsoft-powershell-to-configure-the-authoritative-time-server/)
+* ** AD / GPO ** - (https://admx.help) | (https://pspeditor.azurewebsites.net/)
+* ** AD / GPO Troubleshooting ** - (https://evotec.xyz/the-only-command-you-will-ever-need-to-understand-and-fix-your-group-policies-gpo/)
+* ** Image Preparation ** - BIS-F (https://eucweb.com/download-bis-f | https://github.com/EUCweb/BIS-F) - big thank you to Mathias and all guys who brought this to life
+* ** Image Preparation ** - Evergreen (https://github.com/Deyda/Evergreen-Script | https://github.com/aaronparker/Evergreen)
+* ** Logon Optimization ** - (https://james-rankin.com/features/the-ultimate-guide-to-windows-logon-time-optimizations-part-11/)
+* ** Profiles ** - (https://github.com/FSLogix) | UPD | massive products like Ivanti | Roaming Mandatory Profiles
+* ** Applications ** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
+* ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him 
+* ** WMI/CIM is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)
 
-** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!<br>
-** RDS ** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before<br>
+* ** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
+* ** RDS ** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before
 
-** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together<br>
+* ** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together
 
-**Product documentation**
+## Product documentation
 
-+ Citrix Github - https://github.com/citrix
-+ Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)
-+ The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
-+ Powershell gallery - https://www.powershellgallery.com/
-+ Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
-+ XCP-ng documentation - https://xcp-ng.org/docs/
+* Citrix Github - https://github.com/citrix
+* Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)
+* The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
+* Powershell gallery - https://www.powershellgallery.com/
+* Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery<br>
+* XCP-ng documentation - https://xcp-ng.org/docs/
 
 ** *Citrix Tech Zone* ** - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)
 ** *Citrix Supportability pack* ** - (https://support.citrix.com/article/CTX203082)
 ** *Citrix Optimizer* ** - (https://support.citrix.com/article/CTX224676)
 
-**Books**
+## Books
 
-+ https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf
-+ https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide
-+ https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge wont' harm*
-+ https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, it will pay off from time to time*
-+ https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
-+ https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
-+ https://leanpub.com/the-dsc-book
-+ https://leanpub.com/pesterbook
-+ https://leanpub.com/thebigbookofpowershellerrorhandling
-+ https://leanpub.com/powershell101
-+ https://leanpub.com/azurebicep
-+ https://www.amazon.com/Byte-Sized-design-principles-architectural-recommendations/dp/1797692100
+* https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf
+* https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide
+* https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge wont' harm*
+* https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, it will pay off from time to time*
+* https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
+* https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
+* https://leanpub.com/the-dsc-book
+* https://leanpub.com/pesterbook
+* https://leanpub.com/thebigbookofpowershellerrorhandling
+* https://leanpub.com/powershell101
+* https://leanpub.com/azurebicep
+* https://www.amazon.com/Byte-Sized-design-principles-architectural-recommendations/dp/1797692100
 
-**Supportive channels with structuralized content**
+## Supportive channels with structuralized content
 
 * https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, which make it easier, going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same topics as many times until your subscription expires.
 
@@ -170,37 +118,38 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 * https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
 
-**Bunch of usefull links, with a bit more scattered knowledge**
+## Bunch of usefull links, with a bit more scattered knowledge
 
 * https://www.reddit.com/r/Citrix/
 * https://stackoverflow.com/
 * https://serverfault.com/
 
-**Podcast**
+## Podcasts
+
 * https://www.eucdigest.com/episodes/
 * https://cloudskills.fm/
 * https://runasradio.com/
 
-**Conferences**
+## Conferences
 
 * https://www.youtube.com/c/PowerShellConferenceEU - PowerShell source, apart from that search for Jeffrey Snover presentations, they way he describes things is straightforward and intelligeble, which proofs his well understanding of the topic ;)
 * https://xenappblog.com/agenda/ - virtual expo - it is taking place two times in a year - it is a great initiative which was invented by Trond Haavarstein, with fabolous speakers and presentations
 * https://cloudcamp.ie/
 
-**Automated Lab provisioning**
+## Automated Lab provisioning
 
 * https://github.com/PlagueHO/LabBuilder
 * https://github.com/VirtualEngine/Lability
 * https://github.com/pluralsight/PS-AutoLab-Env
 * https://github.com/ZachThurmond/Automated-XenServer-Labs
 
-**Community shares - lab approaches**
+## Community shares - lab approaches
 
 * Carl Webster Lab - (https://carlwebster.com/building-websters-lab-v2/)
 * Nicolas Ignoto - (https://www.citrixguru.com/category/lab/)
 * https://mybrokencomputer.net/t/setup-a-citrix-home-lab-in-sixty-minutes/28
 
-**Community shares**
+## Community shares
 
 * World of EUC slack - (https://t.co/EVrMXepANH)
 * World of EUC discord - (https://t.co/zE0QTpANZQ)
@@ -244,12 +193,11 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 
 Many of abovementioned EUC experts, links on their blogs shares great tools which may improve your skills in your daily work, and reveal knowledge, which you'll never get on the trainings guarateed by the vendor, exposing their experience from the field. There are many more, please forgive me I can not enumerate them all here. Depending from the area, many are CTP's or MVP's, but there are also grey eminence personas who share valuable information.
 
-**.**
+## Tools
+
 * https://feedly.com/ - RSS agregator
 * https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
 * https://www.cloudflare.com/ - can bring great improvement for your web services
-
-**tools**
 
 * ShareX - (https://getsharex.com/) - fantastic project for a screen capturing, producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)
 * CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)
@@ -263,7 +211,7 @@ Many of abovementioned EUC experts, links on their blogs shares great tools whic
 It's impossible to list all names of great people who produce the valuable content and link it in one place, never the less it is a good starting point. The question which remains is the order to lay this down, constructively in memory. Apart from that each of us has it's topics which attacts him or her more than other and it is the Team who builds the Virtual Workplace solutions, not the lonesome wariors or stars.
 Keep calm and do puzzles (https://www.redbubble.com/shop/jackson+pollock+jigsaw-puzzles).
 
-**Hybrid / Azure**
+## Hybrid / Azure
 
 * Why should you become Azure certified - (https://www.thomasmaurer.ch/2019/08/why-you-should-become-microsoft-azure-certified/)
 * Hybrid / Trond advises for building hybrid scenarios - (https://xenappblog.com/2021/building-hybrid-cloud-on-nutanix-community-edition/)

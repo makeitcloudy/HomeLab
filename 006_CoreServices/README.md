@@ -13,6 +13,10 @@ Citrix lab survive with the traffic being sent over HTTP, never the less the gre
 
 Apart from that Application layer is challenging, but the most interesting and important is the Access Layer. Getting to know the HTTP protocol, and the meandres of HTTPS, a performing a bit of excercises with SSL offloading will help.
 
+## PowerShell
+
+Altaro - [Encrypt Passwords Powershell](https://www.altaro.com/msp-dojo/encrypt-password-powershell/)
+
 ## AD
 
 https://carlwebster.com/downloads/download-category/pdfs/
@@ -21,6 +25,7 @@ https://carlwebster.com/downloads/download-category/pdfs/
 
 https://github.com/cognitionIT/ADMXReader
 
-## PowerShell
+### PKI
 
-Altaro - [Encrypt Passwords Powershell](https://www.altaro.com/msp-dojo/encrypt-password-powershell/)
+Think about the PKI infrastructure, then you can get some hands on experience with FAS (Federated Authentication Services), TLS 1.x - and you'll gain some hands on experience with openSSL, and you can take the benefit of that piece for the regular RDS (Remote Desktop Infrastructure).
+

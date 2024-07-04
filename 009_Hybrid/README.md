@@ -1,12 +1,7 @@
-Cloud and Hybrid face of EUC
-It's like clouds on the sky, tend to change fast, both from the GUI frontend, but also from the API. When you follow the IaC path life will be much easier, transition from old way is tough, but it will hit you anyway, unless @crod is right with his decloudify idea.<br>
-Cloud is the mindset. That's it.<br>
+# Hybrid
 
-Onboard to azure - Certification Materials - https://github.com/johnthebrit/CertificationMaterials<br>
+* Onboard to azure - Certification Materials - https://github.com/johnthebrit/CertificationMaterials
 
-**twitter**
-hashtags: #RDmi #MSWVD https://twitter.com/search?q=%23MSWVD&src=typed_query&f=top
+## Applications
 
-**youtube**
-+ channels like Microsoft Mechanics, Microsoft Ignite may help you to grasp some knowledge<br>
-+ 4ndersonLin - https://github.com/4ndersonLin/awesome-cloud-security
+Applications - There is AppLayering from citrix, never the less let's be fair, I have not seen a vendor who is doing all the things right and have the best possible solutions to spin up the environment, especially considering such amount of usecases, and different angles. It has been said, if you decide to go with AppLayering then you should cover all your apps. The question is how much effort will that cost you comparing to other solutions available on the market like App-v or SCCM/MEM or rewriting those to be served as web apps. It's hard to suggest anything here, but bare in mind the binary methodology here 1 or 0. The worse thing you can do for yourself is to bring different ways of provisioning for your applicaiton layer. Keep it simple, and tend to use solutions which lasts.
