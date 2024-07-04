@@ -443,7 +443,7 @@ function Set-InitialConfiguration {
 
             # Generate the MOF file for LCM configuration
             Write-Information "Prepare the meta.mof for the LCM"
-            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath 
+            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath | Out-Null
 
             # Apply LCM configuration
             Write-Information "Apply LCM Configuration"
@@ -480,12 +480,14 @@ function Set-InitialConfiguration {
             if($Workgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
+                Write-Information "Start Node Initial Configuration - Option: Workgroup"
+                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             if($domain){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
+                Write-Information "Start Node Initial Configuration - Option: Domain"
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             
 
