@@ -43,7 +43,7 @@ function Set-InitialConfiguration {
 
         #region - Initialize variables
         #region - initialize variables - DSC structure
-        $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration'
+        $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration'
         $dsc_000_InitialConfig_FolderName          = '000_initialConfig'
         $dsc_000_InitialConfig_FileName            = '000_initialConfig_demo.ps1'
 
