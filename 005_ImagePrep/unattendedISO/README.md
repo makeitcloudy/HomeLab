@@ -11,6 +11,8 @@
 * [unattended xml bios and uefi for windows 10](https://github.com/larytet/auto-win/tree/master/autounattend)
 * [PVS Admin Toolkit](https://github.com/Mohrpheus78/Citrix/tree/main/PVS%20Admin%20Toolkit)
 * [MSIX packaging](https://flexxible.com/automating-msix-packaging-with-powershell/)
+* [10 min Windows 10 / Server 2019 build automation via OSDBuilder, autounattend.xml and Packer.IO](https://owenr.me/2020/07/29/10-min-windows-10-server-2019-build-automation-via-osdbuilder-autounattend-xml-and-packer-io/)
+
 
 ## .
 
