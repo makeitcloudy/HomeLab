@@ -73,252 +73,255 @@ param (
 BEGIN
 {
 
-#region 1. DSC - Initialize Variables
-#region Initialize Variables - Missing Modules
-$modules = @{
-    'ActiveDirectoryDsc'                    = '6.4.0'
-    'NetworkingDsc'                         = '9.0.0'
-    'ComputerManagementDsc'                 = '9.1.0'
-}
-#endregion
 
-#region Initialize Variables - Credentials
-#https://community.spiceworks.com/t/dns-issue-i-have-to-enter-fqdn-to-join-domain-but-why/636506/10
+    #region 1. DSC - Initialize Variables
+    #region Initialize Variables - Missing Modules
+    $modules = @{
+        'PSDscResources'                        = '2.12.0.0'
+        'ActiveDirectoryDsc'                    = '6.4.0'
+        'NetworkingDsc'                         = '9.0.0'
+        'ComputerManagementDsc'                 = '9.1.0'
+    }
+    #endregion
 
-$AdministratorUserName                      = 'Administrator'
-$AdministratorPassword                      = 'Password1$'
-$AdministratorPasswordSecureString          = ConvertTo-SecureString $AdministratorPassword -AsPlainText -Force
-$AdministratorCred                          = New-Object System.Management.Automation.PSCredential ($AdministratorUserName, $AdministratorPasswordSecureString)
+    #region Initialize Variables - Credentials
+    #https://community.spiceworks.com/t/dns-issue-i-have-to-enter-fqdn-to-join-domain-but-why/636506/10
 
-$SafemodeAdministratorUserName             = 'Administrator'
-$SafemodeAdministratorPassword             = 'Password1$'
-$SafemodeAdministratorPasswordSecureString = ConvertTo-SecureString $SafemodeAdministratorPassword -AsPlainText -Force
-$SafemodeAdministratorCred                 = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorUserName, $SafemodeAdministratorPasswordSecureString)
+    $AdministratorUserName                      = 'Administrator'
+    $AdministratorPassword                      = 'Password1$'
+    $AdministratorPasswordSecureString          = ConvertTo-SecureString $AdministratorPassword -AsPlainText -Force
+    $AdministratorCred                          = New-Object System.Management.Automation.PSCredential ($AdministratorUserName, $AdministratorPasswordSecureString)
 
-
-$domainAdministratorUserName               = 'lab.local\Administrator'
-$domainAdministratorPassword               = 'Password1$'
-$domainAdministratorPasswordSecureString   = ConvertTo-SecureString $domainAdministratorPassword -AsPlainText -Force
-$domainAdministratorCred                   = New-Object System.Management.Automation.PSCredential ($domainAdministratorUserName, $domainAdministratorPasswordSecureString)
-
-#if (-not $AdministratorCred){
-#    $AdministratorCred = (Get-Credential -Message "Enter new domain's credential")
-#}
-#endregion
-
-#region Initialize Variables - Folder structure
-# each time you modify the folder structure ammend the $arrayFolderStructure variable accordingly
-
-$dsc_FolderName                            = 'dsc'             #C:\dsc\
-
-$config_FolderName                         = 'config'          #C:\dsc\config\ - # it stores the DSC configuration
-$localhost_FolderName                      = 'localhost'       #C:\dsc\config\localhost\ - # it stores the configurations run locally on the localhost (Node)
-
-$certificate_FolderName                    = 'certificate'     #C:\dsc\certificate\ - # it stores self signed certificate used to secure DSC credentials
-$function_FolderName                       = 'function'        #C:\dsc\function\
-$module_FolderName                         = 'module'          #C:\dsc\module\ - # it stores the Module which contains various functions
-
-$output_FolderName                         = '_output'         #C:\dsc\_output\ - # it stores the results of the DSC compilation
-$LCM_FolderName                            = 'LCM'             #C:\dsc\_output\LCM\
-
-$ADDS_FolderName                           = 'ActiveDirectory' #C:\dsc\config\localhost\ActiveDirectory\ - # it contains the configurations of ActiveDirectory
+    $SafemodeAdministratorUserName             = 'Administrator'
+    $SafemodeAdministratorPassword             = 'Password1$'
+    $SafemodeAdministratorPasswordSecureString = ConvertTo-SecureString $SafemodeAdministratorPassword -AsPlainText -Force
+    $SafemodeAdministratorCred                 = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorUserName, $SafemodeAdministratorPasswordSecureString)
 
 
-#C:\dsc\
-$dsc_DirectoryPath                         = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dsc_FolderName
+    $domainAdministratorUserName               = 'lab.local\Administrator'
+    $domainAdministratorPassword               = 'Password1$'
+    $domainAdministratorPasswordSecureString   = ConvertTo-SecureString $domainAdministratorPassword -AsPlainText -Force
+    $domainAdministratorCred                   = New-Object System.Management.Automation.PSCredential ($domainAdministratorUserName, $domainAdministratorPasswordSecureString)
 
-#C:\dsc\config\
-$dscConfig_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -childPath $config_FolderName
-#C:\dsc\config\localhost\
-$dscConfigLocahost_DirectoryPath           = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
-#C:\dsc\config\localhost\ActiveDirectory\
-$dscConfigLocalhostADDS_DirectoryPath      = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $ADDS_FolderName
+    #if (-not $AdministratorCred){
+    #    $AdministratorCred = (Get-Credential -Message "Enter new domain's credential")
+    #}
+    #endregion
 
-#C:\dsc\certificate\
-$dscCertificate_DirectoryPath              = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
+    #region Initialize Variables - Folder structure
+    # each time you modify the folder structure ammend the $arrayFolderStructure variable accordingly
 
-#C:\dsc\function\
-$dscFunction_DirectoryPath                 = Join-Path -Path $dsc_DirectoryPath -ChildPath $function_FolderName
+    $dsc_FolderName                            = 'dsc'             #C:\dsc\
 
-#C:\dsc\module\
-$dscModule_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $module_FolderName
+    $config_FolderName                         = 'config'          #C:\dsc\config\ - # it stores the DSC configuration
+    $localhost_FolderName                      = 'localhost'       #C:\dsc\config\localhost\ - # it stores the configurations run locally on the localhost (Node)
 
-#C:\dsc\_output\
-$dscOutput_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $output_FolderName
-#C:\dsc\_output\ActiveDirectory
-$dscOutputADDS_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $ADDS_FolderName
-#C:\dsc\_output\LCM
-$dscOutputLCM_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
-#endregion
+    $certificate_FolderName                    = 'certificate'     #C:\dsc\certificate\ - # it stores self signed certificate used to secure DSC credentials
+    $function_FolderName                       = 'function'        #C:\dsc\function\
+    $module_FolderName                         = 'module'          #C:\dsc\module\ - # it stores the Module which contains various functions
 
-#region Initialize Variables - Function - C:\dsc\function\New-SelfSignedCertificateEx.ps1
-# it contains the Function to prepare the self signed certificate
-$newSelfSignedCertificateEx_FileName       = 'New-SelfSignedCertificateEx.ps1'
-$newSelfsignedCertificateEx_GithubUrl      = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateEx_FileName -join '/'
+    $output_FolderName                         = '_output'         #C:\dsc\_output\ - # it stores the results of the DSC compilation
+    $LCM_FolderName                            = 'LCM'             #C:\dsc\_output\LCM\
 
-$dscFunction_NewSelfSignedCertificateEx_FullPath = Join-Path -Path $dscFunction_DirectoryPath -ChildPath $newSelfSignedCertificateEx_FileName
+    $ADDS_FolderName                           = 'ActiveDirectory' #C:\dsc\config\localhost\ActiveDirectory\ - # it contains the configurations of ActiveDirectory
 
-$selfSignedCertificateParams               = @{
-    Subject                                = "CN=${ENV:ComputerName}"
-    EKU                                    = 'Document Encryption'
-    KeyUsage                               = 'KeyEncipherment, DataEncipherment'
-    SAN                                    = ${ENV:ComputerName}
-    FriendlyName                           = 'DSC Credential Encryption certificate'
-    Exportable                             = $true
-    StoreLocation                          = 'LocalMachine'
-    KeyLength                              = 2048
-    ProviderName                           = 'Microsoft Enhanced Cryptographic Provider v1.0'
-    AlgorithmName                          = 'RSA'
-    SignatureAlgorithm                     = 'SHA256'
-}
 
-$selfSignedCertificatePrivateKeyPassword              = 'Password1$'
-$selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
-#endregion
+    #C:\dsc\
+    $dsc_DirectoryPath                         = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dsc_FolderName
 
-#region Initialize Variables - Self Signed Certificate
-$dscSelfSignedCertificate_FileName         = 'dscSelfSignedCertificate'
-$dscSelfSignedCerCertificate_FileName      = $dscSelfSignedCertificate_FileName,'cer' -join '.'
-$dscSelfSignedPfxCertificate_FileName      = $dscSelfSignedCertificate_FileName,'pfx' -join '.'
+    #C:\dsc\config\
+    $dscConfig_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -childPath $config_FolderName
+    #C:\dsc\config\localhost\
+    $dscConfigLocahost_DirectoryPath           = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
+    #C:\dsc\config\localhost\ActiveDirectory\
+    $dscConfigLocalhostADDS_DirectoryPath      = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $ADDS_FolderName
 
-$dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificate_FileName
-$dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
-#endregion
+    #C:\dsc\certificate\
+    $dscCertificate_DirectoryPath              = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
 
-#region Initialize Variables - Configuration - ADDS
-$dscConfigLocalhostADDS_ps1_FileName       = 'ADDS_configuration.ps1'
+    #C:\dsc\function\
+    $dscFunction_DirectoryPath                 = Join-Path -Path $dsc_DirectoryPath -ChildPath $function_FolderName
 
-$dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
-$dscConfigLocalhostADDS_ps1_GithubUrl      = $dscConfigLocalhostADDS_GithubUrl,$dscConfigLocalhostADDS_ps1_FileName -join '/'
+    #C:\dsc\module\
+    $dscModule_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $module_FolderName
 
-#C:\dsc\config\localhost\ActiveDirectory\New-ADDSC.ps1
-$dscConfigLocalhostADDS_ps1_FullPath       = Join-Path -Path $dscConfigLocalhostADDS_DirectoryPath -ChildPath $dscConfigLocalhostADDS_ps1_FileName
-#endregion
+    #C:\dsc\_output\
+    $dscOutput_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $output_FolderName
+    #C:\dsc\_output\ActiveDirectory
+    $dscOutputADDS_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $ADDS_FolderName
+    #C:\dsc\_output\LCM
+    $dscOutputLCM_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
+    #endregion
 
-#endregion
+    #region Initialize Variables - Function - C:\dsc\function\New-SelfSignedCertificateEx.ps1
+    # it contains the Function to prepare the self signed certificate
+    $newSelfSignedCertificateEx_FileName       = 'New-SelfSignedCertificateEx.ps1'
+    $newSelfsignedCertificateEx_GithubUrl      = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateEx_FileName -join '/'
 
-#region 2. DSC - Prepare Prerequisites
+    $dscFunction_NewSelfSignedCertificateEx_FullPath = Join-Path -Path $dscFunction_DirectoryPath -ChildPath $newSelfSignedCertificateEx_FileName
 
-#region 2.1. Create Directory Structure
-$arrayFolderStructure = @(
-    $dsc_DirectoryPath,
-    $dscConfig_DirectoryPath,
-    $dscConfigLocahost_DirectoryPath,
-    $dscConfigLocalhostADDS_DirectoryPath
-    $dscCertificate_DirectoryPath,
-    $dscFunction_DirectoryPath,
-    $dscModule_DirectoryPath,
-    $dscOutput_DirectoryPath,
-    $dscOutputADDS_DirectoryPath,
-    $dscOutputLCM_DirectoryPath
-)
+    $selfSignedCertificateParams               = @{
+        Subject                                = "CN=${ENV:ComputerName}"
+        EKU                                    = 'Document Encryption'
+        KeyUsage                               = 'KeyEncipherment, DataEncipherment'
+        SAN                                    = ${ENV:ComputerName}
+        FriendlyName                           = 'DSC Credential Encryption certificate'
+        Exportable                             = $true
+        StoreLocation                          = 'LocalMachine'
+        KeyLength                              = 2048
+        ProviderName                           = 'Microsoft Enhanced Cryptographic Provider v1.0'
+        AlgorithmName                          = 'RSA'
+        SignatureAlgorithm                     = 'SHA256'
+    }
 
-$arrayFolderStructure.ForEach({
-    if(!(Test-Path -Path $_)){
+    $selfSignedCertificatePrivateKeyPassword              = 'Password1$'
+    $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
+    #endregion
+
+    #region Initialize Variables - Self Signed Certificate
+    $dscSelfSignedCertificate_FileName         = 'dscSelfSignedCertificate'
+    $dscSelfSignedCerCertificate_FileName      = $dscSelfSignedCertificate_FileName,'cer' -join '.'
+    $dscSelfSignedPfxCertificate_FileName      = $dscSelfSignedCertificate_FileName,'pfx' -join '.'
+
+    $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificate_FileName
+    $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
+    #endregion
+
+    #region Initialize Variables - Configuration - ADDS
+    $dscConfigLocalhostADDS_ps1_FileName       = 'ADDS_configuration.ps1'
+
+    $dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
+    $dscConfigLocalhostADDS_ps1_GithubUrl      = $dscConfigLocalhostADDS_GithubUrl,$dscConfigLocalhostADDS_ps1_FileName -join '/'
+
+    #C:\dsc\config\localhost\ActiveDirectory\New-ADDSC.ps1
+    $dscConfigLocalhostADDS_ps1_FullPath       = Join-Path -Path $dscConfigLocalhostADDS_DirectoryPath -ChildPath $dscConfigLocalhostADDS_ps1_FileName
+    #endregion
+
+    #endregion
+
+    #region 2. DSC - Prepare Prerequisites
+
+    #region 2.1. Create Directory Structure
+    $arrayFolderStructure = @(
+        $dsc_DirectoryPath,
+        $dscConfig_DirectoryPath,
+        $dscConfigLocahost_DirectoryPath,
+        $dscConfigLocalhostADDS_DirectoryPath
+        $dscCertificate_DirectoryPath,
+        $dscFunction_DirectoryPath,
+        $dscModule_DirectoryPath,
+        $dscOutput_DirectoryPath,
+        $dscOutputADDS_DirectoryPath,
+        $dscOutputLCM_DirectoryPath
+    )
+
+    $arrayFolderStructure.ForEach({
+        if(!(Test-Path -Path $_)){
+            try {
+                New-Item -Path $_ -ItemType Directory -Force
+            }
+            catch {
+                Write-Error "Something went wrong"
+            }
+        }
+        else {
+            Write-Output "$_ - already exist"
+        }
+    })
+
+    #endregion
+
+    Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
+    Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
+
+    #region 2.2. Download code from from Github
+    # Function: SelfSigned Certificate
+    #https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
+    Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFunction_NewSelfSignedCertificateEx_FullPath -Verbose
+
+    # DSC Configuration: - localhost ADDS
+    #configuration_ADDS.ps1
+    #https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/configuration_ADDS.ps1
+    Invoke-WebRequest -Uri $dscConfigLocalhostADDS_ps1_GithubUrl -OutFile $dscConfigLocalhostADDS_ps1_FullPath -Verbose
+
+    #New-ADDSC.psm1
+    #Invoke-WebRequest -Uri $dscConfigLocalhostADDS_psm1_GithubUrl -OutFile $dscConfigLocalhostADDS_psm1_FullPath -Verbose
+    #endregion
+
+    #region 2.3. Self Signed Certificate - Generate and Export to CER & PFX
+    if (!(Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)})){
+    # Load the function into memory
+        . $dscFunction_NewSelfSignedCertificateEx_FullPath
         try {
-            New-Item -Path $_ -ItemType Directory -Force
+            New-SelfsignedCertificateEx @selfSignedCertificateParams
         }
         catch {
-            Write-Error "Something went wrong"
+
         }
     }
     else {
-        Write-Output "$_ - already exist"
+        Write-Output "Certificate already exist - Friendly Name: $($selfSignedCertificateParams.FriendlyName)"
     }
-})
 
-#endregion
+    # Exporting certificate to CER and PFX
+    if(!(Test-Path -Path $dscSelfSignedCerCertificate_FullPath)){
+        try {
+            Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force
+        }
+        catch {
 
-#region 2.2. Download code from from Github
-# Function: SelfSigned Certificate
-#https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
-Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFunction_NewSelfSignedCertificateEx_FullPath -Verbose
-
-# DSC Configuration: - localhost ADDS
-#configuration_ADDS.ps1
-#https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/configuration_ADDS.ps1
-Invoke-WebRequest -Uri $dscConfigLocalhostADDS_ps1_GithubUrl -OutFile $dscConfigLocalhostADDS_ps1_FullPath -Verbose
-
-#New-ADDSC.psm1
-#Invoke-WebRequest -Uri $dscConfigLocalhostADDS_psm1_GithubUrl -OutFile $dscConfigLocalhostADDS_psm1_FullPath -Verbose
-#endregion
-
-#region 2.3. Self Signed Certificate - Generate and Export to CER & PFX
-if (!(Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)})){
-# Load the function into memory
-    . $dscFunction_NewSelfSignedCertificateEx_FullPath
-    try {
-        New-SelfsignedCertificateEx @selfSignedCertificateParams
+        }
     }
-    catch {
-
+    else {
+        Write-Output "Certificate CER File already exist - Path: $($dscSelfSignedCerCertificate_FullPath)"
     }
-}
-else {
-    Write-Output "Certificate already exist - Friendly Name: $($selfSignedCertificateParams.FriendlyName)"
-}
 
-# Exporting certificate to CER and PFX
-if(!(Test-Path -Path $dscSelfSignedCerCertificate_FullPath)){
-    try {
-        Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force
+    if(!(Test-Path -Path $dscSelfSignedPfxCertificate_FullPath)){
+        try {
+            Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString
+        }
+        catch {
+
+        }    
     }
-    catch {
-
+    else {
+        Write-Output "Certificate PFX File already exist - Path: $($dscSelfSignedPfxCertificate_FullPath)"
     }
-}
-else {
-    Write-Output "Certificate CER File already exist - Path: $($dscSelfSignedCerCertificate_FullPath)"
-}
+    #endregion
 
-if(!(Test-Path -Path $dscSelfSignedPfxCertificate_FullPath)){
-    try {
-        Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString
-    }
-    catch {
-
-    }    
-}
-else {
-    Write-Output "Certificate PFX File already exist - Path: $($dscSelfSignedPfxCertificate_FullPath)"
-}
-#endregion
-
-#region 2.4. Install Missing Modules - TODO:
-#region AUTOMATYCZNIE
-# AutomatedLab - contains functions which are crucial for the whole logic to work properly
-# Install-Modules is one of the functions within the AutomatedLab module
-
-Install-Modules -modules $modules
-#endregion
-
-#region MANUALNIE
-### wywolanie manualne
-
-Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
-Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
-
-Install-Module -Name 'PSDscResources' -RequiredVersion 2.12.0.0 -Force -AllowClobber
-Install-Module -Name 'ActiveDirectoryDsc' -RequiredVersion 6.4.0 -Force -AllowClobber
-Install-Module -Name 'ComputerManagementDsc' -RequiredVersion 9.1.0 -Force -AllowClobber
-Install-Module -Name 'NetworkingDsc' -RequiredVersion 9.0.0 -Force -AllowClobber
-#endregion
-#endregion
-#endregion
-
-#region 3. DSC - LCM - Self Signed CertificateCertificate - Thumbprint
-$selfSignedCertificateThumbprint = (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)}).Thumbprint
-
-#$selfSignedCertificateThumbprint | clip
-#psedit $dscConfigLocalhostADDS_ps1_FullPath
-#psedit $dscConfigLocalhostADDS_psm1_FullPath
-
-#endregion
+    
+    #endregion
 
 }
 
 PROCESS
 {
+    #region 2.4. Install Missing Modules - TODO:
+    #region AUTOMATYCZNIE
+    # AutomatedLab - contains functions which are crucial for the whole logic to work properly
+    # Install-Modules is one of the functions within the AutomatedLab module
+
+    Install-Modules -modules $modules
+    #endregion
+
+    #region MANUALNIE
+    ### wywolanie manualne
+
+    ##Install-Module -Name 'PSDscResources' -RequiredVersion 2.12.0.0 -Force -AllowClobber
+    ##Install-Module -Name 'ActiveDirectoryDsc' -RequiredVersion 6.4.0 -Force -AllowClobber
+    ##Install-Module -Name 'ComputerManagementDsc' -RequiredVersion 9.1.0 -Force -AllowClobber
+    ##Install-Module -Name 'NetworkingDsc' -RequiredVersion 9.0.0 -Force -AllowClobber
+    #endregion
+    #endregion
+
+    #region 3. DSC - LCM - Self Signed CertificateCertificate - Thumbprint
+    $selfSignedCertificateThumbprint = (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)}).Thumbprint
+
+    #$selfSignedCertificateThumbprint | clip
+    #psedit $dscConfigLocalhostADDS_ps1_FullPath
+    #psedit $dscConfigLocalhostADDS_psm1_FullPath
+
+    #endregion
 
     #^ Customize this with your details
     $configData = @{
