@@ -32,12 +32,12 @@ function Set-InitialConfiguration {
             "Workgroup" {
                 $workgroup = $true
                 $domain = $false
-                Write-Output "ParameterOne: $Joined, Workgroup is enabled."
+                Write-Output "ParameterOne: $Option, Workgroup is enabled."
             }
             "Domain" {
                 $workgroup = $false
                 $domain = $true
-                Write-Output "ParameterOne: $Joined, Domain is enabled."
+                Write-Output "ParameterOne: $Option, Domain is enabled."
             }
         }
 
@@ -50,7 +50,7 @@ function Set-InitialConfiguration {
         $dscCodeRepo_000_initialConfig_url         = $dscCodeRepoUrl,$dsc_000_InitialConfig_FolderName -join '/'
 
         #$downloadsFolder                           = $("$env:USERPROFILE\Downloads")
-        $certificate_FolderName                    = '__certificate'
+        $certificate_FolderName                    = '_certificate'
 
         $dscSelfSignedCertificateName              = 'dscSelfSignedCertificate'
         $dscSelfSignedCerCertificateName           = $dscSelfSignedCertificateName,'cer' -join '.'
@@ -73,8 +73,8 @@ function Set-InitialConfiguration {
             SignatureAlgorithm                     = 'SHA256'
         }
 
-        $dscConfig_FolderName                      = 'dscConfig'
-        $dscOutput_FolderName                      = '__output'
+        $dscConfig_FolderName                      = 'dsc'
+        $dscOutput_FolderName                      = '_output'
         $lcm_FolderName                            = 'LCM'
 
        #$nodeName                                  = $NodeName
@@ -149,9 +149,9 @@ function Set-InitialConfiguration {
             # create folder to store the DSC configuration
             # TODO: change the folder creation to Desired State Configuration
             $arrayFolderStructure = @(
-                $dscConfigDirectoryPath,
-                $dscConfigNodeDirectoryPath,
-                $dscConfigCertificateDirectoryPath,
+                $dscConfig_DirectoryPath,
+                $dscConfigNode_DirectoryPath,
+                $dscConfigCertificate_DirectoryPath,
                 $dscConfig_000_InitialConfig_Path
             )
 
