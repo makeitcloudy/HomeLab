@@ -74,10 +74,8 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 * ** Applications ** - FsLogix AppMasking - thank you Benny Tritsch (https://www.youtube.com/watch?v=vCtnhTsdAaQ)
 * ** OS Layer / Uber Agent ** - (https://uberagent.com/download/) - Helge Klein - (https://helgeklein.com/) shares great insights, worth following him 
 * ** WMI/CIM is your friend ** - (https://0xinfection.github.io/posts/wmi-basics-part-1/)
-
 * ** RDS ** - RDS-O-Matic, along with all links provided on this webpage (https://www.rdsgurus.com/scripts/) - @crod - thank you for presenting this to the world!
 * ** RDS ** - (https://mehic.se/category/remote-desktop-services-2016/) - great series which is nice supplement for the RDS book mentioned before
-
 * ** PVS vs Pester ** - (https://www.youtube.com/watch?v=3xOHpiKEpn8) - Synergy 2017 #SYN306 - this is a perfect example how the building blocks can be glued together
 
 ## Product documentation
@@ -110,12 +108,9 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 ## Supportive channels with structuralized content
 
-* https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, which make it easier, going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same topics as many times until your subscription expires.
-
-* https://www.youtube.com/ - search for the sesoins of Cláudio Rodrigues, in youtube you'll have to follow his name with BriForum suffix, otherwise you'll be shown with non relevant materials, time is passing by fast, but in context of EUC this guy had and has very much to say - referencing video from 2012 (https://www.youtube.com/watch?v=msK6n7049ig). It's a pity he is no longer a regular EUC contractor, as it was very interesting to read his opinions comming from the field. This session from 10y ago is really good even though it is almost an extinct spieces ;).
-
-* https://www.youtube.com/user/briforum - BriForum sessions may be a great foreground for a newcomer, there is dozens of details shared by EUC (End User Computing) engaged colleagues, which can help laying down some foreground for the newer knowledge. Bare in mind that the products by itself didn't changed that much. It's rather the Access Layer which is evolving by prism of Authorization, Authentication and Zero Trust.
-
+* https://www.pluralsight.com/ along with their full time author and evangelist Greg Shields and his great courses - he will share a virtual hand and equip you with brilliant tips, which make it easier, going through the installations and configurations of your virtual estate. Extremely patient guy, who is not scared of repeating the same topics as many times until your subscription expires
+* https://www.youtube.com/ - search for the sesoins of Cláudio Rodrigues, in youtube you'll have to follow his name with BriForum suffix, otherwise you'll be shown with non relevant materials, (https://www.youtube.com/watch?v=msK6n7049ig) - video from 2012
+* https://www.youtube.com/user/briforum - BriForum sessions may be a great foreground for a newcomer, there is dozens of details shared by EUC (End User Computing) engaged colleagues, which can help laying down some foreground for the newer knowledge. Bare in mind that the products by itself didn't changed that much. It's rather the Access Layer which is evolving by prism of Authorization, Authentication and Zero Trust
 * https://github.com/yt-dlp/yt-dlp - this will support your youtube activities
 
 ## Bunch of usefull links, with a bit more scattered knowledge
@@ -166,7 +161,6 @@ Two Carl's - let's list them alphabetically: Carl Webster and Carl Stalhood
 * Freek Berson - (https://github.com/fberson | http://microsoftplatform.blogspot.com/) - his blog post are great to lay down the foreground for Citrix which is nothing else than RDS (Remote Desktop Services), it seems to be good idea to start with Terminal Services and RDS which help structualize knowledge needed for a Citrix guy
 * MsFreaks - (https://msfreaks.wordpress.com/)
 * Bas van Kaam - (https://www.basvankaam.com/) - he is one of the Nerdio evangelist, who shared great green book called the FMA Architecture.
-
 * Denis Span - (https://dennisspan.com/) - he was my inspiration for some automation topics around PVS etc. His blog is full of examples how the installation of the components building CVAD can be automated. You may customize those scripts for your preference, for instance including the Error and Verbose streams, they are great starting point.
 * Jonathan Pitre - (https://github.com/JonathanPitre)
 * Dennis Mohrmann - (https://github.com/Mohrpheus78/)
@@ -198,7 +192,6 @@ Many of abovementioned EUC experts, links on their blogs shares great tools whic
 * https://feedly.com/ - RSS agregator
 * https://freedns.afraid.org/subdomain/ - fantastic freeDNS service
 * https://www.cloudflare.com/ - can bring great improvement for your web services
-
 * ShareX - (https://getsharex.com/) - fantastic project for a screen capturing, producing GIF's for your webpage (thank you Josh Duffney! - https://duffney.io/)
 * CIM/WMI Explorer - (https://www.sapien.com/software/cimexplorer | https://www.ks-soft.net/hostmon.eng/wmi/index.htm)
 * Chocolatey - (https://chocolatey.org/ | https://github.com/chocolatey/choco)
