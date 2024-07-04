@@ -1,6 +1,9 @@
 Configuration NodeInitialConfigWorkgroup {
     param (
         [Parameter(Mandatory = $true)]
+        [pscredential]$NodeName,        
+    
+        [Parameter(Mandatory = $true)]
         [pscredential]$AdminCredential
     )
     
@@ -19,7 +22,7 @@ Configuration NodeInitialConfigWorkgroup {
 
         NetAdapterBinding DisableIPv6
         {
-            InterfaceAlias = 'Ethernet 2'
+            InterfaceAlias = $Node.InterfaceAlias
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
         }
@@ -57,7 +60,7 @@ Configuration NodeInitialConfigWorkgroup {
 
         # Rename Computer using ComputerManagementDsc
         Computer RenameComputer {
-            Name       = $Node.ComputerName
+            Name       = $NodeName
             Credential = $AdminCredential
             DependsOn = '[Script]SetTrustedHosts'
         }

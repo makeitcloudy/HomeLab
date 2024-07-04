@@ -441,17 +441,17 @@ function Set-InitialConfiguration {
             if($Workgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutput_DirectoryPath -Verbose
+                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
             }
             if($domain){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutput_DirectoryPath -Verbose
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
             }
             
 
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
-            Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
+            Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
             #endregion
         }
         catch {

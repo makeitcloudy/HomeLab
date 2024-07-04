@@ -2,13 +2,13 @@
     AllNodes = @(
         @{
             NodeName            = 'localhost'
-            ComputerName        = 'w10mgmt'
+            #ComputerName        = 'w10mgmt'
             InterfaceAlias      = 'Ethernet 2'
             DnsServers          = @('10.2.134.254')            
             #DnsServers          = @('10.2.134.201', '10.2.134.202')
             # Target Node IP addresses for winRM connectivity
-            #TrustedHosts        = 'localhost,dc01,dc02'
-            TrustedHosts        = 'localhost,10.2.134.201,10.2.134.202'
+            TrustedHosts        = 'localhost'
+            #TrustedHosts        = 'localhost,10.2.134.201,10.2.134.202'
             # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
             CertificateFile     = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'
             # The thumbprint of the Encryption Certificate used to decrypt the credentials on target node.

@@ -9,7 +9,7 @@ Configuration ConfigureLCM {
         Settings {
             ActionAfterReboot  = 'ContinueConfiguration'
             CertificateID      = $CertificateThumbprint
-            ConfigurationMode  = 'ApplyAndAutoCorrect'
+            ConfigurationMode  = 'ApplyAndMonitor'
             RebootNodeIfNeeded = $true
             RefreshMode        = 'Push'
         }
