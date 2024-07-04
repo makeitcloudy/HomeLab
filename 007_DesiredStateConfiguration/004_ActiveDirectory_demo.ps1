@@ -19,7 +19,7 @@
 
 
 #region - initialize variables - DSC structure
-$dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration'
+$dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration'
 $dsc_004_ActiveDirectory_FolderName        = '004_ActiveDirectory'
 $dsc_004_ActiveDirectory_FileName          = '004_ActiveDirectory_demo.ps1'
 
@@ -157,7 +157,7 @@ $modules = @{
     'ComputerManagementDsc' = '9.1.0'
 }
 
-# AutomatedLab - contains functions which are crucial for the whole logic to work properly
+# AtuomatedLab - contains functions which are crucial for the whole logic to work properly
 # Install-Modules is one of the functions within the AutomatedLab module
 
 Install-Modules -modules $modules

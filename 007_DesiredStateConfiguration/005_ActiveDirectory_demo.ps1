@@ -1,4 +1,4 @@
-$githubUrl            = 'https://raw.githubusercontent.com/makeitcloudy/AutomatedLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
+$githubUrl            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
 $fileName             = 'ADDS_setup.ps1'
 $uri                  = $githubUrl,$fileName -join '/'
 
