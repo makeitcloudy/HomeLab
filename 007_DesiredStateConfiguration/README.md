@@ -2,6 +2,25 @@
 
 Consider automating the deployment of the core elements which are the backbone of your VM infrastructure, like AD, GPO's, certificates and other stuff which will come into play, especially when in disposal of 180days evaluation products. Time is passing by fast, especially when you try to keep up in balance. Stil IaC (Infrastructure as a Code) which is your goal, requires a lot of work, and it does not often scales well, but stil better than manual clicks.
 
+## Links
+
+https://github.com/dsccommunity/TheDSCBookCode
+https://github.com/PowerShell/DscResources
+
+[DSC code for various Windows Roles](https://github.com/PlagueHO/LabBuilder/tree/main/source/dsclibrary)
+[Install Windows Admin Center using DSC](https://dscottraynsford.wordpress.com/category/dsc/)
+https://dscottraynsford.wordpress.com/category/certificate-services/'
+https://dscottraynsford.wordpress.com/'
+https://plagueho.github.io/'
+
+https://gitter.im/PlagueHO/LabBuilder?at=57437c8afce033da4bef4936'
+
+https://github.com/PlagueHO/LabBuilder/blob/main/source/samples/Sample_WS2016_DomainComplete.xml'
+https://github.com/PlagueHO/LabBuilder/blob/main/source/dsclibrary/STANDALONE_ROOTCA.DSC.ps1'
+
+https://blogs.infosupport.com/safely-using-pscredentials-in-a-powershell-dsc-configuration/
+https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
+
 ## WinRM
 
 [winRM - over HTTPS](https://gist.github.com/gregjhogan/dbe0bfa277d450c049e0bbdac6142eed)
