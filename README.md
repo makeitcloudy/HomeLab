@@ -81,13 +81,12 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 ## Product documentation
 
-* Citrix Github - https://github.com/citrix
-* Citrix Developer - (https://developer.cloud.com/ | https://developer.citrix.com)
 * The DSC community - https://github.com/dsccommunity - plenty of interesting modules which release from reinventing things from scratch
 * Powershell gallery - https://www.powershellgallery.com/
 * Technet gallery - https://docs.microsoft.com/en-us/samples/browse/?redirectedfrom=TechNet-Gallery
 * XCP-ng documentation - https://xcp-ng.org/docs/
-
+* *Citrix Github* - https://github.com/citrix
+* *Citrix Developer* - (https://developer.cloud.com/ | https://developer.citrix.com)
 * *Citrix Tech Zone* - (https://docs.citrix.com/en-us/tech-zone/build/deployment-guides/windows-10-deployment.html?utm_content=buffere2e95&utm_medium=social%2520media%2520-%2520organic&utm_source=twitter&utm_campaign=CVAD)
 * *Citrix Supportability pack* - (https://support.citrix.com/article/CTX203082)
 * *Citrix Optimizer* - (https://support.citrix.com/article/CTX224676)
@@ -96,10 +95,10 @@ Clouds changes rapidly, you'll get far better experience cooperating with them w
 
 * https://www.basvankaam.com/wp-content/uploads/2019/03/Inside-Citrix-The-FlexCast-Management-Architecture.pdf
 * https://www.amazon.com/RDS-Complete-Guide-Everything-about-ebook/dp/B07C6849WD/ref=sr_1_1?ie=UTF8&qid=1525462416&sr=8-1&keywords=rds+complete+guide
-* https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches *a bit of sql knowledge wont' harm*
-* https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches *worth to grasp some details about iis, it will pay off from time to time*
-* https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
-* https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month *month of launches series*
+* https://www.manning.com/books/learn-sql-server-administration-in-a-month-of-lunches - *a bit of sql knowledge wont' harm*
+* https://www.manning.com/books/learn-windows-iis-in-a-month-of-lunches - *worth to grasp some details about iis, it will pay off from time to time*
+* https://www.manning.com/books/learn-powershell-in-a-month-of-lunches?query=powershell%20in%20month - *month of launches series*
+* https://www.manning.com/books/learn-powershell-scripting-in-a-month-of-lunches?query=powershell%20in%20month - *month of launches series*
 * https://leanpub.com/the-dsc-book
 * https://leanpub.com/pesterbook
 * https://leanpub.com/thebigbookofpowershellerrorhandling
