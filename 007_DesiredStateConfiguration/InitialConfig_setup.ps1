@@ -41,23 +41,75 @@ function Set-InitialConfiguration {
             }
         }
 
-        #region - Initialize variables
-        #region - initialize variables - DSC structure
-        $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration'
-        $dsc_000_InitialConfig_FolderName          = '000_initialConfig'
-        $dsc_000_InitialConfig_FileName            = '000_initialConfig_demo.ps1'
+        #region 1. DSC Initialize variables
+        #region Initialize Variables - Missing Modules
+        $modules = @{
+            'PSDscResources'                        = '2.12.0.0'
+            #'ActiveDirectoryDsc'                    = '6.4.0'
+            'ComputerManagementDsc'                 = '9.1.0'
+            'NetworkingDsc'                         = '9.0.0'
+        }
+        #endregion
 
-        $dscCodeRepo_000_initialConfig_url         = $dscCodeRepoUrl,$dsc_000_InitialConfig_FolderName -join '/'
+        #region - initialize variables - credentials
+        # local administartor on the localhost
+        $localNodeAdminUsername                    = "labuser"
+        $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
+        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
 
-        #$downloadsFolder                           = $("$env:USERPROFILE\Downloads")
-        $certificate_FolderName                    = '_certificate'
+        # creds for PFX self signed cert
+        $selfSignedCertificatePrivateKeyPasswordSecureString = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
+        #endregion
 
-        $dscSelfSignedCertificateName              = 'dscSelfSignedCertificate'
-        $dscSelfSignedCerCertificateName           = $dscSelfSignedCertificateName,'cer' -join '.'
-        $dscSelfSignedPfxCertificateName           = $dscSelfSignedCertificateName,'pfx' -join '.'
+        #region Initialize Variables - Folder structure
+        $dsc_FolderName                            = 'dsc'             #C:\dsc\
 
+        $config_FolderName                         = 'config'          #C:\dsc\config\ - # it stores the DSC configuration
+        $localhost_FolderName                      = 'localhost'       #C:\dsc\config\localhost\ - # it stores the configurations run locally on the localhost (Node)
+    
+        $certificate_FolderName                    = 'certificate'     #C:\dsc\certificate\ - # it stores self signed certificate used to secure DSC credentials
+        $function_FolderName                       = 'function'        #C:\dsc\function\
+        $module_FolderName                         = 'module'          #C:\dsc\module\ - # it stores the Module which contains various functions
+    
+        $output_FolderName                         = '_output'         #C:\dsc\_output\ - # it stores the results of the DSC compilation
+        $LCM_FolderName                            = 'LCM'             #C:\dsc\_output\LCM\
+    
+        $InitialSetup_FolderName                   = 'InitialSetup'    #C:\dsc\config\localhost\InitialSetup\ - # it contains the configurations of ActiveDirectory
+    
+    
+        #C:\dsc\
+        $dsc_DirectoryPath                         = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dsc_FolderName
+    
+        #C:\dsc\config\
+        $dscConfig_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -childPath $config_FolderName
+        #C:\dsc\config\localhost\
+        $dscConfigLocahost_DirectoryPath           = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
+        #C:\dsc\config\localhost\InitialSetup\
+        $dscConfigLocalhostInitialSetup_DirectoryPath  = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $InitialSetup_FolderName
+    
+        #C:\dsc\certificate\
+        $dscCertificate_DirectoryPath              = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
+    
+        #C:\dsc\function\
+        $dscFunction_DirectoryPath                 = Join-Path -Path $dsc_DirectoryPath -ChildPath $function_FolderName
+    
+        #C:\dsc\module\
+        $dscModule_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $module_FolderName
+    
+        #C:\dsc\_output\
+        $dscOutput_DirectoryPath                   = Join-Path -Path $dsc_DirectoryPath -ChildPath $output_FolderName
+        #C:\dsc\_output\ActiveDirectory
+        $dscOutputADDS_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $ADDS_FolderName
+        #C:\dsc\_output\LCM
+        $dscOutputLCM_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
+        #endregion
+
+        #region Initialize Variables - Function - C:\dsc\function\New-SelfSignedCertificateEx.ps1
+        # it contains the Function to prepare the self signed certificate
         $newSelfSignedCertificateEx_FileName       = 'New-SelfSignedCertificateEx.ps1'
         $newSelfsignedCertificateEx_GithubUrl      = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateEx_FileName -join '/'
+
+        $dscFunction_NewSelfSignedCertificateEx_FullPath = Join-Path -Path $dscFunction_DirectoryPath -ChildPath $newSelfSignedCertificateEx_FileName
 
         $selfSignedCertificateParams               = @{
             Subject                                = "CN=${ENV:ComputerName}"
@@ -73,46 +125,26 @@ function Set-InitialConfiguration {
             SignatureAlgorithm                     = 'SHA256'
         }
 
-        $dscConfig_FolderName                      = 'dsc'
-        $dscOutput_FolderName                      = '_output'
-        $lcm_FolderName                            = 'LCM'
-
-       #$nodeName                                  = $NodeName
-
-        $configData_psd1_FileName                  = 'ConfigData.psd1'
-        $configureLCM_ps1_FileName                 = 'ConfigureLCM.ps1'
-        $configureNode_ps1_FileName                = 'ConfigureNode.ps1'
-
-        $configData_psd1_url                       = $dscCodeRepo_000_initialConfig_url,$configData_psd1_FileName -join '/'
-        $configureLCM_ps1_url                      = $dscCodeRepo_000_initialConfig_url,$configureLCM_ps1_FileName -join '/'
-        $configureNode_ps1_url                     = $dscCodeRepo_000_initialConfig_url,$configureNode_ps1_FileName -join '/'
-
-        $dscConfig_DirectoryPath                   = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dscConfig_FolderName
-        $dscConfigCertificate_DirectoryPath        = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $certificate_FolderName
-        $dscConfigOutput_DirectoryPath             = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $dscOutput_FolderName
-        $dscConfigNode_DirectoryPath               = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $NodeName
-        $dscConfig_000_InitialConfig_Path          =  Join-Path -Path $dscConfigNode_DirectoryPath -ChildPath $dsc_000_InitialConfig_FolderName
-
-        $configData_psd1_FullPath                  = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configData_psd1_fileName
-        $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configureLCM_ps1_fileName 
-        $configureNode_ps1_FullPath                = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configureNode_ps1_fileName
-
-        $newSelfSignedCertificateEx_FullPath       = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $newSelfSignedCertificateEx_FileName
-        $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificateName
-        $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificateName
-
-        $dscConfigLCM_DirectoryPath                = Join-Path -Path $dscConfigOutput_DirectoryPath -ChildPath $lcm_FolderName
+        $selfSignedCertificatePrivateKeyPassword              = 'Password1$'
+        $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
         #endregion
 
-        #region - initialize variables - credentials
-        # local administartor on the localhost
-        $localNodeAdminUsername                    = "labuser"
-        $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
-        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
+    #region Initialize Variables - Self Signed Certificate
+    $dscSelfSignedCertificate_FileName         = 'dscSelfSignedCertificate'
+    $dscSelfSignedCerCertificate_FileName      = $dscSelfSignedCertificate_FileName,'cer' -join '.'
+    $dscSelfSignedPfxCertificate_FileName      = $dscSelfSignedCertificate_FileName,'pfx' -join '.'
 
-        # creds for PFX self signed cert
-        $selfSignedCertificatePrivateKeyPasswordSecureString = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
+    $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificate_FileName
+    $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
+    #endregion
+
+       $dscCodeRepoUrl                            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration'
+       $dsc_000_InitialConfig_FolderName          = '000_initialConfig'
+       $dsc_000_InitialConfig_FileName            = '000_initialConfig_demo.ps1'
+
+       $dscCodeRepo_000_initialConfig_url         = $dscCodeRepoUrl,$dsc_000_InitialConfig_FolderName -join '/'
         #endregion
+
     }
 
     PROCESS
@@ -175,7 +207,7 @@ function Set-InitialConfiguration {
         }
 
         # set the location to the path where the DSC configuration is stored
-        Set-Location -Path $dscConfigDirectoryPath
+        Set-Location -Path $dscConfig_DirectoryPath
         #endregion
 
         try {
