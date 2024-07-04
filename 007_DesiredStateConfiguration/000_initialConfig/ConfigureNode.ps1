@@ -1,7 +1,7 @@
 Configuration NodeInitialConfigWorkgroup {
     param (
         [Parameter(Mandatory = $true)]
-        [pscredential]$NodeName,        
+        [String]$NodeName,        
     
         [Parameter(Mandatory = $true)]
         [pscredential]$AdminCredential

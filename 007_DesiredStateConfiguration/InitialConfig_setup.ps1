@@ -4,6 +4,7 @@ function Set-InitialConfiguration {
     .SYNOPSIS
     .DESCRIPTION
     .PARAMETER NodeName
+    .PARAMETER Option
     .EXAMPLE
     .LINK
     #>
@@ -52,11 +53,6 @@ function Set-InitialConfiguration {
         #endregion
 
         #region - initialize variables - credentials
-        # local administartor on the localhost
-        $localNodeAdminUsername                    = "labuser"
-        $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
-        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
-
         # creds for PFX self signed cert
         $selfSignedCertificatePrivateKeyPasswordSecureString = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
         #endregion
@@ -116,11 +112,11 @@ function Set-InitialConfiguration {
         $dscOutputInitialSetup_DirectoryPath       = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $InitialSetup_FolderName
         #C:\dsc\_output\LCM
         $dscOutputLCM_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
-        #endregion
 
         $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configData_psd1_fileName
         $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureLCM_ps1_fileName 
         $configureNode_ps1_FullPath                = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureNode_ps1_fileName
+        #endregion
 
         #region Initialize Variables - Function - C:\dsc\function\New-SelfSignedCertificateEx.ps1
         # it contains the Function to prepare the self signed certificate
@@ -147,14 +143,15 @@ function Set-InitialConfiguration {
         $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
         #endregion
 
-    #region Initialize Variables - Self Signed Certificate
-    $dscSelfSignedCertificate_FileName         = 'dscSelfSignedCertificate'
-    $dscSelfSignedCerCertificate_FileName      = $dscSelfSignedCertificate_FileName,'cer' -join '.'
-    $dscSelfSignedPfxCertificate_FileName      = $dscSelfSignedCertificate_FileName,'pfx' -join '.'
+        #region Initialize Variables - Self Signed Certificate
+        $dscSelfSignedCertificate_FileName         = 'dscSelfSignedCertificate'
+        $dscSelfSignedCerCertificate_FileName      = $dscSelfSignedCertificate_FileName,'cer' -join '.'
+        $dscSelfSignedPfxCertificate_FileName      = $dscSelfSignedCertificate_FileName,'pfx' -join '.'
 
-    $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificate_FileName
-    $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
-    #endregion
+        $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificate_FileName
+        $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
+        #endregion
+        #endregion
 
     }
 
@@ -429,6 +426,12 @@ function Set-InitialConfiguration {
 
         try
         {
+
+            # local administartor on the localhost
+            $localNodeAdminUsername                    = "labuser"
+            $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
+            $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
+
             #region DSC - run anytime - Start Configuration
             $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
             #$ConfigData.AllNodes
@@ -441,12 +444,12 @@ function Set-InitialConfiguration {
             if($Workgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
+                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
             }
             if($domain){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath -Verbose
             }
             
 
