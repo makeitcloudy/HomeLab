@@ -16,9 +16,12 @@ function Set-InitialConfiguration {
         [ValidateNotNullOrEmpty()]
         [String]$NodeName,
 
-        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()][ValidateSet("WorkGroup", "Domain")]
-        [string]$Option
+        [string]$Option,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$false)]
+        [switch]$UpdatePowerShellHelp
     )
 
     BEGIN
@@ -157,28 +160,45 @@ function Set-InitialConfiguration {
 
     PROCESS
     {
+        if ($PSBoundParameters.ContainsKey('UpdatePowerShellHelp')) {
+            Write-Information "Update PowerShell Help"
+            try
+            {
+                Update-Help | Out-Null
+                #Get-ExecutionPolicy
+                #Test-WSMan -ComputerName localhost #can not connect 
+                #Get-Item WSMan:\localhost\Client\TrustedHosts #winRM is not running hence error during execution
+                #endregion            
+            }
+            catch 
+            {
+    
+            }
+
+        } else {
+            Write-Information "Skipping the PowerShell Help Update Process"
+        }
+
         try
         {
-            #region - run once - prerequisites for the DSC to work properly
-            #region w10mgmt - initial checks
-            update-help
-            Get-ExecutionPolicy
-            Get-Service -Name WinRM #stopped
-            Test-WSMan -ComputerName localhost #can not connect 
-            #Get-Item WSMan:\localhost\Client\TrustedHosts #winRM is not running hence error during execution
-            #endregion            
+            #WinRM configuration
+            Write-Information "Enable WinRM"
+            if(!(Get-service -Name "WinRm").Status -eq 'Running'){
+                Get-Service -Name WinRM | Start-Service | Out-Null
+            }
+            
         }
-        catch 
+        catch
         {
 
         }
 
         try
         {
-            #region WinRM configuration
-            Set-NetConnectionProfile -NetworkCategory Private
-            Enable-PSRemoting
-            Get-Item WSMan:\localhost\Client\TrustedHosts #empty
+            Write-Information "Set NetConnectionProfile to Private"
+            Set-NetConnectionProfile -NetworkCategory Private | Out-Null
+            #Enable-PSRemoting
+            #Get-Item WSMan:\localhost\Client\TrustedHosts #empty
             #endregion
         }
         catch
@@ -205,14 +225,15 @@ function Set-InitialConfiguration {
             $arrayFolderStructure.ForEach({
                 if(!(Test-Path -Path $_)){
                     try {
-                        New-Item -Path $_ -ItemType Directory -Force
+                        Write-Information "Create Directory: $_"
+                        New-Item -Path $_ -ItemType Directory -Force | Out-Null
                     }
                     catch {
                         Write-Error "Something went wrong"
                     }
                 }
                 else {
-                    Write-Output "$_ - already exist"
+                    Write-Warning "$_ - already exist"
                 }
             })
 
@@ -226,6 +247,7 @@ function Set-InitialConfiguration {
             #region 2.2. Download code from from Github
             # Function: SelfSigned Certificate
             #https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
+            Write-Information "Downloading: $newSelfsignedCertificateEx_GithubUrl"
             Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFunction_NewSelfSignedCertificateEx_FullPath -Verbose
             #endregion
         }
@@ -238,8 +260,11 @@ function Set-InitialConfiguration {
         try
         {
             # Function: DSC Configuration
+            Write-Information "Downloading: $configData_psd1_url"
             Invoke-WebRequest -Uri $configData_psd1_url -OutFile $configData_psd1_FullPath -Verbose
+            Write-Information "Downloading: $configureLCM_ps1_url"
             Invoke-WebRequest -Uri $configureLCM_ps1_url -OutFile $configureLCM_ps1_FullPath -Verbose
+            Write-Information "Downloading: $configureNode_ps1_url"
             Invoke-WebRequest -Uri $configureNode_ps1_url -OutFile $configureNode_ps1_FullPath -Verbose
         #endregion
         }
@@ -249,6 +274,7 @@ function Set-InitialConfiguration {
         }
 
         # set the location to the path where the DSC configuration is stored
+        Write-Information "Change current directory: $dscConfig_DirectoryPath"
         Set-Location -Path $dscConfig_DirectoryPath
         #endregion
 
@@ -257,12 +283,13 @@ function Set-InitialConfiguration {
             #Test-Path -Path $newSelfSignedCertificateExFullPath
             #. $newSelfSignedCertificateExFullPath
             #$env:COMPUTERNAME
-
-            Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
-
-            Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
+            Write-Information "Set Execution Policy: Bypass, Scope LocalMachine"
+            Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force | Out-Null
+            Write-Information "Install Nuget"
+            Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force | Out-Null
 
             #region DSC - Intall missing modules
+            Write-Information "Install Missing DSC Modules"
             Install-Modules -modules $modules
             #endregion
 
@@ -327,7 +354,8 @@ function Set-InitialConfiguration {
             # Load the function into memory
                 . $dscFunction_NewSelfSignedCertificateEx_FullPath
                 try {
-                    New-SelfsignedCertificateEx @selfSignedCertificateParams
+                    Write-Information "Create Self Signed Certificate"
+                    New-SelfsignedCertificateEx @selfSignedCertificateParams | Out-Null
                 }
                 catch {
 
@@ -340,7 +368,8 @@ function Set-InitialConfiguration {
             # Exporting certificate to CER and PFX
             if(!(Test-Path -Path $dscSelfSignedCerCertificate_FullPath)){
                 try {
-                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force
+                    Write-Information "Export Self Signed Certificate to file: $dscSelfSignedCerCertificate_FullPath"
+                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force | Out-Null
                 }
                 catch {
 
@@ -352,7 +381,8 @@ function Set-InitialConfiguration {
 
             if(!(Test-Path -Path $dscSelfSignedPfxCertificate_FullPath)){
                 try {
-                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString
+                    Write-Information "Export Self Signed Certificate to file: $$dscSelfSignedPfxCertificate_FullPath"
+                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString | Out-Null
                 }
                 catch {
 
@@ -386,6 +416,7 @@ function Set-InitialConfiguration {
             # now modify the ConfigData.psd1
             # * update the CertificateFile location if needed
             # * update the Thumbprint
+            Write-Information "Get Self Signed Certificate Thumbprint"
             $selfSignedCertificateThumbprint = (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)}).Thumbprint
             #(Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)}).Thumbprint | clip
             #psedit $configData_psd1_FullPath
@@ -401,21 +432,26 @@ function Set-InitialConfiguration {
             #region - run once - LCM - Ammend certificate thumbprint
             # Import the configuration data
             #$ConfigData = .\ConfigData.psd1
+            Write-Information "Import DSC Configuration Data: $configData_psd1_FullPat"
             $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
             #$ConfigData.AllNodes
 
             #psedit $configureLCM_ps1_FullPath
             #. .\ConfigureLCM.ps1
+            Write-Information "Load DSC Configuration Data into Memory"
             . $configureLCM_ps1_FullPath
 
             # Generate the MOF file for LCM configuration
+            Write-Information "Prepare the meta.mof for the LCM"
             ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath 
 
             # Apply LCM configuration
-            Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath  -Verbose
+            Write-Information "Apply LCM Configuration"
+            Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Verbose
 
             # check LCM configuration
             # for the CIM sessions to work the WIMrm should be configured first
+            Write-Information "Get LCM Configuration details "
             Get-DscLocalConfigurationManager -CimSession localhost
             #endregion
         }
