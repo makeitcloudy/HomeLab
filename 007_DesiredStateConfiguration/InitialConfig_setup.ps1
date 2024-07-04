@@ -49,17 +49,17 @@ function Set-InitialConfiguration {
 
         $dscCodeRepo_000_initialConfig_url         = $dscCodeRepoUrl,$dsc_000_InitialConfig_FolderName -join '/'
 
-        $downloadsFolder                           = $("$env:USERPROFILE\Downloads")
+        #$downloadsFolder                           = $("$env:USERPROFILE\Downloads")
         $certificate_FolderName                    = '__certificate'
 
         $dscSelfSignedCertificateName              = 'dscSelfSignedCertificate'
         $dscSelfSignedCerCertificateName           = $dscSelfSignedCertificateName,'cer' -join '.'
         $dscSelfSignedPfxCertificateName           = $dscSelfSignedCertificateName,'pfx' -join '.'
 
-        $newSelfSignedCertificateExFileName        = 'New-SelfSignedCertificateEx.ps1'
-        $newSelfsignedCertificateExGithubUrl       = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateExFileName -join '/'
+        $newSelfSignedCertificateEx_FileName       = 'New-SelfSignedCertificateEx.ps1'
+        $newSelfsignedCertificateEx_GithubUrl      = 'https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset',$newSelfSignedCertificateEx_FileName -join '/'
 
-        $selfSignedCertificate                     = @{
+        $selfSignedCertificateParams               = @{
             Subject                                = "CN=${ENV:ComputerName}"
             EKU                                    = 'Document Encryption'
             KeyUsage                               = 'KeyEncipherment, DataEncipherment'
@@ -79,29 +79,29 @@ function Set-InitialConfiguration {
 
        #$nodeName                                  = $NodeName
 
-        $configData_psd1_fileName                  = 'ConfigData.psd1'
-        $configureLCM_ps1_fileName                 = 'ConfigureLCM.ps1'
-        $configureNode_ps1_fileName                = 'ConfigureNode.ps1'
+        $configData_psd1_FileName                  = 'ConfigData.psd1'
+        $configureLCM_ps1_FileName                 = 'ConfigureLCM.ps1'
+        $configureNode_ps1_FileName                = 'ConfigureNode.ps1'
 
-        $configData_psd1_url                       = $dscCodeRepo_000_initialConfig_url,$configData_psd1_fileName -join '/'
-        $configureLCM_ps1_url                      = $dscCodeRepo_000_initialConfig_url,$configureLCM_ps1_fileName -join '/'
-        $configureNode_ps1_url                     = $dscCodeRepo_000_initialConfig_url,$configureNode_ps1_fileName -join '/'
+        $configData_psd1_url                       = $dscCodeRepo_000_initialConfig_url,$configData_psd1_FileName -join '/'
+        $configureLCM_ps1_url                      = $dscCodeRepo_000_initialConfig_url,$configureLCM_ps1_FileName -join '/'
+        $configureNode_ps1_url                     = $dscCodeRepo_000_initialConfig_url,$configureNode_ps1_FileName -join '/'
 
-        $dscConfigDirectoryPath                    = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dscConfig_FolderName
-        $dscConfigCertificateDirectoryPath         = Join-Path -Path $dscConfigDirectoryPath -ChildPath $certificate_FolderName
-        $dscConfigOutputDirectoryPath              = Join-Path -Path $dscConfigDirectoryPath -ChildPath $dscOutput_FolderName
-        $dscConfigNodeDirectoryPath                = Join-Path -Path $dscConfigDirectoryPath -ChildPath $NodeName
-        $dscConfig_000_InitialConfig_Path          =  Join-Path -Path $dscConfigNodeDirectoryPath -ChildPath $dsc_000_InitialConfig_FolderName
+        $dscConfig_DirectoryPath                   = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dscConfig_FolderName
+        $dscConfigCertificate_DirectoryPath        = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $certificate_FolderName
+        $dscConfigOutput_DirectoryPath             = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $dscOutput_FolderName
+        $dscConfigNode_DirectoryPath               = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $NodeName
+        $dscConfig_000_InitialConfig_Path          =  Join-Path -Path $dscConfigNode_DirectoryPath -ChildPath $dsc_000_InitialConfig_FolderName
 
         $configData_psd1_FullPath                  = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configData_psd1_fileName
         $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configureLCM_ps1_fileName 
         $configureNode_ps1_FullPath                = Join-Path -Path $dscConfig_000_InitialConfig_Path -ChildPath $configureNode_ps1_fileName
 
-        $newSelfSignedCertificateExFullPath        = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $newSelfSignedCertificateExFileName
-        $dscSelfSignedCerCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedCerCertificateName
-        $dscSelfSignedPfxCertificateFullPath       = Join-Path -Path $dscConfigCertificateDirectoryPath -ChildPath $dscSelfSignedPfxCertificateName
+        $newSelfSignedCertificateEx_FullPath       = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $newSelfSignedCertificateEx_FileName
+        $dscSelfSignedCerCertificate_FullPath      = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $dscSelfSignedCerCertificateName
+        $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscConfigCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificateName
 
-        $dscConfigLCMDirectoryPath                 = Join-Path -Path $dscConfigOutputDirectoryPath -ChildPath $lcm_FolderName
+        $dscConfigLCM_DirectoryPath                = Join-Path -Path $dscConfigOutput_DirectoryPath -ChildPath $lcm_FolderName
         #endregion
 
         #region - initialize variables - credentials
@@ -111,7 +111,7 @@ function Set-InitialConfiguration {
         $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
 
         # creds for PFX self signed cert
-        $mypwd                                     = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
+        $selfSignedCertificatePrivateKeyPasswordSecureString = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
         #endregion
     }
 
@@ -182,7 +182,7 @@ function Set-InitialConfiguration {
             #region - Download the powershell functions and configuration
             # download the helper functions and DSC configurations
 
-            Invoke-WebRequest -Uri $newSelfsignedCertificateExGithubUrl -OutFile $newSelfSignedCertificateExFullPath
+            Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $newSelfSignedCertificateEx_FullPath
 
             Invoke-WebRequest -Uri $configData_psd1_url -OutFile $configData_psd1_FullPath
             Invoke-WebRequest -Uri $configureLCM_ps1_url -OutFile $configureLCM_ps1_FullPath
@@ -257,13 +257,54 @@ function Set-InitialConfiguration {
         
         try
         {
-            #region DSC - Self signed certificate preparation
-            New-SelfsignedCertificateEx @selfSignedCertificate
+            #region 2.3. Self Signed Certificate - Generate and Export to CER & PFX
+            if (!(Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)})){
+            # Load the function into memory
+                . $dscFunction_NewSelfSignedCertificateEx_FullPath
+                try {
+                    New-SelfsignedCertificateEx @selfSignedCertificateParams
+                }
+                catch {
+            
+                }
+            }
+            else {
+                Write-Warning "Certificate already exist - Friendly Name: $($selfSignedCertificateParams.FriendlyName)"
+            }
+            
+            # Exporting certificate to CER and PFX
+            if(!(Test-Path -Path $dscSelfSignedCerCertificate_FullPath)){
+                try {
+                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force
+                }
+                catch {
+            
+                }
+            }
+            else {
+                Write-Warning "Certificate CER File already exist - Path: $($dscSelfSignedCerCertificate_FullPath)"
+            }
+            
+            if(!(Test-Path -Path $dscSelfSignedPfxCertificate_FullPath)){
+                try {
+                    Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString
+                }
+                catch {
+            
+                }    
+            }
+            else {
+                Write-Warning "Certificate PFX File already exist - Path: $($dscSelfSignedPfxCertificate_FullPath)"
+            }
+            #endregion
 
-            Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificateFullPath -Force
+            #region DSC - Self signed certificate preparation
+            ##New-SelfsignedCertificateEx @selfSignedCertificate
+
+            ##Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificateFullPath -Force
             #export certificate (with Private key) to C:\DscPrivateKey.pfx
             #Get-ChildItem -Path Cert:\LocalMachine\My\ | where{$_.Thumbprint -eq "4eeee9dca7dd5ccf70e47e46ac1128ddddbbb321"} | Export-PfxCertificate -FilePath "$env:USERPROFILE\Documents\dscSelfSignedCertificate\mypfx.pf" -Password $mypwd
-            Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificateFullPath -Password $mypwd
+            ##Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificateFullPath -Password $mypwd
 
             #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd
             #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
@@ -303,10 +344,10 @@ function Set-InitialConfiguration {
             . $configureLCM_ps1_FullPath
 
             # Generate the MOF file for LCM configuration
-            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscConfigLCMDirectoryPath
+            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscConfigLCM_DirectoryPath
 
             # Apply LCM configuration
-            Set-DscLocalConfigurationManager -Path $dscConfigLCMDirectoryPath -Verbose
+            Set-DscLocalConfigurationManager -Path $dscConfigLCM_DirectoryPath -Verbose
 
             # check LCM configuration
             # for the CIM sessions to work the WIMrm should be configured first
@@ -332,17 +373,17 @@ function Set-InitialConfiguration {
             if(Worokgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutputDirectoryPath -Verbose
+                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutput_DirectoryPath -Verbose
             }
             if($domain){
-# Generate the MOF files and apply the configuration
+                # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutputDirectoryPath -Verbose
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -AdminCredential $localNodeAdminCredential -OutputPath $dscConfigOutput_DirectoryPath -Verbose
             }
             
 
-            #Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Wait -Verbose -Force
-            Start-DscConfiguration -Path $dscConfigOutputDirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
+            #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
+            Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
             #endregion
         }
         catch {
