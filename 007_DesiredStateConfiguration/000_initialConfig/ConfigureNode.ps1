@@ -1,4 +1,4 @@
-Configuration NodeInitialConfig {
+Configuration NodeInitialConfigWorkgroup {
     param (
         [Parameter(Mandatory = $true)]
         [pscredential]$AdminCredential
