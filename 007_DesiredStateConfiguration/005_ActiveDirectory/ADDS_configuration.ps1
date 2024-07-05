@@ -464,7 +464,7 @@ configuration DomainAdditionalDCs {
             DomainName   = $NODE.DomainName
             Credential   = $DomainCredential
             RestartCount = 2
-            DependsOn    = '[DnsServerAddress]SetDnsServer', '[WindowsFeature]ADDSFeatureInstall'
+            DependsOn    = '[DnsServerAddress]SetIPv4DnsServer', '[WindowsFeature]ADDSFeatureInstall'
         }
 
         ADDomainController 'DomainControllerMinimal'
