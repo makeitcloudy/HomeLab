@@ -45,7 +45,8 @@ function Set-InitialConfiguration {
             }
         }
 
-        #region - check if it is a desktop operating system, or server OS
+        #region Initialize variables
+        #region Initialize variables - check if it is a desktop operating system, or server OS
         ### the execution is succesfull if the AutomatedLab module is imported and available
         # https://github.com/makeitcloudy/AutomatedLab
 
@@ -62,7 +63,6 @@ function Set-InitialConfiguration {
         }
         #endregion
 
-        #region Initialize variables
         #region Initialize Variables - Missing Modules - DSC
         $modules = @{
             'PSDscResources'                        = '2.12.0.0'
@@ -94,7 +94,6 @@ function Set-InitialConfiguration {
         # creds for PFX self signed cert
         $selfSignedCertificatePrivateKeyPassword   = 'Password1$'
         $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
-        #endregion
         #endregion
 
         #region Initialize Variables - Folder structure
@@ -215,8 +214,9 @@ function Set-InitialConfiguration {
         try
         {
             #WinRM configuration
-            Write-Information 'Enable WinRM'
+            
             if(!(Get-service -Name 'WinRm').Status -eq 'Running'){
+                Write-Information 'Enable WinRM'
                 Get-Service -Name WinRM | Start-Service | Out-Null
             }
             
