@@ -45,8 +45,25 @@ function Set-InitialConfiguration {
             }
         }
 
-        #region 1. DSC Initialize variables
-        #region Initialize Variables - Missing Modules
+        #region - check if it is a desktop operating system, or server OS
+        ### the execution is succesfull if the AutomatedLab module is imported and available
+        # https://github.com/makeitcloudy/AutomatedLab
+
+        # that check matters due to the difference with the credentials of local administrator
+        # between Desktop and Server. If the creds are the same, then this check is not needed
+        # though still it brings flexibility into the whole logic
+        try {
+            $isDesktop = $false
+            # Retrieve the operating system information using CIM
+            $isDesktop = Get-OperatingSystemType            
+        }
+        catch {
+            <#Do this if a terminating exception happens#>
+        }
+        #endregion
+
+        #region Initialize variables
+        #region Initialize Variables - Missing Modules - DSC
         $modules = @{
             'PSDscResources'                        = '2.12.0.0'
             #'ActiveDirectoryDsc'                    = '6.4.0'
@@ -54,10 +71,30 @@ function Set-InitialConfiguration {
             'NetworkingDsc'                         = '9.0.0'
         }
         #endregion
+        
+        #region Initialize variables - Credentials
+        switch($isDesktop){
+            $true {
+                Write-Warning ('Desktop OS')
+                #Initialize Variables - local administartor on the localhost - DesktopOS
+                $localNodeAdminUsername            = 'labuser'
+                $localNodeAdminPassword            = 'Password1$'
+            }
+            $false {
+                Write-Warning ('Server OS')
+                #Initialize Variables - local administartor on the localhost - ServerOS
+                $localNodeAdminUsername            = 'administrator'
+                $localNodeAdminPassword            = 'Password1$'
+            }
+        }
+        
+        $localNodeAdminPasswordSecureString        = ConvertTo-SecureString $localNodeAdminPassword -AsPlainText -Force
+        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPasswordSecureString)
 
-        #region - initialize variables - credentials
         # creds for PFX self signed cert
-        $selfSignedCertificatePrivateKeyPasswordSecureString = ConvertTo-SecureString -String "Password1$" -Force -AsPlainText
+        $selfSignedCertificatePrivateKeyPassword   = 'Password1$'
+        $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
+        #endregion
         #endregion
 
         #region Initialize Variables - Folder structure
@@ -89,7 +126,6 @@ function Set-InitialConfiguration {
         $configureLCM_ps1_url                      = $dscCodeRepo_000_initialConfig_url,$configureLCM_ps1_fileName -join '/'
         $configureNode_ps1_url                     = $dscCodeRepo_000_initialConfig_url,$configureNode_ps1_fileName -join '/'
 
-    
         #C:\dsc\
         $dsc_DirectoryPath                         = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dsc_FolderName
     
@@ -98,7 +134,7 @@ function Set-InitialConfiguration {
         #C:\dsc\config\localhost\
         $dscConfigLocahost_DirectoryPath           = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
         #C:\dsc\config\localhost\InitialSetup\
-        $dscConfigLocalhostInitialSetup_DirectoryPath  = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $InitialSetup_FolderName
+        $dscConfigLocalhostInitialSetup_DirectoryPath = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $InitialSetup_FolderName
     
         #C:\dsc\certificate\
         $dscCertificate_DirectoryPath              = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
@@ -114,7 +150,7 @@ function Set-InitialConfiguration {
         #C:\dsc\_output\InitialSetup
         $dscOutputInitialSetup_DirectoryPath       = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $InitialSetup_FolderName
         #C:\dsc\_output\LCM
-        $dscOutputLCM_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
+        $dscOutputLCM_DirectoryPath                = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
 
         $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configData_psd1_fileName
         $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureLCM_ps1_fileName 
@@ -142,8 +178,6 @@ function Set-InitialConfiguration {
             SignatureAlgorithm                     = 'SHA256'
         }
 
-        $selfSignedCertificatePrivateKeyPassword              = 'Password1$'
-        $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
         #endregion
 
         #region Initialize Variables - Self Signed Certificate
@@ -155,13 +189,12 @@ function Set-InitialConfiguration {
         $dscSelfSignedPfxCertificate_FullPath      = Join-Path -Path $dscCertificate_DirectoryPath -ChildPath $dscSelfSignedPfxCertificate_FileName
         #endregion
         #endregion
-
     }
 
     PROCESS
     {
         if ($PSBoundParameters.ContainsKey('UpdatePowerShellHelp')) {
-            Write-Information "Update PowerShell Help"
+            Write-Information 'Update PowerShell Help'
             try
             {
                 Update-Help | Out-Null
@@ -176,14 +209,14 @@ function Set-InitialConfiguration {
             }
 
         } else {
-            Write-Information "Skipping the PowerShell Help Update Process"
+            Write-Information 'Skipping the PowerShell Help Update Process'
         }
 
         try
         {
             #WinRM configuration
-            Write-Information "Enable WinRM"
-            if(!(Get-service -Name "WinRm").Status -eq 'Running'){
+            Write-Information 'Enable WinRM'
+            if(!(Get-service -Name 'WinRm').Status -eq 'Running'){
                 Get-Service -Name WinRM | Start-Service | Out-Null
             }
             
@@ -195,7 +228,7 @@ function Set-InitialConfiguration {
 
         try
         {
-            Write-Information "Set NetConnectionProfile to Private"
+            Write-Information 'Set NetConnectionProfile to Private'
             Set-NetConnectionProfile -NetworkCategory Private | Out-Null
             #Enable-PSRemoting
             #Get-Item WSMan:\localhost\Client\TrustedHosts #empty
@@ -229,7 +262,7 @@ function Set-InitialConfiguration {
                         New-Item -Path $_ -ItemType Directory -Force | Out-Null
                     }
                     catch {
-                        Write-Error "Something went wrong"
+                        Write-Error 'Something went wrong'
                     }
                 }
                 else {
@@ -283,13 +316,13 @@ function Set-InitialConfiguration {
             #Test-Path -Path $newSelfSignedCertificateExFullPath
             #. $newSelfSignedCertificateExFullPath
             #$env:COMPUTERNAME
-            Write-Information "Set Execution Policy: Bypass, Scope LocalMachine"
+            Write-Information 'Set Execution Policy: Bypass, Scope LocalMachine'
             Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force | Out-Null
-            Write-Information "Install Nuget"
+            Write-Information 'Install Nuget'
             Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force | Out-Null
 
             #region DSC - Intall missing modules
-            Write-Information "Install Missing DSC Modules"
+            Write-Information 'Install Missing DSC Modules'
             Install-Modules -modules $modules
             #endregion
 
@@ -354,7 +387,7 @@ function Set-InitialConfiguration {
             # Load the function into memory
                 . $dscFunction_NewSelfSignedCertificateEx_FullPath
                 try {
-                    Write-Information "Create Self Signed Certificate"
+                    Write-Information 'Create Self Signed Certificate'
                     New-SelfsignedCertificateEx @selfSignedCertificateParams | Out-Null
                 }
                 catch {
@@ -368,7 +401,7 @@ function Set-InitialConfiguration {
             # Exporting certificate to CER and PFX
             if(!(Test-Path -Path $dscSelfSignedCerCertificate_FullPath)){
                 try {
-                    Write-Information "Export Self Signed Certificate to file: $dscSelfSignedCerCertificate_FullPath"
+                    Write-Information "Export Self Signed Certificate to file: $($dscSelfSignedCerCertificate_FullPath)"
                     Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificate_FullPath -Force | Out-Null
                 }
                 catch {
@@ -381,7 +414,7 @@ function Set-InitialConfiguration {
 
             if(!(Test-Path -Path $dscSelfSignedPfxCertificate_FullPath)){
                 try {
-                    Write-Information "Export Self Signed Certificate to file: $$dscSelfSignedPfxCertificate_FullPath"
+                    Write-Information "Export Self Signed Certificate to file: $($dscSelfSignedPfxCertificate_FullPath)"
                     Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificate_FullPath -Password $selfSignedCertificatePrivateKeyPasswordSecureString | Out-Null
                 }
                 catch {
@@ -416,7 +449,7 @@ function Set-InitialConfiguration {
             # now modify the ConfigData.psd1
             # * update the CertificateFile location if needed
             # * update the Thumbprint
-            Write-Information "Get Self Signed Certificate Thumbprint"
+            Write-Information 'Get Self Signed Certificate Thumbprint'
             $selfSignedCertificateThumbprint = (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificateParams.FriendlyName)}).Thumbprint
             #(Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)}).Thumbprint | clip
             #psedit $configData_psd1_FullPath
@@ -429,29 +462,50 @@ function Set-InitialConfiguration {
 
         try
         {
+            #region DSC - run anytime - Start Configuration
+            $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
+            #$ConfigData.AllNodes
+            #psedit $configData_psd1_FullPath
+        }
+        catch
+        {
+
+        }
+
+        try {
+            . $configureNode_ps1_FullPath
+            #. .\ConfigureNode.ps1
+            #psedit $configureNode_ps1_FullPath            
+        }
+        catch {
+            <#Do this if a terminating exception happens#>
+        }
+
+        try
+        {
             #region - run once - LCM - Ammend certificate thumbprint
             # Import the configuration data
             #$ConfigData = .\ConfigData.psd1
-            Write-Information "Import DSC Configuration Data: $configData_psd1_FullPat"
+            Write-Information "Import DSC Configuration Data: $($configData_psd1_FullPath)"
             $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
             #$ConfigData.AllNodes
 
             #psedit $configureLCM_ps1_FullPath
             #. .\ConfigureLCM.ps1
-            Write-Information "Load DSC Configuration Data into Memory"
+            Write-Information 'Load DSC Configuration Data into Memory'
             . $configureLCM_ps1_FullPath
 
             # Generate the MOF file for LCM configuration
-            Write-Information "Prepare the meta.mof for the LCM"
+            Write-Information 'Prepare the meta.mof for the LCM'
             ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath | Out-Null
 
             # Apply LCM configuration
-            Write-Information "Apply LCM Configuration"
+            Write-Information 'Apply LCM Configuration'
             Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Verbose
 
             # check LCM configuration
             # for the CIM sessions to work the WIMrm should be configured first
-            Write-Information "Get LCM Configuration details "
+            Write-Information 'Get LCM Configuration details'
             Get-DscLocalConfigurationManager -CimSession localhost
             #endregion
         }
@@ -462,35 +516,20 @@ function Set-InitialConfiguration {
 
         try
         {
-
-            # local administartor on the localhost
-            $localNodeAdminUsername                    = "labuser"
-            $localNodeAdminPassword                    = ConvertTo-SecureString "Password1$" -AsPlainText -Force
-            $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPassword)
-
-            #region DSC - run anytime - Start Configuration
-            $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
-            #$ConfigData.AllNodes
-            #psedit $dscConfigDataPath
-
-            #psedit $configureNode_ps1_FullPath
-            #. .\ConfigureNode.ps1
-            . $configureNode_ps1_FullPath
-
             if($Workgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start Node Initial Configuration - Option: Workgroup"
+                Write-Information 'Start the MOF file compilation - Node Initial Configuration - Option: Workgroup'
                 NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             if($domain){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start Node Initial Configuration - Option: Domain"
+                Write-Information 'Start the MOF file compilation - Node Initial Configuration - Option: Domain'
                 NodeInitialConfigDomain -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             
-
+            Write-Information 'Start the DSC Configuration'
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
             Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
             #endregion
