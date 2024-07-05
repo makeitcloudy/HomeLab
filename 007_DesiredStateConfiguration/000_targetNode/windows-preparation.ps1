@@ -29,7 +29,11 @@ function windows-preparation {
 
     BEGIN
     {
-
+        $WarningPreference = "Continue"
+        $VerbosePreference = "Continue"
+        $InformationPreference = "Continue"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
+        $startDate = Get-Date
     }
 
     PROCESS
@@ -154,10 +158,13 @@ function windows-preparation {
         #Get-Module -Name $moduleName -ListAvailable
         #Get-Command -Module $moduleName
         #endregion
+
+        Write-Output 'If everything went well, please proceed with steps described in blogpost: https://makeitcloudy.pl/windows-DSC/'
     }
 
     END
     {
-
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
