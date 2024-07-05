@@ -38,7 +38,7 @@ function windows-preparation {
 
     PROCESS
     {
-        #region 1.3.2 - VMTools - installation
+        #region 2.1.1 - VMTools - installation
         # run on VM (in elevated powershell session)
         #Start-Process PowerShell_ISE -Verb RunAs
 
@@ -60,7 +60,7 @@ function windows-preparation {
         #Invoke-Item -Path $LogApp
         #endregion
 
-        #region 2.1 - Configure WinRM
+        #region 3.1 - Configure WinRM
         #Rename-Computer -NewName 'w10mgmt' -Force -Restart
         #$winRMServiceName = 'winRM' 
 
@@ -114,7 +114,7 @@ function windows-preparation {
 
         #endregion
 
-        #region 2.2 - PowerShell Module - AutomatedLab - Download from Github
+        #region 3.2 - PowerShell Module - AutomatedLab - Download from Github
         # run in elevated PowerShell session
         #region initialize variables
         $scriptName     = 'Get-GitModule.ps1'
@@ -144,7 +144,7 @@ function windows-preparation {
         #Get-Command -Module $moduleName
         #endregion
 
-        #region 2.3 - PowerShell Module - AutomatedXCPng - Download from Github
+        #region 3.3 - PowerShell Module - AutomatedXCPng - Download from Github
         # run in elevated PowerShell session
         # follow the guidelines: https://github.com/makeitcloudy/AutomatedXCPng
         # There prerequisite for the AutomatedXCPng to work properly is - Citrix Hypervisor Powershell Module / SDK
