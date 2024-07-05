@@ -60,10 +60,28 @@ xe vm-cd-eject vm=_w2k22c
 /opt/scripts/vm_create_uefi.sh --VmName 'dc02_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_desktop_experience'
 ```
 
+```bash
+# it will work - provided there is only one iso on SR with such name
+xe vm-cd-eject vm='dc01_dexp'
+xe vm-cd-insert vm='dc01_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+
+xe vm-cd-eject vm='dc02_dexp'
+xe vm-cd-insert vm='dc02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+```
+
 ## Windows - Server OS - 2x Domain Controller - Core
 
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'dc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_core'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'dc02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_core'
+```
+
+```bash
+# it will work - provided there is only one iso on SR with such name
+xe vm-cd-eject vm='dc01_core'
+xe vm-cd-insert vm='dc01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+
+xe vm-cd-eject vm='dc02_core'
+xe vm-cd-insert vm='dc02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```

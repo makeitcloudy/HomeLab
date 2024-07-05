@@ -344,11 +344,12 @@ PROCESS
              }
 
             @{
-                NodeName                    = 'dc01'                           #FIXME
+                NodeName                    = 'dc01'                           #FIXME:
                 Role                        = 'RootDomainController'
-                IPV4Address                 = '10.2.134.201/24'
-                DefaultGatewayAddress       = '10.2.134.254'
-                DNSServers                  = '127.0.0.1', '1.1.1.1' #NOTE: Cloudflare IP is optional
+                IPV4Address                 = '10.2.134.201'                   #FIXME:
+                SubnetMask                  = '255.255.255.0'                  #FIXME:
+                DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
+                DNSServers                  = '127.0.0.1', '1.1.1.1'           #NOTE: Cloudflare IP is optional
                 # # domain settings -->
                 ComplexityEnabled           = $false
                 MinPasswordLength           = 8
@@ -363,8 +364,9 @@ PROCESS
             @{
                 NodeName                    = 'dc02'                           #FIXME: additional DC
                 Role                        = 'MemberDomainController'
-                IPV4Address                 = '10.2.134.202/24'                #FIXME: additional DC IP
-                DefaultGatewayAddress       = '10.2.134.254'
+                IPV4Address                 = '10.2.134.202'                   #FIXME: additional DC IP
+                SubnetMask                  = '255.255.255.0'                  #FIXME:
+                DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
                 DNSServers                  = '10.2.134.201', '1.1.1.1'        #FIXME: first DC + any optional DNS servers
                 Site                        = 'Lab-Site'                       #FIXME: any valid site created on the first DC
                 IsGlobalCatalog             = $true

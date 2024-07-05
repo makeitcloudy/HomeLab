@@ -116,33 +116,38 @@ configuration DomainFirstDC {
         #    DependsOn      = '[NetAdapterName]InterfaceRename'
         #}
 
-        IPAddress StaticIP
+        IPAddress SetStaticIPAddress
         {
-            InterfaceAlias = $Node.InterfaceAlias
+            Ensure         = 'Present'
             AddressFamily  = 'IPv4'
-            IPAddress      = $NODE.IPv4Address
+            AddressType    = 'Static'
+            InterfaceAlias = $Node.InterfaceAlias
+            IPAddress      = $Node.IPv4Address
+            SubnetMask     = $Node.SubnetMask
             DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
-        DefaultGatewayAddress IPv4DefaultGateway {
+        DefaultGatewayAddress SetIPv4DefaultGateway {
+            Ensure         = 'Present'
             AddressFamily  = 'IPv4'
             InterfaceAlias = $Node.InterfaceAlias
             Address        = $Node.DefaultGatewayAddress
-            DependsOn      = '[NetAdapterName]InterfaceRename'
+            DependsOn      = '[IPAddress]SetStaticIPAddress'
         }
 
-        DnsServerAddress SetDnsServer
+        DnsServerAddress SetIPv4DnsServer
         {
-            InterfaceAlias = $Node.InterfaceAlias
+            Ensure         = 'Present'
             AddressFamily  = 'IPv4'
-            Address        = $NODE.DNSServers
-            DependsOn      = '[NetAdapterName]InterfaceRename'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DNSServers
+            DependsOn      = '[IPAddress]SetStaticIPAddress','[DefaultGatewayAddress]SetIPv4DefaultGateway'
         }
 
         FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
         FirewallProfile PublicFirewall
@@ -382,38 +387,50 @@ configuration DomainAdditionalDCs {
             NewName = $Node.InterfaceAlias
         }
 
-        IPAddress StaticIP
+        IPAddress SetStaticIPAddress
         {
-            InterfaceAlias = $Node.InterfaceAlias
+            Ensure         = 'Present'
             AddressFamily  = 'IPv4'
-            IPAddress      = $NODE.IPv4Address
+            AddressType    = 'Static'
+            InterfaceAlias = $Node.InterfaceAlias
+            IPAddress      = $Node.IPv4Address
+            SubnetMask     = $Node.SubnetMask
             DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
-        DnsServerAddress SetDnsServer
-        {
-            InterfaceAlias = $Node.InterfaceAlias
+        DefaultGatewayAddress SetIPv4DefaultGateway {
+            Ensure         = 'Present'
             AddressFamily  = 'IPv4'
-            Address        = $NODE.DNSServers
-            DependsOn      = '[NetAdapterName]InterfaceRename'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DefaultGatewayAddress
+            DependsOn      = '[IPAddress]SetStaticIPAddress'
         }
 
-        FirewallProfile DomainFirewallOff
+        DnsServerAddress SetIPv4DnsServer
+        {
+            Ensure         = 'Present'
+            AddressFamily  = 'IPv4'
+            InterfaceAlias = $Node.InterfaceAlias
+            Address        = $Node.DNSServers
+            DependsOn      = '[IPAddress]SetStaticIPAddress','[DefaultGatewayAddress]SetIPv4DefaultGateway'
+        }
+
+        FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
-        FirewallProfile PublicFirewallOff
+        FirewallProfile PublicFirewall
         {
             Name    = 'Public'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
         FirewallProfile PrivateFirewallOff
         {
             Name    = 'Private'
-            Enabled = 'False'
+            Enabled = 'True'
         }
 
         # * INSTALL FEATURES
