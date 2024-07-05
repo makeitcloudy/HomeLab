@@ -39,6 +39,8 @@ The integration between Hyper-V and DSC is great, there is a bit of learning cur
 * https://discussions.citrix.com/topic/379901-socket-with-cores-or-sockets-with-core/'
 * https://support.citrix.com/article/CTX126524'
 
+* [Are big changes in store for VDI hypervisors?](https://www.linkedin.com/pulse/big-changes-store-vdi-hypervisors-andrew-wood-kkq6e/?trackingId=d9P%2ByzsLYTpAaTkP7MzsKQ%3D%3D) - Andrew Wood - Product Manager, ControlUp - 2024.07.04
+
 
 ## Hypervisor automation
 
