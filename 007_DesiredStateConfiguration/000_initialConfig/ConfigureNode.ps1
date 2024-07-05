@@ -20,11 +20,17 @@ Configuration NodeInitialConfigWorkgroup {
         #    AllowModuleOverWrite = $true
         #}
 
+        NetAdapterName InterfaceRename
+        {
+            NewName = $Node.InterfaceAlias
+        }
+
         NetAdapterBinding DisableIPv6
         {
             InterfaceAlias = $Node.InterfaceAlias
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
         }
 
         # Set DNS Client Server Address using NetworkingDsc

@@ -3,7 +3,7 @@
         @{
             NodeName            = 'localhost'
             #ComputerName        = 'w10mgmt'
-            InterfaceAlias      = 'Ethernet 2'
+            InterfaceAlias      = 'Eth0'
             DnsServers          = @('10.2.134.254')            
             #DnsServers          = @('10.2.134.201', '10.2.134.202')
             # Target Node IP addresses for winRM connectivity
