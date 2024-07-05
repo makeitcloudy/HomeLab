@@ -227,6 +227,10 @@ function Set-InitialConfiguration {
         #endregion
 
         #region - NetConnectionProfile - set to private
+        # prerequisite for the Desktop Operating System
+        # for the Enable-PSRemoting commandlet to work properly
+        # this piece is already executed on Desktop OS, hence not needed here / launched second time
+        # though still it should be applied on Server OS
         try {
             Write-Information 'Set NetConnectionProfile to Private'
             Set-NetConnectionProfile -NetworkCategory Private | Out-Null
