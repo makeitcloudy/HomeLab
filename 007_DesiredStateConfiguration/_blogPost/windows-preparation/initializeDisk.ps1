@@ -1,4 +1,5 @@
 #Start-Process PowerShell_ISE -Verb RunAs
+# Run in elevated powershell session
 # https://www.itprotoday.com/powershell/use-powershell-to-initialize-a-disk-and-create-partitions
 # Z: | GPT | data drive
 
