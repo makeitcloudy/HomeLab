@@ -1,8 +1,6 @@
-# Code used for testing, provisioning and what not
+# XCPng - Test Nodes
 
-## XCP-ng
-
-### windows - Desktop OS - VM
+## windows - Desktop OS - Initial Configuration - Testing Node
 
 ```bash
 # Run on XCP-ng
@@ -18,7 +16,7 @@ xe vm-cd-eject vm=_w10
 /opt/scripts/vm_add_disk.sh --vmName "_w10" --storageName "node4_hdd_sdc_lsi" --diskName "w10_node_dataDrive" --deviceId 4 --diskGB 20  --description "w10_node_dataDrive"
 ```
 
-## windows - Server OS - VM - Desktop Experience
+## windows - Server OS - Initial Configuration - Testing Node - Desktop Experience
 
 Node (Server) used to test the DSC code for joining the domain
 
@@ -36,7 +34,7 @@ xe vm-cd-eject vm=_w2k22d
 /opt/scripts/vm_add_disk.sh --vmName "_w2k22d" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
 ```
 
-## windows - Server OS - VM - Core
+## windows - Server OS - Initial Configuration - Testing Node - Core
 
 Node (Server) used to test the DSC code for joining the domain
 
@@ -54,4 +52,18 @@ xe vm-cd-eject vm=_w2k22c
 /opt/scripts/vm_add_disk.sh --vmName "_w2k22c" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
 ```
 
-##
+## Windows - Server OS - 2x Domain Controller - Desktop Experience
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName 'dc01_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_desktop_experience'
+
+/opt/scripts/vm_create_uefi.sh --VmName 'dc02_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_desktop_experience'
+```
+
+## Windows - Server OS - 2x Domain Controller - Core
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName 'dc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_core'
+
+/opt/scripts/vm_create_uefi.sh --VmName 'dc02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '5E:16:3e:5d:1f:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_core'
+```
