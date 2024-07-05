@@ -1,7 +1,7 @@
 Configuration NodeInitialConfigWorkgroup {
     param (
         [Parameter(Mandatory = $true)]
-        [String]$NodeName,        
+        [String]$NewComputerName,        
     
         [Parameter(Mandatory = $true)]
         [pscredential]$AdminCredential
@@ -66,7 +66,7 @@ Configuration NodeInitialConfigWorkgroup {
 
         # Rename Computer using ComputerManagementDsc
         Computer RenameComputer {
-            Name       = $NodeName
+            Name       = $NewComputerName
             Credential = $AdminCredential
             DependsOn = '[Script]SetTrustedHosts'
         }

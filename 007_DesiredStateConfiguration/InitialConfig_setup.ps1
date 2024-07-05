@@ -3,7 +3,7 @@ function Set-InitialConfiguration {
     <#
     .SYNOPSIS
     .DESCRIPTION
-    .PARAMETER NodeName
+    .PARAMETER NewComputerName
     .PARAMETER Option
     .PARAMETER UpdatePowerShellHelp
     .EXAMPLE
@@ -15,7 +15,7 @@ function Set-InitialConfiguration {
     (
         [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
-        [String]$NodeName,
+        [String]$NewComputerName,
 
         [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()][ValidateSet("WorkGroup", "Domain")]
@@ -78,13 +78,13 @@ function Set-InitialConfiguration {
         #region Initialize variables - Credentials
         switch($isDesktop){
             $true {
-                Write-Warning ("Desktop OS - NodeName - $NodeName")
+                Write-Warning ("Desktop OS - NewComputerName - $NewComputerName")
                 #Initialize Variables - local administartor on the localhost - DesktopOS
                 $localNodeAdminUsername            = 'labuser'
                 $localNodeAdminPassword            = 'Password1$'
             }
             $false {
-                Write-Warning ('Server OS - NodeName - $NodeName')
+                Write-Warning ('Server OS - NewComputerName - $NewComputerName')
                 #Initialize Variables - local administartor on the localhost - ServerOS
                 $localNodeAdminUsername            = 'administrator'
                 $localNodeAdminPassword            = 'Password1$'
@@ -536,14 +536,14 @@ function Set-InitialConfiguration {
             if($Workgroup){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start the MOF file compilation - Node Initial Configuration - NodeName $($NodeName) - Option: Workgroup"
-                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
+                Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Workgroup"
+                NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             if($domain){
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start the MOF file compilation - Node Initial Configuration - NodeName $($NodeName) - Option: Domain"
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -NodeName $NodeName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
+                Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Domain"
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
         }
         catch {
