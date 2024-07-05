@@ -30,7 +30,7 @@ function Set-InitialConfiguration {
         $WarningPreference = "Continue"
         $VerbosePreference = "Continue"
         $InformationPreference = "Continue"
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Set-InitialConfiguration"
         $startDate = Get-Date
 
         switch ($Option) {
@@ -78,13 +78,13 @@ function Set-InitialConfiguration {
         #region Initialize variables - Credentials
         switch($isDesktop){
             $true {
-                Write-Warning ('Desktop OS')
+                Write-Warning ("Desktop OS - NodeName - $NodeName")
                 #Initialize Variables - local administartor on the localhost - DesktopOS
                 $localNodeAdminUsername            = 'labuser'
                 $localNodeAdminPassword            = 'Password1$'
             }
             $false {
-                Write-Warning ('Server OS')
+                Write-Warning ('Server OS - NodeName - $NodeName')
                 #Initialize Variables - local administartor on the localhost - ServerOS
                 $localNodeAdminUsername            = 'administrator'
                 $localNodeAdminPassword            = 'Password1$'
