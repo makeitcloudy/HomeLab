@@ -1,3 +1,37 @@
+Get-Module -ListAvailable
+
+Find-DscResource -Repository PSGallery
+Find-DscResource -ModuleName PSDesiredStateConfiguration -AllVersions
+Find-DscResource -ModuleName PSDscResources -AllVersions
+
+# * built-in availability, it is included with Windows PowerShell and PowerShell Core installations
+# * basic configurations, used for basic configuration tasks and to provide essential functionality needed to run DSC configurations
+# * updated with PowerShell release
+Get-Module -Name PSDesiredStateConfiguration -ListAvailable
+#Start-DscConfiguration
+#Get-DscConfiguration
+#Test-DscConfiguration
+#Publish-DscConfiguration
+
+# * extended functionality, it is a separate module available from PowerShell gallery, that provides additional and more specialized DSC resources
+# * enhanced capabilities, and a wider range or resources that are not inlcluded in PSDEsiredStateConfiguration module
+# * more frequently updated
+Get-Module -Name PSDscResources -ListAvailable
+
+Get-Module -Name ActiveDirectoryDsc -ListAvailable
+Get-Module -Name ComputerManagementDsc -ListAvailable
+Get-Module -Name NetworkingDsc -ListAvailable
+
+$moduleName = 'ComputerManagementDsc'
+Find-DscResource -ModuleName $moduleName -AllVersions | Select-Object -First 10
+Get-DscResource -Module $moduleName
+$resourceName = 'Computer'
+Find-DscResource -Filter $resourceName
+Find-DscResource -Name $resourceName
+Get-DscResource $resourceName -Syntax
+
+####
+
 # get the syntax of the resource
 # it will show how to use the resource within the configuration
 Get-DscResource $dscResource -Syntax

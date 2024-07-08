@@ -4,8 +4,10 @@
             NodeName            = 'localhost'
             #ComputerName        = 'w10mgmt'
             InterfaceAlias      = 'Eth0'
-            DnsServers          = @('10.2.134.254')            
-            #DnsServers          = @('10.2.134.201', '10.2.134.202')
+            WorkgroupDnsServers = @('10.2.134.254')
+            WorkgroupName       = 'Workgroup'
+            DomainDnsServers    = @('10.2.134.201', '10.2.134.202')
+            JoinOu              = 'ou=computers,dc=lab,dc=local'
             # Target Node IP addresses for winRM connectivity
             TrustedHosts        = 'localhost'
             #TrustedHosts        = 'localhost,10.2.134.201,10.2.134.202'

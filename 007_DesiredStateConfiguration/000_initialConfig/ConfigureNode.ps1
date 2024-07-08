@@ -1,10 +1,13 @@
 Configuration NodeInitialConfigWorkgroup {
     param (
         [Parameter(Mandatory = $true)]
-        [String]$NewComputerName,        
-    
-        [Parameter(Mandatory = $true)]
-        [pscredential]$AdminCredential
+        [ValidateNotNullOrEmpty()]
+        [String]
+        $NewComputerName,
+
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]
+        $AdminCredential
     )
     
     Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
@@ -19,29 +22,7 @@ Configuration NodeInitialConfigWorkgroup {
         #    RefreshMode = 'Push'
         #    AllowModuleOverWrite = $true
         #}
-
-        NetAdapterName InterfaceRename
-        {
-            NewName = $Node.InterfaceAlias
-        }
-
-        NetAdapterBinding DisableIPv6
-        {
-            InterfaceAlias = $Node.InterfaceAlias
-            ComponentId    = 'ms_tcpip6'
-            State          = 'Disabled'
-            DependsOn      = '[NetAdapterName]InterfaceRename'
-        }
-
-        # Set DNS Client Server Address using NetworkingDsc
-        DnsServerAddress DnsSettings {
-            
-            AddressFamily  = 'IPv4'
-            Address        = $Node.DNSServers
-            InterfaceAlias = $Node.InterfaceAlias
-            DependsOn      = "[NetAdapterBinding]DisableIPv6"
-        }
-
+        #region Services
         Service WinRm {
             Name        = 'WinRM'
             StartupType = 'Automatic'
@@ -63,14 +44,126 @@ Configuration NodeInitialConfigWorkgroup {
             }
             DependsOn = '[Service]WinRm'
         }
+        #endregion
+
+        #region network interface
+        NetAdapterName InterfaceRename {
+            NewName = $Node.InterfaceAlias
+        }
+
+        NetAdapterBinding DisableIPv6 {
+            InterfaceAlias = $Node.InterfaceAlias
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+
+        # Set DNS Client Server Address using NetworkingDsc
+        DnsServerAddress DnsSettings {
+            AddressFamily  = 'IPv4'
+            Address        = $Node.WorkgroupDnsServers
+            InterfaceAlias = $Node.InterfaceAlias
+            DependsOn      = "[NetAdapterBinding]DisableIPv6"
+        }
+        #endregion
 
         # Rename Computer using ComputerManagementDsc
         Computer RenameComputer {
             Name       = $NewComputerName
             Credential = $AdminCredential
             DependsOn = '[Script]SetTrustedHosts'
+            WorkGroupName = $Node.WorkgroupName
         }
         
+        # PendingReboot using ComputerManagementDsc
+        PendingReboot RebootAfterRename {
+            Name      = 'RebootAfterRename'
+            DependsOn = '[Computer]RenameComputer'
+        }
+    }
+}
+
+Configuration NodeInitialConfigDomain {
+    param (
+        [Parameter(Mandatory = $true)]
+        [String]$NewComputerName,        
+    
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]
+        $AdminCredential,
+
+        [Parameter(Mandatory = $true)]
+        [ValidateNotNullOrEmpty()]
+        [System.Management.Automation.PSCredential]
+        $DomainJoinCredential
+    )
+    
+    Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
+    Import-DscResource -ModuleName 'NetworkingDsc' -ModuleVersion 9.0.0
+
+    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
+
+    Node $AllNodes.NodeName {
+
+        #region network interface
+        NetAdapterName InterfaceRename {
+            NewName = $Node.InterfaceAlias
+        }
+    
+        NetAdapterBinding DisableIPv6 {
+            InterfaceAlias = $Node.InterfaceAlias
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+    
+        # Set DNS Client Server Address using NetworkingDsc
+        DnsServerAddress DnsSettings {
+            AddressFamily  = 'IPv4'
+            Address        = $Node.DomainDnsServers
+            InterfaceAlias = $Node.InterfaceAlias
+            DependsOn      = "[NetAdapterBinding]DisableIPv6"
+        }
+    
+
+        #region services
+        Service WinRm {
+            Name        = 'WinRM'
+            StartupType = 'Automatic'
+            State       = 'Running'
+        }
+
+        Script SetTrustedHosts {
+            GetScript = {
+                @{
+                    Result = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                }
+            }
+            SetScript = {
+                Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $using:Node.TrustedHosts -Force
+            }
+            TestScript = {
+                $currentTrustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                $currentTrustedHosts -eq $using:Node.TrustedHosts
+            }
+            DependsOn = '[Service]WinRm'
+        }
+        #endregion
+            
+        # Rename Computer using ComputerManagementDsc
+        Computer RenameComputer {
+            Name        = $NewComputerName
+            DomainName  = $Node.DomainName
+            Credential  = $DomainJoinCredential
+            JoinOU      = $Node.JoinOu
+            #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
+            Options     = 'JoinWithNewName'
+            Description = 'ComputerManagementDsc - test description'
+            #[PsDscRunAsCredential = [PSCredential]]
+            DependsOn   = '[Script]SetTrustedHosts'
+        }
+            
         # PendingReboot using ComputerManagementDsc
         PendingReboot RebootAfterRename {
             Name      = 'RebootAfterRename'
@@ -94,5 +187,17 @@ Configuration NodeInitialConfigWorkgroup {
         #    Ensure = "Present"
         #    #DependsOn = "[WindowsFeature]InstallPSRemoting"
         #}
+
+    }
+    $AllNodes.Where({$_.Role -eq 'FileServer'}).ForEach{
+        Node $AllNodes.NodeName {
+
+        }
+    }
+
+    $AllNodes.Where({$_.Role -eq 'SQLServer'}).ForEach{
+        Node $AllNodes.NodeName {
+
+        }
     }
 }

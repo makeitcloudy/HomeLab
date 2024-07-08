@@ -88,6 +88,9 @@ function Set-InitialConfiguration {
                 #Initialize Variables - local administartor on the localhost - ServerOS
                 $localNodeAdminUsername            = 'administrator'
                 $localNodeAdminPassword            = 'Password1$'
+
+                $domainJoinUserName                = 'administrator'
+                $domainJoinPassword                = 'Password1$'
             }
         }
         
@@ -154,8 +157,11 @@ function Set-InitialConfiguration {
         #C:\dsc\_output\LCM
         $dscOutputLCM_DirectoryPath                = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
 
+        #C:\dsc\_output\InitialSetup\ConfigData.psd1
         $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configData_psd1_fileName
+        #C:\dsc\_output\InitialSetup\ConfigureLCM.ps1
         $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureLCM_ps1_fileName 
+        #C:\dsc\_output\InitialSetup\ConfigureNode.ps1
         $configureNode_ps1_FullPath                = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureNode_ps1_fileName
         #endregion
 
@@ -540,10 +546,14 @@ function Set-InitialConfiguration {
                 NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             if($domain){
+
+                $localNodeAdminPasswordSecureString    = ConvertTo-SecureString $domainJoinPassword -AsPlainText -Force
+                $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $domainJoinPassword)                
+
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
                 Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Domain"
-                NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
+                NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -DomainJoinCredential $domainJoinCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
         }
         catch {
