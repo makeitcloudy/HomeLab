@@ -76,6 +76,9 @@ function Set-InitialConfigurationDsc {
         #endregion
         
         #region Initialize variables - Credentials
+        $domainJoinUserName                        = 'administrator'
+        $domainJoinPassword                        = 'Password1$'
+
         switch($isDesktop){
             $true {
                 Write-Warning ("Desktop OS - NewComputerName - $NewComputerName")
@@ -88,9 +91,6 @@ function Set-InitialConfigurationDsc {
                 #Initialize Variables - local administartor on the localhost - ServerOS
                 $localNodeAdminUsername            = 'administrator'
                 $localNodeAdminPassword            = 'Password1$'
-
-                $domainJoinUserName                = 'administrator'
-                $domainJoinPassword                = 'Password1$'
             }
         }
         
