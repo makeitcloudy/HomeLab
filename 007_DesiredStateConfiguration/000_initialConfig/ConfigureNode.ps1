@@ -159,7 +159,7 @@ Configuration NodeInitialConfigDomain {
             JoinOU      = $Node.JoinOu
             #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
             Options     = 'JoinWithNewName'
-            Description = 'ComputerManagementDsc - test description'
+            #Description = ''
             #[PsDscRunAsCredential = [PSCredential]]
             DependsOn   = '[Script]SetTrustedHosts'
         }

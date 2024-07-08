@@ -76,7 +76,7 @@ function Set-InitialConfigurationDsc {
         #endregion
         
         #region Initialize variables - Credentials
-        $domainJoinUserName                        = 'administrator'
+        $domainJoinUserName                        = 'mot\administrator'
         $domainJoinPassword                        = 'Password1$'
 
         switch($isDesktop){
