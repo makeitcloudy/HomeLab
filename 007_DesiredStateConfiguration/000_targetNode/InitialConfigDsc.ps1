@@ -539,21 +539,29 @@ function Set-InitialConfigurationDsc {
 
         #region - DSC - NodeInitialConfig - MOF compilation
         try {
-            if($Workgroup){
+            #Write-Information "Workgroup: $workgroup | domain: $domain"
+            if($workgroup) {
+                #Write-Information "workgroup"
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
                 Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Workgroup"
                 NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
-            if($domain){
-
+            else {
+                #Write-Information "skipping workgroup"
+            }
+            if($domain) {
+                #Write-Information "domain"
                 $localNodeAdminPasswordSecureString    = ConvertTo-SecureString $domainJoinPassword -AsPlainText -Force
-                $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $domainJoinPassword)                
+                $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $localNodeAdminPasswordSecureString)                
 
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
                 Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Domain"
                 NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -DomainJoinCredential $domainJoinCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
+            }
+            else {
+                #Write-Information "skipping domain"
             }
         }
         catch {
