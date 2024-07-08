@@ -76,7 +76,8 @@ function Set-InitialConfigurationDsc {
         #endregion
         
         #region Initialize variables - Credentials
-        $domainJoinUserName                        = 'mot\administrator'
+        $domainJoinUserName                        = 'lab.local\administrator'
+        #$domainJoinUserName                        = 'mot\administrator'
         $domainJoinPassword                        = 'Password1$'
 
         switch($isDesktop){
@@ -576,6 +577,7 @@ function Set-InitialConfigurationDsc {
             Write-Information "Domain    - $domain"
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
             Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
+            Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $domainJoinCredential -Wait -Verbose -Force
         }
         catch {
 

@@ -8,7 +8,7 @@
             WorkgroupName       = 'Workgroup'
             DomainDnsServers    = @('10.2.134.201', '10.2.134.202')
             DomainName          = 'lab.local'
-            JoinOu              = 'ou=computers,dc=lab,dc=local'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
             # Target Node IP addresses for winRM connectivity
             TrustedHosts        = 'localhost'
             #TrustedHosts        = 'localhost,10.2.134.201,10.2.134.202'

@@ -156,9 +156,10 @@ Configuration NodeInitialConfigDomain {
             Name        = $NewComputerName
             DomainName  = $Node.DomainName
             Credential  = $DomainJoinCredential
-            JoinOU      = $Node.JoinOu
+            ##JoinOU      = $Node.JoinOu
             #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
-            Options     = 'JoinWithNewName'
+            ##Options     = 'JoinWithNewName'
+            ##Server = 'dc01.lab.local'
             #Description = ''
             #[PsDscRunAsCredential = [PSCredential]]
             DependsOn   = '[Script]SetTrustedHosts'
