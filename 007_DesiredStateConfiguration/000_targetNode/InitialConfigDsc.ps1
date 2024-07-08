@@ -577,7 +577,6 @@ function Set-InitialConfigurationDsc {
             Write-Information "Domain    - $domain"
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
             Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
-            #Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $domainJoinCredential -Wait -Verbose -Force
         }
         catch {
 
