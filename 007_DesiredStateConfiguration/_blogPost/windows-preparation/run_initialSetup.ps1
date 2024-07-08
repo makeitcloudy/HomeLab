@@ -1,10 +1,10 @@
+Start-Process PowerShell_ISE -Verb RunAs
 # run in elevated PowerShell session
 #region initialize variables
-$scriptName     = 'windows-preparation.ps1'
+$scriptName     = 'initialConfig.ps1'
 $uri            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode',$scriptName -join '/'
 $path           = "$env:USERPROFILE\Documents"
 $outFile        = Join-Path -Path $path -ChildPath $scriptName
-
 #endregion
 
 # set the execution policy
@@ -17,5 +17,8 @@ Invoke-WebRequest -Uri $uri -OutFile $outFile -Verbose
 
 # load function into memory
 . $outFile
-windows-preparation
+#psedit $outfile
+
 #endregion
+
+Restart-Computer -Force

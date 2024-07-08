@@ -1,4 +1,4 @@
-function Set-InitialConfiguration {
+function Set-InitialConfigurationDsc {
 
     <#
     .SYNOPSIS

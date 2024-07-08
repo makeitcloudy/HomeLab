@@ -12,7 +12,7 @@
 # Add itempotency to VMTools - installation
 # 
 
-function windows-preparation {
+function Set-InitialConfiguration {
     <#
     .SYNOPSIS
     .DESCRIPTION
@@ -32,7 +32,7 @@ function windows-preparation {
         $WarningPreference = "Continue"
         $VerbosePreference = "Continue"
         $InformationPreference = "Continue"
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Example"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - InitialConfig.ps1"
         $startDate = Get-Date
     }
 
@@ -90,7 +90,8 @@ function windows-preparation {
 
                     #region - Enable PS Remoting
                     try {
-                        Enable-PSRemoting -Verbose
+                        Write-Information 'Enable-PSRemoting'
+                        Enable-PSRemoting | Out-Null
                     }
                     catch {
 
@@ -98,7 +99,8 @@ function windows-preparation {
                     
                     try {
                         #region 3 - RSAT Tools
-                        Add-WindowsCapability -Online -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0*
+                        Write-Information 'Add-WindowsCapability'
+                        Add-WindowsCapability -Online -Name Rsat.ActiveDirectory.DS-LDS.Tools~~~~0.0.1.0* | Out-Null
                         #endregion                        
                     }
                     catch {
