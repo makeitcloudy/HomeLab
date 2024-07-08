@@ -91,7 +91,9 @@ function Set-InitialConfiguration {
                     #region - Enable PS Remoting
                     try {
                         Write-Information 'Enable-PSRemoting'
+                        $VerbosePreference = 'SilentlyContinue'
                         Enable-PSRemoting | Out-Null
+                        $VerbosePreference = 'Continue'
                     }
                     catch {
 
