@@ -3,7 +3,7 @@
         @{
             Role                = 'newVM'
             #NodeName            = 'localhost'
-            NodeName            = '*'
+            NodeName            = 'localhost'
             #ComputerName        = 'w10mgmt'
             InterfaceAlias      = 'Eth0'
             WorkgroupDnsServers = @('10.2.134.254')

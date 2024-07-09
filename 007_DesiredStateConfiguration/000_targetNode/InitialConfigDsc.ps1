@@ -483,10 +483,10 @@ function Set-InitialConfigurationDsc {
         }
         #endregion
 
-        #region - DSC - Import Configuration Data
+        #region - DSC - ConfigurationData - Import
         try {
             #$ConfigData = .\ConfigData.psd1
-            Write-Information "Import DSC Configuration Data: $($configData_psd1_FullPath)"
+            Write-Information "DSC Configuration Data - import : $($configData_psd1_FullPath)"
             $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
             #$ConfigData.AllNodes
         }
@@ -495,9 +495,9 @@ function Set-InitialConfigurationDsc {
         }
         #endregion
 
-        #region - DSC - Dealing with LCM preparation steps
+        #region - DSC - ConfigurationData - Load to memory
         try {
-            Write-Information 'Load DSC Configuration Data into Memory'
+            Write-Information 'DSC Configuration Data - load to memory'
             . $configureLCM_ps1_FullPath
             #psedit $configureLCM_ps1_FullPath
             #. .\ConfigureLCM.ps1
@@ -507,10 +507,11 @@ function Set-InitialConfigurationDsc {
         }
         #endregion
 
-        #region - DSC 
+        #region - DSC - LCM - Compile Configuration - Generate the .meta.mof
         try {
-            # Generate the MOF file for LCM configuration - pass the certificate thumbprint into the configuration
-            Write-Information 'Prepare the meta.mof for the LCM'
+            # pass the certificate thumbprint into the configuration
+            # C:\dsc\_output\LCM
+            Write-Information 'LCM - Prepare the .meta.mof'
             ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath | Out-Null
         }
         catch {
@@ -518,25 +519,25 @@ function Set-InitialConfigurationDsc {
         }
         #endregion
 
-        #region - DSC - Apply LCM configuration
-            Write-Information 'Apply LCM Configuration'
+        #region - DSC - LCM - Apply configuration
+            Write-Information 'LCM - Apply configuration'
             Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Verbose
         #endregion
 
         #region - DSC - check LCM configuration
-        try
-        {
-            # for the CIM sessions to work the WIMrm should be configured first
-            Write-Information 'Get LCM Configuration details'
-            Get-DscLocalConfigurationManager -CimSession localhost
-        }
-        catch {
-
-        }
+        #try {
+        #    # for the CIM sessions to work the WIMrm should be configured first
+        #    Write-Information 'Get LCM Configuration details'
+        #    Get-DscLocalConfigurationManager -CimSession localhost
+        #}
+        #catch {
+        #
+        #}
         #endregion
 
-        #region - DSC - Loading Configuration into memory
+        #region - DSC - Load configuration to memory
         try {
+            Write-Information 'DSC Configuration - load to memory'
             . $configureNode_ps1_FullPath
             #. .\ConfigureNode.ps1
             #psedit $configureNode_ps1_FullPath
@@ -553,7 +554,7 @@ function Set-InitialConfigurationDsc {
                 #Write-Information "workgroup"
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Workgroup"
+                Write-Information "DSC compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Workgroup"
                 NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             else {
@@ -566,7 +567,7 @@ function Set-InitialConfigurationDsc {
 
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
-                Write-Information "Start the MOF file compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Domain"
+                Write-Information "DSC compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Domain"
                 NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -DomainJoinCredential $domainJoinCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             else {
@@ -580,9 +581,7 @@ function Set-InitialConfigurationDsc {
 
         #region - DSC - Start-DscConfiguration
         try {
-            Write-Information "Start the DSC Configuration - $Option"
-            Write-Information "WorkGroup - $workgroup"
-            Write-Information "Domain    - $domain"
+            Write-Information "DSC Configuration - Start - Option: $Option | WorkGroup - $workgroup | Domain - $domain"
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
             Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
         }
