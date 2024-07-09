@@ -72,7 +72,7 @@ function Set-InitialConfiguration {
         $os = Get-CimInstance -ClassName Win32_OperatingSystem -ComputerName $ComputerName
         switch($os.ProductType){
             '1' {
-                    Write-Output 'DesktopOS'
+                    Write-Information 'DesktopOS'
                     #if((Get-Service -Name $winRMServiceName).Status -match 'Stopped'){
                     #    Write-Warning "WinRM service is stopped"
                     #    Start-Service -Name $winRMServiceName
@@ -111,7 +111,7 @@ function Set-InitialConfiguration {
                     #endregion
                 }
             '3' {
-                    Write-Output 'ServerOs'
+                    Write-Information 'ServerOs'
                     # PS Remoting seems to be configured already for the succesfull execution
                 }
         }
@@ -163,7 +163,21 @@ function Set-InitialConfiguration {
         #Get-Command -Module $moduleName
         #endregion
 
-        Write-Output 'If everything went well, please proceed with steps described in blogpost: https://makeitcloudy.pl/windows-DSC/'
+        #region 3.4 - Power Plan
+        try {
+            #$powerPlanName = 'Ultimate Performance'
+            $powerPlanName = 'High Performance' 
+            $p = Get-CimInstance -Namespace root\cimv2\power -Class win32_PowerPlan -Filter "ElementName = '$($powerPlanName)'"
+            $planGuid = $p.InstanceID.Split("\")[-1]
+            $cleanGuid = $planGuid -replace '^\{(.*)\}$', '$1'
+            powercfg /SETACTIVE $cleanGuid
+        }
+        catch {
+
+        }
+        #endregion
+
+        Write-Information 'If everything went well, please proceed with steps described in blogpost: https://makeitcloudy.pl/windows-DSC/'
     }
 
     END

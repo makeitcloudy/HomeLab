@@ -75,34 +75,6 @@ function Set-InitialConfigurationDsc {
         }
         #endregion
         
-        #region Initialize variables - Credentials
-        $domainJoinUserName                        = 'lab.local\administrator'
-        #$domainJoinUserName                        = 'mot\administrator'
-        $domainJoinPassword                        = 'Password1$'
-
-        switch($isDesktop){
-            $true {
-                Write-Warning ("Desktop OS - NewComputerName - $NewComputerName")
-                #Initialize Variables - local administartor on the localhost - DesktopOS
-                $localNodeAdminUsername            = 'labuser'
-                $localNodeAdminPassword            = 'Password1$'
-            }
-            $false {
-                Write-Warning ('Server OS - NewComputerName - $NewComputerName')
-                #Initialize Variables - local administartor on the localhost - ServerOS
-                $localNodeAdminUsername            = 'administrator'
-                $localNodeAdminPassword            = 'Password1$'
-            }
-        }
-        
-        $localNodeAdminPasswordSecureString        = ConvertTo-SecureString $localNodeAdminPassword -AsPlainText -Force
-        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPasswordSecureString)
-
-        # creds for PFX self signed cert
-        $selfSignedCertificatePrivateKeyPassword   = 'Password1$'
-        $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
-        #endregion
-
         #region Initialize Variables - Folder structure
         $dsc_FolderName                            = 'dsc'             #C:\dsc\
 
@@ -141,7 +113,14 @@ function Set-InitialConfigurationDsc {
         $dscConfigLocahost_DirectoryPath           = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
         #C:\dsc\config\localhost\InitialSetup\
         $dscConfigLocalhostInitialSetup_DirectoryPath = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $InitialSetup_FolderName
-    
+
+        #C:\dsc\config\InitialSetup\ConfigData.psd1
+        $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configData_psd1_fileName
+        #C:\dsc\config\InitialSetup\ConfigureLCM.ps1
+        $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureLCM_ps1_fileName 
+        #C:\dsc\config\InitialSetup\ConfigureNode.ps1
+        $configureNode_ps1_FullPath                = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureNode_ps1_fileName        
+
         #C:\dsc\certificate\
         $dscCertificate_DirectoryPath              = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
     
@@ -157,13 +136,34 @@ function Set-InitialConfigurationDsc {
         $dscOutputInitialSetup_DirectoryPath       = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $InitialSetup_FolderName
         #C:\dsc\_output\LCM
         $dscOutputLCM_DirectoryPath                = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
+        #endregion
 
-        #C:\dsc\_output\InitialSetup\ConfigData.psd1
-        $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configData_psd1_fileName
-        #C:\dsc\_output\InitialSetup\ConfigureLCM.ps1
-        $configureLCM_ps1_FullPath                 = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureLCM_ps1_fileName 
-        #C:\dsc\_output\InitialSetup\ConfigureNode.ps1
-        $configureNode_ps1_FullPath                = Join-Path -Path $dscConfigLocalhostInitialSetup_DirectoryPath -ChildPath $configureNode_ps1_fileName
+        #region Initialize variables - Credentials
+        $domainJoinUserName                        = 'lab.local\administrator'
+        #$domainJoinUserName                        = 'mot\administrator'
+        $domainJoinPassword                        = 'Password1$'
+
+        switch($isDesktop){
+            $true {
+                Write-Warning ("Desktop OS - NewComputerName - $NewComputerName")
+                #Initialize Variables - local administartor on the localhost - DesktopOS
+                $localNodeAdminUsername            = 'labuser'
+                $localNodeAdminPassword            = 'Password1$'
+            }
+            $false {
+                Write-Warning ('Server OS - NewComputerName - $NewComputerName')
+                #Initialize Variables - local administartor on the localhost - ServerOS
+                $localNodeAdminUsername            = 'administrator'
+                $localNodeAdminPassword            = 'Password1$'
+            }
+        }
+        
+        $localNodeAdminPasswordSecureString        = ConvertTo-SecureString $localNodeAdminPassword -AsPlainText -Force
+        $localNodeAdminCredential                  = New-Object System.Management.Automation.PSCredential ($localNodeAdminUsername, $localNodeAdminPasswordSecureString)
+
+        # creds for PFX self signed cert
+        $selfSignedCertificatePrivateKeyPassword   = 'Password1$'
+        $selfSignedCertificatePrivateKeyPasswordSecureString  = ConvertTo-SecureString -String $selfSignedCertificatePrivateKeyPassword -Force -AsPlainText
         #endregion
 
         #region Initialize Variables - Function - C:\dsc\function\New-SelfSignedCertificateEx.ps1
@@ -485,9 +485,50 @@ function Set-InitialConfigurationDsc {
 
         #region - DSC - Import Configuration Data
         try {
+            #$ConfigData = .\ConfigData.psd1
+            Write-Information "Import DSC Configuration Data: $($configData_psd1_FullPath)"
             $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
             #$ConfigData.AllNodes
-            #psedit $configData_psd1_FullPath
+        }
+        catch {
+
+        }
+        #endregion
+
+        #region - DSC - Dealing with LCM preparation steps
+        try {
+            Write-Information 'Load DSC Configuration Data into Memory'
+            . $configureLCM_ps1_FullPath
+            #psedit $configureLCM_ps1_FullPath
+            #. .\ConfigureLCM.ps1
+        }
+        catch {
+
+        }
+        #endregion
+
+        #region - DSC 
+        try {
+            # Generate the MOF file for LCM configuration - pass the certificate thumbprint into the configuration
+            Write-Information 'Prepare the meta.mof for the LCM'
+            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath | Out-Null
+        }
+        catch {
+            
+        }
+        #endregion
+
+        #region - DSC - Apply LCM configuration
+            Write-Information 'Apply LCM Configuration'
+            Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Verbose
+        #endregion
+
+        #region - DSC - check LCM configuration
+        try
+        {
+            # for the CIM sessions to work the WIMrm should be configured first
+            Write-Information 'Get LCM Configuration details'
+            Get-DscLocalConfigurationManager -CimSession localhost
         }
         catch {
 
@@ -498,43 +539,10 @@ function Set-InitialConfigurationDsc {
         try {
             . $configureNode_ps1_FullPath
             #. .\ConfigureNode.ps1
-            #psedit $configureNode_ps1_FullPath            
+            #psedit $configureNode_ps1_FullPath
         }
         catch {
             <#Do this if a terminating exception happens#>
-        }
-        #endregion
-
-        #region - DSC - Dealing with LCM preparation steps
-        try
-        {
-            # Import the configuration data
-            #$ConfigData = .\ConfigData.psd1
-            Write-Information "Import DSC Configuration Data: $($configData_psd1_FullPath)"
-            $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
-            #$ConfigData.AllNodes
-
-            #psedit $configureLCM_ps1_FullPath
-            #. .\ConfigureLCM.ps1
-            Write-Information 'Load DSC Configuration Data into Memory'
-            . $configureLCM_ps1_FullPath
-
-            # Generate the MOF file for LCM configuration - pass the certificate thumbprint into the configuration
-            Write-Information 'Prepare the meta.mof for the LCM'
-            ConfigureLCM -CertificateThumbprint $selfSignedCertificateThumbprint -ConfigurationData $ConfigData -OutputPath $dscOutputLCM_DirectoryPath | Out-Null
-
-            # Apply LCM configuration
-            Write-Information 'Apply LCM Configuration'
-            Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Verbose
-
-            # check LCM configuration
-            # for the CIM sessions to work the WIMrm should be configured first
-            Write-Information 'Get LCM Configuration details'
-            Get-DscLocalConfigurationManager -CimSession localhost
-            
-        }
-        catch {
-
         }
         #endregion
 

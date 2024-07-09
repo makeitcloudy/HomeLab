@@ -2,6 +2,7 @@
     AllNodes = @(
         @{
             NodeName            = 'localhost'
+            Role                = 'newVM'
             #ComputerName        = 'w10mgmt'
             InterfaceAlias      = 'Eth0'
             WorkgroupDnsServers = @('10.2.134.254')
@@ -17,6 +18,14 @@
             # The thumbprint of the Encryption Certificate used to decrypt the credentials on target node.
             # The value of the thumbprint should be changed each time the Self Signed Certificate is generated
             #Thumbprint          = 'EF280FE58AC3E1B8BC211122866248282B44E7D8'
+        },
+        @{
+            Role = 'FileServer'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+        },
+        @{
+            Role = 'SQLServer'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
         }
     )
 }
