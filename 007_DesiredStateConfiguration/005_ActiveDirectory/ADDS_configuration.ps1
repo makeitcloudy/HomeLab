@@ -38,7 +38,7 @@ configuration DomainFirstDC {
             RefreshMode        = 'Push'
         }
 
-        # * LOCALE and TIME
+        #region - LOCALE and TIME
         SystemLocale SystemLocaleExample
         {
             IsSingleInstance = 'Yes'
@@ -46,17 +46,17 @@ configuration DomainFirstDC {
         }
 
         Timezone TimeZoneConfiguration {
-            TimeZone            = $NODE.TimeZone
+            TimeZone            = $Node.TimeZone
             IsSingleInstance    = 'Yes'
         }
 
-        $ntpServerValue1 = [string]($NODE.NTPServer | ForEach-Object { $_, (',0x{0:x}' -f '8') }) -replace ' ,',","
-        $ntpServerValue2 = [string]($NODE.FailOverNTPServers | %{$_, (",0x{0:x}" -f "a")}) -replace " ,",","
+        $ntpServerValue1 = [string]($Node.NTPServer | ForEach-Object { $_, (',0x{0:x}' -f '8') }) -replace ' ,',","
+        $ntpServerValue2 = [string]($Node.FailOverNTPServers | %{$_, (",0x{0:x}" -f "a")}) -replace " ,",","
         $ntpServerValue = $ntpServerValue1, $ntpServerValue2 -join " "
 
         $ntpservers = @()
-        $ntpservers += $NODE.NTPServer
-        $ntpservers += $NODE.FailOverNTPServers | %{$_}
+        $ntpservers += $Node.NTPServer
+        $ntpservers += $Node.FailOverNTPServers | %{$_}
 
         $timeRootPath = "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time"
         $NTPListPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers"
@@ -85,6 +85,7 @@ configuration DomainFirstDC {
             ValueData = $ntpServerValue
             Ensure = "Present"
         }
+        #endregion        
 
         # * RESET LOCAL ADMIN PASSWORD
         # this will be used as the default domain admin's password
@@ -95,7 +96,8 @@ configuration DomainFirstDC {
             Password = $DomainCredential
         }
 
-        # * NETWORKING
+        #region - NETWORKING
+        #region - NETWORKING - Network Interface
         NetAdapterName InterfaceRename
         {
             NewName = $Node.InterfaceAlias
@@ -146,7 +148,9 @@ configuration DomainFirstDC {
             Address        = $Node.DNSServers
             DependsOn      = '[IPAddress]SetStaticIPv4Address','[DefaultGatewayAddress]SetIPv4DefaultGateway'
         }
+        #endregion
 
+        #region - NETWORKING - Firewall
         FirewallProfile DomainFirewall
         {
             Name    = 'Domain'
@@ -181,8 +185,11 @@ configuration DomainFirstDC {
             #Profile       = ('Domain', 'Private', 'Public')
             DependsOn = '[FirewallProfile]DomainFirewall','[FirewallProfile]PrivateFirewall'
         }
+        #endregion
+        #endregion
 
-        # * INSTALL FEATURES
+        #region - Domain Setup
+        #region - Domain Setup - INSTALL FEATURES
         WindowsFeature ADDSFeatureInstall
         {
             Ensure    = 'Present'
@@ -201,25 +208,25 @@ configuration DomainFirstDC {
             }
         }
 
-        $DomainContainer = "DC=$($NODE.DomainName.Split('.') -join ',DC=')"
+        $DomainContainer = "DC=$($Node.DomainName.Split('.') -join ',DC=')"
 
         ADDomain 'ThisDomain'
         {
-            DomainName                    = $NODE.DomainName
-            DomainNetbiosName             = $NODE.DomainNetbiosName
+            DomainName                    = $Node.DomainName
+            DomainNetbiosName             = $Node.DomainNetbiosName
             ForestMode                    = $ForestMode
             DomainMode                    = $DomainMode
             Credential                    = $DomainCredential
             SafemodeAdministratorPassword = $SafemodePassword
-            DatabasePath                  = $NODE.NTDSPath
-            LogPath                       = $NODE.LogPath
-            SysvolPath                    = $NODE.SysvolPath
+            DatabasePath                  = $Node.NTDSPath
+            LogPath                       = $Node.LogPath
+            SysvolPath                    = $Node.SysvolPath
             DependsOn                     = '[WindowsFeature]ADDSFeatureInstall'
         }
 
         WaitForADDomain 'WaitForDomainInstall'
         {
-            DomainName   = $NODE.DomainName
+            DomainName   = $Node.DomainName
             Credential   = $DomainCredential
             RestartCount = 2
             # RebootRetryCount     = 2
@@ -227,8 +234,10 @@ configuration DomainFirstDC {
             # RetryIntervalSec     = 60
             DependsOn    = '[ADDomain]ThisDomain'
         }
+        #endregion
+        #endregion
 
-        # * STARTER ORGANIZATIONAL UNITS [OPTIONAL]
+        #region - Domain Setup - OPTIONAL - STARTER ORGANIZATIONAL UNITS
         ADOrganizationalUnit 'CreateAccountsOU'
         {
             Name       = 'Accounts'
@@ -264,34 +273,39 @@ configuration DomainFirstDC {
             Credential = $DomainCredential
             DependsOn  = '[ADOrganizationalUnit]CreateAccountsOU'
         }
+        #endregion
 
-        # * PASSWORD POLICY
+        #region - Domain Customizations
+        #region - Domain Customizations - PASSWORD POLICY
         ADDomainDefaultPasswordPolicy 'DefaultPasswordPolicy'
         {
-            DomainName        = $NODE.DomainName
-            ComplexityEnabled = $NODE.ComplexityEnabled
-            MinPasswordLength = $NODE.MinPasswordLength
+            DomainName        = $Node.DomainName
+            ComplexityEnabled = $Node.ComplexityEnabled
+            MinPasswordLength = $Node.MinPasswordLength
             DependsOn         = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
         }
+        #endregion
 
-        # * ENABLE RECYCLEBIN
+        #region - Domain Customizations - ENABLE RECYCLEBIN
         ADOptionalFeature RecycleBin
         {
             FeatureName                       = 'Recycle Bin Feature'
             EnterpriseAdministratorCredential = $DomainCredential
-            ForestFQDN                        = $NODE.DomainName
+            ForestFQDN                        = $Node.DomainName
             DependsOn                         = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
         }
-        # * SITES AND SUBNETS
+        #endregion
 
-        # # sites
+        #region - Domain Customizations - SITES AND SUBNETS
         ADReplicationSite 'FirstSite'
         {
             Ensure                     = 'Present'
-            Name                       = $NODE.FirstSite
+            Name                       = $Node.FirstSite
             RenameDefaultFirstSiteName = $true
             DependsOn                  = '[ADDomain]ThisDomain', '[WindowsFeature]ADDSFeatureInstall'
         }
+        #endregion
+        #endregion
     }
 
 }
@@ -322,7 +336,7 @@ configuration DomainAdditionalDCs {
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion '9.1.0'
     Import-DscResource -ModuleName NetworkingDsc -ModuleVersion '9.0.0'
 
-    #* -------------------------------------------------------------------------------- ADDITIONAL DCS ONLY
+    # * Additional Domain Controler Configuration
     Node $AllNodes.Where{ $_.Role -eq 'MemberDomainController' }.NodeName  {
 
         # * LCM CONFIGURATION
@@ -344,17 +358,17 @@ configuration DomainAdditionalDCs {
         }
 
         Timezone TimeZoneConfiguration {
-            TimeZone            = $NODE.TimeZone
+            TimeZone            = $Node.TimeZone
             IsSingleInstance    = 'Yes'
         }
 
-        $ntpServerValue1 = [string]($NODE.NTPServer | ForEach-Object { $_, (',0x{0:x}' -f '8') }) -replace ' ,',","
-        $ntpServerValue2 = [string]($NODE.FailOverNTPServers | %{$_, (",0x{0:x}" -f "a")}) -replace " ,",","
+        $ntpServerValue1 = [string]($Node.NTPServer | ForEach-Object { $_, (',0x{0:x}' -f '8') }) -replace ' ,',","
+        $ntpServerValue2 = [string]($Node.FailOverNTPServers | %{$_, (",0x{0:x}" -f "a")}) -replace " ,",","
         $ntpServerValue = $ntpServerValue1, $ntpServerValue2 -join " "
 
         $ntpservers = @()
-        $ntpservers += $NODE.NTPServer
-        $ntpservers += $NODE.FailOverNTPServers | %{$_}
+        $ntpservers += $Node.NTPServer
+        $ntpservers += $Node.FailOverNTPServers | %{$_}
 
         $timeRootPath = "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time"
         $NTPListPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers"
@@ -421,19 +435,19 @@ configuration DomainAdditionalDCs {
             DependsOn      = '[IPAddress]SetStaticIPv4Address','[DefaultGatewayAddress]SetIPv4DefaultGateway'
         }
 
-        FirewallProfile DomainFirewall
+        FirewallProfile DomainFirewallOn
         {
             Name    = 'Domain'
             Enabled = 'True'
         }
 
-        FirewallProfile PublicFirewall
+        FirewallProfile PublicFirewallOn
         {
             Name    = 'Public'
             Enabled = 'True'
         }
 
-        FirewallProfile PrivateFirewallOff
+        FirewallProfile PrivateFirewallOn
         {
             Name    = 'Private'
             Enabled = 'True'
@@ -461,7 +475,7 @@ configuration DomainAdditionalDCs {
         # * JOIN DOMAIN AND PROMOTE TO DC
         WaitForADDomain 'WaitForDomainInstall'
         {
-            DomainName   = $NODE.DomainName
+            DomainName   = $Node.DomainName
             Credential   = $DomainCredential
             RestartCount = 2
             DependsOn    = '[DnsServerAddress]SetIPv4DnsServer', '[WindowsFeature]ADDSFeatureInstall'
@@ -469,13 +483,13 @@ configuration DomainAdditionalDCs {
 
         ADDomainController 'DomainControllerMinimal'
         {
-            DomainName                    = $NODE.DomainName
+            DomainName                    = $Node.DomainName
             Credential                    = $DomainCredential
             SafeModeAdministratorPassword = $SafeModePassword
-            DatabasePath                  = $NODE.NTDSPath
-            LogPath                       = $NODE.LogPath
-            SysvolPath                    = $NODE.SysvolPath
-            IsGlobalCatalog               = $NODE.IsGlobalCatalog
+            DatabasePath                  = $Node.NTDSPath
+            LogPath                       = $Node.LogPath
+            SysvolPath                    = $Node.SysvolPath
+            IsGlobalCatalog               = $Node.IsGlobalCatalog
             DependsOn                     = '[WaitForADDomain]WaitForDomainInstall'
         }
     }

@@ -4,3 +4,8 @@
 
 * https://www.gettothe.cloud/azure-virtual-desktop-intune-set-timezone/
 * https://mischasachse.com/deploying-session-hosts-with-bicep-and-azure-devops/
+* https://blog.itprocloud.de/AVD-Capturing-and-Deploying-Confidential-Session-Hosts/
+
+### Nerdio
+
+* [A functioning step by step guide using 'AVD App Attach' with Nerdio](https://michaelsendpoint.com/avd/nerdio/appattach.html)
