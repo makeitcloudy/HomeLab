@@ -2,8 +2,8 @@ function Get-GitModule {
     <#
     .SYNOPSIS
     .DESCRIPTION
-    .PARAMETER One
-    .PARAMETER Two
+    .PARAMETER GithubUserName
+    .PARAMETER ModuleName
     .EXAMPLE
     .EXAMPLE
     .LINK
@@ -23,18 +23,18 @@ function Get-GitModule {
     
         BEGIN
         {
-            $WarningPreference = "Continue"
-            $VerbosePreference = "Continue"
-            $InformationPreference = "Continue"
+            $WarningPreference = 'Continue'
+            $VerbosePreference = 'Continue'
+            $InformationPreference = 'Continue'
             Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - It downloads module from Github repository"
             $startDate = Get-Date
 
             #initialize variables
-            #$ModuleName                    = "AutomatedLab"
+            #$ModuleName                    = 'AutomatedLab'
             #$GitHubUserName                = 'makeitcloudy'
             $repoUrl                       = 'https://github.com',$GithubUserName,$ModuleName,'archive/refs/heads/main.zip' -join '/'
 
-            $modulePath                    = "C:\Program Files\WindowsPowerShell\Modules\$ModuleName"
+            $modulePath                    = "C:\Program Files\WindowsPowerShell\Modules\$($ModuleName)"
 
             $tempZipFileName               = $ModuleName,'.zip' -join ''
             $tempZipFullPath               = "$env:TEMP",$tempZipFileName -join '\'

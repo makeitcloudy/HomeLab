@@ -29,9 +29,9 @@ function Set-InitialConfiguration {
 
     BEGIN
     {
-        $WarningPreference = "Continue"
-        $VerbosePreference = "Continue"
-        $InformationPreference = "Continue"
+        $WarningPreference = 'Continue'
+        $VerbosePreference = 'Continue'
+        $InformationPreference = 'Continue'
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - InitialConfig.ps1"
         $startDate = Get-Date
     }
@@ -52,7 +52,7 @@ function Set-InitialConfiguration {
 
         $opticalDriveLetter = (Get-CimInstance Win32_LogicalDisk | Where-Object {$_.DriveType -eq 5}).DeviceID
         Get-ChildItem -Path $opticalDriveLetter
-        #$Source = "$PackageName" + "." + "$InstallerType"
+        #$Source = "$($PackageName)" + "." + "$($InstallerType)"
         $UnattendedArgs = "/i $(Join-Path -Path $opticalDriveLetter -ChildPath $($PackageName,$InstallerType -join '.')) ALLUSERS=1 /Lv $LogApp /quiet /norestart"
 
         # should throw 0
@@ -74,7 +74,7 @@ function Set-InitialConfiguration {
             '1' {
                     Write-Information 'DesktopOS'
                     #if((Get-Service -Name $winRMServiceName).Status -match 'Stopped'){
-                    #    Write-Warning "WinRM service is stopped"
+                    #    Write-Warning 'WinRM service is stopped'
                     #    Start-Service -Name $winRMServiceName
                     
                     #region - NetConnectionProfile - set to private
@@ -168,7 +168,7 @@ function Set-InitialConfiguration {
             #$powerPlanName = 'Ultimate Performance'
             $powerPlanName = 'High Performance' 
             $p = Get-CimInstance -Namespace root\cimv2\power -Class win32_PowerPlan -Filter "ElementName = '$($powerPlanName)'"
-            $planGuid = $p.InstanceID.Split("\")[-1]
+            $planGuid = $p.InstanceID.Split('\')[-1]
             $cleanGuid = $planGuid -replace '^\{(.*)\}$', '$1'
             powercfg /SETACTIVE $cleanGuid
         }

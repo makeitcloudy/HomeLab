@@ -18,7 +18,7 @@ function Set-InitialConfigurationDsc {
         [String]$NewComputerName,
 
         [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
-        [ValidateNotNullOrEmpty()][ValidateSet("WorkGroup", "Domain")]
+        [ValidateNotNullOrEmpty()][ValidateSet('WorkGroup', 'Domain')]
         [string]$Option,
 
         [Parameter(Mandatory=$false,Position=2,ValueFromPipelineByPropertyName=$false)]
@@ -27,24 +27,24 @@ function Set-InitialConfigurationDsc {
 
     BEGIN
     {
-        $WarningPreference = "Continue"
-        $VerbosePreference = "Continue"
-        $InformationPreference = "Continue"
+        $WarningPreference = 'Continue'
+        $VerbosePreference = 'Continue'
+        $InformationPreference = 'Continue'
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Set-InitialConfiguration"
         $startDate = Get-Date
 
         switch ($Option) {
-            "Workgroup"
+            'Workgroup'
             {
                 $workgroup = $true
                 $domain = $false
-                Write-Output "ParameterOne: $Option, Workgroup is enabled."
+                Write-Output "ParameterOne: $($Option), Workgroup is enabled."
             }
-            "Domain"
+            'Domain'
             {
                 $workgroup = $false
                 $domain = $true
-                Write-Output "ParameterOne: $Option, Domain is enabled."
+                Write-Output "ParameterOne: $($Option), Domain is enabled."
             }
         }
 
@@ -145,13 +145,13 @@ function Set-InitialConfigurationDsc {
 
         switch($isDesktop){
             $true {
-                Write-Warning ("Desktop OS - NewComputerName - $NewComputerName")
+                Write-Warning ("Desktop OS - NewComputerName - $($NewComputerName)")
                 #Initialize Variables - local administartor on the localhost - DesktopOS
                 $localNodeAdminUsername            = 'labuser'
                 $localNodeAdminPassword            = 'Password1$'
             }
             $false {
-                Write-Warning ('Server OS - NewComputerName - $NewComputerName')
+                Write-Warning ("Server OS - NewComputerName - $($NewComputerName)")
                 #Initialize Variables - local administartor on the localhost - ServerOS
                 $localNodeAdminUsername            = 'administrator'
                 $localNodeAdminPassword            = 'Password1$'
@@ -266,7 +266,7 @@ function Set-InitialConfigurationDsc {
             $arrayFolderStructure.ForEach({
                 if(!(Test-Path -Path $_)){
                     try {
-                        Write-Information "Create Directory: $_"
+                        Write-Information "Create Directory: $($_)"
                         New-Item -Path $_ -ItemType Directory -Force | Out-Null
                     }
                     catch {
@@ -274,7 +274,7 @@ function Set-InitialConfigurationDsc {
                     }
                 }
                 else {
-                    Write-Warning "$_ - already exist"
+                    Write-Warning "$($_) - already exist"
                 }
             })
         }
@@ -288,7 +288,7 @@ function Set-InitialConfigurationDsc {
             
             # Function: SelfSigned Certificate
             #https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
-            Write-Information "Downloading: $newSelfsignedCertificateEx_GithubUrl"
+            Write-Information "Downloading: $($newSelfsignedCertificateEx_GithubUrl)"
             Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFunction_NewSelfSignedCertificateEx_FullPath -Verbose
             
         }
@@ -300,11 +300,11 @@ function Set-InitialConfigurationDsc {
         #region - Download DSC Configuration from Github
         try {
             # Function: DSC Configuration
-            Write-Information "Downloading: $configData_psd1_url"
+            Write-Information "Downloading: $($configData_psd1_url)"
             Invoke-WebRequest -Uri $configData_psd1_url -OutFile $configData_psd1_FullPath -Verbose
-            Write-Information "Downloading: $configureLCM_ps1_url"
+            Write-Information "Downloading: $($configureLCM_ps1_url)"
             Invoke-WebRequest -Uri $configureLCM_ps1_url -OutFile $configureLCM_ps1_FullPath -Verbose
-            Write-Information "Downloading: $configureNode_ps1_url"
+            Write-Information "Downloading: $($configureNode_ps1_url)"
             Invoke-WebRequest -Uri $configureNode_ps1_url -OutFile $configureNode_ps1_FullPath -Verbose
         }
         catch {
@@ -315,7 +315,7 @@ function Set-InitialConfigurationDsc {
         #region - Set-Location
         try {
             # set the location to the path where the DSC configuration is stored
-            Write-Information "Change current directory: $dscConfig_DirectoryPath"
+            Write-Information "Change current directory: $($dscConfig_DirectoryPath)"
             Set-Location -Path $dscConfig_DirectoryPath    
         }
         catch {
@@ -460,11 +460,11 @@ function Set-InitialConfigurationDsc {
 
         ##Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-Certificate -Type cer -FilePath $dscSelfSignedCerCertificateFullPath -Force
         #export certificate (with Private key) to C:\DscPrivateKey.pfx
-        #Get-ChildItem -Path Cert:\LocalMachine\My\ | where{$_.Thumbprint -eq "4eeee9dca7dd5ccf70e47e46ac1128ddddbbb321"} | Export-PfxCertificate -FilePath "$env:USERPROFILE\Documents\dscSelfSignedCertificate\mypfx.pf" -Password $mypwd
+        #Get-ChildItem -Path Cert:\LocalMachine\My\ | where{$_.Thumbprint -eq '4eeee9dca7dd5ccf70e47e46ac1128ddddbbb321'} | Export-PfxCertificate -FilePath "$env:USERPROFILE\Documents\dscSelfSignedCertificate\mypfx.pf" -Password $mypwd
         ##Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)} | Export-PfxCertificate -FilePath $dscSelfSignedPfxCertificateFullPath -Password $mypwd
 
-        #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd
-        #Import-PfxCertificate -FilePath "$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx" -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
+        #Import-PfxCertificate -FilePath '$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx' -CertStoreLocation Cert:\LocalMachine\My -Password $mypwd
+        #Import-PfxCertificate -FilePath '$env:SystemDrive\Temp\dscSelfSignedCertificate.pfx' -CertStoreLocation Cert:\LocalMachine\Root -Password $mypwd
         #endregion        
 
         #region - DSC - Certificate thumbprint update - ConfigData.psd1
@@ -549,19 +549,19 @@ function Set-InitialConfigurationDsc {
 
         #region - DSC - NodeInitialConfig - MOF compilation
         try {
-            #Write-Information "Workgroup: $workgroup | domain: $domain"
+            #Write-Information "Workgroup: $workgroup | domain: $($domain)"
             if($workgroup) {
-                #Write-Information "workgroup"
+                #Write-Information 'workgroup'
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
                 Write-Information "DSC compilation - Node Initial Configuration - NewComputerName $($NewComputerName) - Option: Workgroup"
                 NodeInitialConfigWorkgroup -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             else {
-                #Write-Information "skipping workgroup"
+                #Write-Information 'skipping workgroup'
             }
             if($domain) {
-                #Write-Information "domain"
+                #Write-Information 'domain'
                 $localNodeAdminPasswordSecureString    = ConvertTo-SecureString $domainJoinPassword -AsPlainText -Force
                 $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $localNodeAdminPasswordSecureString)                
 
@@ -571,7 +571,7 @@ function Set-InitialConfigurationDsc {
                 NodeInitialConfigDomain -ConfigurationData $ConfigData -NewComputerName $NewComputerName -AdminCredential $localNodeAdminCredential -DomainJoinCredential $domainJoinCredential -OutputPath $dscOutputInitialSetup_DirectoryPath | Out-Null
             }
             else {
-                #Write-Information "skipping domain"
+                #Write-Information 'skipping domain'
             }
         }
         catch {
@@ -581,7 +581,7 @@ function Set-InitialConfigurationDsc {
 
         #region - DSC - Start-DscConfiguration
         try {
-            Write-Information "DSC Configuration - Start - Option: $Option | WorkGroup - $workgroup | Domain - $domain"
+            Write-Information "DSC Configuration - Start - Option: $($Option) | WorkGroup - $($workgroup) | Domain - $($domain)"
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
             Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
         }
