@@ -1,5 +1,8 @@
 # SQL
 
+* [SQL Server 2019 Evaluation Center](https://www.microsoft.com/en-us/evalcenter/download-sql-server-2019)
+* [SQL Server 2022 Evaluation Center](https://www.microsoft.com/en-us/evalcenter/download-sql-server-2022)
+
 ## Links
 
 * [SQLServerDsc](https://github.com/dsccommunity/SqlServerDsc/blob/main/source/Examples/Resources/SqlSetup/1-InstallDefaultInstanceSingleServer.ps1)
