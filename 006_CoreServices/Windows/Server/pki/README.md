@@ -12,6 +12,8 @@ Think about the PKI infrastructure, then you can get some hands on experience wi
 
 ## Howto - plagueHO
 
+* [PhagueHO](https://danielscottraynsford.com/page/19/) - blog
+* [Advanced Certificate Services Configuration with DSC](https://danielscottraynsford.com/posts/2015/09/2015-09-03-advanced-certificate-services-configuration-with-dsc/)
 * [Advanced Certificate Services Configuration with DSC](https://dscottraynsford.wordpress.com/2015/09/03/advanced-certificate-services-configuration-with-dsc/)
 * [Installing a Two-Tier PKI using nothing but Desired State Configuration – Part 1](https://dscottraynsford.wordpress.com/2015/09/12/installing-a-two-tier-pki-using-nothing-but-desired-state-configuration-part-1/) - dscottraynsford.wordpress.com
 * [Installing a Two-Tier PKI using nothing but Desired State Configuration – Part 2](https://dscottraynsford.wordpress.com/2015/09/13/installing-a-two-tier-pki-using-nothing-but-desired-state-configuration-part-2/) - dscottraynsford.wordpress.com
