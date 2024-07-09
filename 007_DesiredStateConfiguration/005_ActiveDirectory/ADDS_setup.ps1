@@ -329,11 +329,11 @@ PROCESS
             @{
                 NodeName                    = '*'
                 
-                ManagementNodeIPv4Address   = '10.2.134.239'
+                ManagementNodeIPv4Address   = '10.2.134.249'
                 InterfaceAlias              = 'Eth0'
 
-                DomainName                  = 'lab.local' #FIXME: your domain FQDN
-                DomainNetbiosName           = 'mot'       #FIXME: your domain NetBIOS
+                DomainName                  = 'lab.local'                      #FIXME: your domain FQDN
+                DomainNetbiosName           = 'mot'                            #FIXME: your domain NetBIOS
                 Thumbprint                  = $selfSignedCertificateThumbprint
                 CertificateFile             = $dscSelfSignedCerCertificate_FullPath
                 NTDSPath                    = 'C:\Windows\NTDS'
@@ -348,7 +348,7 @@ PROCESS
                 Role                        = 'RootDomainController'
                 IPV4Address                 = '10.2.134.201/24'                #FIXME:
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
-                DNSServers                  = '127.0.0.1', '1.1.1.1'           #NOTE: Cloudflare IP is optional
+                DNSServers                  = '127.0.0.1', '10.2.134.202'      #loopback + second DC
                 # # domain settings -->
                 ComplexityEnabled           = $false
                 MinPasswordLength           = 8
@@ -365,7 +365,7 @@ PROCESS
                 Role                        = 'MemberDomainController'
                 IPV4Address                 = '10.2.134.202/24'                #FIXME: additional DC IP
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
-                DNSServers                  = '10.2.134.201', '1.1.1.1'        #FIXME: first DC + any optional DNS servers
+                DNSServers                  = '10.2.134.201', '127.0.0.1'      #first DC + loopback
                 Site                        = 'Lab-Site'                       #FIXME: any valid site created on the first DC
                 IsGlobalCatalog             = $true
                 NTPServer                   = '0.pl.pool.ntp.org'              #FIXME: prefered NTP server
