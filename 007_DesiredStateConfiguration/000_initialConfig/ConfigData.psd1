@@ -1,8 +1,9 @@
 @{
     AllNodes = @(
         @{
-            NodeName            = 'localhost'
             Role                = 'newVM'
+            #NodeName            = 'localhost'
+            NodeName            = '*'
             #ComputerName        = 'w10mgmt'
             InterfaceAlias      = 'Eth0'
             WorkgroupDnsServers = @('10.2.134.254')
@@ -20,11 +21,13 @@
             #Thumbprint          = 'EF280FE58AC3E1B8BC211122866248282B44E7D8'
         },
         @{
-            Role = 'FileServer'
+            Role                = 'FileServer'
+            NodeName            = 'fs01'
             JoinOu              = 'OU=Computers,DC=lab,DC=local'
         },
         @{
-            Role = 'SQLServer'
+            Role                = 'SQLServer'
+            NodeName            = 'fs02'
             JoinOu              = 'OU=Computers,DC=lab,DC=local'
         }
     )
