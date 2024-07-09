@@ -9,12 +9,12 @@ Consider automating the deployment of the core elements which are the backbone o
 * https://github.com/PowerShell/DscResources
 * [DSC code for various Windows Roles](https://github.com/PlagueHO/LabBuilder/tree/main/source/dsclibrary)
 * [Install Windows Admin Center using DSC](https://dscottraynsford.wordpress.com/category/dsc/)
-* https://dscottraynsford.wordpress.com/category/certificate-services/'
-* https://dscottraynsford.wordpress.com/'
-* https://plagueho.github.io/'
-* https://gitter.im/PlagueHO/LabBuilder?at=57437c8afce033da4bef4936'
-* https://github.com/PlagueHO/LabBuilder/blob/main/source/samples/Sample_WS2016_DomainComplete.xml'
-* https://github.com/PlagueHO/LabBuilder/blob/main/source/dsclibrary/STANDALONE_ROOTCA.DSC.ps1'
+* https://dscottraynsford.wordpress.com/category/certificate-services/
+* https://dscottraynsford.wordpress.com/
+* https://plagueho.github.io/
+* https://gitter.im/PlagueHO/LabBuilder?at=57437c8afce033da4bef4936
+* https://github.com/PlagueHO/LabBuilder/blob/main/source/samples/Sample_WS2016_DomainComplete.xml
+* https://github.com/PlagueHO/LabBuilder/blob/main/source/dsclibrary/STANDALONE_ROOTCA.DSC.ps1
 * https://blogs.infosupport.com/safely-using-pscredentials-in-a-powershell-dsc-configuration/
 * https://pleasework.robbievance.net/howto-desired-state-configuration-dsc-overview/
 
