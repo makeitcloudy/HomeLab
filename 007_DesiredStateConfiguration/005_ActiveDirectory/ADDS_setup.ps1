@@ -206,7 +206,7 @@ BEGIN
         $dsc_DirectoryPath,
         $dscConfig_DirectoryPath,
         $dscConfigLocahost_DirectoryPath,
-        $dscConfigLocalhostADDS_DirectoryPath
+        $dscConfigLocalhostADDS_DirectoryPath,
         $dscCertificate_DirectoryPath,
         $dscFunction_DirectoryPath,
         $dscModule_DirectoryPath,
