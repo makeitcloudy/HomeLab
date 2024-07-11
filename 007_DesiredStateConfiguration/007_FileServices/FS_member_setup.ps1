@@ -25,7 +25,8 @@ Script to setup File Server member
 param (
 )
 
-BEGIN {
+BEGIN
+{
     #region 1. DSC - Initialize Variables
 
     #region Initialize Variables - Missing Modules
