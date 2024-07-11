@@ -2,11 +2,8 @@
 ## it comes from: https://github.com/PlagueHO/LabBuilder/tree/main/source/dsclibrary
 
 Configuration MEMBER_FILESERVER {
-    Param (
-        [Parameter(Position = 0, Mandatory = $true)]
-        [PSCredential]$DomainCredential
+    Param ()
 
-    )
     Import-DscResource -ModuleName PSDesiredStateConfiguration  -ModuleVersion '1.1'
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion '9.1.0'
     Import-DscResource -ModuleName NetworkingDsc -ModuleVersion '9.0.0'
@@ -15,6 +12,85 @@ Configuration MEMBER_FILESERVER {
     Node $AllNodes.Where{ $_.Role -eq 'FileServer' }.NodeName {
 #    Node $AllNodes.NodeName {
 
+        #region storage
+        WaitforDisk DataDriveProfile
+        {
+            DiskId           = $Node.DataDrivePDiskId
+            RetryIntervalSec = 60
+            RetryCount       = 60
+            #DependsOn        = '[Computer]JoinDomain'
+        }
+
+        Disk VolumeProfile
+        {
+            DiskId      = $Node.DataDrivePDiskId
+            DriveLetter = $Node.DataDrivePLetter
+            DependsOn   = '[WaitforDisk]DataDriveProfile'
+        }
+        #endregion
+
+        #region Network
+        #region Network - firewall
+        # Enable FSRM FireWall rules so we can remote manage FSRM
+        Firewall FSRMFirewall1
+        {
+            Name    = 'FSRM-WMI-ASYNC-In-TCP'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall2
+        {
+            Name    = 'FSRM-WMI-WINMGMT-In-TCP'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall3
+        {
+            Name    = 'FSRM-RemoteRegistry-In (RPC)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall4
+        {
+            Name    = 'FSRM-Task-Scheduler-In (RPC)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall5
+        {
+            Name    = 'FSRM-SrmReports-In (RPC)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall6
+        {
+            Name    = 'FSRM-RpcSs-In (RPC-EPMAP)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall7
+        {
+            Name    = 'FSRM-System-In (TCP-445)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+
+        Firewall FSRMFirewall8
+        {
+            Name    = 'FSRM-SrmSvc-In (RPC)'
+            Ensure  = 'Present'
+            Enabled = 'True'
+        }
+        #endregion
+        #endregion
+
+        #region Windows Features
         WindowsFeature FileServerInstall
         {
             Ensure = 'Present'
@@ -77,95 +153,27 @@ Configuration MEMBER_FILESERVER {
             Name      = 'FS-iSCSITarget-Server'
             DependsOn = '[WindowsFeature]StorageServicesInstall'
         }
+        #endregion
+
+        # Target Node is already connected to the Domain
+        # 
 
         # Wait for the Domain to be available so we can join it.
-        WaitForAll DC
-        {
-            ResourceName     = '[ADDomain]PrimaryDC'
-            NodeName         = $Node.DCname
-            RetryIntervalSec = 15
-            RetryCount       = 60
-        }
+        ##WaitForAll DC
+        ##{
+        ##    ResourceName     = '[ADDomain]PrimaryDC'
+        ##    NodeName         = $Node.DCname
+        ##    RetryIntervalSec = 15
+        ##    RetryCount       = 60
+        ##}
 
         # Join this Server to the Domain
-        Computer JoinDomain
-        {
-            Name       = $Node.NodeName
-            DomainName = $Node.DomainName
-            Credential = $DomainAdminCredential
-            DependsOn  = '[WaitForAll]DC'
-        }
-
-        # Enable FSRM FireWall rules so we can remote manage FSRM
-        Firewall FSRMFirewall1
-        {
-            Name    = 'FSRM-WMI-ASYNC-In-TCP'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall2
-        {
-            Name    = 'FSRM-WMI-WINMGMT-In-TCP'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall3
-        {
-            Name    = 'FSRM-RemoteRegistry-In (RPC)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall4
-        {
-            Name    = 'FSRM-Task-Scheduler-In (RPC)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall5
-        {
-            Name    = 'FSRM-SrmReports-In (RPC)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall6
-        {
-            Name    = 'FSRM-RpcSs-In (RPC-EPMAP)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall7
-        {
-            Name    = 'FSRM-System-In (TCP-445)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        Firewall FSRMFirewall8
-        {
-            Name    = 'FSRM-SrmSvc-In (RPC)'
-            Ensure  = 'Present'
-            Enabled = 'True'
-        }
-
-        WaitforDisk Disk2
-        {
-            DiskId           = 1
-            RetryIntervalSec = 60
-            RetryCount       = 60
-            DependsOn        = '[Computer]JoinDomain'
-        }
-
-        Disk DVolume
-        {
-            DiskId      = 1
-            DriveLetter = 'D'
-            DependsOn   = '[WaitforDisk]Disk2'
-        }
+        ##Computer JoinDomain
+        ##{
+        ##    Name       = $Node.NodeName
+        ##    DomainName = $Node.DomainName
+        ##    Credential = $DomainAdminCredential
+        ##    DependsOn  = '[WaitForAll]DC'
+        ##}
     }
 }

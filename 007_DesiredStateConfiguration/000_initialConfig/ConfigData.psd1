@@ -24,11 +24,22 @@
             Role                = 'FileServer'
             NodeName            = 'fs01'
             JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            DataDrivePDiskId    = 1    #Profile Disk
+            DataDrivePLetter    = 'P'  #Profile Disk Letter
+        },
+        @{
+            Role                = 'FileServer'
+            NodeName            = 'fs02'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            DataDrivePDiskId    = 1    #Profile Disk
+            DataDrivePLetter    = 'P'  #Profile Disk Letter
         },
         @{
             Role                = 'SQLServer'
-            NodeName            = 'fs02'
+            NodeName            = 'sql02'
             JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            DataDrivePDiskId    = 1    #Profile Disk
+            DataDrivePLetter    = 'P'  #Profile Disk Letter
         }
     )
 }

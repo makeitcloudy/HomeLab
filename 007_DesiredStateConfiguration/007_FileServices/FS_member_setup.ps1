@@ -70,8 +70,7 @@ param (
     #$certFilePath = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'
 )
 
-BEGIN
-{
+BEGIN {
 
         #region 1. DSC - Initialize Variables
     #region Initialize Variables - Missing Modules
@@ -196,7 +195,7 @@ BEGIN
     #endregion
 
     $configData_psd1_fileName                  = 'ConfigData.psd1'
-    $configDataFS_GithubUrl                    = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/001_initialConfig'
+    $configDataFS_GithubUrl                    = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig'
     $configData_psd1_url                       = $configDataFS_GithubUrl,$configData_psd1_fileName -join '/'
 
     $configData_psd1_FullPath                  = Join-Path -Path $dscConfigLocalhostFS_DirectoryPath -ChildPath $configData_psd1_fileName
@@ -300,7 +299,6 @@ BEGIN
 
 
 }
-
 PROCESS
 {
     #region 2.4. Install Missing Modules - TODO:
@@ -311,28 +309,38 @@ PROCESS
     Install-Modules -modules $modules
     #endregion
 
-        #region - Set-Location
-        try {
-            # set the location to the path where the DSC configuration is stored
-            Write-Information "Change current directory: $($dscConfig_DirectoryPath)"
-            Set-Location -Path $dscConfig_DirectoryPath    
-        }
-        catch {
-            <#Do this if a terminating exception happens#>
-        }
-        #endregion
+    #region - Set-Location
+    try {
+        # set the location to the path where the DSC configuration is stored
+        Write-Information "Change current directory: $($dscConfig_DirectoryPath)"
+        Set-Location -Path $dscConfig_DirectoryPath    
+    }
+    catch {
+        <#Do this if a terminating exception happens#>
+    }
+    #endregion
+
+    # Import the configuration data
+    #$ConfigData = .\ConfigData.psd1
+    $configData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
+
+    #$ConfigData.AllNodes
+
+    ##. .\ConfigureLCM.ps1
+
+    # check if the certificate thumbprint is within the LCM settings
+    #Get-DscLocalConfigurationManager -CimSession localhost
+
 
     # load the configuration into memory for it's execution
     . $dscConfigLocalhostFS_ps1_FullPath
 
-    if ($ENV:ComputerName -match 'fs01')
+    if ($ENV:ComputerName -match 'fs02')
     {
         Write-Output "$env:ComputerName - Role: File Server Member"
         #^ Generate configuration MOF files for the first DC
         MEMBER_FILESERVER -ConfigurationData $configData `
-            -OutputPath $dscOutputFS_DirectoryPath `
-            -DomainCredential $AdministratorCred `
-            -SafemodePassword $AdministratorCred
+            -OutputPath $dscOutputFS_DirectoryPath
     }
     else
     {
@@ -344,75 +352,8 @@ PROCESS
             -SafemodePassword $SafemodeAdministratorCred
     }
 
-    #^ Configure the LCM
-    # LCM is included within the configuration
-    # stored within the same directory as the compilation MOF files - NOT TRUE ANYMORE
-    ##Set-DscLocalConfigurationManager -Path $dscOutputFS_DirectoryPath -Force -Verbose
-    Set-DscLocalConfigurationManager -Path $dscOutputLCM_DirectoryPath -Force -Verbose
-
-    # check if the certificate thumbprint is within the LCM settings
-    #Get-DscLocalConfigurationManager -CimSession localhost
-
     #^ Apply the Dsc Configuration
     Start-DscConfiguration -Path $dscOutputFS_DirectoryPath -Force -Wait -Verbose
-
-
-    #region DSC - LCM 
-    # now modify the ConfigData.psd1
-    # * update the CertificateFile location if needed
-    # * update the Thumbprint
-    (Get-ChildItem -Path Cert:\LocalMachine\My\ | Where-Object {$_.FriendlyName -eq $($selfSignedCertificate.FriendlyName)}).Thumbprint | clip
-    psedit $configData_psd1_FullPath
-
-    #region - NOT NEEDED HERE - LCM - the LCM is configured internally within the configuration - configure certificate thumbprint
-    # Import the configuration data
-    #$ConfigData = .\ConfigData.psd1
-    $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
-
-    #$ConfigData.AllNodes
-
-    . .\ConfigureLCM.ps1
-
-    # Generate the MOF file for LCM configuration
-    ConfigureLCM -ConfigurationData $ConfigData -OutputPath $(Join-Path -Path $dscConfigFullPath -ChildPath 'LCM')
-
-    # Apply LCM configuration
-    Set-DscLocalConfigurationManager -Path $(Join-Path -Path $dscConfigFullPath -ChildPath 'LCM') -Verbose
-
-    # check LCM configuration
-    # for the CIM sessions to work the WIMrm should be configured first
-    Get-DscLocalConfigurationManager -CimSession localhost
-    #endregion
-
-    #endregion
-
-
-
-
-    #region DSC - RUN IT!
-    $ConfigData = Import-PowerShellDataFile -Path $configData_psd1_FullPath
-    #Write-Output $configData_psd1_FullPath
-    #$ConfigData.AllNodes
-    . $configureNode_ps1_FullPath
-    psedit $configureNode_ps1_FullPath
-
-    ConfigureAD -ConfigurationData $ConfigData `
-        -AdministratorCred $AdminCredential `
-        -DomainAdministratorCred $domainAdministratorCred `
-        -SafemodeAdministratorCred $SafemodeAdministratorCred `
-        -ADUserCred $adUserCredential -OutputPath $dscConfigOutputDirectoryPath -PsDscRunAsCredential $AdminCredential -Verbose
-
-    #Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -Verbose -Credential $AdminCredential
-
-    #region DSC - LCM - run it !
-    $nodesAD = @('10.2.134.201','10.2.134.202')
-    $nodesAD.foreach({
-        $tempCimSession = New-CimSession -ComputerName $_ -Credential $AdminCredential
-        Set-DscLocalConfigurationManager -Path $dscConfigOutputDirectoryPath -CimSession $tempCimSession -Verbose
-        Get-DscLocalConfigurationManager -CimSession $tempCimSession -Verbose
-    })
-    #endregion
-
 }
 
 END
