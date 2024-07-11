@@ -1,36 +1,22 @@
 <#
 .SYNOPSIS
-Script to setup Active  Directory
+Script to setup File Server member
 
 .DESCRIPTION
-    This script is intended to set up a functioning AD forest with 1x root domain controller and one or more additional domain controllers
+    This script is intended to set up a functioning File Server.
 
-    The script uses - for now - a  self-signed cert to encryot the password, the thumbprint of this should be supplied on the machine.
+    The LCM should be already configured within the initial configuration, as per the blog posts describing the process on https://makeitcloudy.pl
 
 
 .NOTES
     (Use the `Create-SelfSignedCert` function in the module to generate a cert if this is needed)
 .LINK
-    https://codeandkeep.com/Dsc-Install-AD-Forest/
     https://codeandkeep.com/Dsc-Encrypting-Credentials/
-    https://github.com/dsccommunity/ActiveDirectoryDsc/wiki/ADDomain
-    https://github.com/dsccommunity/ActiveDirectoryDsc/wiki/WaitForADDomain
-    https://github.com/dsccommunity/ActiveDirectoryDsc/wiki/ADOrganizationalUnit
     https://github.com/dsccommunity/NetworkingDsc
     https://github.com/dsccommunity/NetworkingDsc/wiki
-    https://github.com/dsccommunity/NetworkingDsc/wiki/IPAddress
-    https://github.com/dsccommunity/NetworkingDsc/wiki/DnsServerAddress
+    https://github.com/dsccommunity/StorageDsc
+    https://github.com/dsccommunity/StorageDsc/wiki
 .EXAMPLE
-
-        # if (-not $cred){
-        #     $cred = (Get-Credential -Message "Enter new domain's credential")
-        # }
-
-
-        # # install domain - using existing cert
-        # & "\\tsclient\C\PROJECTS\dsc\SS.INFRA.DSC\NewAD\New-ADDSC.ps1"`
-        # -domainCred $cred `
-        # -certThumbprint "67A454BF08E151ACB012108D2EC4094258A4F494"
 
 #>
 
