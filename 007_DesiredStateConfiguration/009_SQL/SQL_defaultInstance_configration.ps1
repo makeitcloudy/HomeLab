@@ -169,6 +169,7 @@ Configuration sqlDefaultInstance2016orLater
 
             SqlServerFirewall ($Instance.Name)
             {
+                # https://support.citrix.com/article/CTX200088/database-connection-issues-in-xendesktop-and-provisioning-services
                 SourcePath   = $Node.SourcePath
                 InstanceName = $Instance.Name
                 Features     = $Features
