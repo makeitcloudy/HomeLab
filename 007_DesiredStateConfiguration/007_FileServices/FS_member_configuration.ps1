@@ -1,5 +1,14 @@
-## This code is not mine, it was updated, adapted and repurposed for this usecase
-## it comes from: https://github.com/PlagueHO/LabBuilder/tree/main/source/dsclibrary
+<#
+    .DESCRIPTION
+        This example shows how to install a File Server.
+
+    .NOTES
+        This code is not mine, it was updated, adapted and repurposed for this usecase,
+        it comes from: https://github.com/PlagueHO/LabBuilder/tree/main/source/dsclibrary
+#>
+
+
+
 
 Configuration MEMBER_FILESERVER {
     Param ()
