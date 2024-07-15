@@ -175,7 +175,7 @@ Configuration sqlDefaultInstance2016orLater {
                 {
                     # https://support.citrix.com/article/CTX200088/database-connection-issues-in-xendesktop-and-provisioning-services
                     SourcePath   = $Node.SQLInstallSourcePath
-                    InstanceName = $Instance.SQLInstanceName
+                    InstanceName = $Instance.Name
                     Features     = $Features
                     DependsOn    = "[SqlSetup]$($Instance.Name)"
                 }
