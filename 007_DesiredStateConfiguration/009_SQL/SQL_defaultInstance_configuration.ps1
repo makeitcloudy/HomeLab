@@ -54,7 +54,8 @@ Configuration sqlDefaultInstance2016orLater {
         $SqlAgentServiceCredential = $SqlServiceCredential
     )
         
-        Import-DscResource -ModuleName 'xPSDesiredStateConfiguration' -ModuleVersion '9.1.0'
+        #Import-DscResource -ModuleName 'xPSDesiredStateConfiguration' -ModuleVersion '9.1.0'
+        Import-DscResource -ModuleName PSDesiredStateConfiguration  -ModuleVersion '1.1'
         Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion '16.6.0'
         Import-DscResource -ModuleName 'StorageDsc' -ModuleVersion '6.0.1'
         

@@ -32,7 +32,7 @@ BEGIN
     #region Initialize Variables - Missing Modules
     $modules = @{
         'PSDscResources'                        = '2.12.0.0'
-        'xPSDesiredStateConfiguration'          = '9.1.0'
+        #'xPSDesiredStateConfiguration'          = '9.1.0'
         #'ComputerManagementDsc'                 = '9.1.0'
         #'NetworkingDsc'                         = '9.0.0'
         'SqlServerDsc'                          = '16.6.0'
@@ -195,6 +195,7 @@ BEGIN
     #endregion
 
 }
+
 PROCESS
 {
     #region Install Missing Modules
