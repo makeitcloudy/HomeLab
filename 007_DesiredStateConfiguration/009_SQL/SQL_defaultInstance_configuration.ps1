@@ -14,6 +14,9 @@
         https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 
     .LINK
+        https://github.com/dsccommunity/SqlServerDsc/wiki
+
+    .LINK
         https://github.com/dsccommunity/SqlServerDsc/blob/main/source/Examples/Resources/SqlSetup/7-InstallDefaultInstanceSingleServer2016OrLater.ps1
 
     .LINK
@@ -184,7 +187,7 @@ Configuration sqlDefaultInstance2016orLater {
             if ($Node.InstallManagementTools) {
                 SqlSetup SQLMT
                 {
-                    SourcePath           = $Node.SourcePath
+                    SourcePath           = $Node.SQLInstallSourcePath
                     InstanceName         = 'NULL'
                     Features             = 'SSMS,ADV_SSMS'
                     PsDscRunAsCredential = $SQLInstallCredential

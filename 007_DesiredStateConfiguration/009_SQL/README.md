@@ -22,9 +22,21 @@ Do not have to initialize the drive with PowerShell. Desired State resource from
 
 ### 3. SQL - DefaultInstance - Mount SQL
 
+```bash
 xe vm-cd-insert vm='a_sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
+```
 
-### Initial Testing
+Unmount disk, after installation.
+
+
+### 4. On MGMT Node - install SMSS
+
+https://www.sqlservercentral.com/articles/install-ssms-using-powershell-dsc
+SSMS-Setup-ENU.msi - 20.1.10.0 - msi available on the fileshare
+
+[https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases](SSMS earlier versions)
+
+## X. Blog post - Initial Testing
 
 ```powershell
 #Start-Process PowerShell_ISE -Verb RunAs
