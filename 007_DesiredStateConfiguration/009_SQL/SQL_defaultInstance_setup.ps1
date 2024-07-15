@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Script to setup File Server member
+Script to setup SQL Server >= 2016
 
 .DESCRIPTION
     This script is intended to set up a functioning File Server.
@@ -32,9 +32,11 @@ BEGIN
     #region Initialize Variables - Missing Modules
     $modules = @{
         'PSDscResources'                        = '2.12.0.0'
-        'ComputerManagementDsc'                 = '9.1.0'
-        'NetworkingDsc'                         = '9.0.0'
-        'StorageDsc'                            = '6.0.1'
+        'xPSDesiredStateConfiguration'          = '9.1.0'
+        'SqlServerDsc'                          = '16.6.0'
+        #'ComputerManagementDsc'                 = '9.1.0'
+        #'NetworkingDsc'                         = '9.0.0'
+        #'StorageDsc'                            = '6.0.1'
     }
     #endregion
 
@@ -53,7 +55,7 @@ BEGIN
     $output_FolderName                       = '_output'         #C:\dsc\_output\ - # it stores the results of the DSC compilation
     $LCM_FolderName                          = 'LCM'             #C:\dsc\_output\LCM\
 
-    $FS_FolderName                           = 'FileServer' #C:\dsc\config\localhost\FileServer\ - # it contains the configurations of FileServer
+    $SQL_FolderName                           = 'SQLServer' #C:\dsc\config\localhost\FileServer\ - # it contains the configurations of FileServer
 
     #C:\dsc\
     $dsc_DirectoryPath                       = Join-Path -Path "$env:SYSTEMDRIVE" -childPath $dsc_FolderName
@@ -63,7 +65,7 @@ BEGIN
     #C:\dsc\config\localhost\
     $dscConfigLocahost_DirectoryPath         = Join-Path -Path $dscConfig_DirectoryPath -ChildPath $localhost_FolderName
     #C:\dsc\config\localhost\FileServer\
-    $dscConfigLocalhostFS_DirectoryPath      = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $FS_FolderName
+    $dscConfigLocalhostSQL_DirectoryPath      = Join-Path -Path $dscConfigLocahost_DirectoryPath -ChildPath $SQL_FolderName
 
     #C:\dsc\certificate\
     ##$dscCertificate_DirectoryPath          = Join-Path -Path $dsc_DirectoryPath -ChildPath $certificate_FolderName
@@ -77,27 +79,27 @@ BEGIN
     #C:\dsc\_output\
     $dscOutput_DirectoryPath                 = Join-Path -Path $dsc_DirectoryPath -ChildPath $output_FolderName
     #C:\dsc\_output\FileServer
-    $dscOutputFS_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $FS_FolderName
+    $dscOutputSQL_DirectoryPath               = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $SQL_FolderName
     #C:\dsc\_output\LCM
     $dscOutputLCM_DirectoryPath              = Join-Path -Path $dscOutput_DirectoryPath -ChildPath $LCM_FolderName
     #endregion
 
-    #region Initialize Variables - Configuration - File Services
+    #region Initialize Variables - Configuration - SQL Server
     $configData_psd1_fileName                = 'ConfigData.psd1'
 
-    $configDataFS_GithubUrl                  = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig'
-    $configData_psd1_url                     = $configDataFS_GithubUrl,$configData_psd1_fileName -join '/'
+    $configDataSQL_GithubUrl                 = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig'
+    $configData_psd1_url                     = $configDataSQL_GithubUrl,$configData_psd1_fileName -join '/'
 
     #C:\dsc\config\localhost\FileServer\ConfigData.psd1
-    $configData_psd1_FullPath                = Join-Path -Path $dscConfigLocalhostFS_DirectoryPath -ChildPath $configData_psd1_fileName
+    $configData_psd1_FullPath                = Join-Path -Path $dscConfigLocalhostSQL_DirectoryPath -ChildPath $configData_psd1_fileName
 
-    $dscConfigLocalhostFS_ps1_FileName       = 'FS_member_configuration.ps1'
+    $dscConfigLocalhostSQL_ps1_FileName      = 'SQL_defaultInstance_configuration.ps1'
 
-    $dscConfigLocalhostFS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/007_FileServices'
-    $dscConfigLocalhostFS_ps1_GithubUrl      = $dscConfigLocalhostFS_GithubUrl,$dscConfigLocalhostFS_ps1_FileName -join '/'
+    $dscConfigLocalhostSQL_GithubUrl         = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/009_SQL'
+    $dscConfigLocalhostSQL_ps1_GithubUrl     = $dscConfigLocalhostSQL_GithubUrl,$dscConfigLocalhostSQL_ps1_FileName -join '/'
 
     #C:\dsc\config\localhost\FileServer\FS_member_configuration.ps1
-    $dscConfigLocalhostFS_ps1_FullPath       = Join-Path -Path $dscConfigLocalhostFS_DirectoryPath -ChildPath $dscConfigLocalhostFS_ps1_FileName
+    $dscConfigLocalhostSQL_ps1_FullPath      = Join-Path -Path $dscConfigLocalhostSQL_DirectoryPath -ChildPath $dscConfigLocalhostSQL_ps1_FileName
     #endregion
 
     #endregion
@@ -109,12 +111,12 @@ BEGIN
         #$dsc_DirectoryPath,
         #$dscConfig_DirectoryPath,
         #$dscConfigLocahost_DirectoryPath,
-        $dscConfigLocalhostFS_DirectoryPath,
+        $dscConfigLocalhostSQL_DirectoryPath,
         #$dscCertificate_DirectoryPath,
         #$dscFunction_DirectoryPath,
         #$dscModule_DirectoryPath,
         #$dscOutput_DirectoryPath,
-        $dscOutputFS_DirectoryPath
+        $dscOutputSQL_DirectoryPath
         #$dscOutputLCM_DirectoryPath
     )
 
@@ -137,13 +139,13 @@ BEGIN
     Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope LocalMachine -Force
     Install-PackageProvider -Name Nuget -MinimumVersion 2.8.5.201 -Force
 
-    #region 2.2. Download ConfigData.pds1 and FS_member_configuration.ps1 from from Github
+    #region 2.2. Download ConfigData.pds1 and SQL_defaultInstance_configuration.ps1 from from Github
 
     # DSC Configuration: - localhost FileServices
     #FS_member_configuration.ps1
     #https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/007_FileServices/FS_member_configuration.ps1
     try {
-        Invoke-WebRequest -Uri $dscConfigLocalhostFS_ps1_GithubUrl -OutFile $dscConfigLocalhostFS_ps1_FullPath -Verbose    
+        Invoke-WebRequest -Uri $dscConfigLocalhostSQL_ps1_GithubUrl -OutFile $dscConfigLocalhostSQL_ps1_FullPath -Verbose    
     }
     catch {
 
@@ -190,7 +192,7 @@ PROCESS
 
     #region DSC - Load the configuration into memory for it's execution
     try {
-        . $dscConfigLocalhostFS_ps1_FullPath
+        . $dscConfigLocalhostSQL_ps1_FullPath
     }
     catch {
 
@@ -200,9 +202,9 @@ PROCESS
     #region DSC - Compile the configuration
     try {
         Write-Information "$env:ComputerName - Role: File Server Member"
-        #^ Generate configuration MOF files for the first DC
-        MEMBER_FILESERVER -ConfigurationData $configData `
-                          -OutputPath $dscOutputFS_DirectoryPath
+        #^ Generate configuration MOF files for the SQL Server
+        sqlDefaultInstance2016orLater -ConfigurationData $configData `
+                          -OutputPath $dscOutputSQL_DirectoryPath
     }
     catch {
 
@@ -212,7 +214,7 @@ PROCESS
     #region DSC - Start Configuration
     try {
         #^ Apply the Dsc Configuration
-        Start-DscConfiguration -Path $dscOutputFS_DirectoryPath -Force -Wait -Verbose
+        Start-DscConfiguration -Path $dscOutputSQL_DirectoryPath -Force -Wait -Verbose
     }
     catch {
 
