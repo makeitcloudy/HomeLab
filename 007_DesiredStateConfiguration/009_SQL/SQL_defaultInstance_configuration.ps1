@@ -177,7 +177,7 @@ Configuration sqlDefaultInstance2016orLater {
                     SourcePath   = $Node.SQLInstallSourcePath
                     InstanceName = $Instance.SQLInstanceName
                     Features     = $Features
-                    DependsOn    = "[SqlServerSetup]$($Instance.Name)"
+                    DependsOn    = "[SqlSetup]$($Instance.Name)"
                 }
             }
         
@@ -188,7 +188,8 @@ Configuration sqlDefaultInstance2016orLater {
                     InstanceName         = 'NULL'
                     Features             = 'SSMS,ADV_SSMS'
                     PsDscRunAsCredential = $SQLInstallCredential
-                    DependsOn            = '[Computer]JoinDomain', '[WindowsFeature]NET35Install'
+                    DependsOn            = '[WindowsFeature]NetFramework35'
+                    #DependsOn            = '[Computer]JoinDomain', '[WindowsFeature]NET35Install'
                     }
             }
             #endregion Install SQL Server
