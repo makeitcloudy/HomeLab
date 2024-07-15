@@ -21,4 +21,20 @@ Do not have to initialize the drive with PowerShell. Desired State resource from
 ```
 
 
-###
+### Initial Testing
+
+```powershell
+#Start-Process PowerShell_ISE -Verb RunAs
+# run in elevated PowerShell session
+Set-Location -Path "$env:USERPROFILE\Documents"
+
+#$sqlDefaultInstanceConfiguration = 'SQL_defaultInstance_configuration.ps1'
+#$sqlDefaultInstanceSetup = 'SQL_defaultInstance_setup.ps1'
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/009_SQL/SQL_defaultInstance_configuration.ps1' -OutFile "$env:USERPROFILE\Documents\SQL_defaultInstance_configuration.ps1" -Verbose
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/009_SQL/SQL_defaultInstance_setup.ps1' -OutFile "$env:USERPROFILE\Documents\SQL_defaultInstance_setup.ps1" -Verbose
+#psedit "$env:USERPROFILE\Documents\SQL_defaultInstance_setup.ps1"
+#psedit "$env:USERPROFILE\Documents\SQL_defaultInstance_configuration.ps1"
+
+# at this stage the computername is already renamed and it's name is : dc01
+#. "$env:USERPROFILE\Documents\ActiveDirectory_demo.ps1" -ComputerName $env:Computername
+```

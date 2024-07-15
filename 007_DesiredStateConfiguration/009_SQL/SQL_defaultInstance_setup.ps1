@@ -40,6 +40,40 @@ BEGIN
     }
     #endregion
 
+    #region Initialize Variables - Credentials
+    #https://community.spiceworks.com/t/dns-issue-i-have-to-enter-fqdn-to-join-domain-but-why/636506/10
+
+    
+    $SqlInstallUserName                         = 'Administrator'
+    $SqlInstallPassword                         = 'Password1$'
+    $SqlInstallPasswrodSecureString             = ConvertTo-SecureString $SqlInstallPassword -AsPlainText -Force
+    $SqlInstallCred                             = New-Object System.Management.Automation.PSCredential ($SqlInstallUserName, $SqlInstallPasswrodSecureString) # PsDscRunAsCredential
+
+    $SqlAdministratorUserName                   = 'Administrator'
+    $SqlAdministratorPassword                   = 'Password1$'
+    $SqlAdministratorPasswordSecureString       = ConvertTo-SecureString $SqlAdministratorPassword -AsPlainText -Force
+    $SqlAdministratorCred                       = New-Object System.Management.Automation.PSCredential ($SqlAdministratorUserName, $SqlAdministratorPasswordSecureString) # $SQLSysAdminAccounts ; $SqlAdministratorCredential = $SqlInstallCredential       
+
+    $SQLServiceUserName                         = 'Administrator'
+    $SQLServicePassword                         = 'Password1$'
+    $SQLServicePasswordSecureString             = ConvertTo-SecureString $SQLServicePassword -AsPlainText -Force
+    $SQLServiceCred                             = New-Object System.Management.Automation.PSCredential ($SQLServiceUserName, $SQLServicePasswordSecureString) # $SQLSvcAccount, $ASSvcAccount
+
+    $SqlAgentUserName                           = 'Administrator'
+    $SqlAgentPassword                           = 'Password1$'
+    $SqlAgentPasswordSecureString               = ConvertTo-SecureString $SqlAgentPassword -AsPlainText -Force
+    $SqlASServiceCred                        = New-Object System.Management.Automation.PSCredential ($SqlAgentUserName, $SqlAgentPasswordSecureString) # $SqlAgentServiceCredential = $SQLServiceCredential
+
+    #$AdministratorUserName                      = 'Administrator'
+    #$AdministratorPassword                      = 'Password1$'
+    #$AdministratorPasswordSecureString          = ConvertTo-SecureString $AdministratorPassword -AsPlainText -Force
+    #$AdministratorCred                          = New-Object System.Management.Automation.PSCredential ($AdministratorUserName, $AdministratorPasswordSecureString)
+
+    #if (-not $AdministratorCred){
+    #    $AdministratorCred = (Get-Credential -Message "Enter new domain's credential")
+    #}
+    #endregion
+
     #region Initialize Variables - Folder structure
     # each time you modify the folder structure ammend the $arrayFolderStructure variable accordingly
 
@@ -204,7 +238,11 @@ PROCESS
         Write-Information "$env:ComputerName - Role: File Server Member"
         #^ Generate configuration MOF files for the SQL Server
         sqlDefaultInstance2016orLater -ConfigurationData $configData `
-                          -OutputPath $dscOutputSQL_DirectoryPath
+                                      -SqlInstallCredential $sqlInstallCred `
+                                      -SqlAdministratorCredential $sqlAdministratorCred `
+                                      -SqlServiceCredential $sqlServiceCred `
+                                      -SqlAgentServiceCredential $sqlASServiceCred `
+                                      -OutputPath $dscOutputSQL_DirectoryPath
     }
     catch {
 

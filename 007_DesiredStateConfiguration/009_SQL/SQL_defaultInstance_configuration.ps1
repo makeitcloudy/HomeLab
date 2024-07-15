@@ -52,7 +52,7 @@ Configuration sqlDefaultInstance2016orLater {
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential]
         $SqlAgentServiceCredential = $SqlServiceCredential
-        )
+    )
         
         Import-DscResource -ModuleName 'xPSDesiredStateConfiguration' -ModuleVersion '9.1.0'
         Import-DscResource -ModuleName 'SqlServerDsc' -ModuleVersion '16.6.0'
@@ -131,7 +131,7 @@ Configuration sqlDefaultInstance2016orLater {
                     ForceReboot            = $false
                     UpdateEnabled          = 'False'
                     SourcePath             = $Node.SQLInstallSourcePath
-                    InstanceName           = $Instance.SQLInstanceName
+                    InstanceName           = $Instance.Name
                     SQLCollation           = 'Latin1_General_100_CI_AS_KS' #https://www.carlstalhood.com/delivery-controller-2402-ltsr-and-licensing/
                     Features               = $Features
                     #SQLSysAdminAccounts    = 'MOT\Domain Administrators', $SqlAdministratorCredential.UserName
@@ -155,9 +155,10 @@ Configuration sqlDefaultInstance2016orLater {
                     ASTempDir              = 'C:\MSOLAP\Temp'
                     ASServerMode           = 'TABULAR'
 
+                    SQLSvcAccount          = $SqlServiceCredential
                     AgtSvcAccount          = $SqlAgentServiceCredential
                     ASSvcAccount           = $SqlServiceCredential
-                    SQLSvcAccount          = $SqlServiceCredential
+
 
                     SqlTempdbFileCount     = 4
                     SqlTempdbFileSize      = 1024

@@ -35,23 +35,35 @@
             Role                 = 'SQLServer'
             NodeName             = 'sql01'
             JoinOu               = 'OU=Computers,DC=lab,DC=local'
-            DataDrivePDiskId     = 1    #Profile Disk
-            DataDrivePLetter     = 'S'  #Profile Disk Letter
+            DataDriveSDiskId     = 1                                                   # SQL Data Disk
+            DataDriveSLetter     = 'S'                                                 # SQL Data Disk Letter
             SQLInstallSourcePath = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
             SQLDataDrive         = 'C:\'
-            SQLInstanceName      = 'test'
+            Instances = @(
+                @{
+                    Name         = 'MSSQLSERVER'
+                    Features     = 'SQLENGINE,AS'
+                    #Features     = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                }
+            )            
             SQLAdminAccount      = 'Administrator'
         },
         @{
-            Role                = 'SQLServer'
-            NodeName            = 'sql02'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
-            DataDrivePDiskId    = 1    #Profile Disk
-            DataDrivePLetter    = 'S'  #Profile Disk Letter
+            Role                 = 'SQLServer'
+            NodeName             = 'sql02'
+            JoinOu               = 'OU=Computers,DC=lab,DC=local'
+            DataDriveSDiskId     = 1                                                   # SQL Data Disk
+            DataDriveSLetter     = 'S'                                                 # SQL Data Disk Letter
             SQLInstallSourcePath = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
             SQLDataDrive         = 'C:\'
-            SQLInstanceName      = 'test'
-            SQLAdminAccount      = 'Administrator'
+            Instances = @(
+                @{
+                    Name         = 'MSSQLSERVER'
+                    Features     = 'SQLENGINE,AS'
+                    #Features     = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                }
+            )            
+            SQLAdminAccount      = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
         }        
     )
 }
