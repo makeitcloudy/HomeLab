@@ -138,10 +138,10 @@ Configuration sqlDefaultInstance2016orLater {
                     InstanceName           = $Instance.Name
                     SQLCollation           = 'Latin1_General_100_CI_AS_KS' #https://www.carlstalhood.com/delivery-controller-2402-ltsr-and-licensing/
                     Features               = $Features
-                    #SQLSysAdminAccounts    = 'MOT\Domain Administrators', $SqlAdministratorCredential.UserName
-                    SQLSysAdminAccounts    = "$($Node.DomainName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
+                    SQLSysAdminAccounts    = "$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
+                    #SQLSysAdminAccounts    = "$($Node.DomainName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
+                    ASSysAdminAccounts     = "$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
                     #ASSysAdminAccounts     = 'MOT\Domain Administrators', $SqlAdministratorCredential.UserName
-                    ASSysAdminAccounts     = "$($Node.DomainName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
                     InstallSharedDir       = "$($Node.SQLDataDrive)Program Files\Microsoft SQL Server"
                     InstallSharedWOWDir    = "$($Node.SQLDataDrive)Program Files (x86)\Microsoft SQL Server"
                     InstanceDir            = "$($Node.SQLDataDrive)Program Files\Microsoft SQL Server"

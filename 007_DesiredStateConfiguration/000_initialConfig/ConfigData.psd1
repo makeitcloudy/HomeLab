@@ -1,6 +1,6 @@
 @{
     AllNodes = @(
-        @{
+    @{
             Role                 = 'newVM'
             #NodeName            = 'localhost'
             NodeName             = 'localhost'
@@ -32,6 +32,8 @@
             DataDrivePLetter    = 'P'  #Profile Disk Letter
         },
         @{
+            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
+            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql01'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
@@ -47,10 +49,12 @@
                 }
             )            
             SQLAdminAccount        = 'Administrator'
-            InstallManagementTools = $True
+            InstallManagementTools = $False
             CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         },
         @{
+            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
+            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql02'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
@@ -66,7 +70,7 @@
                 }
             )            
             SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
-            InstallManagementTools = $True
+            InstallManagementTools = $False
             CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         }        
     )
