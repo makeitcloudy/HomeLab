@@ -32,38 +32,40 @@
             DataDrivePLetter    = 'P'  #Profile Disk Letter
         },
         @{
-            Role                 = 'SQLServer'
-            NodeName             = 'sql01'
-            JoinOu               = 'OU=Computers,DC=lab,DC=local'
-            DataDriveSDiskId     = 1                                                   # SQL Data Disk
-            DataDriveSLetter     = 'S'                                                 # SQL Data Disk Letter
-            SQLInstallSourcePath = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive         = 'C:\'
+            Role                   = 'SQLServer'
+            NodeName               = 'sql01'
+            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+            DataDriveSDiskId       = 1                                                   # SQL Data Disk
+            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
+            SQLDataDrive           = 'C:\'
             Instances = @(
                 @{
-                    Name         = 'MSSQLSERVER'
-                    Features     = 'SQLENGINE,AS'
-                    #Features     = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                    Name           = 'MSSQLSERVER'
+                    Features       = 'SQLENGINE,AS'
+                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
                 }
             )            
-            SQLAdminAccount      = 'Administrator'
+            SQLAdminAccount        = 'Administrator'
+            InstallManagementTools = $True
         },
         @{
-            Role                 = 'SQLServer'
-            NodeName             = 'sql02'
-            JoinOu               = 'OU=Computers,DC=lab,DC=local'
-            DataDriveSDiskId     = 1                                                   # SQL Data Disk
-            DataDriveSLetter     = 'S'                                                 # SQL Data Disk Letter
-            SQLInstallSourcePath = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive         = 'C:\'
+            Role                   = 'SQLServer'
+            NodeName               = 'sql02'
+            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+            DataDriveSDiskId       = 1                                                   # SQL Data Disk
+            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
+            SQLDataDrive           = 'C:\'
             Instances = @(
                 @{
-                    Name         = 'MSSQLSERVER'
-                    Features     = 'SQLENGINE,AS'
-                    #Features     = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                    Name           = 'MSSQLSERVER'
+                    Features       = 'SQLENGINE,AS'
+                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
                 }
             )            
-            SQLAdminAccount      = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
+            SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
+            InstallManagementTools = $True
         }        
     )
 }

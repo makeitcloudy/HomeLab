@@ -30,6 +30,10 @@ Find-DscResource -Filter $resourceName
 Find-DscResource -Name $resourceName
 Get-DscResource $resourceName -Syntax
 
+#SQL
+Get-DscResource -Module SqlServerDsc
+Get-DscResource -Name SQLWindowsFirewall -Syntax
+
 ####
 
 # get the syntax of the resource
