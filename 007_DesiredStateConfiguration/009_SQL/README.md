@@ -53,3 +53,48 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 # at this stage the computername is already renamed and it's name is : dc01
 #. "$env:USERPROFILE\Documents\ActiveDirectory_demo.ps1" -ComputerName $env:Computername
 ```
+
+
+## XX. Installation
+
+FEATURES=SQLENGINE,AS /ASCONFIGDIR="C:\MSOLAP\Config" /QUIET="True" 
+/SQLTEMPDBLOGDIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Data" 
+/AGTSVCACCOUNT="Administrator" 
+/SQLBACKUPDIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Backup" 
+/SQLTEMPDBLOGFILEGROWTH="64" 
+/IACCEPTSQLSERVERLICENSETERMS="True" 
+/ACTION="Install" 
+/ASSYSADMINACCOUNTS="\Administrator" "Administrator" "Administrator" 
+/SQLSYSADMINACCOUNTS="\Administrator" "Administrator" "Administrator" 
+/ASSERVERMODE="TABULAR" 
+/INSTALLSHAREDDIR="C:\Program Files\Microsoft SQL Server" 
+/SQLSVCPASSWORD="********" 
+/SQLTEMPDBFILESIZE="1024" 
+/AGTSVCPASSWORD="********" 
+/ASLOGDIR="C:\MSOLAP\Log" 
+/INSTALLSQLDATADIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Data" 
+/SQLTEMPDBFILEGROWTH="512" 
+/SQLTEMPDBDIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Data" 
+/SQLCOLLATION="Latin1_General_100_CI_AS_KS" 
+/ASTEMPDIR="C:\MSOLAP\Temp" 
+/SQLUSERDBDIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Data" 
+/UPDATEENABLED="False" 
+/ASDATADIR="C:\MSOLAP\Data" 
+/SQLUSERDBLOGDIR="C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\Data" 
+/INSTANCENAME="MSSQLSERVER" 
+/ASSVCPASSWORD="********" 
+/INSTANCEDIR="C:\Program Files\Microsoft SQL Server" 
+/INSTALLSHAREDWOWDIR="C:\Program Files (x86)\Microsoft SQL Server" 
+/SQLTEMPDBLOGFILESIZE="128" 
+/ASSVCACCOUNT="Administrator" 
+
+/SQLTEMPDBFILECOUNT="4" 
+/ASBACKUPDIR="C:\MSOLAP\Backup" 
+/SQLSVCACCOUNT="Administrator"
+
+
+### Troubleshooting 
+
+C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\Log\20240715_145438
+
+Summary_sql02_20240715.log
