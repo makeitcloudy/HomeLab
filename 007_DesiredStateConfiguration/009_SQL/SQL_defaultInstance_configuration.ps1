@@ -182,7 +182,7 @@ Configuration sqlDefaultInstance2016orLater {
             }
         
             if ($Node.InstallManagementTools) {
-                SqlServerSetup SQLMT
+                SqlSetup SQLMT
                 {
                     SourcePath           = $Node.SourcePath
                     InstanceName         = 'NULL'
