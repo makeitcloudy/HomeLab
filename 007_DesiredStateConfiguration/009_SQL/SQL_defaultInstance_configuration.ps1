@@ -171,7 +171,7 @@ Configuration sqlDefaultInstance2016orLater {
                     DependsOn              = '[WindowsFeature]NetFramework45'
                 }
         
-                SqlServerFirewall ($Instance.Name)
+                SqlWindowsFirewall ($Instance.Name)
                 {
                     # https://support.citrix.com/article/CTX200088/database-connection-issues-in-xendesktop-and-provisioning-services
                     SourcePath   = $Node.SQLInstallSourcePath
@@ -187,7 +187,7 @@ Configuration sqlDefaultInstance2016orLater {
                     SourcePath           = $Node.SourcePath
                     InstanceName         = 'NULL'
                     Features             = 'SSMS,ADV_SSMS'
-                    PsDscRunAsCredential = $InstallerCredential
+                    PsDscRunAsCredential = $SQLInstallCredential
                     DependsOn            = '[Computer]JoinDomain', '[WindowsFeature]NET35Install'
                     }
             }

@@ -48,6 +48,7 @@
             )            
             SQLAdminAccount        = 'Administrator'
             InstallManagementTools = $True
+            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         },
         @{
             Role                   = 'SQLServer'
@@ -66,6 +67,7 @@
             )            
             SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
             InstallManagementTools = $True
+            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         }        
     )
 }
