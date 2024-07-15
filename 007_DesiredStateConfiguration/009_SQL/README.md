@@ -20,6 +20,9 @@ Do not have to initialize the drive with PowerShell. Desired State resource from
 
 ```
 
+### 3. SQL - DefaultInstance - Mount SQL
+
+xe vm-cd-insert vm='a_sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
 
 ### Initial Testing
 

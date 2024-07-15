@@ -84,7 +84,7 @@ Configuration sqlDefaultInstance2016orLater {
             #region storage
             WaitforDisk DataDriveSQL 
             {
-                DiskId           = $Node.DataDrivePDiskId
+                DiskId           = $Node.DataDriveSDiskId
                 RetryIntervalSec = 60
                 RetryCount       = 60
                 #DependsOn        = '[Computer]JoinDomain'
@@ -92,8 +92,8 @@ Configuration sqlDefaultInstance2016orLater {
         
             Disk VolumeProfile
             {
-                DiskId      = $Node.DataDrivePDiskId
-                DriveLetter = $Node.DataDrivePLetter
+                DiskId      = $Node.DataDriveSDiskId
+                DriveLetter = $Node.DataDriveSLetter
                 DependsOn   = '[WaitforDisk]DataDriveSQL'
             }
             #endregion
