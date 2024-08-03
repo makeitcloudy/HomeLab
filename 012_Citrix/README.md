@@ -1,5 +1,8 @@
 # Citrix
 
+## Books
+
+* [Citrix VDI Handbook - 2402 LTSR](https://community.citrix.com/tech-zone/build/tech-papers/citrix-vdi-handbook#_=_)
 
 ## Links
 
