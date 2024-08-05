@@ -112,7 +112,8 @@ Desktop Experience OR Core
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'a_iscsi_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:10' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_iscsi_FileServer_desktop_experience'
 
-/opt/scripts/vm_add_disk.sh --vmName "a_iscsi_dexp" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_quorumDrive"
+/opt/scripts/vm_add_disk.sh --vmName "a_iscsi_dexp" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_vhdxClusterStorageDrive" --deviceId 5 --diskGB 20  --description "w2k22_vhdxClusterStorageDrive"
+/opt/scripts/vm_add_disk.sh --vmName "a_iscsi_dexp" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_quorumDrive" --deviceId 6 --diskGB 20  --description "w2k22_quorumDrive"
 ```
 
 ### Windows - Server OS - 2x File Server - Desktop Experience

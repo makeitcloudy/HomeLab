@@ -15,11 +15,16 @@ This vm is for the situation where there is no NAS which can serve the iscsi for
 # once the disk is added to the iscsi node - do NOT initialize the disk, do NOT format it
 # do it only when it is added to the cluster
 
+# iscsi has 3 drives
+# C
+# S - vhdx storage
+# Q - quorum - this drive is initialized and formated from the server manager from one of the clustered nodes
+
 whoami
 Install-WindowsFeature -ComputerName iscsi FS-FileServer,FS-iSCSITarget-Server -IncludeAllSubFeature -Restart
-Invoke-Command -Computername iscsi -ScriptBlock {New-iSCSIVirtualDisk -Path "Q:\iscsi-lun-clusterFS-quorum.vhdx" -Description "iscsi-lun-clusterFS-quorum" -Size 2GB}
+Invoke-Command -Computername iscsi -ScriptBlock {New-iSCSIVirtualDisk -Path "S:\iscsi-lun-clusterFS-quorum.vhdx" -Description "iscsi-lun-clusterFS-quorum" -Size 2GB}
 Invoke-Command -Computername iscsi -ScriptBlock {New-iSCSIServerTarget -TargetName "iscsi-target-clusterFS" -InitiatorIds @("IPAddress:10.0.0.1","IPAddress:10.0.0.2")}
-Invoke-Command -Computername iscsi -ScriptBlock {Add-iSCSIVirtualDiskTargetMapping -TargetName "iscsi-target-clusterFS" -Path "Q:\iscsi-lun-clusterFS-quorum.vhdx"}
+Invoke-Command -Computername iscsi -ScriptBlock {Add-iSCSIVirtualDiskTargetMapping -TargetName "iscsi-target-clusterFS" -Path "S:\iscsi-lun-clusterFS-quorum.vhdx"}
 
 Invoke-Command -ComputerName fs01,fs02 -ScriptBlock {Set-Service msiscsi -StartupType Automatic; Start-Service msiscsi}
 Invoke-Command -ComputerName fs01,fs02 -ScriptBlock {Get-InitiatorPort}
