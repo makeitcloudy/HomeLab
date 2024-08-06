@@ -84,6 +84,12 @@ xe vm-cd-eject vm='a_dc02_dexp'
 xe vm-cd-insert vm='a_dc02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
+### Windows - Server OS - 1x Domain Controller - Core - TEST
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName 'a_tdc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1442 - tagged - up' --Mac '2A:47:41:D9:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_tdc01_ADDS_core'
+```
+
 ### Windows - Server OS - 2x Domain Controller - Core
 
 Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience

@@ -2,33 +2,7 @@
 
 ## Initial Configuration
 
-```powershell
-tzutil /l
-Set-TimeZone "Central Europe Standard Time"
-Set-Date -Date '8/6/2024 7:49 PM'
-Get-NetAdapter
-Get-NetIPAddress -InterfaceAlias 'Ethernet'
-New-NetIPAddress -InterfaceAlias 'Ethernet' -IPAddress 10.0.0.1 -PrefixLength 24 -DefaultGateway 10.0.0.254
-Get-NetIPConfiguration -InterfaceAlias ethernet
 
-Set-DSNClientServerAddress -InterfaceAlias ethernet -ServerAddres ("10.0.0.1")
-Get-NetIPConfiguration -InterfaceAlias ethernet
-
-Rename-Computer -NewName dc01 -Restart
-
-slmgr.vbs -ipk [produktkey]
-slmgr.vbs -ato
-Enable-PSRemoting
-
-Get-NetFirewallRule
-Get-NetFirewallRule -Name [nameOfTheRule]
-Get-NetFirewallRule | FormatTable DisplayName,DisplayGroup
-Enable-FirewallRule -DisplayGroup 'file and printer sharing'
-
-# allowed only in the lab
-New-NetFirewallrule -DisplayName "Allow All Traffic" -Direction Outbound -Action Allow
-New-NetFirewallrule -DisplayName "Allow All Traffic" -Direction Inbound -Action Allow
-```
 
 ## Install ADDS
 
