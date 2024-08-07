@@ -2,111 +2,42 @@
 
 ## Management Node
 
-### Windows - Desktop OS - Initial Configuration - Management Node - w10mgmt
+### Windows - Desktop OS - Initial Configuration - Management Node - w10mgmt - SiteB2
 
 Node (Desktop) used to manage the environment and author DSC configurations - Starting Point
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:49' --StorageName 'node4_ssd_sdg' --VmDescription 'w10mgmt'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1442 - tagged - up' --Mac '2A:47:41:B2:00:49' --StorageName 'node4_ssd_sdg' --VmDescription 'w10mgmt'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm='a_w10mgmt'
-xe vm-cd-insert vm='a_w10mgmt' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='b2_w10mgmt'
+xe vm-cd-insert vm='b2_w10mgmt' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'a_w10mgmt' --storageName 'node4_hdd_sdc_lsi' --diskName 'w10mgmt_dataDrive' --deviceId 4 --diskGB 20  --description 'w10mgmt_dataDrive'
-```
-
-## Image Factory - OSD
-
-### Windows - Desktop OS - Initial Configuration - ImageFactory Desktop
-
-Node (Desktop) used to update the Desktop Based image OS'es
-
-```bash
-# Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDd' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_imageFactory_for_DesktopOS'
-
-# After installation eject CD
-# Run on XCP-ng
-# eject installation media
-xe vm-cd-eject vm='a_OSDd'
-xe vm-cd-insert vm='a_OSDd' cd-name='Citrix_Hypervisor_821_tools.iso'
-
-## Add Disk
-# run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'a_OSDd' --storageName 'node4_hdd_sdc_lsi' --diskName 'aOSDd_dataDrive' --deviceId 4 --diskGB 120  --description 'aOSDd_dataDrive'
-```
-
-### Windows - Server OS - Initial Configuration - ImageFactory Server
-
-Node (Desktop) used to update the Server Based image OS'es
-
-```bash
-# Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDs' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_imageFactory_for_ServerOS'
-
-# After installation eject CD
-# Run on XCP-ng
-# eject installation media
-xe vm-cd-eject vm='a_OSDs'
-xe vm-cd-insert vm='a_OSDs' cd-name='Citrix_Hypervisor_821_tools.iso'
-
-## Add Disk
-# run over SSH
-/opt/scripts/vm_add_disk.sh --vmName "a_OSDs" --storageName "node4_hdd_sdc_lsi" --diskName "aOSDs_dataDrive" --deviceId 4 --diskGB 120  --description "aOSDs_dataDrive"
+/opt/scripts/vm_add_disk.sh --vmName 'b2_w10mgmt' --storageName 'node4_hdd_sdc_lsi' --diskName 'b2_w10mgmt_dataDrive' --deviceId 4 --diskGB 20  --description 'w10mgmt_dataDrive'
 ```
 
 ## Active Directory Domain Services
 
-Desktop Experience OR Core
-
-### Windows - Server OS - 2x Domain Controller - Desktop Experience
-
-Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience
+### Windows - Server OS - 2x Domain Controller - Server Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'a_dc01_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_ADDS_desktop_experience'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_dc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1442 - tagged - up' --Mac '2A:47:41:B2:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_ADDS_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'a_dc02_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_ADDS_desktop_experience'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_dc02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1442 - tagged - up' --Mac '2A:47:41:B2:00:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_ADDS_core'
 ```
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='a_dc01_dexp'
-xe vm-cd-insert vm='a_dc01_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='b2_dc01_core'
+xe vm-cd-insert vm='b2_dc01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='a_dc02_dexp'
-xe vm-cd-insert vm='a_dc02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
-```
-
-### Windows - Server OS - 1x Domain Controller - Core - TEST
-
-```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'a_tdc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1442 - tagged - up' --Mac '2A:47:41:D9:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_tdc01_ADDS_core'
-```
-
-### Windows - Server OS - 2x Domain Controller - Core
-
-Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience
-
-```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'a_dc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_ADDS_core'
-
-/opt/scripts/vm_create_uefi.sh --VmName 'a_dc02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_ADDS_core'
-```
-
-```bash
-# it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='a_dc01_core'
-xe vm-cd-insert vm='a_dc01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
-
-xe vm-cd-eject vm='a_dc02_core'
-xe vm-cd-insert vm='a_dc02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='b2_dc02_core'
+xe vm-cd-insert vm='b2_dc02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 ## File Services
@@ -202,9 +133,49 @@ xe vm-cd-eject vm='a_sql02_core'
 xe vm-cd-insert vm='a_sql02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
-### Windows - Server OS - 1x cloud connector - Desktop Experience
+## Image Factory - OSD
 
-Node (Server) used to test the DSC code for Active Directory Domain Setup - Core
+### Windows - Desktop OS - Initial Configuration - ImageFactory Desktop
+
+Node (Desktop) used to update the Desktop Based image OS'es
+
+```bash
+# Run on XCP-ng
+/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDd' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_imageFactory_for_DesktopOS'
+
+# After installation eject CD
+# Run on XCP-ng
+# eject installation media
+xe vm-cd-eject vm='a_OSDd'
+xe vm-cd-insert vm='a_OSDd' cd-name='Citrix_Hypervisor_821_tools.iso'
+
+## Add Disk
+# run over SSH
+/opt/scripts/vm_add_disk.sh --vmName 'a_OSDd' --storageName 'node4_hdd_sdc_lsi' --diskName 'aOSDd_dataDrive' --deviceId 4 --diskGB 120  --description 'aOSDd_dataDrive'
+```
+
+### Windows - Server OS - Initial Configuration - ImageFactory Server
+
+Node (Desktop) used to update the Server Based image OS'es
+
+```bash
+# Run on XCP-ng
+/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDs' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_imageFactory_for_ServerOS'
+
+# After installation eject CD
+# Run on XCP-ng
+# eject installation media
+xe vm-cd-eject vm='a_OSDs'
+xe vm-cd-insert vm='a_OSDs' cd-name='Citrix_Hypervisor_821_tools.iso'
+
+## Add Disk
+# run over SSH
+/opt/scripts/vm_add_disk.sh --vmName "a_OSDs" --storageName "node4_hdd_sdc_lsi" --diskName "aOSDs_dataDrive" --deviceId 4 --diskGB 120  --description "aOSDs_dataDrive"
+```
+
+## Cloud Connector
+
+### Windows - Server OS - 1x cloud connector - Desktop Experience
 
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'a_cloudC' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_cloudConnector_core'
