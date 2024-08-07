@@ -73,22 +73,24 @@ function Set-InitialConfiguration {
             #reg add HKLM\System\CurrentControlSet\Services\xenbus_monitor\Parameters /v Autoreboot /t REG_DWORD /d 3
 
             # Define the registry path and value name
-            $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services\xenbus_monitor\Parameters"
+            $registryPath = "HKLM:\SYSTEM\CurrentControlSet\Services\xenbus_monitor\Parameters"
             $valueName = "Autoreboot"
             $desiredValue = 3
-
-            # Check if the registry key exists
-            if (Test-Path -Path $regPath) {
-                # Get the existing value
-                $existingValue = Get-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue
-
-                if ($null -ne $existingValue -and $existingValue.$valueName -eq $desiredValue) {
-                    Write-Warning "The registry value '$valueName' with the desired value already exists."
+            
+            # Check if the registry key exists and has the desired value
+            if (Test-Path $registryPath) {
+                $existingValue = Get-ItemProperty -Path $registryPath -Name $valueName -ErrorAction SilentlyContinue
+                if ($existingValue -and $existingValue.$valueName -eq $desiredValue) {
+                    Write-Warning "Registry key already exists with the desired value."
+                } else {
+                    Write-Information "Updating or adding the registry key."
+                    Set-ItemProperty -Path $registryPath -Name $valueName -Value $desiredValue -Type DWord
                 }
             } else {
-                # Create the registry key and add the value
-                New-ItemProperty -Path $regPath -Name $valueName -PropertyType DWORD -Value $desiredValue
-                Write-Information "Registry key and value created successfully."
+                # If the registry path does not exist, create it and add the value
+                Write-Warning "Registry path not found. Creating path and adding the value."
+                New-Item -Path $registryPath -Force | Out-Null
+                New-ItemProperty -Path $registryPath -Name $valueName -Value $desiredValue -PropertyType DWord -Force | Out-Null
             }
             
         }
