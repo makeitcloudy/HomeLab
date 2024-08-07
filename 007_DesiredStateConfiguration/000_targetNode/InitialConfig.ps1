@@ -53,11 +53,29 @@ function Set-InitialConfiguration {
         $opticalDriveLetter = (Get-CimInstance Win32_LogicalDisk | Where-Object {$_.DriveType -eq 5}).DeviceID
         Get-ChildItem -Path $opticalDriveLetter
         #$Source = "$($PackageName)" + "." + "$($InstallerType)"
-        $UnattendedArgs = "/i $(Join-Path -Path $opticalDriveLetter -ChildPath $($PackageName,$InstallerType -join '.')) ALLUSERS=1 /Lv $LogApp /quiet /norestart"
+        $UnattendedArgs = "/i $(Join-Path -Path $opticalDriveLetter -ChildPath $($PackageName,$InstallerType -join '.')) ALLUSERS=1 /Lv $LogApp /quiet /norestart ADDLOCAL=ALL"
 
         # should throw 0
         (Start-Process msiexec.exe -ArgumentList $UnattendedArgs -Wait -Passthru).ExitCode
         #Invoke-Item -Path $LogApp
+        #endregion
+
+        #region 3.0 - registry key
+        try {
+            #https://support.citrix.com/s/article/CTX292687-setting-automatic-reboots-when-updating-the-citrix-vm-tools-for-windows
+            #To use this feature, we recommend that you set the following registry key as soon as possible: HLKM\System\CurrentControlSet\services\xenbus_monitor\Parameters\Autoreboot.
+            #The value of the registry key must be a positive integer. We recommend that you set the number of reboots in the registry key to 3.
+            #Before each reboot, Windows can display an alert for 60 seconds that warns of the upcoming reboot. You can dismiss the alert, but this does not cancel the reboot. Because of this delay between the reboots, wait a few minutes after the initial reboot for the reboot cycle to complete. (Note that in some cases the alert might not be shown, but there is still a 60 second delay before reboot.)
+            #This setting is required for headless servers with static IP addresses.
+
+            #This automatic reboot feature only applies to updates to the Windows I/O drivers through Device Manager or Windows Update. If you are using the Management Agent installer to deploy your drivers, the installer disregards this registry key and manages the VM reboots according to its own settings.
+            #Note: If, after waiting for all reboots to complete, you still lose your static IP configuration, initiate a reboot of the VM from XenCenter to attempt to restore the configuration.
+            reg add HKLM\System\CurrentControlSet\Services\xenbus_monitor\Parameters /v Autoreboot /t REG_DWORD /d 3
+        }
+        catch {
+
+        }
+        
         #endregion
 
         #region 3.1 - Configure WinRM
