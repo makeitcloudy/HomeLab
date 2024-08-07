@@ -22,13 +22,14 @@ Set-ADDefaultDomainPasswordPolicy -Identity $DomainName `
 -LockoutThreshold 5
 #endregion
 
-#region - domain configuration - Sites - Setup
+#region - SKIP THIS - domain configuration - Sites - Setup
+# 2024.08.07 - does not work properly within this scenario
 ## here the assumption is - there are two domain controllers already
 $ADSites2 = @()
 #create a new site
 $ADSites = @{
     "134b" = "Based on Webster's Lab, 134b"
-    "144c" = "Based on Webster's Lab, 144c"
+    #"144c" = "Based on Webster's Lab, 144c"
 }
 ForEach($ADSite in $ADSites.Keys)
 {
@@ -38,7 +39,7 @@ ForEach($ADSite in $ADSites.Keys)
 
 #move the new domain controller from the Default-First-Site-Name site to the new site
 Move-ADDirectoryServer -Identity "dc01" -Site "134b"
-#Move-ADDirectoryServer -Identity "dc02" -Site "134b"
+Move-ADDirectoryServer -Identity "dc02" -Site "134b"
 
 #remove the Default-First-Site-Name site
 #Remove-ADReplicationSite -Identity "Default-First-Site-Name" -Confirm:$False
@@ -46,7 +47,7 @@ Remove-ADReplicationSite -Identity "Lab-Site" -Confirm:$False
 #create subnets and associate them with a site
 $Subnets = @{
     "134b" = "10.2.134.0/24"
-    "144c" = "10.3.144.0/24"
+    #"144c" = "10.3.144.0/24"
 }
 ForEach($Subnet in $Subnets.Keys) {
     New-ADReplicationSubnet -Name $Subnets[$Subnet] -Site $Subnet
@@ -69,9 +70,9 @@ Set-DnsServerForwarder -Confirm:$False -IPAddress @('1.1.1.1','8.8.8.8','8.8.4.4
 #Add-DnsServerForwarder -Confirm:$False -IPAddress '8.8.8.8' -PassThru
 #Add-DnsServerForwarder -Confirm:$False -IPAddress '8.8.4.4' -PassThru
 
-ForEach($Subnet in $Subnets.Keys) {
-    Add-DnsServerPrimaryZone -NetworkID $Subnets[$Subnet] -ReplicationScope "Forest" -DynamicUpdate "Secure"
-}
+###ForEach($Subnet in $Subnets.Keys) {
+###    Add-DnsServerPrimaryZone -NetworkID $Subnets[$Subnet] -ReplicationScope "Forest" -DynamicUpdate "Secure"
+###}
 
 Get-DnsServerZone | Where-Object {$_.IsAutoCreated -eq $False} | Set-DnsServerZoneAging -Aging $True -ScavengeServers $ScavengeServer -RefreshInterval 7.00:00:00 -NoRefreshInterval 7.00:00:00
 #endregion
@@ -133,7 +134,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'CtxAdmin' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'CtxAdmin' `
 -UserPrincipalName "CtxAdmin@$domainName"
 
@@ -145,7 +146,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'RASAdmin' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'RASAdmin' `
 -UserPrincipalName "RASAdmin@$domainName"
 
@@ -157,7 +158,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'UMSAdmin' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'UMSAdmin' `
 -UserPrincipalName "UMSAdmin@$domainName"
 
@@ -169,7 +170,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'VMwAdmin' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Admin,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'VMwAdmin' `
 -UserPrincipalName "VMwAdmin@$domainName"
 #endregion
@@ -186,7 +187,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'DNSDynamicUpdate' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'DNSDynamicUpdate' `
 -UserPrincipalName "DNSDynamicUpdate@$domainName"
 
@@ -201,7 +202,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'svc_CtxVMware' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'svc_CtxVMware' `
 -UserPrincipalName "svc_CtxVMware@domainName"
 
@@ -216,7 +217,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'ldap_query' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Service,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'ldap_query' `
 -UserPrincipalName "ldap_query@$domainName"
 #endregion
@@ -230,7 +231,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'CtxUser1' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'CtxUser1' `
 -UserPrincipalName "CtxUser1@$domainName"
 
@@ -242,7 +243,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'CtxUser2' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'CtxUser2' `
 -UserPrincipalName "CtxUser2@$domainName"
 
@@ -254,7 +255,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'CtxUser3' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'CtxUser3' `
 -UserPrincipalName "CtxUser3@$domainName"
 
@@ -266,7 +267,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'RASUser1' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'RASUser1' `
 -UserPrincipalName "RASUser1@$domainName"
 
@@ -278,7 +279,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'RASUser2' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'RASUser2' `
 -UserPrincipalName "RASUser2@$domainName"
 
@@ -290,7 +291,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'RASUser3' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'RASUser3' `
 -UserPrincipalName "RASUser3@$domainName"
 
@@ -302,7 +303,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'VMwUser1' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'VMwUser1' `
 -UserPrincipalName "VMwUser1@domainName"
 
@@ -314,7 +315,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'VMwUser2' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'VMwUser2' `
 -UserPrincipalName "VMwUser2@$domainName"
 
@@ -326,7 +327,7 @@ New-ADUser -AccountPassword $UserPwd `
 -Name 'VMwUser3' `
 -PasswordNeverExpires $True `
 -PasswordNotRequired $False `
--Path 'OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD' `
+-Path "OU=Users,OU=Accounts,OU=Lab,DC=$ADDomain,DC=$TLD" `
 -SamAccountName 'VMwUser3' `
 -UserPrincipalName "VMwUser@$domainName"
 #endregion
@@ -372,7 +373,7 @@ Add-ADGroupMember -Identity "CN=XDUsers,ou=Users,ou=Groups,ou=Lab,dc=$ADDomain,d
 
 Add-DnsServerResourceRecordA -AllowUpdateAny `
 -CreatePtr `
--IPv4Address '192.168.1.91' `
+-IPv4Address '10.2.134.199' `
 -Name 'AppLayering' `
 -TimeToLive 01:00:00 `
 -ZoneName $DnsZoneName

@@ -23,13 +23,27 @@ xe vm-cd-insert vm='w10mgmt' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 Then follow up with
 
-```bash
+```powershell
 https://makeitcloudy.pl/windows-preparation/
 # proceed with the code from paragraph 2.0.2
+# machine won't restart
+```
 
+Proceed with the code
+
+```powershell
 https://makeitcloudy.pl/windows-DSC/
 # proceed with the code from paragraph 2.2
-
+# the code available in that paragraph runs the Set-InitialConfigDsc function which triggers the the code 
+https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1
+# config data are grabbed from here
+# for the domain scenario to work properly the DNS should be configured properly (DomainDnsServers)
+# and goes hand in hand with the IP addresses of the domain controllers 
+https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1
+# run first
+Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
+# then once finished run
+Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 # when the VM is provisioned login via XCP-ng console unless you know the IP address
 # Restart-Computer for the succesfull installation of the PV-Tools
@@ -91,6 +105,12 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 
 # the DSC configuration is available in this file, configurationData is in ADDS_setup.ps1
 https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/ADDS_configuration.ps1
+
+# once the domain is setup run the _ad_carlWebster_structure.ps1
+https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/Windows/Server/ad/_ad_carlWebster_structure.ps1
+# everything apart from the Site configuration
+# as of 2024.08.07 - still some users / groups needs fixes
+# though this will be rewritten to the DSC configuration at some point anyway
 
 ```
 
