@@ -1,7 +1,7 @@
 #Start-Process PowerShell_ISE -Verb RunAs
 # run in elevated PowerShell session
 #region initialize variables
-$scriptName     = 'initialConfig.ps1'
+$scriptName     = 'InitialConfig.ps1'
 $uri            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode',$scriptName -join '/'
 $path           = "$env:USERPROFILE\Documents"
 $outFile        = Join-Path -Path $path -ChildPath $scriptName
