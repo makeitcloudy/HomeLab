@@ -70,7 +70,27 @@ function Set-InitialConfiguration {
 
             #This automatic reboot feature only applies to updates to the Windows I/O drivers through Device Manager or Windows Update. If you are using the Management Agent installer to deploy your drivers, the installer disregards this registry key and manages the VM reboots according to its own settings.
             #Note: If, after waiting for all reboots to complete, you still lose your static IP configuration, initiate a reboot of the VM from XenCenter to attempt to restore the configuration.
-            reg add HKLM\System\CurrentControlSet\Services\xenbus_monitor\Parameters /v Autoreboot /t REG_DWORD /d 3
+            #reg add HKLM\System\CurrentControlSet\Services\xenbus_monitor\Parameters /v Autoreboot /t REG_DWORD /d 3
+
+            # Define the registry path and value name
+            $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services\xenbus_monitor\Parameters"
+            $valueName = "Autoreboot"
+            $desiredValue = 3
+
+            # Check if the registry key exists
+            if (Test-Path -Path $regPath) {
+                # Get the existing value
+                $existingValue = Get-ItemProperty -Path $regPath -Name $valueName -ErrorAction SilentlyContinue
+
+                if ($null -ne $existingValue -and $existingValue.$valueName -eq $desiredValue) {
+                    Write-Warning "The registry value '$valueName' with the desired value already exists."
+                }
+            } else {
+                # Create the registry key and add the value
+                New-ItemProperty -Path $regPath -Name $valueName -PropertyType DWORD -Value $desiredValue
+                Write-Information "Registry key and value created successfully."
+            }
+            
         }
         catch {
 
