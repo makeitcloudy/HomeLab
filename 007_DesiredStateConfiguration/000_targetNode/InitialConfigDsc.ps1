@@ -5,8 +5,19 @@ function Set-InitialConfigurationDsc {
     .DESCRIPTION
     .PARAMETER NewComputerName
     .PARAMETER Option
+    .PARAMETER DomainName
     .PARAMETER UpdatePowerShellHelp
     .EXAMPLE
+
+    Set-InitialConfigDsc -NewComputerName $env:computername -Option Workgroup -Verbose
+
+    .EXAMPLE
+
+    Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -Verbose
+
+    .EXAMPLE
+
+    Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName 'lab.local' -Verbose
     .LINK
     #>
         
@@ -21,7 +32,11 @@ function Set-InitialConfigurationDsc {
         [ValidateNotNullOrEmpty()][ValidateSet('WorkGroup', 'Domain')]
         [string]$Option,
 
-        [Parameter(Mandatory=$false,Position=2,ValueFromPipelineByPropertyName=$false)]
+        [Parameter(Mandatory=$false,Position=2,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        [string]$DomainName,
+
+        [Parameter(Mandatory=$false,Position=3,ValueFromPipelineByPropertyName=$false)]
         [switch]$UpdatePowerShellHelp
     )
 
@@ -140,10 +155,17 @@ function Set-InitialConfigurationDsc {
         #endregion
 
         #region Initialize variables - Credentials
-        $domainJoinUserName                        = 'lab.local\administrator'
-        #$domainJoinUserName                        = 'mot\administrator'
-        $domainJoinPassword                        = 'Password1$'
+        switch ($Option) {
+            'Domain'
+            {
+                # initialize variables - domain
 
+                $domainJoinUserName                = "$domainName\administrator"
+                #$domainJoinUserName               = 'mot\administrator'
+                $domainJoinPassword                = 'Password1$'
+            }
+        }
+        
         switch($isDesktop){
             $true {
                 Write-Warning ("Desktop OS - NewComputerName - $($NewComputerName)")
@@ -564,7 +586,7 @@ function Set-InitialConfigurationDsc {
             if($domain) {
                 #Write-Information 'domain'
                 $localNodeAdminPasswordSecureString    = ConvertTo-SecureString $domainJoinPassword -AsPlainText -Force
-                $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $localNodeAdminPasswordSecureString)                
+                $domainJoinCredential                  = New-Object System.Management.Automation.PSCredential ($domainJoinUserName, $localNodeAdminPasswordSecureString)
 
                 # Generate the MOF files and apply the configuration
                 # Credentials are used within the configuration file - hence SelfSigned certificate is needed as there is no Active Directory Certification Services
