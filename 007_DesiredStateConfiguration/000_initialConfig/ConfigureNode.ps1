@@ -208,7 +208,7 @@ Configuration NodeInitialConfigDomain {
                                 
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
-                #Name        = $NewComputerName
+                Name        = $NewComputerName
                 DomainName  = $Node.DomainName
                 Credential  = $DomainJoinCredential
                 ##JoinOU      = $Node.JoinOu
@@ -299,7 +299,7 @@ Configuration NodeInitialConfigDomain {
                                 
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
-                #Name        = $NewComputerName
+                Name        = $NewComputerName
                 DomainName  = $Node.DomainName
                 Credential  = $DomainJoinCredential
                 ##JoinOU      = $Node.JoinOu
@@ -390,7 +390,7 @@ Configuration NodeInitialConfigDomain {
                                 
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
-                #Name        = $NewComputerName
+                Name        = $NewComputerName
                 DomainName  = $Node.DomainName
                 Credential  = $DomainJoinCredential
                 ##JoinOU      = $Node.JoinOu
@@ -481,7 +481,7 @@ Configuration NodeInitialConfigDomain {
                                 
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
-                #Name        = $NewComputerName
+                Name        = $NewComputerName
                 DomainName  = $Node.DomainName
                 Credential  = $DomainJoinCredential
                 ##JoinOU      = $Node.JoinOu
@@ -571,7 +571,7 @@ Configuration NodeInitialConfigDomain {
 
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
-                #Name        = $NewComputerName
+                Name        = $NewComputerName
                 DomainName  = $Node.DomainName
                 Credential  = $DomainJoinCredential
                 ##JoinOU      = $Node.JoinOu
