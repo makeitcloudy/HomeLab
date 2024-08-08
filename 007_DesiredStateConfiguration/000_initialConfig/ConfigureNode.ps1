@@ -136,8 +136,6 @@ Configuration NodeInitialConfigDomain {
     Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
 
-    switch($Node.Role) {
-
             #region network interface
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -225,6 +223,7 @@ Configuration NodeInitialConfigDomain {
             }
             #endregion
 
+    switch($Node.Role) {
         'DHCPServer' {
             Write-Output "DHCP Server Configuration"
             #region - apply common settings
