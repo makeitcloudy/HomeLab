@@ -18,8 +18,8 @@ Configuration NodeInitialConfigWorkgroup {
     #Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
     Node $AllNodes.NodeName {
-        switch ($Node.Role) {
-            'newVM' {
+        #switch ($Node.Role) {
+        #    'newVM' {
                 #LocalConfigurationManager {
                 #    RebootNodeIfNeeded = $true
                 #    ConfigurationMode = 'ApplyAndAutoCorrect'
@@ -107,8 +107,8 @@ Configuration NodeInitialConfigWorkgroup {
                     Name      = 'RebootAfterRename'
                     DependsOn = '[Computer]RenameComputer'
                 }
-            }
-        }
+#            }
+#        }
     }
 }
 

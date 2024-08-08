@@ -38,14 +38,14 @@
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'adcsr'
-            IPV4Address                 = '10.2.134.18/24'
+            IPV4Address                 = '10.2.134.19/24'
             DefaultGatewayAddress       = '10.2.134.254'            
             #JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'adcss'
-            IPV4Address                 = '10.2.134.19/24'
+            IPV4Address                 = '10.2.134.18/24'
             DefaultGatewayAddress       = '10.2.134.254'            
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
