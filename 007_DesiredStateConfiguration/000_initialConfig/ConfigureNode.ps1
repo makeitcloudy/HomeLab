@@ -128,25 +128,6 @@ Configuration NodeInitialConfigDomain {
     Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
 
-    switch($Node.Role) {
-        {$_ -eq 'DHCPServer', 'CertificationServices', 'FileServer', 'SQLServer'} {
-            IPAddress SetStaticIPv4Address {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
-            }
-    
-            DefaultGatewayAddress SetIPv4DefaultGateway {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4Address'
-            }            
-        }
-        default {}
-    }
-
     #region - apply common settings
         NetAdapterName InterfaceRename {
             NewName = $Node.InterfaceAlias
@@ -157,6 +138,33 @@ Configuration NodeInitialConfigDomain {
             ComponentId    = 'ms_tcpip6'
             State          = 'Disabled'
             DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+
+        # Set DNS Client Server Address using NetworkingDsc
+        DnsServerAddress DnsSettings {
+            AddressFamily  = 'IPv4'
+            Address        = $Node.DomainDnsServers
+            InterfaceAlias = $Node.InterfaceAlias
+            DependsOn      = "[NetAdapterBinding]DisableIPv6"
+        }
+
+        switch($Node.Role) {
+            {$_ -eq 'DHCPServer', 'CertificationServices', 'FileServer', 'SQLServer'} {
+                IPAddress SetStaticIPv4Address {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+        
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }            
+            }
+            default {}
         }
 
         # Set DNS Client Server Address using NetworkingDsc
