@@ -606,7 +606,11 @@ function Set-InitialConfigurationDsc {
         try {
             Write-Information "DSC Configuration - Start - Option: $($Option) | WorkGroup - $($workgroup) | Domain - $($domain)"
             #Start-DscConfiguration -Path $dscConfigOutput_DirectoryPath -Wait -Verbose -Force
-            Start-DscConfiguration -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
+            # the parameter -ComputerName is used here to narrow down the execution to the current node on which
+            # the configuration is being executed, otherwise it is trying to apply the configuration
+            # across all the nodes for which the configuration has been compiled
+            # which is a good thing, though does not fit this architecture and usecase at this moment
+            Start-DscConfiguration -ComputerName $env:computername -Path $dscOutputInitialSetup_DirectoryPath -Credential $localNodeAdminCredential -Wait -Verbose -Force
         }
         catch {
 
