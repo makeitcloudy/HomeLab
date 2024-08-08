@@ -173,38 +173,34 @@ Configuration NodeInitialConfigDomain {
         }
 
         'CertificationServices' {
+            #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
             }
                 
-            NetAdapterBinding IPv4DisableIPv6 {
+            NetAdapterBinding DisableIPv6 {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
-            NetIPInterface IPv4DisableDhcp
-            {
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
                 AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                Dhcp           = 'Disabled'
-                DependsOn      = '[NetAdapterName]InterfaceRename'
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
             }
 
-            IPAddress SetStaticIPv4Address {
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
                 AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
             }
-
-            DefaultGatewayAddress SetIPv4DefaultGateway {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4Address'
-            }
+            #endregion
         }
 
         'FileServer' {
@@ -278,11 +274,11 @@ Configuration NodeInitialConfigDomain {
         }
 
         default {
-            #region - apply common settings
+            #region network interface
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
             }
-                
+
             NetAdapterBinding DisableIPv6 {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
@@ -290,18 +286,33 @@ Configuration NodeInitialConfigDomain {
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
-            # Set DNS Client Server Address using NetworkingDsc
-            DnsServerAddress DnsSettings {
+            NetIPInterface IPv4DisableDhcp
+            {
                 AddressFamily  = 'IPv4'
-                Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                Dhcp           = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            IPAddress SetStaticIPv4Address
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+            }
+    
+            DefaultGatewayAddress SetIPv4DefaultGateway {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
 
             # Set DNS Client Server Address using NetworkingDsc
             DnsServerAddress DnsSettings {
                 AddressFamily  = 'IPv4'
-                Address        = $Node.DomainDnsServers
+                Address        = $Node.WorkgroupDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
                 DependsOn      = "[NetAdapterBinding]DisableIPv6"
             }
