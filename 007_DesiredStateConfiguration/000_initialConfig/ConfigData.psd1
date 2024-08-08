@@ -17,6 +17,26 @@
             #Thumbprint          = 'EF280FE58AC3E1B8BC211122866248282B44E7D8'          # The thumbprint of the Encryption Certificate used to decrypt the credentials on target node. The value of the thumbprint changes each time the Self Signed Certificate is generated
 
         },
+        # DHCP Server
+        @{
+            Role                = 'DHCPServer'
+            NodeName            = 'dhcp01'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+        },
+        @{
+            Role                = 'DHCPServer'
+            NodeName            = 'dhcp02'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+        },
+        # Active Directory Certification Services
+        # ADCS Root - not added to the domain
+        # ADCS Sub - domain joined
+        @{
+            Role                = 'Certification Services'
+            NodeName            = 'adcss'
+            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+        },
+        # File Server
         @{
             Role                = 'FileServer'
             NodeName            = 'fs01'
@@ -31,6 +51,7 @@
             DataDrivePDiskId    = 1    #Profile Disk
             DataDrivePLetter    = 'P'  #Profile Disk Letter
         },
+        # SQL Server
         @{
             DomainName             = 'lab.local'                      #FIXME: your domain FQDN
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
