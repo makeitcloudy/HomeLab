@@ -202,7 +202,7 @@ Configuration NodeInitialConfigDomain {
     }
 }
 
-Configuration FileServer {
+Configuration DHCPServer {
     $AllNodes.Where({$_.Role -eq 'DHCPServer'}).ForEach{
         Node $AllNodes.NodeName {
 
@@ -210,7 +210,7 @@ Configuration FileServer {
     }
 }
 
-Configuration FileServer {
+Configuration CertificationServices {
     $AllNodes.Where({$_.Role -eq 'CertificationServices'}).ForEach{
         Node $AllNodes.NodeName {
 
@@ -226,7 +226,6 @@ Configuration FileServer {
     }
 }
     
-
 Configuration SQLServer {
     $AllNodes.Where({$_.Role -eq 'SQLServer'}).ForEach{
         Node $AllNodes.NodeName {
