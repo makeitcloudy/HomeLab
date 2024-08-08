@@ -455,6 +455,23 @@ Configuration NodeInitialConfigDomain {
             }
             #endregion
 
+            #region storage
+            WaitForDisk Disk1
+            {
+                 DiskId = 1
+                 RetryIntervalSec = 60
+                 RetryCount = 60
+            }
+    
+            Disk SVolume
+            {
+                 DiskId = 1
+                 DriveLetter = 'S'
+                 Size = 30GB
+            }
+    
+            #endregion
+
             #region services
             Service WinRm {
                 Name        = 'WinRM'
@@ -479,6 +496,7 @@ Configuration NodeInitialConfigDomain {
             }
             #endregion
                                 
+            #region - domain join
             # Rename Computer using ComputerManagementDsc
             Computer RenameComputer {
                 Name        = $NewComputerName

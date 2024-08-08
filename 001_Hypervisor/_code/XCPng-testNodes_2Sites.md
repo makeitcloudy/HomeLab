@@ -403,6 +403,11 @@ xe vm-cd-eject vm='sql02_dexp'
 xe vm-cd-insert vm='sql02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
+```bash
+/opt/scripts/vm_add_disk.sh --vmName "sql01_dexp" --storageName "node4_ssd_sdd" --diskName "w2k22_sql01_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+/opt/scripts/vm_add_disk.sh --vmName "sql02_dexp" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+```
+
 Then proceed with
 
 ```powershell
@@ -414,7 +419,9 @@ https://makeitcloudy.pl/windows-preparation/
 
 ```bash
 xe vm-cd-eject vm='sql01_dexp'
+xe vm-cd-insert vm='sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
 xe vm-cd-eject vm='sql02_dexp'
+xe vm-cd-insert vm='sql02_dexp' cd-name='SQLServer2019-x64-ENU.iso'
 ```
 
 At this point rename the computer and reboot it.
