@@ -132,16 +132,20 @@ Configuration sqlDefaultInstance2016orLater {
                     # SQL Server 2019 - C:\Program Files\Microsoft SQL Server\MSSQL15.MSSQLSERVER\MSSQL\DATA\
                     # SQL Server 2022 - C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\
 
+                    # Installation log Summary.txt - C:\Program Files\Microsoft SQL Server\150\Setup Bootstrap\Log
+
                     ForceReboot            = $false
                     UpdateEnabled          = 'False'
                     SourcePath             = $Node.SQLInstallSourcePath
                     InstanceName           = $Instance.Name
                     SQLCollation           = 'Latin1_General_100_CI_AS_KS' #https://www.carlstalhood.com/delivery-controller-2402-ltsr-and-licensing/
                     Features               = $Features
-                    SQLSysAdminAccounts    = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", 'MOT\Administrator', 'sa' , 'Administrator', $SqlAdministratorCredential.UserName)
-                    SQLSysAdminAccounts    = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName)
+                    SQLSysAdminAccounts    = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)")
+                    #SQLSysAdminAccounts    = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", 'sa' , $SqlAdministratorCredential.UserName)
+                    #SQLSysAdminAccounts    = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName)
                     #SQLSysAdminAccounts    = "$($Node.DomainName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
-                    ASSysAdminAccounts     = "$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
+                    #ASSysAdminAccounts     = "$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)", $SqlAdministratorCredential.UserName
+                    ASSysAdminAccounts     = @("$($Node.DomainNetbiosName)\$($Node.SQLAdminAccount)")
                     #ASSysAdminAccounts     = 'MOT\Domain Administrators', $SqlAdministratorCredential.UserName
                     InstallSharedDir       = "$($Node.SQLDataDrive)Program Files\Microsoft SQL Server"
                     InstallSharedWOWDir    = "$($Node.SQLDataDrive)Program Files (x86)\Microsoft SQL Server"

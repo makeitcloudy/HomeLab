@@ -2,6 +2,16 @@
 
 ## SQL - DefaultInstance
 
+2024.08.08 - SQL_defaultInstance_configuration.ps1 - works - tested with SQL 2019 
+Once the SMS 17 has been installed on w10mgmt - it was possible to connect to it
+no Firewall exceptions etc, firewall ON
+at this point with MOT\administrator credentials
+
+Tested on Desktop Experience
+
+TODO: add domain structure and groups and expand the configuration by SQLAdmins
+TODO: Test the installation of SQL on SQL core
+
 ### 1. SQL - DefaultInstance -  VM provisioning
 
 ```bash
