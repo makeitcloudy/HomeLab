@@ -201,31 +201,7 @@ Configuration NodeInitialConfigDomain {
         }
     }
 }
-
-Configuration DHCPServer {
-    $AllNodes.Where({$_.Role -eq 'DHCPServer'}).ForEach{
-        Node $AllNodes.NodeName {
-
-        }
-    }
-}
-
-Configuration CertificationServices {
-    $AllNodes.Where({$_.Role -eq 'CertificationServices'}).ForEach{
-        Node $AllNodes.NodeName {
-
-        }
-    }
-}
-
-Configuration FileServer {
-    $AllNodes.Where({$_.Role -eq 'FileServer'}).ForEach{
-        Node $AllNodes.NodeName {
-
-        }
-    }
-}
-    
+  
 Configuration SQLServer {
     $AllNodes.Where({$_.Role -eq 'SQLServer'}).ForEach{
         Node $AllNodes.NodeName {
