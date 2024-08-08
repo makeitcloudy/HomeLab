@@ -58,6 +58,21 @@
             IPV4Address                 = '10.2.134.29/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
+            #storage - quorum drive
+            QuorumDriveQDiskId          = 1                #order in which the drives are added to the target node ipacts Id
+            QuorumDriveQLetter          = 'Q'
+
+            QuorumDriveQFSFormat        = 'NTFS'
+            QuorumDriveQFSLabel         = 'Quorum'
+            QuorumDriveQPartitionStyle  = 'GPT'
+
+            #storage - vhdx drive - for cluster setup
+            VhdxDriveZDiskId            = 2
+            VhdxDriveZLetter            = 'Z'
+            VhdxDriveZFSFormat          = 'NTFS'
+            VhdxDriveZFSLabel           = 'Storage_vhdx'
+            VhdxDriveZPartitionStyle    = 'GPT'
         },
         @{
             Role                        = 'FileServer'

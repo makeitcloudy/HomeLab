@@ -366,6 +366,137 @@ Configuration NodeInitialConfigDomain {
             #endregion
 
             #region storage
+            WaitforDisk QuorumDrive
+            {
+                DiskId           = $Node.QuorumDriveQDiskId
+                RetryIntervalSec = 60
+                RetryCount       = 10
+            }
+
+            # Q - quorum drive
+            Disk VolumeQuorum
+            {
+                DiskId      = $Node.QuorumDriveQDiskId
+                DriveLetter = $Node.QuorumDriveQLetter
+                
+                FSFormat    = $Node.QuorumDriveQFSFormat
+                FSLabel     = $Node.QuorumDriveQFSLabel
+                PartitionStyle = $Node.QuorumDriveQPartitionStyle
+                DependsOn   = '[WaitForDisk]QuorumDrive'
+            }
+
+            # Z - vhdx drive
+            WaitforDisk VhdxDrive
+            {
+                DiskId           = $Node.VhdxDriveZDiskId
+                RetryIntervalSec = 60
+                RetryCount       = 10
+            }
+
+            Disk VolumeVhdx
+            {
+                DiskId      = $Node.VhdxDriveZDiskId
+                DriveLetter = $Node.VhdxDriveZLetter
+                
+                FSFormat    = $Node.VhdxDriveZFSFormat
+                FSLabel     = $Node.VhdxDriveZFSLabel
+                PartitionStyle = $Node.VhdxDriveZPartitionStyle
+                DependsOn   = '[WaitForDisk]VhdxDrive'
+            }
+            #endregion
+
+            #region services
+            Service WinRm {
+                Name        = 'WinRM'
+                StartupType = 'Automatic'
+                State       = 'Running'
+            }
+
+            Script SetTrustedHosts {
+                GetScript = {
+                    @{
+                        Result = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                    }
+                }
+                SetScript = {
+                    Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $using:Node.TrustedHosts -Force
+                }
+                TestScript = {
+                    $currentTrustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                    $currentTrustedHosts -eq $using:Node.TrustedHosts
+                }
+                DependsOn = '[Service]WinRm'
+            }
+            #endregion
+                                
+            # Rename Computer using ComputerManagementDsc
+            Computer RenameComputer {
+                Name        = $NewComputerName
+                DomainName  = $Node.DomainName
+                Credential  = $DomainJoinCredential
+                ##JoinOU      = $Node.JoinOu
+                #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
+                ##Options     = 'JoinWithNewName'
+                ##Server = 'dc01.lab.local'
+                #Description = ''
+                #[PsDscRunAsCredential = [PSCredential]]
+                DependsOn   = '[Script]SetTrustedHosts'
+            }
+                                
+            # PendingReboot using ComputerManagementDsc
+                PendingReboot RebootAfterRename {
+                Name      = 'RebootAfterRename'
+                DependsOn = '[Computer]RenameComputer'
+            }
+            #endregion
+        }
+
+        'FileServer' {
+            Write-Output "SQL Server Configuration"
+            #region - apply common settings
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            NetIPInterface IPv4DisableDhcp
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Dhcp           = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            IPAddress SetStaticIPv4Address {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+            }
+
+            DefaultGatewayAddress SetIPv4DefaultGateway {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
+            }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+            #endregion
+
+            #region storage
             WaitforDisk DataDriveProfile
             {
                 DiskId           = $Node.DataDrivePDiskId
