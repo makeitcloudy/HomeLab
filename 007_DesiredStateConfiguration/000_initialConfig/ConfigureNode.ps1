@@ -94,7 +94,7 @@ Configuration NodeInitialConfigWorkgroup {
                     AddressFamily  = 'IPv4'
                     Address        = $Node.WorkgroupDnsServers
                     InterfaceAlias = $Node.InterfaceAlias
-                    DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                    DependsOn      = '[NetAdapterBinding]DisableIPv6'
                 }
                 #endregion
 
@@ -146,7 +146,7 @@ Configuration NodeInitialConfigDomain {
 
     switch($Node.Role) {
         'DHCPServer' {
-            Write-Output "DHCP Server Configuration"
+            Write-Output 'DHCP Server Configuration'
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -186,7 +186,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 
@@ -237,7 +237,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         'CertificationServices' {
-            Write-Output "ADCS Configuration"
+            Write-Output 'ADCS Configuration'
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -277,7 +277,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 
@@ -328,7 +328,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         'IscsiServer' {
-            Write-Output "Iscsi Server Configuration"
+            Write-Output 'Iscsi Server Configuration'
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -368,7 +368,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 
@@ -459,7 +459,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         'FileServer' {
-            Write-Output "File Server Configuration"
+            Write-Output 'File Server Configuration'
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -499,7 +499,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 
@@ -570,7 +570,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         'SQLServer' {
-            Write-Output "SQL Server Configuration"
+            Write-Output 'SQL Server Configuration'
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -610,7 +610,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 
@@ -681,7 +681,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         default {
-            Write-Output "default section"
+            Write-Output 'default section'
             #region network interface
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -720,7 +720,7 @@ Configuration NodeInitialConfigDomain {
                 AddressFamily  = 'IPv4'
                 Address        = $Node.WorkgroupDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                DependsOn      = '[NetAdapterBinding]DisableIPv6'
             }
             #endregion
 

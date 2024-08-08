@@ -58,32 +58,32 @@ configuration DomainFirstDC {
         $ntpservers += $Node.NTPServer
         $ntpservers += $Node.FailOverNTPServers | %{$_}
 
-        $timeRootPath = "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time"
-        $NTPListPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers"
+        $timeRootPath = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time'
+        $NTPListPath = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers'
 
         Service w32time
         {
-            Name = "W32Time"
-            State = "Running"
-            StartupType = "Automatic"
+            Name = 'W32Time'
+            State = 'Running'
+            StartupType = 'Automatic'
         }
 
         Registry NTPType
         {
             Key = "$timeRootPath\Parameters"
-            ValueName = "Type"
-            ValueType = "String"
-            ValueData = "NTP"
-            Ensure = "Present"
+            ValueName = 'Type'
+            ValueType = 'String'
+            ValueData = 'NTP'
+            Ensure = 'Present'
         }
 
         Registry NTPServer
         {
             Key = "$timeRootPath\Parameters"
-            ValueName = "NTPServer"
-            ValueType = "String"
+            ValueName = 'NTPServer'
+            ValueType = 'String'
             ValueData = $ntpServerValue
-            Ensure = "Present"
+            Ensure = 'Present'
         }
         #endregion        
 
@@ -370,32 +370,32 @@ configuration DomainAdditionalDCs {
         $ntpservers += $Node.NTPServer
         $ntpservers += $Node.FailOverNTPServers | %{$_}
 
-        $timeRootPath = "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time"
-        $NTPListPath = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers"
+        $timeRootPath = 'HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\W32Time'
+        $NTPListPath = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DateTime\Servers'
 
         Service w32time
         {
-            Name = "W32Time"
-            State = "Running"
-            StartupType = "Automatic"
+            Name = 'W32Time'
+            State = 'Running'
+            StartupType = 'Automatic'
         }
 
         Registry NTPType
         {
             Key = "$timeRootPath\Parameters"
-            ValueName = "Type"
-            ValueType = "String"
-            ValueData = "NTP"
-            Ensure = "Present"
+            ValueName = 'Type'
+            ValueType = 'String'
+            ValueData = 'NTP'
+            Ensure = 'Present'
         }
 
         Registry NTPServer
         {
             Key = "$timeRootPath\Parameters"
-            ValueName = "NTPServer"
-            ValueType = "String"
+            ValueName = 'NTPServer'
+            ValueType = 'String'
             ValueData = $ntpServerValue
-            Ensure = "Present"
+            Ensure = 'Present'
         }
 
         # * NETWORKING
