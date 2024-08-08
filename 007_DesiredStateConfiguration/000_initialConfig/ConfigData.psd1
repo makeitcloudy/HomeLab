@@ -19,37 +19,62 @@
         },
         # DHCP Server
         @{
-            Role                = 'DHCPServer'
-            NodeName            = 'dhcp01'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            Role                        = 'DHCPServer'
+            NodeName                    = 'dhcp01'
+            IPV4Address                 = '10.2.134.11/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         @{
-            Role                = 'DHCPServer'
-            NodeName            = 'dhcp02'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            Role                        = 'DHCPServer'
+            NodeName                    = 'dhcp02'
+            IPV4Address                 = '10.2.134.12/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         # Active Directory Certification Services
         # ADCS Root - not added to the domain
         # ADCS Sub - domain joined
         @{
-            Role                = 'CertificationServices'
-            NodeName            = 'adcss'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
+            Role                        = 'CertificationServices'
+            NodeName                    = 'adcsr'
+            IPV4Address                 = '10.2.134.18/24'
+            DefaultGatewayAddress       = '10.2.134.254'            
+            #JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        @{
+            Role                        = 'CertificationServices'
+            NodeName                    = 'adcss'
+            IPV4Address                 = '10.2.134.19/24'
+            DefaultGatewayAddress       = '10.2.134.254'            
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         # File Server
+        #ISCSI
         @{
-            Role                = 'FileServer'
-            NodeName            = 'fs01'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
-            DataDrivePDiskId    = 1    #Profile Disk
-            DataDrivePLetter    = 'P'  #Profile Disk Letter
+            Role                        = 'FileServer'
+            NodeName                    = 'iscsi'
+            IPV4Address                 = '10.2.134.29/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         @{
-            Role                = 'FileServer'
-            NodeName            = 'fs02'
-            JoinOu              = 'OU=Computers,DC=lab,DC=local'
-            DataDrivePDiskId    = 1    #Profile Disk
-            DataDrivePLetter    = 'P'  #Profile Disk Letter
+            Role                        = 'FileServer'
+            NodeName                    = 'fs01'
+            IPV4Address                 = '10.2.134.21/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            DataDrivePDiskId            = 1    #Profile Disk
+            DataDrivePLetter            = 'P'  #Profile Disk Letter
+        },
+        @{
+            Role                        = 'FileServer'
+            NodeName                    = 'fs02'
+            IPV4Address                 = '10.2.134.22/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            DataDrivePDiskId            = 1    #Profile Disk
+            DataDrivePLetter            = 'P'  #Profile Disk Letter
         },
         # SQL Server
         @{
@@ -57,6 +82,8 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql01'
+            IPV4Address            = '10.2.134.31/24'
+            DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
@@ -78,6 +105,8 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql02'
+            IPV4Address            = '10.2.134.32/24'
+            DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter

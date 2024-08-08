@@ -62,6 +62,21 @@ Configuration NodeInitialConfigWorkgroup {
                     DependsOn      = '[NetAdapterName]InterfaceRename'
                 }
 
+                IPAddress SetStaticIPv4Address
+                {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+        
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }
+
                 # Set DNS Client Server Address using NetworkingDsc
                 DnsServerAddress DnsSettings {
                     AddressFamily  = 'IPv4'
@@ -126,7 +141,22 @@ Configuration NodeInitialConfigDomain {
                     State          = 'Disabled'
                     DependsOn      = '[NetAdapterName]InterfaceRename'
                 }
-            
+
+                IPAddress SetStaticIPv4Address
+                {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+        
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }
+
                 # Set DNS Client Server Address using NetworkingDsc
                 DnsServerAddress DnsSettings {
                     AddressFamily  = 'IPv4'
