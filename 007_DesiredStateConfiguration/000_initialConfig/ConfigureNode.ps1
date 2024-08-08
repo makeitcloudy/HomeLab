@@ -320,8 +320,8 @@ Configuration NodeInitialConfigDomain {
             #endregion
         }
 
-        'FileServer' {
-            Write-Output "SQL Server Configuration"
+        'IscsiServer' {
+            Write-Output "Iscsi Server Configuration"
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
@@ -452,7 +452,7 @@ Configuration NodeInitialConfigDomain {
         }
 
         'FileServer' {
-            Write-Output "SQL Server Configuration"
+            Write-Output "File Server Configuration"
             #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias

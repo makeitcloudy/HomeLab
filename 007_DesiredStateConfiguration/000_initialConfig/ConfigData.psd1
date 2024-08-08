@@ -53,7 +53,7 @@
         # File Server
         #ISCSI
         @{
-            Role                        = 'FileServer'
+            Role                        = 'IscsiServer'
             NodeName                    = 'iscsi'
             IPV4Address                 = '10.2.134.29/24'
             DefaultGatewayAddress       = '10.2.134.254'

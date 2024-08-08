@@ -263,6 +263,8 @@ xe vm-cd-eject vm='iscsi_dexp'
 xe vm-cd-insert vm='iscsi_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
+Proceed further with
+
 ```powershell
 https://makeitcloudy.pl/windows-preparation/
 # proceed with the code from paragraph 2.0.2
