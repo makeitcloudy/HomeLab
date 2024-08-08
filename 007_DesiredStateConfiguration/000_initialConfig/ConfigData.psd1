@@ -1,9 +1,9 @@
 @{
     AllNodes = @(
     @{
-            Role                 = 'newVM'
+            #Role                 = 'newVM'                                            # targetNode
             #NodeName            = 'localhost'
-            NodeName             = 'localhost'
+            NodeName             = '*'
             #ComputerName        = 'w10mgmt'
             InterfaceAlias       = 'Eth0'
             WorkgroupDnsServers  = @('10.2.134.254')
