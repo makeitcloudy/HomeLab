@@ -149,22 +149,69 @@ Configuration NodeInitialConfigDomain {
         }
 
         switch($Node.Role) {
-            {$_ -eq 'DHCPServer', 'CertificationServices', 'FileServer', 'SQLServer'} {
+            'DHCPServer' {
                 IPAddress SetStaticIPv4Address {
                     AddressFamily  = 'IPv4'
                     InterfaceAlias = $Node.InterfaceAlias
                     IPAddress      = $Node.IPv4Address
                     DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
                 }
-        
+
                 DefaultGatewayAddress SetIPv4DefaultGateway {
                     AddressFamily  = 'IPv4'
                     InterfaceAlias = $Node.InterfaceAlias
                     Address        = $Node.DefaultGatewayAddress
                     DependsOn      = '[IPAddress]SetStaticIPv4Address'
-                }            
+                }
             }
-            default {}
+
+            'CertificationServices' {
+                IPAddress SetStaticIPv4Address {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }
+            }
+
+            'FileServer' {
+                IPAddress SetStaticIPv4Address {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }
+            }
+
+            'SQLServer' {
+                IPAddress SetStaticIPv4Address {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    IPAddress      = $Node.IPv4Address
+                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                }
+
+                DefaultGatewayAddress SetIPv4DefaultGateway {
+                    AddressFamily  = 'IPv4'
+                    InterfaceAlias = $Node.InterfaceAlias
+                    Address        = $Node.DefaultGatewayAddress
+                    DependsOn      = '[IPAddress]SetStaticIPv4Address'
+                }
+            }
         }
 
         # Set DNS Client Server Address using NetworkingDsc
