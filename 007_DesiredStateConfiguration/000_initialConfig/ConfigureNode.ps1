@@ -149,6 +149,14 @@ Configuration NodeInitialConfigDomain {
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
+            NetIPInterface IPv4DisableDhcp
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Dhcp           = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
             IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
@@ -173,6 +181,14 @@ Configuration NodeInitialConfigDomain {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            NetIPInterface IPv4DisableDhcp
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Dhcp           = 'Disabled'
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
@@ -203,6 +219,14 @@ Configuration NodeInitialConfigDomain {
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
+            NetIPInterface IPv4DisableDhcp
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Dhcp           = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
             IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
@@ -227,6 +251,14 @@ Configuration NodeInitialConfigDomain {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            NetIPInterface IPv4DisableDhcp
+            {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Dhcp           = 'Disabled'
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
