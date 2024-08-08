@@ -32,7 +32,7 @@
         # ADCS Root - not added to the domain
         # ADCS Sub - domain joined
         @{
-            Role                = 'Certification Services'
+            Role                = 'CertificationServices'
             NodeName            = 'adcss'
             JoinOu              = 'OU=Computers,DC=lab,DC=local'
         },

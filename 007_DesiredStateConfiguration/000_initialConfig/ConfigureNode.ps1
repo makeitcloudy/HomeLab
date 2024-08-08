@@ -202,6 +202,21 @@ Configuration NodeInitialConfigDomain {
     }
 }
 
+Configuration FileServer {
+    $AllNodes.Where({$_.Role -eq 'DHCPServer'}).ForEach{
+        Node $AllNodes.NodeName {
+
+        }
+    }
+}
+
+Configuration FileServer {
+    $AllNodes.Where({$_.Role -eq 'CertificationServices'}).ForEach{
+        Node $AllNodes.NodeName {
+
+        }
+    }
+}
 
 Configuration FileServer {
     $AllNodes.Where({$_.Role -eq 'FileServer'}).ForEach{
