@@ -115,8 +115,8 @@
             DataDriveSFSLabel      = 'sqlDB'
             DataDriveSPartitionStyle = 'GPT'
 
-            SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive           = 'C:\'
+            SQLInstallSourcePath   = 'D:\'                          # SQL  -defaultInstance - SQL ISO is mounted here
+            SQLDataDrive           = 'C:\'                          # TODO: change this to S:\ - drive designated for SQL db
             Instances = @(
                 @{
                     Name           = 'MSSQLSERVER'

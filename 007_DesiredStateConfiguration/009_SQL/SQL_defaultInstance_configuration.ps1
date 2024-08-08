@@ -14,6 +14,9 @@
         https://www.microsoft.com/en-us/sql-server/sql-server-downloads
 
     .LINK
+        https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases
+
+    .LINK
         https://github.com/dsccommunity/SqlServerDsc/wiki
 
     .LINK
@@ -67,6 +70,9 @@ Configuration sqlDefaultInstance2016orLater {
 
             #region Install prerequisites for SQL Server
 
+            ## SQL Management Studio - releases
+            ## https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases
+
             ## it is assumed that the .NET 3.5 is available and installed as a feature on the OS already
             ## here it is done during the OSD phase - preparation of the unatended ISO
 
@@ -115,7 +121,7 @@ Configuration sqlDefaultInstance2016orLater {
                 Ensure = 'Present'
                 DependsOn = '[WindowsFeature]NetFramework35'
             }
-            #endregion Install prerequisites for SQL Server
+            #endregion
         
             #region Install SQL Server
             foreach ($Instance in $Node.Instances) {

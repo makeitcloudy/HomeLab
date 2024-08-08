@@ -9,6 +9,10 @@ at this point with MOT\administrator credentials
 
 Tested on Desktop Experience
 
+SMS Server Management Studio
+Installed: 14.0.17289.0
+Latest   : 20.2.30.0
+
 TODO: add domain structure and groups and expand the configuration by SQLAdmins
 TODO: Test the installation of SQL on SQL core
 
