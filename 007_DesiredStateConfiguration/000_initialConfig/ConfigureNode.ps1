@@ -138,11 +138,12 @@ Configuration NodeInitialConfigDomain {
 
     switch($Node.Role) {
         'DHCPServer' {
+            #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
             }
                 
-            NetAdapterBinding IPv4DisableIPv6 {
+            NetAdapterBinding DisableIPv6 {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
@@ -170,6 +171,15 @@ Configuration NodeInitialConfigDomain {
                 Address        = $Node.DefaultGatewayAddress
                 DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+            #endregion
         }
 
         'CertificationServices' {
@@ -185,12 +195,26 @@ Configuration NodeInitialConfigDomain {
                 DependsOn      = '[NetAdapterName]InterfaceRename'
             }
 
-            # Set DNS Client Server Address using NetworkingDsc
-            DnsServerAddress DnsSettings {
+            NetIPInterface IPv4DisableDhcp
+            {
                 AddressFamily  = 'IPv4'
-                Address        = $Node.DomainDnsServers
                 InterfaceAlias = $Node.InterfaceAlias
-                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+                Dhcp           = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            IPAddress SetStaticIPv4Address {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+            }
+
+            DefaultGatewayAddress SetIPv4DefaultGateway {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
 
             # Set DNS Client Server Address using NetworkingDsc
@@ -204,11 +228,12 @@ Configuration NodeInitialConfigDomain {
         }
 
         'FileServer' {
+            #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
             }
                 
-            NetAdapterBinding IPv4DisableIPv6 {
+            NetAdapterBinding DisableIPv6 {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
@@ -236,14 +261,24 @@ Configuration NodeInitialConfigDomain {
                 Address        = $Node.DefaultGatewayAddress
                 DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+            #endregion
         }
 
         'SQLServer' {
+            #region - apply common settings
             NetAdapterName InterfaceRename {
                 NewName = $Node.InterfaceAlias
             }
                 
-            NetAdapterBinding IPv4DisableIPv6 {
+            NetAdapterBinding DisableIPv6 {
                 InterfaceAlias = $Node.InterfaceAlias
                 ComponentId    = 'ms_tcpip6'
                 State          = 'Disabled'
@@ -271,6 +306,15 @@ Configuration NodeInitialConfigDomain {
                 Address        = $Node.DefaultGatewayAddress
                 DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+            #endregion
         }
 
         default {
