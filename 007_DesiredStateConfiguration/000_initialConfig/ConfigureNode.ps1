@@ -138,18 +138,18 @@ Configuration NodeInitialConfigDomain {
 
     switch($Node.Role) {
         'DHCPServer' {
-            NetIPInterface IPv4DisableDhcp {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Dhcp           = 'Disabled'
-                DependsOn      = '[NetAdapterName]InterfaceRename'
-            }
+            #NetIPInterface IPv4DisableDhcp {
+            #    AddressFamily  = 'IPv4'
+            #    InterfaceAlias = $Node.InterfaceAlias
+            #    Dhcp           = 'Disabled'
+            #    DependsOn      = '[NetAdapterName]InterfaceRename'
+            #}
 
             IPAddress SetStaticIPv4AddressDHCPServer {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
             DefaultGatewayAddress SetIPv4DefaultGatewayDHCPServer {
@@ -161,18 +161,18 @@ Configuration NodeInitialConfigDomain {
         }
 
         'CertificationServices' {
-            NetIPInterface IPv4DisableDhcp {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Dhcp           = 'Disabled'
-                DependsOn      = '[NetAdapterName]InterfaceRename'
-            }
+            #NetIPInterface IPv4DisableDhcp {
+            #    AddressFamily  = 'IPv4'
+            #    InterfaceAlias = $Node.InterfaceAlias
+            #    Dhcp           = 'Disabled'
+            #    DependsOn      = '[NetAdapterName]InterfaceRename'
+            #}
 
             IPAddress SetStaticIPv4AddressCertificationServices {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
             DefaultGatewayAddress SetIPv4DefaultGatewayCertificationServices {
@@ -184,18 +184,18 @@ Configuration NodeInitialConfigDomain {
         }
 
         'FileServer' {
-            NetIPInterface IPv4DisableDhcp {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Dhcp           = 'Disabled'
-                DependsOn      = '[NetAdapterName]InterfaceRename'
-            }
+            #NetIPInterface IPv4DisableDhcp {
+            #    AddressFamily  = 'IPv4'
+            #    InterfaceAlias = $Node.InterfaceAlias
+            #    Dhcp           = 'Disabled'
+            #    DependsOn      = '[NetAdapterName]InterfaceRename'
+            #}
 
             IPAddress SetStaticIPv4AddressFileServer {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
             DefaultGatewayAddress SetIPv4DefaultGatewayFileServer {
@@ -207,19 +207,18 @@ Configuration NodeInitialConfigDomain {
         }
 
         'SQLServer' {
-            NetIPInterface IPv4DisableDhcp
-            {
-                AddressFamily  = 'IPv4'
-                InterfaceAlias = $Node.InterfaceAlias
-                Dhcp           = 'Disabled'
-                DependsOn      = '[NetAdapterName]InterfaceRename'
-            }
+            #NetIPInterface IPv4DisableDhcp {
+            #    AddressFamily  = 'IPv4'
+            #    InterfaceAlias = $Node.InterfaceAlias
+            #    Dhcp           = 'Disabled'
+            #    DependsOn      = '[NetAdapterName]InterfaceRename'
+            #}
 
             IPAddress SetStaticIPv4AddressSQLServer {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
             DefaultGatewayAddress SetIPv4DefaultGatewaySQLServer {
