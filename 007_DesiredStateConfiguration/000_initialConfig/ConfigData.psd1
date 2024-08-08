@@ -62,7 +62,6 @@
             #storage - quorum drive
             QuorumDriveQDiskId          = 1                #order in which the drives are added to the target node ipacts Id
             QuorumDriveQLetter          = 'Q'
-
             QuorumDriveQFSFormat        = 'NTFS'
             QuorumDriveQFSLabel         = 'Quorum'
             QuorumDriveQPartitionStyle  = 'GPT'
@@ -80,6 +79,7 @@
             IPV4Address                 = '10.2.134.21/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
             DataDrivePFSFormat          = 'NTFS'
@@ -92,11 +92,12 @@
             IPV4Address                 = '10.2.134.22/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
-            DataDriveSFSFormat          = 'NTFS'
-            DataDriveSFSLabel           = 'Profiles'
-            DataDriveSPartitionStyle    = 'GPT'            
+            DataDrivePFSFormat          = 'NTFS'
+            DataDrivePFSLabel           = 'Profiles'
+            DataDrivePPartitionStyle    = 'GPT'            
         },
         # SQL Server
         @{
@@ -107,11 +108,13 @@
             IPV4Address            = '10.2.134.31/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
             DataDriveSFSFormat     = 'NTFS'
             DataDriveSFSLabel      = 'sqlDB'
             DataDriveSPartitionStyle = 'GPT'
+
             SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
             SQLDataDrive           = 'C:\'
             Instances = @(

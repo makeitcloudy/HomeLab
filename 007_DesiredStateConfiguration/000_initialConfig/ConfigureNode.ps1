@@ -515,10 +515,11 @@ Configuration NodeInitialConfigDomain {
             {
                 DiskId      = $Node.DataDrivePDiskId
                 DriveLetter = $Node.DataDrivePLetter
-                DependsOn   = '[WaitforDisk]DataDriveProfile'
+                
                 FSFormat    = $Node.DataDrivePFSFormat
                 FSLabel     = $Node.DataDrivePFSLabel
-                PartitionStyle = $Node.DataDrivePPartitionStyle                
+                PartitionStyle = $Node.DataDrivePPartitionStyle
+                DependsOn   = '[WaitforDisk]DataDriveProfile'
             }
             #endregion
 
