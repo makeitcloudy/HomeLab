@@ -403,9 +403,13 @@ xe vm-cd-eject vm='sql02_dexp'
 xe vm-cd-insert vm='sql02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
+Add extra disk for the database storage
+
 ```bash
 /opt/scripts/vm_add_disk.sh --vmName "sql01_dexp" --storageName "node4_ssd_sdd" --diskName "w2k22_sql01_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
 /opt/scripts/vm_add_disk.sh --vmName "sql02_dexp" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+# in case the drive size is adjusted, it should be also updated in the ConfigureNode.ps1 file
+# which keeps the DSC script for the initial configuration of the nodes
 ```
 
 Then proceed with

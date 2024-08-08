@@ -10,10 +10,10 @@ Configuration NodeInitialConfigWorkgroup {
         $AdminCredential
     )
     
-    Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
-    Import-DscResource -ModuleName 'NetworkingDsc' -ModuleVersion 9.0.0
+    Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 9.1.0
+    Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
 
-    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
+    Import-DscResource -ModuleName PSDscResources -ModuleVersion 2.12.0.0
 
     #Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
@@ -128,10 +128,11 @@ Configuration NodeInitialConfigDomain {
         $DomainJoinCredential
     )
     
-    Import-DscResource -ModuleName 'ComputerManagementDsc' -ModuleVersion 9.1.0
-    Import-DscResource -ModuleName 'NetworkingDsc' -ModuleVersion 9.0.0
+    Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 9.1.0
+    Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
+    Import-DscResource -ModuleName StorageDsc -ModuleVersion 6.0.1
 
-    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
+    Import-DscResource -ModuleName PSDscResources -ModuleVersion 2.12.0.0
 
     Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
@@ -364,6 +365,22 @@ Configuration NodeInitialConfigDomain {
             }
             #endregion
 
+            #region storage
+            WaitforDisk DataDriveProfile
+            {
+                DiskId           = $Node.DataDrivePDiskId
+                RetryIntervalSec = 60
+                RetryCount       = 10
+            }
+
+            Disk VolumeProfile
+            {
+                DiskId      = $Node.DataDrivePDiskId
+                DriveLetter = $Node.DataDrivePLetter
+                DependsOn   = '[WaitforDisk]DataDriveProfile'
+            }
+            #endregion
+
             #region services
             Service WinRm {
                 Name        = 'WinRM'
@@ -456,20 +473,19 @@ Configuration NodeInitialConfigDomain {
             #endregion
 
             #region storage
-            WaitForDisk Disk1
+            WaitforDisk DataDriveSqlDb
             {
-                 DiskId = 1
-                 RetryIntervalSec = 60
-                 RetryCount = 60
+                DiskId           = $Node.DataDriveSDiskId
+                RetryIntervalSec = 60
+                RetryCount       = 10
             }
-    
-            Disk SVolume
+
+            Disk VolumeProfile
             {
-                 DiskId = 1
-                 DriveLetter = 'S'
-                 Size = 30GB
+                DiskId      = $Node.DataDriveSDiskId
+                DriveLetter = $Node.DataDriveSLetter
+                DependsOn   = '[WaitforDisk]DataDriveSqlDb'
             }
-    
             #endregion
 
             #region services
