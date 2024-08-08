@@ -128,163 +128,165 @@ Configuration NodeInitialConfigDomain {
     Node $AllNodes.NodeName {
     #Node $AllNodes.Where({ $_.Role -eq 'newVM' }).NodeName
 
-    #region - apply common settings
-        NetAdapterName InterfaceRename {
-            NewName = $Node.InterfaceAlias
-        }
-            
-        NetAdapterBinding DisableIPv6 {
-            InterfaceAlias = $Node.InterfaceAlias
-            ComponentId    = 'ms_tcpip6'
-            State          = 'Disabled'
-            DependsOn      = '[NetAdapterName]InterfaceRename'
-        }
-
-        # Set DNS Client Server Address using NetworkingDsc
-        DnsServerAddress DnsSettings {
-            AddressFamily  = 'IPv4'
-            Address        = $Node.DomainDnsServers
-            InterfaceAlias = $Node.InterfaceAlias
-            DependsOn      = "[NetAdapterBinding]DisableIPv6"
-        }
-
-        switch($Node.Role) {
-            'DHCPServer' {
-                IPAddress SetStaticIPv4AddressDHCPServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    IPAddress      = $Node.IPv4Address
-                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
-                }
-
-                DefaultGatewayAddress SetIPv4DefaultGatewayDHCPServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    Address        = $Node.DefaultGatewayAddress
-                    DependsOn      = '[IPAddress]SetStaticIPv4AddressDHCPServer'
-                }
+    switch($Node.Role) {
+        'DHCPServer' {
+            IPAddress SetStaticIPv4AddressDHCPServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
-            'CertificationServices' {
-                IPAddress SetStaticIPv4AddressCertificationServices {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    IPAddress      = $Node.IPv4Address
-                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
-                }
-
-                DefaultGatewayAddress SetIPv4DefaultGatewayCertificationServices {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    Address        = $Node.DefaultGatewayAddress
-                    DependsOn      = '[IPAddress]SetStaticIPv4AddressCertificationServices'
-                }
-            }
-
-            'FileServer' {
-                IPAddress SetStaticIPv4AddressFileServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    IPAddress      = $Node.IPv4Address
-                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
-                }
-
-                DefaultGatewayAddress SetIPv4DefaultGatewayFileServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    Address        = $Node.DefaultGatewayAddress
-                    DependsOn      = '[IPAddress]SetStaticIPv4AddressFileServer'
-                }
-            }
-
-            'SQLServer' {
-                IPAddress SetStaticIPv4AddressSQLServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    IPAddress      = $Node.IPv4Address
-                    DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
-                }
-
-                DefaultGatewayAddress SetIPv4DefaultGatewaySQLServer {
-                    AddressFamily  = 'IPv4'
-                    InterfaceAlias = $Node.InterfaceAlias
-                    Address        = $Node.DefaultGatewayAddress
-                    DependsOn      = '[IPAddress]SetStaticIPv4AddressSQLServer'
-                }
+            DefaultGatewayAddress SetIPv4DefaultGatewayDHCPServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4AddressDHCPServer'
             }
         }
 
-        # Set DNS Client Server Address using NetworkingDsc
-        DnsServerAddress DnsSettings {
-            AddressFamily  = 'IPv4'
-            Address        = $Node.DomainDnsServers
-            InterfaceAlias = $Node.InterfaceAlias
-            DependsOn      = "[NetAdapterBinding]DisableIPv6"
-        }
-        #endregion
-
-        #region services
-        Service WinRm {
-            Name        = 'WinRM'
-            StartupType = 'Automatic'
-            State       = 'Running'
-        }
-
-        Script SetTrustedHosts {
-            GetScript = {
-                @{
-                    Result = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
-                    }
+        'CertificationServices' {
+            IPAddress SetStaticIPv4AddressCertificationServices {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
-            SetScript = {
-                Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $using:Node.TrustedHosts -Force
+
+            DefaultGatewayAddress SetIPv4DefaultGatewayCertificationServices {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4AddressCertificationServices'
             }
-            TestScript = {
-                $currentTrustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
-                $currentTrustedHosts -eq $using:Node.TrustedHosts
+        }
+
+        'FileServer' {
+            IPAddress SetStaticIPv4AddressFileServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
-            DependsOn = '[Service]WinRm'
-        }
-        #endregion
-                    
-        # Rename Computer using ComputerManagementDsc
-        Computer RenameComputer {
-            Name        = $NewComputerName
-            DomainName  = $Node.DomainName
-            Credential  = $DomainJoinCredential
-            ##JoinOU      = $Node.JoinOu
-            #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
-            ##Options     = 'JoinWithNewName'
-            ##Server = 'dc01.lab.local'
-            #Description = ''
-            #[PsDscRunAsCredential = [PSCredential]]
-            DependsOn   = '[Script]SetTrustedHosts'
-        }
-                    
-        # PendingReboot using ComputerManagementDsc
-            PendingReboot RebootAfterRename {
-                Name      = 'RebootAfterRename'
-                DependsOn = '[Computer]RenameComputer'
+
+            DefaultGatewayAddress SetIPv4DefaultGatewayFileServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4AddressFileServer'
+            }
         }
 
-        # Set Trusted Hosts
-            #WindowsFeature InstallWSMan {
-            #    Name = "Windows-RemoteManagement-Service"
-            #    Ensure = "Present"
-        #}
+        'SQLServer' {
+            IPAddress SetStaticIPv4AddressSQLServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                IPAddress      = $Node.IPv4Address
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+            }
 
-        #WindowsFeature InstallPSRemoting {
-            #    Name = "WindowsPowerShell"
-            #    Ensure = "Present"
-            #    #DependsOn = "[WindowsFeature]InstallWSMan"
-        #}
+            DefaultGatewayAddress SetIPv4DefaultGatewaySQLServer {
+                AddressFamily  = 'IPv4'
+                InterfaceAlias = $Node.InterfaceAlias
+                Address        = $Node.DefaultGatewayAddress
+                DependsOn      = '[IPAddress]SetStaticIPv4AddressSQLServer'
+            }
+        }
 
-        #WindowsFeature ConfigureTrustedHosts {
-            #    Name = "WindowsRemoteManagement"
-            #    Ensure = "Present"
-            #    #DependsOn = "[WindowsFeature]InstallPSRemoting"
-        #}
-    #endregion
+        default {
+            #region - apply common settings
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+
+            # Set DNS Client Server Address using NetworkingDsc
+            DnsServerAddress DnsSettings {
+                AddressFamily  = 'IPv4'
+                Address        = $Node.DomainDnsServers
+                InterfaceAlias = $Node.InterfaceAlias
+                DependsOn      = "[NetAdapterBinding]DisableIPv6"
+            }
+            #endregion
+
+            #region services
+            Service WinRm {
+                Name        = 'WinRM'
+                StartupType = 'Automatic'
+                State       = 'Running'
+            }
+
+            Script SetTrustedHosts {
+                GetScript = {
+                    @{
+                        Result = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                        }
+                }
+                SetScript = {
+                    Set-Item -Path WSMan:\localhost\Client\TrustedHosts -Value $using:Node.TrustedHosts -Force
+                }
+                TestScript = {
+                    $currentTrustedHosts = (Get-Item -Path WSMan:\localhost\Client\TrustedHosts).Value
+                    $currentTrustedHosts -eq $using:Node.TrustedHosts
+                }
+                DependsOn = '[Service]WinRm'
+            }
+            #endregion
+                        
+            # Rename Computer using ComputerManagementDsc
+            Computer RenameComputer {
+                Name        = $NewComputerName
+                DomainName  = $Node.DomainName
+                Credential  = $DomainJoinCredential
+                ##JoinOU      = $Node.JoinOu
+                #AccountCreate | InstallInvoke | JoinReadOnly | JoinWithNewName | PasswordPass | UnsecuredJoin | Win9XUpgrade
+                ##Options     = 'JoinWithNewName'
+                ##Server = 'dc01.lab.local'
+                #Description = ''
+                #[PsDscRunAsCredential = [PSCredential]]
+                DependsOn   = '[Script]SetTrustedHosts'
+            }
+                        
+            # PendingReboot using ComputerManagementDsc
+                PendingReboot RebootAfterRename {
+                    Name      = 'RebootAfterRename'
+                    DependsOn = '[Computer]RenameComputer'
+            }
+
+            # Set Trusted Hosts
+                #WindowsFeature InstallWSMan {
+                #    Name = "Windows-RemoteManagement-Service"
+                #    Ensure = "Present"
+            #}
+
+            #WindowsFeature InstallPSRemoting {
+                #    Name = "WindowsPowerShell"
+                #    Ensure = "Present"
+                #    #DependsOn = "[WindowsFeature]InstallWSMan"
+            #}
+
+            #WindowsFeature ConfigureTrustedHosts {
+                #    Name = "WindowsRemoteManagement"
+                #    Ensure = "Present"
+                #    #DependsOn = "[WindowsFeature]InstallPSRemoting"
+            #}
+            #endregion
+        }
+    }
     }
 }
   
