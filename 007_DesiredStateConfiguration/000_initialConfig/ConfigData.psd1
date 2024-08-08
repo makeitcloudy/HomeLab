@@ -67,6 +67,9 @@
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
+            DataDrivePFSFormat          = 'NTFS'
+            DataDrivePFSLabel           = 'Profiles'
+            DataDrivePPartitionStyle    = 'GPT'            
         },
         @{
             Role                        = 'FileServer'
@@ -76,6 +79,9 @@
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
+            DataDriveSFSFormat          = 'NTFS'
+            DataDriveSFSLabel           = 'Profiles'
+            DataDriveSPartitionStyle    = 'GPT'            
         },
         # SQL Server
         @{
@@ -88,6 +94,9 @@
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            DataDriveSFSFormat     = 'NTFS'
+            DataDriveSFSLabel      = 'sqlDB'
+            DataDriveSPartitionStyle = 'GPT'
             SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
             SQLDataDrive           = 'C:\'
             Instances = @(
@@ -111,6 +120,9 @@
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            DataDriveSFSFormat     = 'NTFS'
+            DataDriveSFSLabel      = 'sqlDB'
+            DataDriveSPartitionStyle = 'GPT'
             SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
             SQLDataDrive           = 'C:\'
             Instances = @(

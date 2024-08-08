@@ -378,6 +378,9 @@ Configuration NodeInitialConfigDomain {
                 DiskId      = $Node.DataDrivePDiskId
                 DriveLetter = $Node.DataDrivePLetter
                 DependsOn   = '[WaitforDisk]DataDriveProfile'
+                FSFormat    = $Node.DataDrivePFSFormat
+                FSLabel     = $Node.DataDrivePFSLabel
+                PartitionStyle = $Node.DataDrivePPartitionStyle                
             }
             #endregion
 
@@ -485,6 +488,9 @@ Configuration NodeInitialConfigDomain {
                 DiskId      = $Node.DataDriveSDiskId
                 DriveLetter = $Node.DataDriveSLetter
                 DependsOn   = '[WaitforDisk]DataDriveSqlDb'
+                FSFormat    = $Node.DataDriveSFSFormat
+                FSLabel     = $Node.DataDriveSFSLabel
+                PartitionStyle = $Node.DataDriveSPartitionStyle
             }
             #endregion
 
