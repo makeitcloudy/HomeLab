@@ -138,94 +138,110 @@ Configuration NodeInitialConfigDomain {
 
     switch($Node.Role) {
         'DHCPServer' {
-            #NetIPInterface IPv4DisableDhcp {
-            #    AddressFamily  = 'IPv4'
-            #    InterfaceAlias = $Node.InterfaceAlias
-            #    Dhcp           = 'Disabled'
-            #    DependsOn      = '[NetAdapterName]InterfaceRename'
-            #}
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding IPv4DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
 
-            IPAddress SetStaticIPv4AddressDHCPServer {
+            IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
-            DefaultGatewayAddress SetIPv4DefaultGatewayDHCPServer {
+            DefaultGatewayAddress SetIPv4DefaultGateway {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4AddressDHCPServer'
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
         }
 
         'CertificationServices' {
-            #NetIPInterface IPv4DisableDhcp {
-            #    AddressFamily  = 'IPv4'
-            #    InterfaceAlias = $Node.InterfaceAlias
-            #    Dhcp           = 'Disabled'
-            #    DependsOn      = '[NetAdapterName]InterfaceRename'
-            #}
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding IPv4DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
 
-            IPAddress SetStaticIPv4AddressCertificationServices {
+            IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
-            DefaultGatewayAddress SetIPv4DefaultGatewayCertificationServices {
+            DefaultGatewayAddress SetIPv4DefaultGateway {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4AddressCertificationServices'
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
         }
 
         'FileServer' {
-            #NetIPInterface IPv4DisableDhcp {
-            #    AddressFamily  = 'IPv4'
-            #    InterfaceAlias = $Node.InterfaceAlias
-            #    Dhcp           = 'Disabled'
-            #    DependsOn      = '[NetAdapterName]InterfaceRename'
-            #}
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding IPv4DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
 
-            IPAddress SetStaticIPv4AddressFileServer {
+            IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
-            DefaultGatewayAddress SetIPv4DefaultGatewayFileServer {
+            DefaultGatewayAddress SetIPv4DefaultGateway {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4AddressFileServer'
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
         }
 
         'SQLServer' {
-            #NetIPInterface IPv4DisableDhcp {
-            #    AddressFamily  = 'IPv4'
-            #    InterfaceAlias = $Node.InterfaceAlias
-            #    Dhcp           = 'Disabled'
-            #    DependsOn      = '[NetAdapterName]InterfaceRename'
-            #}
+            NetAdapterName InterfaceRename {
+                NewName = $Node.InterfaceAlias
+            }
+                
+            NetAdapterBinding IPv4DisableIPv6 {
+                InterfaceAlias = $Node.InterfaceAlias
+                ComponentId    = 'ms_tcpip6'
+                State          = 'Disabled'
+                DependsOn      = '[NetAdapterName]InterfaceRename'
+            }
 
-            IPAddress SetStaticIPv4AddressSQLServer {
+            IPAddress SetStaticIPv4Address {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 IPAddress      = $Node.IPv4Address
-                #DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
+                DependsOn      = '[NetIPInterface]IPv4DisableDhcp'
             }
 
-            DefaultGatewayAddress SetIPv4DefaultGatewaySQLServer {
+            DefaultGatewayAddress SetIPv4DefaultGateway {
                 AddressFamily  = 'IPv4'
                 InterfaceAlias = $Node.InterfaceAlias
                 Address        = $Node.DefaultGatewayAddress
-                DependsOn      = '[IPAddress]SetStaticIPv4AddressSQLServer'
+                DependsOn      = '[IPAddress]SetStaticIPv4Address'
             }
         }
 
