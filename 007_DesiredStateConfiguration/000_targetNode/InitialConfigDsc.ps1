@@ -88,6 +88,7 @@ function Set-InitialConfigurationDsc {
             #'ActiveDirectoryDsc'                    = '6.4.0'
             'ComputerManagementDsc'                 = '9.1.0'
             'NetworkingDsc'                         = '9.0.0'
+            'StorageDsc'                            = '6.0.1'
         }
         #endregion
         

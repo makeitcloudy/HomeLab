@@ -9,9 +9,13 @@ Configuration NodeInitialConfigWorkgroup {
         [System.Management.Automation.PSCredential]
         $AdminCredential
     )
-    
+
+    #Everytime you update the list of DSC resources to reflect the configuration changes
+    #you have to update it as well in the $modules varialble inside the initialConfigDsc.ps1 file
+
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 9.1.0
     Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
+    Import-DscResource -ModuleName StorageDsc -ModuleVersion 6.0.1
 
     Import-DscResource -ModuleName PSDscResources -ModuleVersion 2.12.0.0
 
@@ -127,7 +131,10 @@ Configuration NodeInitialConfigDomain {
         [System.Management.Automation.PSCredential]
         $DomainJoinCredential
     )
-    
+
+    #Everytime you update the list of DSC resources to reflect the configuration changes
+    #you have to update it as well in the $modules varialble inside the initialConfigDsc.ps1 file
+
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 9.1.0
     Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
     Import-DscResource -ModuleName StorageDsc -ModuleVersion 6.0.1
