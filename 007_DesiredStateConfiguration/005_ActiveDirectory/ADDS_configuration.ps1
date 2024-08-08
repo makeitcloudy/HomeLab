@@ -404,6 +404,14 @@ configuration DomainAdditionalDCs {
             NewName = $Node.InterfaceAlias
         }
 
+        NetAdapterBinding DisableIPv6
+        {
+            InterfaceAlias = $Node.InterfaceAlias
+            ComponentId    = 'ms_tcpip6'
+            State          = 'Disabled'
+            DependsOn      = '[NetAdapterName]InterfaceRename'
+        }
+
         NetIPInterface IPv4DisableDhcp
         {
             AddressFamily  = 'IPv4'
