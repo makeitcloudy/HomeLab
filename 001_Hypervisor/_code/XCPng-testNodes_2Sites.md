@@ -335,7 +335,7 @@ Add Disk. The current DSC configuration configures the Filers as member servers,
 ## Add Disk
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName 'fs01_core' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 60  --description 'fs01_ProfileDrive'
-/opt/scripts/vm_add_disk.sh --vmName 'fs01_core' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 60  --description 'fs02_ProfileDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'fs02_core' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 60  --description 'fs02_ProfileDrive'
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.

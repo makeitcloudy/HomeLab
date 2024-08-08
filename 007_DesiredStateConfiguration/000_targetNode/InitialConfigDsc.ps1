@@ -59,6 +59,7 @@ function Set-InitialConfigurationDsc {
         try {
             $isDesktop = $false
             # Retrieve the operating system information using CIM
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Retrieve the operating system information"
             $isDesktop = Get-OperatingSystemType            
         }
         catch {
