@@ -11,6 +11,7 @@ Script to setup SQL Server >= 2016
 .NOTES
     (Use the `Create-SelfSignedCert` function in the module to generate a cert if this is needed)
 .LINK
+    https://learn.microsoft.com/en-us/sql/sql-server/install/configure-the-windows-firewall-to-allow-sql-server-access?view=sql-server-ver16
     https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases
     https://codeandkeep.com/Dsc-Encrypting-Credentials/
     https://github.com/dsccommunity/NetworkingDsc
@@ -260,6 +261,12 @@ PROCESS
 
     }
     #endregion
+
+    ## The installation goes smothly with SQL Server 2019 release
+    ## No need for firewall openings
+    ## https://learn.microsoft.com/en-us/sql/sql-server/install/configure-the-windows-firewall-to-allow-sql-server-access?view=sql-server-ver16
+    ## New-NetFirewallRule -DisplayName "SQLServer default instance" -Direction Inbound -LocalPort 1433 -Protocol TCP -Action Allow
+    ## New-NetFirewallRule -DisplayName "SQLServer Browser service" -Direction Inbound -LocalPort 1434 -Protocol UDP -Action Allow
 }
 
 END

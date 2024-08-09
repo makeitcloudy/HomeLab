@@ -241,3 +241,34 @@ Get-DscConfiguration -CimSession vm1
 Test-DscConfiguration -ComputerName vm1
 Test-DscConfiguration -ComputerName vm1 -Detailed
 #endregion
+
+#region DSC - AD related
+#region DSC - AD related - some legacy stuff
+#here all the modules which are downloaded from the Powershell Gallery for the DSC are located
+Get-ChildItem 'C:\Program Files\WindowsPowerShell\Modules'
+#once you put the module in this location it should appear and be available for further use
+###############################################################################################
+#Powershell DSC Resource Kit
+#https://blogs.msdn.microsoft.com/powershell/2016/12/14/dsc-resource-kit-release-december-2016/
+###############################################################################################
+#list of all local installed DSC resources
+Get-DscResource
+#looks at the powershell galery for all the modules available there
+
+#there are two types of installation push and pull
+#in pull scenario all resources are stored in central server and once resources are needed
+#they are pulled from central server
+
+Find-Module
+Find-DSCResource
+Install-Module -Name xOU
+Uninstall-Module -Name xOU
+
+#get information about the particular DSCResource functionality
+Get-DscResource -Name file -Syntax
+#endregion
+
+#region DSC - AD related
+
+#endregion
+#endregion

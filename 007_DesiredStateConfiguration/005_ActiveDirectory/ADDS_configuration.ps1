@@ -237,44 +237,6 @@ configuration DomainFirstDC {
         #endregion
         #endregion
 
-        #region - Domain Setup - OPTIONAL - STARTER ORGANIZATIONAL UNITS
-        ADOrganizationalUnit 'CreateAccountsOU'
-        {
-            Name       = 'Accounts'
-            Path       = $DomainContainer
-            Ensure     = 'Present'
-            Credential = $DomainCredential
-            DependsOn  = '[WaitForADDomain]WaitForDomainInstall'
-        }
-
-        ADOrganizationalUnit 'AdminOU'
-        {
-            Name       = 'Admin'
-            Path       = "OU=Accounts,$DomainContainer"
-            Ensure     = 'Present'
-            Credential = $DomainCredential
-            DependsOn  = '[ADOrganizationalUnit]CreateAccountsOU'
-        }
-
-        ADOrganizationalUnit 'BusinessOU'
-        {
-            Name       = 'Business'
-            Path       = "OU=Accounts,$DomainContainer"
-            Ensure     = 'Present'
-            Credential = $DomainCredential
-            DependsOn  = '[ADOrganizationalUnit]CreateAccountsOU'
-        }
-
-        ADOrganizationalUnit 'ServiceOU'
-        {
-            Name       = 'Service'
-            Path       = "OU=Accounts,$DomainContainer"
-            Ensure     = 'Present'
-            Credential = $DomainCredential
-            DependsOn  = '[ADOrganizationalUnit]CreateAccountsOU'
-        }
-        #endregion
-
         #region - Domain Customizations
         #region - Domain Customizations - PASSWORD POLICY
         ADDomainDefaultPasswordPolicy 'DefaultPasswordPolicy'
