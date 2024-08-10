@@ -8,7 +8,7 @@
             InterfaceAlias       = 'Eth0'
             WorkgroupDnsServers  = @('10.2.134.254')
             WorkgroupName        = 'Workgroup'
-            DomainDnsServers     = @('10.2.134.201', '10.2.134.202')
+            DomainDnsServers     = @('10.2.134.1', '10.2.134.2')
             DomainName           = 'lab.local'
             JoinOu               = 'OU=Computers,DC=lab,DC=local'
             TrustedHosts         = 'localhost'

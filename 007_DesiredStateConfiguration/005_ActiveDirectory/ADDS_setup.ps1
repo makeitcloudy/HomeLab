@@ -329,7 +329,7 @@ PROCESS
             @{
                 NodeName                    = '*'
                 
-                ManagementNodeIPv4Address   = '10.2.134.249'
+                ManagementNodeIPv4Address   = '10.2.134.19'
                 InterfaceAlias              = 'Eth0'
 
                 DomainName                  = 'lab.local'                      #FIXME: your domain FQDN
@@ -346,7 +346,7 @@ PROCESS
             @{
                 NodeName                    = 'dc01'                           #FIXME:
                 Role                        = 'RootDomainController'
-                IPV4Address                 = '10.2.134.201/24'                #FIXME:
+                IPV4Address                 = '10.2.134.1/24'                #FIXME:
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
                 # both domain controllers are configured at the same point of time
                 # if only one DC is configured then the DNS settings should be configured this way
@@ -356,7 +356,7 @@ PROCESS
                 # first DNS entry : points to itself by IP address
                 # second DNS entry: points to the second DC
                 # third DNS entry: points to the IPv4 loopback address
-                DNSServers                  = '10.2.134.201','10.2.134.202','127.0.0.1'
+                DNSServers                  = '10.2.134.1','10.2.134.2','127.0.0.1'
                 # # domain settings -->
                 ComplexityEnabled           = $false
                 MinPasswordLength           = 8
@@ -371,14 +371,14 @@ PROCESS
             @{
                 NodeName                    = 'dc02'                           #FIXME: additional DC
                 Role                        = 'MemberDomainController'
-                IPV4Address                 = '10.2.134.202/24'                #FIXME: additional DC IP
+                IPV4Address                 = '10.2.134.2/24'                #FIXME: additional DC IP
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
                 # Carl Webster in his Webster Lab v2.1 documents state that the DNS should be configured
                 # on second DC this way
                 # first DNS entry : points to first DC  IP address
                 # second DNS entry: points to the the second DC itself by IP address
                 # third DNS entry: points to the IPv4 loopback address
-                DNSServers                  = '10.2.134.201','10.2.134.202','127.0.0.1'      #first DC + loopback
+                DNSServers                  = '10.2.134.1','10.2.134.2','127.0.0.1'      #first DC + loopback
                 Site                        = 'Lab-Site'                       #FIXME: any valid site created on the first DC
                 IsGlobalCatalog             = $true
                 NTPServer                   = '0.pl.pool.ntp.org'              #FIXME: prefered NTP server
