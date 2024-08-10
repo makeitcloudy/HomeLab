@@ -8,17 +8,17 @@ Node (Desktop) used to manage the environment and author DSC configurations - St
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:49' --StorageName 'node4_ssd_sdg' --VmDescription 'w10mgmt'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'c1_w10mgmt'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm='w10mgmt'
-xe vm-cd-insert vm='w10mgmt' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_w10mgmt'
+xe vm-cd-insert vm='c1_w10mgmt' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'w10mgmt' --storageName 'node4_hdd_sdc_lsi' --diskName 'w10mgmt_dataDrive' --deviceId 4 --diskGB 20  --description 'w10mgmt_dataDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'c1_w10mgmt' --storageName 'node4_hdd_sdc_lsi' --diskName 'c1_w10mgmt_dataDrive' --deviceId 4 --diskGB 20  --description 'c1_w10mgmt'
 ```
 
 Then follow up with
@@ -54,42 +54,24 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 ### Windows - Server OS - 2x Domain Controller - Server Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'dc01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:01' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dc01_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dc01_ADDS_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'dc02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:02' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dc02_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dc02_ADDS_core'
 ```
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='dc01_core'
-xe vm-cd-insert vm='dc01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_dc01'
+xe vm-cd-insert vm='c1_dc01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='dc02_core'
-xe vm-cd-insert vm='dc02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_dc02'
+xe vm-cd-insert vm='c1_dc02' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 ```powershell
-https://makeitcloudy.pl/windows-preparation/ #paragraph 2.0.2
-# run the code from this link
-https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1
-# which downloads the code and execute the code available here
-https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfig.ps1
-
-# 1. it install management tools with I/O drivers
-# 2. it adds the registry key for the reboot after the management tools installation: CTX292687
-# 3. if target VM is a DesktopOS it configures winRM, install RSAT ADDS, in case of server it skips it
-# 4. it downlaods AutomatedLab module
-# 5. it downloads AutomatedXCPng module
-# 6. it changes the power plan to high performance
-
-### repeat those steps for dc01 and dc02
-$newComputerName = 'dc01' #FIXME: the computername 
-#region Rename Computer
-Rename-Computer -NewName $newComputerName -Restart -Force
 
 ### take the snapshot of the VM (dc01, dc02)
-
-# then follow up with paragraph 3.3
+# then follow up with paragraph 2
 https://makeitcloudy.pl/active-directory-DSC/
 # run the code on DC01 from, then once finished run the code on DC02
 # run the configuration on DC02 - once the DC01 is available again after the reboot
