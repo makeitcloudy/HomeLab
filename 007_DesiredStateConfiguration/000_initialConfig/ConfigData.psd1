@@ -1,7 +1,7 @@
 @{
     AllNodes = @(
     @{
-            #Role                 = 'newVM'                                            # targetNode
+            Role                 = 'newVM'                                            # targetNode
             #NodeName            = 'localhost'
             NodeName             = '*'
             #ComputerName        = 'w10mgmt'
