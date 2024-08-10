@@ -12,6 +12,30 @@
 # Add itempotency to VMTools - installation
 # 
 
+function Set-NewComputerName {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $NodeNewName
+    )
+
+    BEGIN {
+    }
+
+    PROCESS {
+        try {
+            Rename-Computer -NewName $NodeNewName -Restart -Force
+        }
+        catch {
+            Write-Error "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Something went wrong"
+        }
+    }
+
+    END {
+    }
+}
+
 function Set-InitialConfiguration {
     <#
     .SYNOPSIS
@@ -218,6 +242,12 @@ function Set-InitialConfiguration {
         #endregion
 
         Write-Information 'If everything went well, please proceed with steps described in blogpost: https://makeitcloudy.pl/windows-DSC/'
+        Start-Sleep -Seconds 5
+        #region 3.5 - Rename Computer
+        Write-Verbose 'Please provide new computer name for this node, machine will be restarted afterwards'
+        Set-NewComputerName
+        #endregion
+        
     }
 
     END

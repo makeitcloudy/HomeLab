@@ -7,6 +7,7 @@
 # Z: | GPT | data drive
 
 $driveLetter = 'Z'
+$fileSystemLabel = 'dataDisk'
 Get-Disk | Select-Object Number, IsOffline
 #Initialize-Disk -Number 1 -PartitionStype GPT
 
@@ -14,5 +15,6 @@ $rawDisk = Get-Disk | Where-Object {$_.PartitionStyle -eq 'Raw'}
 $rawDisk | Initialize-Disk -PartitionStyle GPT
 New-Partition -DiskNumber $rawDisk.DiskNumber -DriveLetter $driveLetter -UseMaximumSize
 Format-Volume -DriveLetter $driveLetter -FileSystem NTFS
+get-volume -DriveLetter $driveLetter | Set-Volume -NewFileSystemLabel $fileSystemLabel
 Get-ChildItem -Path $($driveLetter,':' -join '')
 Get-PSDrive
