@@ -1,6 +1,25 @@
-# XCPng - Test Nodes
+# XCP-ng - HomeLab
+
+It contains the code which creates the VM on the XCP-ng hypervisor. It has the dependencies on the following scripts, which should exist on the XCP-ng in */opt/scripts*. Details are described in the [blogpost](https://makeitcloudy.pl/windows-preparation/), which is also available [here](https://github.com/makeitcloudy/makeitcloudy.github.io/blob/master/_posts/2022-05-13-windows-preparation.md).
+
+* [AutomatedXCP-ng](https://github.com/makeitcloudy/AutomatedXCP-ng/)
+* AutomatedXCP-ng [/opt/scripts/vm_create_bios.sh](https://github.com/makeitcloudy/AutomatedXCP-ng/blob/main/bash/vm_create_bios.sh)
+* AutomatedXCP-ng [/opt/scripts/vm_create_uefi.sh](https://github.com/makeitcloudy/AutomatedXCP-ng/blob/main/bash/vm_create_uefi.sh)
+* AutomatedXCP-ng [/opt/scripts/vm_create_uefi_secureBoot.sh](https://github.com/makeitcloudy/AutomatedXCP-ng/blob/main/bash/vm_create_uefi_secureBoot.sh)
+* AutomatedXCP-ng [/opt/scripts/vm_add_disk.sh](https://github.com/makeitcloudy/AutomatedXCP-ng/blob/main/bash/vm_add_disk.sh)
+
+## XCP-ng - HomeLab - Assumptions
+
+It is assumed:
+
+1. that the storage and network is configured on the XCP-ng.
+2. there is Storage Repository which keeps the ISO's used for the VM installations
+3. there is a DHCP server within the network, so it is possible to RDP to the VM's (Xen Orchestra used to login to the VM's via virtual console, at this stage does not offer the clipboard)
+4. the ISO's are unattended - [blog post](https://makeitcloudy.pl/OSDBuilder-offline-servicing-updates/) - describing the process
 
 ## Management Node
+
+Configuration Data for the Desired State Configuration (DSC) is stored in the [HomeLab](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1) Git repository.
 
 ### Windows - Desktop OS - Initial Configuration - Management Node - w10mgmt
 
@@ -36,13 +55,10 @@ https://makeitcloudy.pl/windows-DSC/
 # proceed with the code from paragraph 2.2
 # the code available in that paragraph runs the Set-InitialConfigDsc function which triggers the the code 
 https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1
-# config data are grabbed from here
-# for the domain scenario to work properly the DNS should be configured properly (DomainDnsServers)
-# and goes hand in hand with the IP addresses of the domain controllers 
-https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1
-# run first
+
+# scenario - workgroup - run first
 Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
-# then once finished (and the domain is already configured) run
+# scenario - domain - when the domain is already configured
 Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 # when the VM is provisioned login via XCP-ng console unless you know the IP address
