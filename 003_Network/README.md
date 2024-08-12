@@ -24,6 +24,17 @@ Choise is your's, for a starting point you may rely on a firewall built into the
 * https://mikrotik.com/support
 * https://wiki.mikrotik.com/wiki/Main_Page
 
+### Links - Azure VPN
+
+* https://cloudtips.nl/configuring-azure-vpn-s2s-on-mikrotik-hex-s-0ab5ed0bea6e
+* https://github.com/brianveldman/azure-bicep
+
+```code
+https://forum.mikrotik.com/viewtopic.php?t=203943
+I have a slightly different setup, my local public Ip is a dynamic adress, is it also possible to connect a site-to-site vpn with azure?
+I'd probably suggest a different solution, like running CHR in Azure and using L2TP/IPSEC rather than using Azure VPN Gateway.
+```
+
 ## Firewall
 
 * OpenBSD FAQ - https://www.openbsd.org/faq/pf/
