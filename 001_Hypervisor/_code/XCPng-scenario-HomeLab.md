@@ -253,7 +253,8 @@ xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-Add Disk
+Install VMTools.  
+Add Disk.  
 
 * QuorumDrive - stores quorum disk - once clustering is setup
 * vhdxClusterStorageDrive - stores the profile vhdx'es - once file cluster is setup
@@ -326,7 +327,9 @@ xe vm-cd-insert vm='c1_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-Add Disk. The current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
+Install VMTools.  
+Add Disk.  
+Current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
 
 ```bash
 ## Add Disk
