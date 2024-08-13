@@ -253,7 +253,7 @@ xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-Install VMTools.  
+Windows Server (regardsless if it is desktop experience or core) needs a reboot for the PV drivers to become available in the OS, then the disk can be added on the XCP-ng terminal. That's why it's a good time to install VMTools, which requires restart anyway.  
 Add Disk.  
 
 * QuorumDrive - stores quorum disk - once clustering is setup
@@ -327,7 +327,7 @@ xe vm-cd-insert vm='c1_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-Install VMTools.  
+Windows Server (regardsless if it is desktop experience or core) needs a reboot for the PV drivers to become available in the OS, then the disk can be added on the XCP-ng terminal. That's why it's a good time to install VMTools, which requires restart anyway.
 Add Disk.  
 Current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
 
