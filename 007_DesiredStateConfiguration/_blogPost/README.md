@@ -50,7 +50,7 @@ Restart-Computer -Force
 
 ### run_adds.ps1
 
-Core here is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
 
 * [run_adds.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds.ps1) - GitHub
 * [run_adds.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds.ps1) - GitHub raw
@@ -69,3 +69,21 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 . "$env:USERPROFILE\Documents\ActiveDirectory_demo.ps1" -ComputerName $env:Computername
 
 ```
+
+### run_initialConfigDSC_domain.ps1
+
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+
+* [run_initialConfigDSC_domain.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDSC_domain.ps1) - GitHub
+* [run_initialConfigDSC_domain.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDSC_domain.ps1) - GitHub raw
+* [ActiveDirectory_demo.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub
+* [ActiveDirectory_demo.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub raw
+
+### run_initialConfigDSC_workgroup.ps1
+
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+
+* [run_initialConfigDSC_workgroup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds.ps1) - GitHub
+* [run_initialConfigDSC_workgroup.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds.ps1) - GitHub raw
+* [ActiveDirectory_demo.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub
+* [ActiveDirectory_demo.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub raw
