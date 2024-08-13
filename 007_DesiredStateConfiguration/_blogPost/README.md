@@ -13,8 +13,11 @@ Run_initialSetup.ps1 is used in:
 
 Core here is a duplicate (anytime it's modified there, those changes should be reflected here in README.md) of:
 
-* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1) - github
-* [run_initialSetup.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1) - github raw
+* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1) - GitHub
+* [run_initialSetup.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1) - GitHub raw
+* [InitialConfig.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfig.ps1) - GitHub
+* [InitialConfig.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfig.ps1) - GitHub raw
+
 
 ```powershell
 #Start-Process PowerShell_ISE -Verb RunAs
