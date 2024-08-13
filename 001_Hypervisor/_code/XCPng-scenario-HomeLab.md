@@ -84,6 +84,7 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 # Second domain controller - server core
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dc02_ADDS_core'
+
 ```
 
 ```bash
@@ -96,6 +97,7 @@ xe vm-cd-insert vm='c1_dc01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_dc02'
 xe vm-cd-insert vm='c1_dc02' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 ```powershell
@@ -133,6 +135,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA_desktopExperience'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:18' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_SubCA_desktopExperience'
+
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
@@ -144,6 +147,7 @@ xe vm-cd-insert vm='c1_adcsR' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_adcsS'
 xe vm-cd-insert vm='c1_adcsS' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
@@ -162,6 +166,7 @@ https://makeitcloudy.pl/windows-preparation/
 ```bash
 xe vm-cd-eject vm='c1_adcsR'
 xe vm-cd-eject vm='c1_adcsS'
+
 ```
 
 Proceed with the code
@@ -192,6 +197,7 @@ File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:11' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCPServer_core'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:12' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCPServer_core'
+
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
@@ -203,6 +209,7 @@ xe vm-cd-insert vm='c1_dhcp01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_dhcp02'
 xe vm-cd-insert vm='c1_dhcp02' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
@@ -213,6 +220,7 @@ Then follow up with
 ```bash
 xe vm-cd-eject vm='c1_dhcp01'
 xe vm-cd-eject vm='c1_dhcp02'
+
 ```
 
 Proceed with the code
@@ -246,12 +254,14 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 # add network interfaces to the VM
 # * cluster network
 # * storage network
+
 ```
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
 xe vm-cd-eject vm='c1_iscsi'
 xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 Proceed further with
@@ -265,6 +275,7 @@ https://makeitcloudy.pl/windows-preparation/
 
 ```bash
 xe vm-cd-eject vm='c1_iscsi'
+
 ```
 
 This should take place after the installation of the Management Tools, anyway.
@@ -301,6 +312,7 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_fs01_FileServer_core'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_fs02_FileServer_core'
+
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
@@ -312,6 +324,7 @@ xe vm-cd-insert vm='c1_fs01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_fs02'
 xe vm-cd-insert vm='c1_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 Add Disk. The current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
@@ -321,6 +334,7 @@ Add Disk. The current DSC configuration configures the Filers as member servers,
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName 'c1_fs01' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 60  --description 'fs01_ProfileDrive'
 /opt/scripts/vm_add_disk.sh --vmName 'c1_fs02' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 60  --description 'fs02_ProfileDrive'
+
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
@@ -338,6 +352,7 @@ https://makeitcloudy.pl/windows-preparation/
 ```bash
 xe vm-cd-eject vm='c1_fs01'
 xe vm-cd-eject vm='c1_fs02'
+
 ```
 
 Proceed with the code
@@ -355,6 +370,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Workgroup -Verbose
 # then once finished (and the domain is already configured) run
 Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
+
 ```
 
 ## SQL Server
@@ -367,6 +383,7 @@ Node (Server) used to test the DSC code for Active Directory Domain Setup - Desk
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_desktop_experience'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_desktop_experience'
+
 ```
 
 Once VM's are ready, hit yes for the autodiscovery, pick No for the PV restart.
@@ -378,6 +395,7 @@ xe vm-cd-insert vm='c1_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_sql02'
 xe vm-cd-insert vm='c1_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 Add extra disk for the database storage
@@ -387,6 +405,7 @@ Add extra disk for the database storage
 /opt/scripts/vm_add_disk.sh --vmName "c1_sql02" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
 # in case the drive size is adjusted, it should be also updated in the ConfigureNode.ps1 file
 # which keeps the DSC script for the initial configuration of the nodes
+
 ```
 
 Then proceed with
@@ -403,6 +422,7 @@ xe vm-cd-eject vm='c1_sql01'
 xe vm-cd-insert vm='c1_sql01' cd-name='SQLServer2019-x64-ENU.iso'
 xe vm-cd-eject vm='c1_sql02'
 xe vm-cd-insert vm='c1_sql02' cd-name='SQLServer2019-x64-ENU.iso'
+
 ```
 
 This should take place after the installation of the Management Tools, anyway.
@@ -442,6 +462,7 @@ SQL Server can be installed on Windows Server Core.
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_core'
 
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_core'
+
 ```
 
 ```bash
@@ -451,6 +472,7 @@ xe vm-cd-insert vm='c1_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='c1_sql02'
 xe vm-cd-insert vm='c1_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 ```
 
 ## Image Factory - OSD
@@ -472,6 +494,7 @@ xe vm-cd-insert vm='c1_osdD' cd-name='Citrix_Hypervisor_821_tools.iso'
 ## Add Disk
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName 'c1_osdD' --storageName 'node4_hdd_sdc_lsi' --diskName 'c1OSDd_dataDrive' --deviceId 4 --diskGB 120  --description 'c1_osdD_dataDrive'
+
 ```
 
 ### Windows - Server OS - Initial Configuration - ImageFactory Server
@@ -491,6 +514,7 @@ xe vm-cd-insert vm='c1_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 ## Add Disk
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName "c1_osdS" --storageName "node4_hdd_sdc_lsi" --diskName "aOSDs_dataDrive" --deviceId 4 --diskGB 120  --description "c1_osdS_dataDrive"
+
 ```
 
 ## Cloud Connector
@@ -499,6 +523,7 @@ xe vm-cd-insert vm='c1_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_cloudC' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cloudC_cloudConnector_desktop_experience'
+
 ```
 
 ## Misc
@@ -519,6 +544,7 @@ xe vm-cd-eject vm=c1_w2k22d
 ## Add Disk
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName "c1_w2k22d" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
+
 ```
 
 ### Windows - Server OS - Initial Configuration - Testing Node - Core
@@ -537,4 +563,5 @@ xe vm-cd-eject vm=c1_w2k22c
 ## Add Disk
 # run over SSH
 /opt/scripts/vm_add_disk.sh --vmName "c1_w2k22c" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
+
 ```
