@@ -67,4 +67,5 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 
 # at this stage the computername is already renamed and it's name is : dc01
 . "$env:USERPROFILE\Documents\ActiveDirectory_demo.ps1" -ComputerName $env:Computername
+
 ```
