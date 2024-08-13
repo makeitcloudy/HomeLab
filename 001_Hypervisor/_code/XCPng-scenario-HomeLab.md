@@ -242,6 +242,23 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:09' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_iscsi_FileServer_desktop_experience'
 
+```
+
+Once the OS is installed, execute the code to mount the VMTools
+
+```bash
+# it will work - provided there is only one iso on SR with such name
+xe vm-cd-eject vm='c1_iscsi'
+xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
+
+```
+
+Add Disk
+
+* QuorumDrive - stores quorum disk - once clustering is setup
+* vhdxClusterStorageDrive - stores the profile vhdx'es - once file cluster is setup
+
+```bash
 # once the VM is installed add drives
 # do not initialize them - do that from the failover cluster console
 
@@ -251,24 +268,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 # add network interfaces to the VM
 # * cluster network
 # * storage network
-
 ```
 
-```bash
-# it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='c1_iscsi'
-xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
-
-```
-
-Proceed further with
-
-```powershell
-https://makeitcloudy.pl/windows-preparation/
-# proceed with the code from paragraph 2.0.2
-# run the code on the target node
-# machine won't restart
-```
+Eject installation media
 
 ```bash
 xe vm-cd-eject vm='c1_iscsi'
