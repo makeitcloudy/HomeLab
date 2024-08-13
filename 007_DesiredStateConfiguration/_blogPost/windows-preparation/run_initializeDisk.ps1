@@ -1,6 +1,8 @@
 #Start-Process PowerShell_ISE -Verb RunAs
 # Run in elevated powershell session
 
+# Anytime current code is updated, those changes should be reflected in the README.md file
+
 # Disk should be connected to the VM, otherwise code won't work
 
 # https://www.itprotoday.com/powershell/use-powershell-to-initialize-a-disk-and-create-partitions

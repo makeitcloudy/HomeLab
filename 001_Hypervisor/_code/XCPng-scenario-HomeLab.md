@@ -87,6 +87,8 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 ```
 
+### VMTools Installation - ADDS
+
 ```bash
 # it works - provided there is only one iso on SR with such name
 # .iso should be available in following location: 
