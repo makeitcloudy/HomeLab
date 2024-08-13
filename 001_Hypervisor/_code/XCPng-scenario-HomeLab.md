@@ -67,16 +67,24 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 ## Active Directory Domain Services
 
+'w2k22dtc_2302_untd_nprmpt_uefi.iso' - Desktop Experience ISO
+'w2k22dtc_2302_core_untd_nprmt_uefi.iso' - Core ISO
+
 ### Windows - Server OS - 2x Domain Controller - Server Core
 
 ```bash
+# First domain controller - server core
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dc01_ADDS_core'
 
+# Second domain controller - server core
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dc02_ADDS_core'
 ```
 
 ```bash
-# it will work - provided there is only one iso on SR with such name
+# it works - provided there is only one iso on SR with such name
+# .iso should be available in following location: 
+# /var/opt/xen/ISO_Store      - custom local iso storage created during the XCPng setup
+# /opt/xensource/packages/iso - default iso storage with XCPng tools
 xe vm-cd-eject vm='c1_dc01'
 xe vm-cd-insert vm='c1_dc01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
@@ -119,28 +127,29 @@ Desktop Experience - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 Core - 'w2k22dtc_2302_core_untd_nprmt_uefi.iso'
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'adcsR_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_dhcp01_ADCS_Root_desktopExperience'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA_desktopExperience'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'adcsS_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:18' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_dhcp02_ADCS_Sub_desktopExperience'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:18' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_SubCA_desktopExperience'
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='adcsR_dexp'
-xe vm-cd-insert vm='adcsR_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_adcsR'
+xe vm-cd-insert vm='c1_adcsR' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='adcsS_dexp'
-xe vm-cd-insert vm='adcsS_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_adcsS'
+xe vm-cd-insert vm='c1_adcsS' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
 Note: Machine should have access to the internet to grab the content from github.
 
-Then follow up with
+Then follow up with (initial configuration - VMTools installation script, which also rename the machine and reboots it)
 
 ```powershell
+# not sure if this is still relevant as the structure has changed a bit
 https://makeitcloudy.pl/windows-preparation/
 # proceed with the code from paragraph 2.0.2
 # run the code on the target node
@@ -148,14 +157,8 @@ https://makeitcloudy.pl/windows-preparation/
 ```
 
 ```bash
-xe vm-cd-eject vm='adcsR_dexp'
-xe vm-cd-eject vm='adcsS_dexp'
-```
-
-```powershell
-#repeat those steps for fs01 and fs02
-Rename-Computer -NewName 'adcsR' -Restart -Force #FIXME: the computername 
-Rename-Computer -NewName 'adcsS' -Restart -Force #FIXME: the computername 
+xe vm-cd-eject vm='c1_adcsR'
+xe vm-cd-eject vm='c1_adcsS'
 ```
 
 Proceed with the code
@@ -183,20 +186,20 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'dhcp01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:11' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCPServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:11' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCPServer_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'dhcp02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:12' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCPServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:12' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCPServer_core'
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='dhcp01_core'
-xe vm-cd-insert vm='dhcp01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_dhcp01'
+xe vm-cd-insert vm='c1_dhcp01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='dhcp02_core'
-xe vm-cd-insert vm='dhcp02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_dhcp02'
+xe vm-cd-insert vm='c1_dhcp02' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
@@ -204,22 +207,9 @@ Note: Machine should have access to the internet to grab the content from github
 
 Then follow up with
 
-```powershell
-https://makeitcloudy.pl/windows-preparation/
-# proceed with the code from paragraph 2.0.2
-# run the code on the target node
-# machine won't restart
-```
-
 ```bash
-xe vm-cd-eject vm='dhcp01_core'
-xe vm-cd-eject vm='dhcp02_core'
-```
-
-```powershell
-#repeat those steps for fs01 and fs02
-Rename-Computer -NewName 'dhcp01' -Restart -Force #FIXME: the computername 
-Rename-Computer -NewName 'dhcp02' -Restart -Force #FIXME: the computername 
+xe vm-cd-eject vm='c1_dhcp01'
+xe vm-cd-eject vm='c1_dhcp02'
 ```
 
 Proceed with the code
@@ -244,21 +234,23 @@ Desktop Experience OR Core
 ### Windows - Server OS - 1x File Server - iSCSI target - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'iscsi_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:09' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_iscsi_FileServer_desktop_experience'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:09' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_iscsi_FileServer_desktop_experience'
 
 # once the VM is installed add drives
 # do not initialize them - do that from the failover cluster console
 
-/opt/scripts/vm_add_disk.sh --vmName "iscsi_dexp" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_quorumDrive" --deviceId 5 --diskGB 20  --description "w2k22_quorumDrive"
-/opt/scripts/vm_add_disk.sh --vmName "iscsi_dexp" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_vhdxClusterStorageDrive" --deviceId 6 --diskGB 100  --description "w2k22_vhdxClusterStorageDrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_iscsi" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_quorumDrive" --deviceId 5 --diskGB 20  --description "w2k22_quorumDrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_iscsi" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_iscsi_vhdxClusterStorageDrive" --deviceId 6 --diskGB 100  --description "w2k22_vhdxClusterStorageDrive"
 
-# add network interfaces to the VM, so there is cluster and storage network
+# add network interfaces to the VM
+# * cluster network
+# * storage network
 ```
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='iscsi_dexp'
-xe vm-cd-insert vm='iscsi_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_iscsi'
+xe vm-cd-insert vm='c1_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 Proceed further with
@@ -271,13 +263,7 @@ https://makeitcloudy.pl/windows-preparation/
 ```
 
 ```bash
-xe vm-cd-eject vm='iscsi_dexp'
-```
-
-At this point rename the computer and reboot it.
-
-```powershell
-Rename-Computer -NewName 'iscsi' -Restart -Force #FIXME: the computername 
+xe vm-cd-eject vm='c1_iscsi'
 ```
 
 This should take place after the installation of the Management Tools, anyway.
@@ -310,23 +296,21 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 
 ### Windows - Server OS - 2x File Server - Core
 
-File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
-
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'fs01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_fs01_FileServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_fs01_FileServer_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'fs02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_fs02_FileServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_fs02_FileServer_core'
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='fs01_core'
-xe vm-cd-insert vm='fs01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_fs01'
+xe vm-cd-insert vm='c1_fs01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='fs02_core'
-xe vm-cd-insert vm='fs02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_fs02'
+xe vm-cd-insert vm='c1_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 Add Disk. The current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
@@ -334,8 +318,8 @@ Add Disk. The current DSC configuration configures the Filers as member servers,
 ```bash
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'fs01_core' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 60  --description 'fs01_ProfileDrive'
-/opt/scripts/vm_add_disk.sh --vmName 'fs02_core' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 60  --description 'fs02_ProfileDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'c1_fs01' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 60  --description 'fs01_ProfileDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'c1_fs02' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 60  --description 'fs02_ProfileDrive'
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
@@ -351,14 +335,8 @@ https://makeitcloudy.pl/windows-preparation/
 ```
 
 ```bash
-xe vm-cd-eject vm='fs01_core'
-xe vm-cd-eject vm='fs02_core'
-```
-
-```powershell
-#repeat those steps for fs01 and fs02
-Rename-Computer -NewName 'fs01' -Restart -Force #FIXME: the computername 
-Rename-Computer -NewName 'fs02' -Restart -Force #FIXME: the computername 
+xe vm-cd-eject vm='c1_fs01'
+xe vm-cd-eject vm='c1_fs02'
 ```
 
 Proceed with the code
@@ -387,27 +365,27 @@ Desktop Experience OR Core
 Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'sql01_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQLServer_desktop_experience'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_desktop_experience'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'sql02_dexp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQLServer_desktop_experience'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_desktop_experience'
 ```
 
 Once VM's are ready, hit yes for the autodiscovery, pick No for the PV restart.
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='sql01_dexp'
-xe vm-cd-insert vm='sql01_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_sql01'
+xe vm-cd-insert vm='c1_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='sql02_dexp'
-xe vm-cd-insert vm='sql02_dexp' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_sql02'
+xe vm-cd-insert vm='c1_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 Add extra disk for the database storage
 
 ```bash
-/opt/scripts/vm_add_disk.sh --vmName "sql01_dexp" --storageName "node4_ssd_sdd" --diskName "w2k22_sql01_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
-/opt/scripts/vm_add_disk.sh --vmName "sql02_dexp" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_sql01" --storageName "node4_ssd_sdd" --diskName "w2k22_sql01_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_sql02" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
 # in case the drive size is adjusted, it should be also updated in the ConfigureNode.ps1 file
 # which keeps the DSC script for the initial configuration of the nodes
 ```
@@ -422,17 +400,10 @@ https://makeitcloudy.pl/windows-preparation/
 ```
 
 ```bash
-xe vm-cd-eject vm='sql01_dexp'
-xe vm-cd-insert vm='sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
-xe vm-cd-eject vm='sql02_dexp'
-xe vm-cd-insert vm='sql02_dexp' cd-name='SQLServer2019-x64-ENU.iso'
-```
-
-At this point rename the computer and reboot it.
-
-```powershell
-Rename-Computer -NewName 'sql01' -Restart -Force #FIXME: the computername
-Rename-Computer -NewName 'sql02' -Restart -Force #FIXME: the computername
+xe vm-cd-eject vm='c1_sql01'
+xe vm-cd-insert vm='c1_sql01' cd-name='SQLServer2019-x64-ENU.iso'
+xe vm-cd-eject vm='c1_sql02'
+xe vm-cd-insert vm='c1_sql02' cd-name='SQLServer2019-x64-ENU.iso'
 ```
 
 This should take place after the installation of the Management Tools, anyway.
@@ -469,18 +440,18 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 SQL Server can be installed on Windows Server Core.
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'a_sql01_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQLServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'a_sql02_core' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQLServer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_core'
 ```
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='a_sql01_core'
-xe vm-cd-insert vm='a_sql01_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_sql01'
+xe vm-cd-insert vm='c1_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='a_sql02_core'
-xe vm-cd-insert vm='a_sql02_core' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_sql02'
+xe vm-cd-insert vm='c1_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 ## Image Factory - OSD
@@ -491,17 +462,17 @@ Node (Desktop) used to update the Desktop Based image OS'es
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDd' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_imageFactory_for_DesktopOS'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdD' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_imageFactory_for_DesktopOS'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm='a_OSDd'
-xe vm-cd-insert vm='a_OSDd' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_osdD'
+xe vm-cd-insert vm='c1_osdD' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'a_OSDd' --storageName 'node4_hdd_sdc_lsi' --diskName 'aOSDd_dataDrive' --deviceId 4 --diskGB 120  --description 'aOSDd_dataDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'c1_osdD' --storageName 'node4_hdd_sdc_lsi' --diskName 'c1OSDd_dataDrive' --deviceId 4 --diskGB 120  --description 'c1_osdD_dataDrive'
 ```
 
 ### Windows - Server OS - Initial Configuration - ImageFactory Server
@@ -510,25 +481,29 @@ Node (Desktop) used to update the Server Based image OS'es
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_OSDs' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_imageFactory_for_ServerOS'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_imageFactory_for_ServerOS'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm='a_OSDs'
-xe vm-cd-insert vm='a_OSDs' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='c1_osdS'
+xe vm-cd-insert vm='c1_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName "a_OSDs" --storageName "node4_hdd_sdc_lsi" --diskName "aOSDs_dataDrive" --deviceId 4 --diskGB 120  --description "aOSDs_dataDrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_osdS" --storageName "node4_hdd_sdc_lsi" --diskName "aOSDs_dataDrive" --deviceId 4 --diskGB 120  --description "c1_osdS_dataDrive"
 ```
 
 ## Cloud Connector
 
+w2k22dtc_2302_untd_nprmpt_uefi.iso
+w2k22dtc_2302_core_untd_nprmt_uefi.iso
+
 ### Windows - Server OS - 1x cloud connector - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'a_cloudC' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_cloudConnector_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_cloudC' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cloudC_cloudConnector_desktop_experience'
+```
 
 ## Misc
 
@@ -538,16 +513,16 @@ Node (Server) used to test the DSC code for joining the domain
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName '_w2k22d' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:20' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_desktop_experience_node'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_w2k22d' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:24' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_misc_desktop_experience'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm=_w2k22d
+xe vm-cd-eject vm=c1_w2k22d
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName "_w2k22d" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_w2k22d" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
 ```
 
 ### Windows - Server OS - Initial Configuration - Testing Node - Core
@@ -556,14 +531,14 @@ Node (Server) used to test the DSC code for joining the domain
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName '_w2k22c' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:21' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_core_node'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_w2k22c' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:25' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_core_node'
 
 # After installation eject CD
 # Run on XCP-ng
 # eject installation media
-xe vm-cd-eject vm=_w2k22c
+xe vm-cd-eject vm=c1_w2k22c
 
 ## Add Disk
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName "_w2k22c" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
+/opt/scripts/vm_add_disk.sh --vmName "c1_w2k22c" --storageName "node4_hdd_sdc_lsi" --diskName "w2k22_dataDrive" --deviceId 4 --diskGB 20  --description "w2k22_dataDrive"
 ```
