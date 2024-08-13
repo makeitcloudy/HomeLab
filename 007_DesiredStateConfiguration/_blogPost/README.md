@@ -1,5 +1,7 @@
 #
 
+It is part of the blog post series: [makeitcloudy.pl](https://makeitcloudy.pl/windows-DSC/)
+
 ## windows-preparation
 
 Run_initialSetup.ps1 is used in:
