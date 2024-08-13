@@ -17,6 +17,15 @@ It is assumed:
 3. there is a DHCP server within the network, so it is possible to RDP to the VM's (Xen Orchestra used to login to the VM's via virtual console, at this stage does not offer the clipboard)
 4. the ISO's are unattended - [blog post](https://makeitcloudy.pl/OSDBuilder-offline-servicing-updates/) - describing the process
 
+## XCP-ng - HomeLab - Windows Server 2022 - ISO
+
+Storage repository contains following ISO for the VM provisioning.
+
+```code
+'w2k22dtc_2302_untd_nprmpt_uefi.iso' - Desktop Experience
+'w2k22dtc_2302_core_untd_nprmt_uefi.iso' - Core
+```
+
 ## Management Node
 
 Configuration Data for the Desired State Configuration (DSC) is stored in the [HomeLab](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1) Git repository.
@@ -66,9 +75,6 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 ```
 
 ## Active Directory Domain Services
-
-'w2k22dtc_2302_untd_nprmpt_uefi.iso' - Desktop Experience ISO
-'w2k22dtc_2302_core_untd_nprmt_uefi.iso' - Core ISO
 
 ### Windows - Server OS - 2x Domain Controller - Server Core
 
@@ -122,9 +128,6 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 ## ADCS
 
 ### Windows - Server OS - 1x ADCS Root, 1x ADCS Sub - DesktopExperience
-
-Desktop Experience - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
-Core - 'w2k22dtc_2302_core_untd_nprmt_uefi.iso'
 
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA_desktopExperience'
@@ -228,8 +231,6 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```
 
 ## File Services
-
-Desktop Experience OR Core
 
 ### Windows - Server OS - 1x File Server - iSCSI target - Desktop Experience
 
@@ -357,8 +358,6 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```
 
 ## SQL Server
-
-Desktop Experience OR Core
 
 ### Windows - Server OS - 2x SQL Server - Desktop Experience
 
@@ -495,9 +494,6 @@ xe vm-cd-insert vm='c1_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 ```
 
 ## Cloud Connector
-
-w2k22dtc_2302_untd_nprmpt_uefi.iso
-w2k22dtc_2302_core_untd_nprmt_uefi.iso
 
 ### Windows - Server OS - 1x cloud connector - Desktop Experience
 
