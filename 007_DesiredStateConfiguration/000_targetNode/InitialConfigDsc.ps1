@@ -1,3 +1,9 @@
+# This code has a full dependency on :
+# * the existence of: https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
+# * the local administrator password of the Server Operating System - in current config the username is: administrator
+# * the local administrator password and user name of Desktop OS - in current config the username is: labuser
+# * two aspects mentioned above are set during the preparation of the unattended ISO
+
 function Set-InitialConfigurationDsc {
 
     <#
@@ -311,6 +317,7 @@ function Set-InitialConfigurationDsc {
         try {
             
             # Function: SelfSigned Certificate
+            # If this library is not there, then it is a showstopper and the code won't execute properly
             #https://raw.githubusercontent.com/Azure/azure-libraries-for-net/master/Samples/Asset/New-SelfSignedCertificateEx.ps1
             Write-Information "Downloading: $($newSelfsignedCertificateEx_GithubUrl)"
             Invoke-WebRequest -Uri $newSelfsignedCertificateEx_GithubUrl -OutFile $dscFunction_NewSelfSignedCertificateEx_FullPath -Verbose
