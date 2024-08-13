@@ -157,13 +157,8 @@ Note: Machine should have access to the internet to grab the content from github
 
 Then follow up with (initial configuration - VMTools installation script, which also rename the machine and reboots it)
 
-```powershell
-# not sure if this is still relevant as the structure has changed a bit
-https://makeitcloudy.pl/windows-preparation/
-# proceed with the code from paragraph 2.0.2
-# run the code on the target node
-# machine won't restart
-```
+* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1) - details about the code are described in the blog post [windows-preparation](https://makeitcloudy.pl/windows-preparation/) - paragraph 2.0.2
+
 
 ```bash
 xe vm-cd-eject vm='c1_adcsR'
