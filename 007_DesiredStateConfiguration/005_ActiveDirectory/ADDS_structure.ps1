@@ -52,7 +52,7 @@ function Create-Ou
         #/lab.local/_Governed/Groups/Admin/Services/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/AppLayering
-        New-ADOrganizationalUnit -Name 'AppLayering' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Broker related Admin groups' -ProtectedFromAccidentalDeletion $false
+        New-ADOrganizationalUnit -Name 'AppLayering' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for AppLayering related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/Broker
         New-ADOrganizationalUnit -Name 'Broker' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Broker related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/Director
