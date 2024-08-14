@@ -656,9 +656,9 @@ function Create-AdminAndUserObject
         -DisplayName 'a_labber' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        –Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'a_labber' `
-        –UserPrincipalName "a_labber@$ADDomain.$TLD"
+        -UserPrincipalName "a_labber@$ADDomain.$TLD"
         
         #/lab.local/_Governed/Accounts/User
         #user account
@@ -674,7 +674,7 @@ function Create-AdminAndUserObject
         -PasswordNeverExpires $True `
         -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName "u_labber" `
-        –UserPrincipalName "u_labber@$ADDomain.$TLD"
+        -UserPrincipalName "u_labber@$ADDomain.$TLD"
         
         #/lab.local/_Governed/Accounts/User
         #test account
@@ -690,7 +690,7 @@ function Create-AdminAndUserObject
         -PasswordNeverExpires $True `
         -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName "u_tester" `
-        –UserPrincipalName "u_tester@$ADDomain.$TLD"
+        -UserPrincipalName "u_tester@$ADDomain.$TLD"
     }
 
     END {
