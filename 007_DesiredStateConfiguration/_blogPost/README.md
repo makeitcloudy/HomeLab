@@ -139,7 +139,18 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
 
 ```powershell
+#cmd
+#powershell
+#Start-Process PowerShell -Verb RunAs
+# run in elevated PowerShell session
+Set-Location -Path "$env:USERPROFILE\Documents"
 
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/ADDS_structure.ps1' -OutFile "$env:USERPROFILE\Documents\ADDS_structure.ps1" -Verbose
+
+#psedit "$env:USERPROFILE\Documents\ADDS_structure.ps1"
+
+# it launches the process of the Active Directory structure creation
+.\ADDS_structure.ps1
 ```
 
 * [run_adds_structure.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_structure.ps1) - GitHub
