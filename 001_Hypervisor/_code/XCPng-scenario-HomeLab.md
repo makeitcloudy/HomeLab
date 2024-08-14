@@ -419,7 +419,11 @@ Add extra disk for the database storage
 ```bash
 /opt/scripts/vm_add_disk.sh --vmName "c1_sql01" --storageName "node4_ssd_sdd" --diskName "w2k22_sql01_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
 /opt/scripts/vm_add_disk.sh --vmName "c1_sql02" --storageName "node4_ssd_sde" --diskName "w2k22_sql02_Sdrive" --deviceId 5 --diskGB 30  --description "w2k22_Sdrive_SQLDBdrive"
+```
 
+**Note:**
+
+```code
 # in case the disk is added or substracted, such modification should be adjusted in ConfigureNode.ps1
 # ConfigureNode.ps1 - has the DSC configuration which initialize disks
 # it bases on ConfigData.psd1 for the drive letter, label, format etc
