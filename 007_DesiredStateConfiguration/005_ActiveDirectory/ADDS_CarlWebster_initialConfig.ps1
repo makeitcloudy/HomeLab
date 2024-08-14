@@ -1,6 +1,11 @@
-# Carl Webster code - adapted to fit the purpose
-# Initial configuration of the domain - According to the details shared in the Carl Webster lab build guide - Chapter 16 - Create Active Directory
-# https://www.carlwebster.com/building-websters-lab-v2-1/
+# Carl Webster code, adapted to fit the purpose
+# code comes from Carl Webster publication available here: https://www.carlwebster.com/building-websters-lab-v2-1/
+# Carl Webster lab build guide - Chapter 16 - Create Active Directory
+
+# it contains:
+# * initial configuration of the ADDS 
+# * initial configuration of the DNS
+# 
 
 $DomainName = "lab.local"
 
