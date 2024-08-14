@@ -132,4 +132,14 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 
 ```
 
-* [run_initialConfigDSC_workgroup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_initialConfig.ps1) - GitHub
+* [run_adds_initialConfig.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_initialConfig.ps1) - GitHub
+
+### run_adds_structure.ps1
+
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+
+```powershell
+
+```
+
+* [run_adds_structure.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_structure.ps1) - GitHub
