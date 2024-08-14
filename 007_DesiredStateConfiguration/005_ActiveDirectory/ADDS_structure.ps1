@@ -66,8 +66,8 @@ function Create-Ou
         
         ##/lab.local/_Governed/Groups/Admin/Services/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Functional Services related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/MgmtLayer
-        New-ADOrganizationalUnit -Name 'MgmtLayer' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Management Plane (jumphost,mgmtNode) Admin groups' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Groups/Admin/Services/MS/MGMT
+        New-ADOrganizationalUnit -Name 'MGMT' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Management Plane (jumphost,mgmtNode) Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/MS/ADCS
         New-ADOrganizationalUnit -Name 'ADCS' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for ADCS/PKI related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/MS/DHCP
