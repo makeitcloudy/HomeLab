@@ -406,6 +406,8 @@ Run in the elevated powershell session (VM).
 * [run_InitialSetup.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-preparation/run_initialSetup.ps1), when asked, put the *sql01* and *sql02* for the second VM
 * VM should reboot now
 
+The step mentioned above is described in the [https://makeitcloudy.pl/windows-preparation/](https://makeitcloudy.pl/windows-preparation/) blog post, paragraph 2.0.2.
+
 Eject VMTools installation media. Run bash code (XCP-ng terminal over SSH)
 
 ```bash
@@ -444,14 +446,39 @@ Add extra disk for the database storage
 # it contains DSC script and configuration, for the initial configuration of the node
 ```
 
-Then proceed with
+Run DSC configuration - for the initial setup.  
+Details are described in the [https://makeitcloudy.pl/windows-DSC/](https://makeitcloudy.pl/windows-DSC/) blog post, paragraph 2.2.  
+SQL server should be domain joined, so the -DomainName parameter is passed.  
+It 
 
-```powershell
-https://makeitcloudy.pl/windows-preparation/
-# proceed with the code from paragraph 2.0.2
-# run the code on the target node
-# machine won't restart
 ```
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+
+```
+
+It:
+
+* sets the disk structure
+* set the static IP address
+* join the VM to the domain
+
+**Note:**
+
+```
+# Set-InitialConfigDsc function is part of the AutomatedLab,
+# https://github.com/makeitcloudy/AutomatedLab
+
+# it launches 
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1
+# which triggers
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration\ConfigureNode.ps1
+# which gets configuration data from 
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration\ConfigData.psd1
+```
+
+
+Mount SQL Server 2019 installation media
 
 ```bash
 xe vm-cd-eject vm='c1_sql01'
@@ -461,11 +488,16 @@ xe vm-cd-insert vm='c1_sql02' cd-name='SQLServer2019-x64-ENU.iso'
 
 ```
 
-This should take place after the installation of the Management Tools, anyway.
-Once the computer is renamed, proceed with the code
+It is assumed that mamanagement tools are installed on the mgmt node.
 
-TODO: Integrate the Set-InitialConfigDsc with the AutomatedLab powershell module
-TODO: https://makeitcloudy.pl/windows-DSC/ paragraph 2.2 - the computername is already set, though still should be passed as a parameter into script, never the less not needed anymore to put it manually, grab it as an environmental variable
+Proceed with the SQL installation
+
+```powershell
+
+```
+
+
+**TODO:** https://makeitcloudy.pl/windows-DSC/ paragraph 2.2 - the computername is already set, though still should be passed as a parameter into script, never the less not needed anymore to put it manually, grab it as an environmental variable / Check if that paramater is needed at all.
 
 #### target nodes - desktop experience
 

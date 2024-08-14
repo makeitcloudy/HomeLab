@@ -3,8 +3,8 @@
 ## SQL - DefaultInstance
 
 2024.08.08 - SQL_defaultInstance_configuration.ps1 - works - tested with SQL 2019 
-Once the SMS 17 has been installed on w10mgmt - it was possible to connect to it
-no Firewall exceptions etc, firewall ON
+Once the SMS 17 has been installed on w10mgmt - connection to SQL instance worked
+firewallON, no Firewall exceptions
 at this point with MOT\administrator credentials
 
 Tested on Desktop Experience
@@ -13,8 +13,12 @@ SMS Server Management Studio
 Installed: 14.0.17289.0
 Latest   : 20.2.30.0
 
-TODO: add domain structure and groups and expand the configuration by SQLAdmins
-TODO: Test the installation of SQL on SQL core
+**TODO:** add domain structure and groups and expand the configuration by SQLAdmins
+**TODO:** Test the installation of SQL on SQL core
+
+https://www.microsoft.com/en-us/evalcenter/download-sql-server-2017-rtm
+https://www.microsoft.com/en-us/evalcenter/download-sql-server-2019
+https://www.microsoft.com/en-us/evalcenter/download-sql-server-2022
 
 ### 1. SQL - DefaultInstance -  VM provisioning
 
