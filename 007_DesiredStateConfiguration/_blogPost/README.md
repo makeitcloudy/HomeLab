@@ -81,6 +81,8 @@ Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainNa
 
 ```
 
+Refences used in the function above:
+
 * [run_initialConfigDSC_domain.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_domain.ps1) - GitHub
 * [run_initialConfigDSC_domain.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_domain.ps1) - GitHub raw
 * [InitialConfigDsc.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1) - GitHub
@@ -97,6 +99,8 @@ Current code is a duplicate (anytime the source is updated, those changes should
 Set-InitialConfigDsc -NewComputerName $env:computername -Option Workgroup -Verbose
 
 ```
+
+Refences used in the function above:
 
 * [run_initialConfigDSC_workgroup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_workgroup.ps1) - GitHub
 * [run_initialConfigDSC_workgroup.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_workgroup.ps1) - GitHub raw
