@@ -132,8 +132,11 @@ Configuration NodeInitialConfigDomain {
         $DomainJoinCredential
     )
 
-    #Everytime you update the list of DSC resources to reflect the configuration changes
-    #you have to update it as well in the $modules varialble inside the initialConfigDsc.ps1 file
+    # Every time the list of DSC resources used in current configuration is modified, due to the configuration changes
+    # $modules variable varialble inside the initialConfigDsc.ps1, should be updated as well
+    # those two should go hand in hand
+    
+    # https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1
 
     Import-DscResource -ModuleName ComputerManagementDsc -ModuleVersion 9.1.0
     Import-DscResource -ModuleName NetworkingDsc -ModuleVersion 9.0.0
