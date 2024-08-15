@@ -1835,6 +1835,6 @@ Configure-ADDelegation
 
 # https://www.carlstalhood.com/group-policy-objects-vda-computer-settings/
 
-Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
-Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
-Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
+Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
+Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
+Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
