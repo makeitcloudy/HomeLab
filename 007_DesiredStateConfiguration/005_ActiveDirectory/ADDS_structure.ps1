@@ -706,7 +706,7 @@ function Create-ComputerObject
         1..2 | Foreach-Object {
             $temp = $_.ToString("$('ddc')00")
             $tempName = $_.ToString("CVAD - Broker Server 00")
-            Write-Verbose "Computer object created: $temp - $tempName"
+            #Write-Verbose "Computer object created: $temp - $tempName"
             #New-ADComputer -Name $temp -SAMAccountName $temp -Description $tempName -Path "ou=Broker,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Enabled $True
         }
     }
@@ -1667,7 +1667,7 @@ function Set-ADDelegation {
         $acl.AddAccessRule($ace)
 
         # Apply the modified ACL back to the OU
-        Set-Acl -AclObject $acl -Path ("AD:\" + $ou.DistinguishedName) -Verbose
+        Set-Acl -AclObject $acl -Path ("AD:\" + $ou.DistinguishedName)
     }
 
     END {
@@ -1697,6 +1697,8 @@ function Configure-ADDelegation {
         # when Service group arise then it should be added into the AD Delegation towards it's OU
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure AD Delegation"
         $startDate = Get-Date
+        #Set-ADDelegation left it in AD: path, changing back to userprofile
+        Set-Location -Path "$env:USERPROFILE\Documents"
     }
 
     PROCESS {
