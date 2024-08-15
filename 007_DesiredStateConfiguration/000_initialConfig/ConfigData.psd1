@@ -54,7 +54,7 @@
             Role                        = 'CertificationServices'
             NodeName                    = 'adcss'
             IPV4Address                 = '10.2.134.17/24'
-            DefaultGatewayAddress       = '10.2.134.254'            
+            DefaultGatewayAddress       = '10.2.134.254'
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
@@ -92,7 +92,7 @@
             DataDrivePLetter            = 'P'  #Profile Disk Letter
             DataDrivePFSFormat          = 'NTFS'
             DataDrivePFSLabel           = 'Profiles'
-            DataDrivePPartitionStyle    = 'GPT'            
+            DataDrivePPartitionStyle    = 'GPT'
         },
         @{
             Role                        = 'FileServer'
@@ -105,7 +105,7 @@
             DataDrivePLetter            = 'P'  #Profile Disk Letter
             DataDrivePFSFormat          = 'NTFS'
             DataDrivePFSLabel           = 'Profiles'
-            DataDrivePPartitionStyle    = 'GPT'            
+            DataDrivePPartitionStyle    = 'GPT'
         },
         # SQL Server
         @{

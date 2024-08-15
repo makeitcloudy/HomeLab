@@ -750,9 +750,9 @@ function Create-ServiceAccount
         -DisplayName 'svc-MS-SQL' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        –Path "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -Path "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'svc-MS-SQL' `
-        –UserPrincipalName "svc-MS-SQL@$ADDomain.$TLD"
+        -UserPrincipalName "svc-MS-SQL@$ADDomain.$TLD"
 
         New-ADUser -Name 'svc-MS-AppV' `
         -AccountPassword $CryptoPwd `
@@ -776,7 +776,7 @@ function Create-ServiceAccount
         -PasswordNeverExpires $True `
         -Path "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'svc-CVAD-PVS' `
-        –UserPrincipalName "svc-CVAD-PVS@$ADDomain.$TLD"
+        -UserPrincipalName "svc-CVAD-PVS@$ADDomain.$TLD"
 
         New-ADUser -Name 'svc-CVAD-Director' `
         -AccountPassword $CryptoPwd `
@@ -802,10 +802,6 @@ function Create-ServiceAccount
         -Path "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'svc-MS-ADCS' `
         -UserPrincipalName "$svc-MS-ADCS@$ADDomain.$TLD"
-
-
-        #/lab.local/_Governed/Accounts/Service
-        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
     }
 
     END {
@@ -841,6 +837,9 @@ function Configure-GroupMemebrship {
         
         #/lab.local/_Governed/Accounts/User
         $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+
+        #/lab.local/_Governed/Accounts/Service
+        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *        
     }
 
     PROCESS {
@@ -1010,8 +1009,10 @@ function Configure-GroupMemebrship {
 
     }    
 }
-    
-    
+
+$password = 'Password1!'
+$CryptoPwd = (ConvertTo-SecureString -AsPlainText $password -Force)
+
 Create-Ou -ADDomain 'lab' -TLD 'local' -Verbose
 Create-DelegationGroup -ADDomain 'lab' -TLD 'local' -Verbose
 Create-RoleBasedGroup -ADDomain 'lab' -TLD 'local' -Verbose
