@@ -1436,7 +1436,7 @@ function Configure-GroupMembershipAdminAccount {
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-WEM-Admin' -Members 'CVAD-WEM-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-WEM-CustomAdmin' -Members 'CVAD-WEM-CustomAdmin'
-        Add-ADGroupMember -Identity 'Service-L-CVAD-WEM-Admin' -Members 'Service-G-WEM-LIC-Admin'
+        Add-ADGroupMember -Identity 'Service-L-CVAD-WEM-Admin' -Members 'Service-G-WEM-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-WEM-OU' -Members 'CVAD-WEM-Admin'
     }
 
