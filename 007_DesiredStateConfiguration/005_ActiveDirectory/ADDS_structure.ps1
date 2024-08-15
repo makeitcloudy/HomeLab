@@ -1909,3 +1909,5 @@ Create-GPO -GpoName 'Citrix Infra - U - User Settings' -Ou "ou=CVAD,ou=Citrix,ou
 Write-Output "1. configure GPO so the Security-L-RemoteDesktopUsers - becomes the member of Remote Desktop Users group on the target nodes"
 Write-Output "2. configure `'Citrix Infra - C - Computer Settings`' GPO so the `'Security-L-Administrators`' - becomes the member of local Administrators group on the target nodes"
 Write-Output "`'Computer Configuration`' > `'Policies`' > `'Windows Settings`' > `'Security Settings`'. Click on `'Restricted Groups.`' Right-click on `'Restricted Groups`' and select `'Add Group`'"
+Write-Output "Security-L-Administrators - becomes a member of: Administrators | Local Group -> Action -> Update"
+Write-Output "Repeat those steps for another GPO which is Microsoft infra related, so later on the SQL can be installed by one of the members of local admins, and not domain admin"
