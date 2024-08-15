@@ -769,7 +769,7 @@ function Create-AdminUserObject
         -PasswordNeverExpires $True `
         -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'a_cvad' `
-        -UserPrincipalName "u_cvad@$ADDomain.$TLD"
+        -UserPrincipalName "a_cvad@$ADDomain.$TLD"
 
         New-ADUser -Name 'a_cvad-cpm' `
         -AccountPassword $CryptoPwd `
