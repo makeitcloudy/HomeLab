@@ -184,18 +184,26 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'Win10' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/Win7
         New-ADOrganizationalUnit -Name 'Win7' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        
+
+        ##/lab.local/_Governed/Infra/Hypervisor
+        New-ADOrganizationalUnit -Name 'Hypervisor' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Hypervisor objects' -ProtectedFromAccidentalDeletion $true
+
         #/lab.local/_Governed/Infra/Microsoft
         New-ADOrganizationalUnit -Name 'Microsoft' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Microsoft infra objects' -ProtectedFromAccidentalDeletion $true
         #/lab.local/_Governed/Infra/Microsoft/ADCS
         New-ADOrganizationalUnit -Name 'ADCS' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Active Directory Certification Services infra objects' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Infra/Microsoft/APPV
+        New-ADOrganizationalUnit -Name 'APPV' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Active Directory Certification Services infra objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Microsoft/DHCP
         New-ADOrganizationalUnit -Name 'DHCP' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for DHCP infra objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Microsoft/FileServer
         New-ADOrganizationalUnit -Name 'FileServer' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for File Server infra objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Microsoft/SQL
         New-ADOrganizationalUnit -Name 'SQL' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for SQL infra objects' -ProtectedFromAccidentalDeletion $false
-        
+
+        ##/lab.local/_Governed/Infra/NetScaler
+        New-ADOrganizationalUnit -Name 'NetScaler' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for NetScaler objects' -ProtectedFromAccidentalDeletion $true
+
         #/lab.local/_Governed/Infra/Microsoft/RDS
         New-ADOrganizationalUnit -Name 'RDS' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services infra objects' -ProtectedFromAccidentalDeletion $true
         #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2
@@ -1677,11 +1685,6 @@ function Configure-ADDelegation {
 
     [CmdletBinding()]
     param (
-        [Parameter(Mandatory=$true)]
-        [string]$OUPath,
-
-        [Parameter(Mandatory=$true)]
-        [string]$GroupName
     )
 
     BEGIN {
@@ -1693,28 +1696,27 @@ function Configure-ADDelegation {
     }
 
     PROCESS {
-        Set-ADDelegation -GroupName 'Service-L-MS-APPV-OU' -OUPath "ou=APPV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-MGMT-OU' -OUPath "ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-ADCS-OU' -OUPath "ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-DHCP-OU' -OUPath "ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-FileServer-OU' -OUPath "ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-SQL-OU' -OUPath "ou=SQL,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-MS-APPV-OU' -OUPath "ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local"
+        Set-ADDelegation -GroupName 'Service-L-MS-APPV-OU' -OUPath "ou=APPV,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-MGMT-OU' -OUPath "ou=MGMT,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-ADCS-OU' -OUPath "ou=ADCS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-DHCP-OU' -OUPath "ou=DHCP,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-FileServer-OU' -OUPath "ou=FileServer,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-SQL-OU' -OUPath "ou=SQL,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
-        Set-ADDelegation -GroupName 'Service-L-Hypervisor-OU' -OUPath "ou=Hypervisor,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-NetScaler-OU' -OUPath "ou=NetScaler,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-Hypervisor-OU' -OUPath "ou=Hypervisor,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-NetScaler-OU' -OUPath "ou=NetScaler,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
         # TODO: apply this logic to RDS OU
-        Set-ADDelegation -GroupName 'Service-L-CVAD-OU' -OUPath "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-OU' -OUPath "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
-        Set-ADDelegation -GroupName 'Service-L-CVAD-AppLayering-OU' -OUPath "ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-Broker-OU' -OUPath "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-Director-OU' -OUPath "ou=Director,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-FAS-OU' -OUPath "ou=FAS,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-LIC-OU' -OUPath "ou=LIC,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-PVS-OU' -OUPath "ou=PVS,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-StoreFront-OU' -OUPath "ou=StoreFront,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        Set-ADDelegation -GroupName 'Service-L-CVAD-WEM-OU' -OUPath "ou=WEM,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-AppLayering-OU' -OUPath "ou=AppLayering,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-Broker-OU' -OUPath "ou=Broker,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-Director-OU' -OUPath "ou=Director,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-FAS-OU' -OUPath "ou=FAS,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-LIC-OU' -OUPath "ou=LIC,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-PVS-OU' -OUPath "ou=PVS,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-StoreFront-OU' -OUPath "ou=StoreFront,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-WEM-OU' -OUPath "ou=WEM,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD"
     }
 
     END {
