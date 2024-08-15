@@ -1,3 +1,4 @@
+#region functions
 function Create-Ou
 {
     <#
@@ -38,7 +39,9 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'Service' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Service accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/User
         New-ADOrganizationalUnit -Name 'User' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for User accounts' -ProtectedFromAccidentalDeletion $false
-        
+        #/lab.local/_Governed/Accounts/Test
+        New-ADOrganizationalUnit -Name 'Test' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Test accounts' -ProtectedFromAccidentalDeletion $false
+
         ##/lab.local/_Governed/Groups
         New-ADOrganizationalUnit -Name 'Groups' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Application, Admin and User accounts' -ProtectedFromAccidentalDeletion $true
         #/lab.local/_Governed/Groups/Admin
@@ -244,7 +247,6 @@ function Create-Ou
         
         #/lab.local/_Governed/Infra/Parallels
         New-ADOrganizationalUnit -Name 'Parallels' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Parallels infra objects' -ProtectedFromAccidentalDeletion $true
-        #endregion
     }
 
     END {
@@ -286,12 +288,11 @@ function Create-DelegationGroup
     }
 
     PROCESS {
-        #region _Governed\Groups\Policy
+        #/lab.local/_Governed/Groups/Policy
         New-ADGroup -Name 'Policy-G-AllowRegedit' -SamAccountName 'Policy-G-AllowRegedit' -GroupCategory Security -GroupScope Global -DisplayName 'Policy-G-AllowRegedit' -Path "ou=Policy,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Scope - Global - Allow making use of regedit'
         New-ADGroup -Name 'Policy-L-AllowRegedit' -SamAccountName 'Policy-L-AllowRegedit' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Policy-L-AllowRegedit' -Path "ou=Policy,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Scope - Domain Local - Allow making use of regedit'
-        #endregion
 
-        #region _Governed\Groups\Security
+        #/lab.local/_Governed/Groups/Security
         New-AdGroup -Name 'Security-G-Administrators' -SamAccountName 'Sec-G-Administrators' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-Administrators' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
         New-AdGroup -Name 'Security-G-BackupOperators' -SamAccountName 'Sec-G-BackupOperators' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-BackupOperators' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
         New-AdGroup -Name 'Security-G-PowerUsers' -SamAccountName 'Sec-G-PowerUsers' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-PowerUsers' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
@@ -302,10 +303,7 @@ function Create-DelegationGroup
         New-AdGroup -Name 'Security-L-PowerUsers' -SamAccountName 'Security-L-PowerUsers' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Security-L-PowerUsers' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Provides Power User Permissions'
         New-AdGroup -Name 'Security-L-RemoteDesktopUser' -SamAccountName 'Secucity-L-RemoteDesktopUser' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Secucity-L-RemoteDesktopUser' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Provides Remote Desktop Logon Permissions'
 
-        #endregion
-
-        #region /lab.local/_Governed/Groups/Admin/Services/XX
-
+        #/lab.local/_Governed/Groups/Admin/Services/XX
         #"ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
         #"ou=MgmtLayer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
@@ -345,6 +343,7 @@ function Create-DelegationGroup
 
 
         ##"ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+
         #TODO: RENAME DESCRIPTION OF THE GROUPS ######################################################################
         New-ADGroup -Name 'Service-G-MS-APPV-Admin' -SamAccountName 'Service-G-MS-APPV-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-APPV-Admin' -Path "ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'App-V - DomainGlobal - Full Administrators'
         New-ADGroup -Name 'Service-G-MS-APPV-CustomAdmin' -SamAccountName 'Service-G-MS-APPV-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-APPV-CustomAdmin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'App-V Service Restricted Administrators Delegated Domain Global Group'
@@ -426,7 +425,6 @@ function Create-DelegationGroup
         New-ADGroup -Name 'Service-G-CVAD-WEM-CustomAdmin' -SamAccountName 'Service-G-CVAD-WEM-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-WEM-CustomAdmin' -Path "ou=WEM,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Constrained Permissions - Citrix WEM Administrators'
         New-ADGroup -Name 'Service-L-CVAD-WEM-CustomAdmin' -SamAccountName 'Service-L-CVAD-WEM-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-WEM-CustomAdmin' -Path "ou=WEM,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Constrained Permissions - Citrix WEM Administrators'
         New-ADGroup -Name 'Service-L-CVAD-WEM-OU' -SamAccountName 'Service-L-CVAD-WEM-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-WEM-OU' -Path "ou=WEM,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - Citrix WEM OU and Policies'
-        #endregion
     }
 
     END {
@@ -435,7 +433,7 @@ function Create-DelegationGroup
     }
 }
     
-function Create-RoleBasedGroup
+function Create-RoleBasedGroupAdmin
 {
     <#
     .SYNOPSIS
@@ -459,12 +457,12 @@ function Create-RoleBasedGroup
     )
 
     BEGIN {
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create RoleBasedGroup"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create RoleBasedGroupAdmin"
         $startDate = Get-Date
     }
 
     PROCESS {
-    #region /lab.local/_Governed/Groups/Admin
+    #/lab.local/_Governed/Groups/Admin
     # SOAP, stream service to run - those accounts should become admins on PVS servers
     # admins are member of those ROLE groups
     
@@ -529,15 +527,57 @@ function Create-RoleBasedGroup
 
     New-ADGroup -Name 'CVAD-WEM-Admin' -SamAccountName 'CVAD-WEM-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-WEM-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD WEM - grants Admin Permissions'
     New-ADGroup -Name 'CVAD-WEM-CustomAdmin' -SamAccountName 'CVAD-WEM-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-WEM-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD WEM - grants Constrained Admin Permissions'
-    #endregion
     }
 
     END {
-            $endDate = Get-Date
-            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
-    
+
+function Create-RoleBasedGroupUser
+{
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create RoleBasedGroupUser"
+        $startDate = Get-Date
+    }
+
+    PROCESS {
+        #/lab.local/_Governed/Groups/User
+        New-ADGroup -Name 'MS-RDS-User' -SamAccountName 'MS-RDS-User' -GroupCategory Security -GroupScope Global -DisplayName 'MS-RDS-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of Remote Desktop Services'
+        New-ADGroup -Name 'MS-FSLogix-User' -SamAccountName 'MS-FSLogix-User' -GroupCategory Security -GroupScope Global -DisplayName 'MS-FSLogix-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of MS FSLogix'
+
+        New-ADGroup -Name 'CVAD-User' -SamAccountName 'CVAD-User' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of CVAD'
+        New-ADGroup -Name 'CVAD-UPM-User' -SamAccountName 'CVAD-UPM-User' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-CPM-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of CVAD - Citrix Profile Manager'
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
 function Create-ApplicationGroup
 {
     <#
@@ -627,8 +667,8 @@ function Create-ComputerObject
             Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
-    
-function Create-AdminAndUserObject
+
+function Create-AdminUserObject
 {
     <#
     .SYNOPSIS
@@ -651,13 +691,13 @@ function Create-AdminAndUserObject
         $TLD
     )
     BEGIN {
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Admin and User Object"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Admin User Object"
         $startDate = Get-Date
     }
 
     PROCESS {
         #/lab.local/_Governed/Accounts/Admin
-        #region EUC Admin and User Accounts
+        #EUC Admin and User Accounts
         
         #admin account
         #/lab.local/_Governed/Accounts/Admin
@@ -665,52 +705,414 @@ function Create-AdminAndUserObject
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
-        -GivenName 'Name' `
-        -Surname 'LastName' `
-        -Description 'tireless sculptor' `
+        -GivenName 'Admin' `
+        -Surname 'Labber' `
+        -Description 'tireless sculptor - Admin' `
         -DisplayName 'a_labber' `
         -Enabled $True `
         -PasswordNeverExpires $True `
         -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'a_labber' `
         -UserPrincipalName "a_labber@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_andrzej' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Admin' `
+        -Surname 'Andrzej' `
+        -Description 'Andrzej ShadowIT - Admin' `
+        -DisplayName 'a_andrzej' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_andrzej' `
+        -UserPrincipalName "a_andrzej@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_piotrek' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Admin' `
+        -Surname 'Piotrek' `
+        -Description 'The wanderer - Admin' `
+        -DisplayName 'a_piotrek' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_piotrek' `
+        -UserPrincipalName "a_piotrek@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_temp' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Admin' `
+        -Surname 'Temporarily Elevated Roles' `
+        -Description 'Admin with temporarily given permissions' `
+        -DisplayName 'a_temp' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_temp' `
+        -UserPrincipalName "a_temp@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_cvad' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Admin' `
+        -Surname 'CVAD' `
+        -Description 'CVAD Administrator' `
+        -DisplayName 'a_cvad' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_cvad' `
+        -UserPrincipalName "u_cvad@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_cvad-cpm' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Admin' `
+        -Surname 'CVAD CPM' `
+        -Description 'CVAD Citrix Profile Management' `
+        -DisplayName 'a_cvad-cpm' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_cvad-cpm' `
+        -UserPrincipalName "a_cvad-cpm@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_rds' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'RDS' `
+        -Description 'Remote Desktop Services Admin' `
+        -DisplayName 'a_rds' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_rds' `
+        -UserPrincipalName "a_rds@$ADDomain.$TLD"
+
+        New-ADUser -Name 'a_ms-fslogix' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'FSLogix Admin' `
+        -Description '' `
+        -DisplayName 'a_ms-fslogix' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_ms-fslogix' `
+        -UserPrincipalName "a_ms-fslogix@$ADDomain.$TLD"
+    }
+
+    END {
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
+function Create-TestUserObject {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
         
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Test User Object"
+        $startDate = Get-Date
+    }
+
+    PROCESS {
+        #/lab.local/_Governed/Accounts/User
+        #test account
+        New-ADUser -Name 't_labber' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'Labber' `
+        -Description 'tireless sculptor - Tester' `
+        -DisplayName 't_labber' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -SamAccountName 't_labber' `
+        -UserPrincipalName "t_labber@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_andrzej' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'Andrzej' `
+        -Description 'Andrzej ShadowIT - Tester' `
+        -DisplayName 't_andrzej' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_andrzej' `
+        -UserPrincipalName "t_andrzej@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_piotrek' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'Piotrek' `
+        -Description 'The wanderer - Tester' `
+        -DisplayName 't_piotrek' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_piotrek' `
+        -UserPrincipalName "t_piotrek@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_temp' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'Temporarily Elevated Roles' `
+        -Description 'Tester with temporarily given permissions' `
+        -DisplayName 't_temp' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_temp' `
+        -UserPrincipalName "t_temp@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_cvad' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'CVAD' `
+        -Description 'CVAD - Tester' `
+        -DisplayName 't_cvad' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_cvad' `
+        -UserPrincipalName "t_cvad@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_cvad-cpm' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'CVAD CPM' `
+        -Description 'CVAD Citrix Profile Management - Tester' `
+        -DisplayName 't_cvad-cpm' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_cvad-cpm' `
+        -UserPrincipalName "t_cvad-cpm@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_rds' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'RDS' `
+        -Description 'Remote Desktop Services - Tester' `
+        -DisplayName 't_rds' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_rds' `
+        -UserPrincipalName "t_rds@$ADDomain.$TLD"
+
+        New-ADUser -Name 't_ms-fslogix' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'Tester' `
+        -Surname 'FSLogix - Tester' `
+        -Description '' `
+        -DisplayName 't_ms-fslogix' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_ms-fslogix' `
+        -UserPrincipalName "t_ms-fslogix@$ADDomain.$TLD"
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
+function Create-UserObject {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create User Object"
+        $startDate = Get-Date
+    }
+
+    PROCESS {
         #/lab.local/_Governed/Accounts/User
         #user account
         New-ADUser -Name 'u_labber' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
-        -GivenName 'Name' `
-        -Surname 'Lastname' `
-        -Description "The wanderer " `
-        -DisplayName "u_labber" `
+        -GivenName 'User' `
+        -Surname 'Labber' `
+        -Description 'tireless sculptor - User' `
+        -DisplayName 't_labber' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
-        -SamAccountName "u_labber" `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -SamAccountName 'u_labber' `
         -UserPrincipalName "u_labber@$ADDomain.$TLD"
-        
-        #/lab.local/_Governed/Accounts/User
-        #test account
-        New-ADUser -Name 'u_tester' `
+
+        New-ADUser -Name 'u_andrzej' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
-        -GivenName 'Name' `
-        -Surname 'Lastname' `
-        -Description "stubborn tester" `
-        -DisplayName 'u_tester' `
+        -GivenName 'User' `
+        -Surname 'Andrzej' `
+        -Description 'Andrzej ShadowIT - User' `
+        -DisplayName 't_andrzej' `
         -Enabled $True `
         -PasswordNeverExpires $True `
         -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
-        -SamAccountName "u_tester" `
-        -UserPrincipalName "u_tester@$ADDomain.$TLD"
+        -SamAccountName 'u_andrzej' `
+        -UserPrincipalName "u_andrzej@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_piotrek' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'Piotrek' `
+        -Description 'The wanderer - User' `
+        -DisplayName 'u_piotrek' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_piotrek' `
+        -UserPrincipalName "u_piotrek@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_temp' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'Temporarily Elevated Roles' `
+        -Description 'User with temporarily given permissions' `
+        -DisplayName 'u_temp' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_temp' `
+        -UserPrincipalName "u_temp@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_cvad' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'CVAD' `
+        -Description 'CVAD - User' `
+        -DisplayName 'u_cvad' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_cvad' `
+        -UserPrincipalName "u_cvad@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_cvad-cpm' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'CVAD CPM' `
+        -Description 'CVAD Citrix Profile Management - User' `
+        -DisplayName 'u_cvad-cpm' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_cvad-cpm' `
+        -UserPrincipalName "u_cvad-cpm@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_rds' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'RDS' `
+        -Description 'Remote Desktop Services - User' `
+        -DisplayName 'u_rds' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_rds' `
+        -UserPrincipalName "u_rds@$ADDomain.$TLD"
+
+        New-ADUser -Name 'u_ms-fslogix' `
+        -AccountPassword $CryptoPwd `
+        -CannotChangePassword $True `
+        -ChangePasswordAtLogon $False `
+        -GivenName 'User' `
+        -Surname 'FSLogix - User' `
+        -Description '' `
+        -DisplayName 'u_ms-fslogix' `
+        -Enabled $True `
+        -PasswordNeverExpires $True `
+        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_ms-fslogix' `
+        -UserPrincipalName "u_ms-fslogix@$ADDomain.$TLD"
     }
 
     END {
-            $endDate = Get-Date
-            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -809,7 +1211,7 @@ function Create-ServiceAccount
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
-        -Description $svc_pki_description `
+        -Description 'Service Account - Active Directory Certification Services' `
         -DisplayName 'svc-MS-ADCS' `
         -Enabled $True `
         -PasswordNeverExpires $True `
@@ -823,8 +1225,8 @@ function Create-ServiceAccount
             Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
-    
-function Configure-GroupMemebrship {
+
+function Configure-GroupMemberShipServiceAccount {
     <#
     .SYNOPSIS
     .DESCRIPTION
@@ -847,196 +1249,459 @@ function Configure-GroupMemebrship {
     )
 
     BEGIN {
-        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership"
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - service account"
+        $startDate = Get-Date
+
+        #/lab.local/_Governed/Accounts/Service
+        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+    }
+
+    PROCESS {
+
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
+function Configure-GroupMembershipAdminAccount {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Admin account"
         $startDate = Get-Date
 
         #/lab.local/_Governed/Accounts/Admin
         $adminAccount = get-aduser -searchbase "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
-        
-        #/lab.local/_Governed/Accounts/User
-        $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
-
-        #/lab.local/_Governed/Accounts/Service
-        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *        
     }
 
     PROCESS {
         # add all users from "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"
         # to MS-APPV-Admin Group and all other admin a groups
-        #region admin accounts
+        #admin accounts
 
-        #region MS-MGMT-Admin
+        #MS-MGMT-Admin
         Add-ADGroupMember -Identity 'MS-MGMT-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-MS-MGMT-Admin' -Members 'MS-MGMT-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-MGMT-CustomAdmin' -Members 'MS-MGMT-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-MGMT-Admin' -Members 'Service-G-MS-MGMT-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-MGMT-OU' -Members 'MS-MGMT-Admin'
-        #endregion
 
         # repeat the step above for all other admin groups like CVAD-Admin, CVAD-PVS-Admin, etc
 
-        #region MS-ADCS-Admin
+        #MS-ADCS-Admin
         Add-ADGroupMember -Identity 'MS-ADCS-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-MS-ADCS-Admin' -Members 'MS-ADCS-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-ADCS-CustomAdmin' -Members 'MS-ADCS-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-ADCS-Admin' -Members 'Service-G-MS-ADCS-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-ADCS-OU' -Members 'MS-ADCS-Admin'
-        #endregion
-        
-        #region MS-DHCP-Admin
+
+        #MS-DHCP-Admin
         Add-ADGroupMember -Identity 'MS-DHCP-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-MS-DHCP-Admin' -Members 'MS-DHCP-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-DHCP-CustomAdmin' -Members 'MS-DHCP-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-DHCP-Admin' -Members 'Service-G-MS-DHCP-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-DHCP-OU' -Members 'MS-DHCP-Admin'
-        #endregion
-        
-        #region MS-FileServer-Admin
+
+        #MS-FileServer-Admin
         Add-ADGroupMember -Identity 'MS-FileServer-Admin' -Members $adminAccount
-        
+
         Add-ADGroupMember -Identity 'Service-G-MS-FileServer-Admin' -Members 'MS-FileServer-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-FileServer-CustomAdmin' -Members 'MS-FileServer-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-FileServer-Admin' -Members 'Service-G-MS-FileServer-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-FileServer-OU' -Members 'MS-FileServer-Admin'
-        #endregion
-        
-        #region MS-SQL-Admin
+
+        #MS-SQL-Admin
         Add-ADGroupMember -Identity 'MS-SQL-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-MS-SQL-Admin' -Members 'MS-SQL-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-SQL-CustomAdmin' -Members 'MS-SQL-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-SQL-Admin' -Members 'Service-G-MS-SQL-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-SQL-OU' -Members 'MS-SQL-Admin'
-        #endregion
-        
-        #region MS-APPV-Admin
+
+        #MS-APPV-Admin
         Add-ADGroupMember -Identity 'MS-APPV-Admin' -Members $adminAccount
-        
+
         Add-ADGroupMember -Identity 'Service-G-MS-APPV-Admin' -Members 'MS-APPV-Admin'
         Add-ADGroupMember -Identity 'Service-G-MS-APPV-CustomAdmin' -Members 'MS-APPV-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-MS-APPV-Admin' -Members 'Service-G-MS-APPV-Admin'
         Add-ADGroupMember -Identity 'Service-L-MS-APPV-OU' -Members 'MS-APPV-Admin'
-        #endregion
-        
-        #region Hypervisor-Admin
+
+        #Hypervisor-Admin
         Add-ADGroupMember -Identity 'Hypervisor-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-Hypervisor-Admin' -Members 'Hypervisor-Admin'
         Add-ADGroupMember -Identity 'Service-G-Hypervisor-CustomAdmin' -Members 'Hypervisor-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-Hypervisor-Admin' -Members 'Service-G-Hypervisor-Admin'
         Add-ADGroupMember -Identity 'Service-L-Hypervisor-OU' -Members 'Hypervisor-Admin'
-        #endregion
-        
-        #region NetScaler-Admin
+
+        #NetScaler-Admin
         Add-ADGroupMember -Identity 'NetScaler-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-NetScaler-Admin' -Members 'NetScaler-Admin'
         Add-ADGroupMember -Identity 'Service-G-NetScaler-CustomAdmin' -Members 'NetScaler-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-NetScaler-Admin' -Members 'Service-G-NetScaler-Admin'
         Add-ADGroupMember -Identity 'Service-L-NetScaler-OU' -Members 'NetScaler-Admin'
-        #endregion
-        
-        #region CVAD-Admin
+
+        #CVAD-Admin
         #Add-ADGroupMember -Identity 'CVAD-Admin' -Members $adminAccount
 
         #Add-ADGroupMember -Identity 'Service-G-CVAD-Admin' -Members 'CVAD-Admin'
         #Add-ADGroupMember -Identity 'Service-G-CVAD-CustomAdmin' -Members 'CVAD-CustomAdmin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-Admin' -Members 'Service-G-CVAD-Admin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-OU' -Members 'CVAD-Admin'
-        #endregion
-        
-        #region CVAD-HelpDeskAdmin
+
+        #CVAD-HelpDeskAdmin
         #Add-ADGroupMember -Identity 'CVAD-HelpDeskAdmin' -Members $adminAccount
 
         #Add-ADGroupMember -Identity 'Service-G-CVAD-Helpdesk-Admin' -Members 'CVAD-Admin'
         #Add-ADGroupMember -Identity 'Service-G-CVAD-CustomAdmin' -Members 'CVAD-CustomAdmin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-Admin' -Members 'Service-G-CVAD-Admin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-OU' -Members 'CVAD-Admin'
-        #endregion
-        
-        #region CVAD-Broker-Admin
+
+        #CVAD-Broker-Admin
         Add-ADGroupMember -Identity 'CVAD-Broker-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-Broker-Admin' -Members 'CVAD-Broker-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-Broker-CustomAdmin' -Members 'CVAD-Broker-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-Broker-Admin' -Members 'Service-G-CVAD-Broker-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-Broker-OU' -Members 'CVAD-Broker-Admin'
-        #endregion
         
-        #region CVAD-Director-Admin
+        #CVAD-Director-Admin
         Add-ADGroupMember -Identity 'CVAD-Director-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-Director-Admin' -Members 'CVAD-Director-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-Director-CustomAdmin' -Members 'CVAD-Director-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-Director-Admin' -Members 'Service-G-CVAD-Director-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-Director-OU' -Members 'CVAD-Director-Admin'
-        #endregion
 
-        #region CVAD-FAS-Admin
+        #CVAD-FAS-Admin
         Add-ADGroupMember -Identity 'CVAD-FAS-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-FAS-Admin' -Members 'CVAD-FAS-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-FAS-CustomAdmin' -Members 'CVAD-FAS-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-FAS-Admin' -Members 'Service-G-CVAD-FAS-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-FAS-OU' -Members 'CVAD-FAS-Admin'
-        #endregion
 
-        #region CVAD-LIC-Admin
+        #CVAD-LIC-Admin
         Add-ADGroupMember -Identity 'CVAD-LIC-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-LIC-Admin' -Members 'CVAD-LIC-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-LIC-CustomAdmin' -Members 'CVAD-LIC-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-LIC-Admin' -Members 'Service-G-CVAD-LIC-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-LIC-OU' -Members 'CVAD-LIC-Admin'
-        #endregion
-        
-        #region CVAD-PVS-Admin
+
+        #CVAD-PVS-Admin
         Add-ADGroupMember -Identity 'CVAD-PVS-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-PVS-Admin' -Members 'CVAD-PVS-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-PVS-CustomAdmin' -Members 'CVAD-PVS-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-PVS-Admin' -Members 'Service-G-CVAD-PVS-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-PVS-OU' -Members 'CVAD-PVS-Admin'
-        #endregion
 
-        #region CVAD-StoreFront-Admin
+        #CVAD-StoreFront-Admin
         Add-ADGroupMember -Identity 'CVAD-StoreFront-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-StoreFront-Admin' -Members 'CVAD-StoreFront-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-StoreFront-CustomAdmin' -Members 'CVAD-StoreFront-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-StoreFront-Admin' -Members 'Service-G-CVAD-StoreFront-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-StoreFront-OU' -Members 'CVAD-StoreFront-Admin'
-        #endregion
 
-        #region CVAD-WEM-Admin
+        #CVAD-WEM-Admin
         Add-ADGroupMember -Identity 'CVAD-WEM-Admin' -Members $adminAccount
 
         Add-ADGroupMember -Identity 'Service-G-CVAD-WEM-Admin' -Members 'CVAD-WEM-Admin'
         Add-ADGroupMember -Identity 'Service-G-CVAD-WEM-CustomAdmin' -Members 'CVAD-WEM-CustomAdmin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-WEM-Admin' -Members 'Service-G-WEM-LIC-Admin'
         Add-ADGroupMember -Identity 'Service-L-CVAD-WEM-OU' -Members 'CVAD-WEM-Admin'
-        #endregion
+    }
 
-        #endregion
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }    
+}
+
+function Configure-GroupMembershipUserAccount {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - User Account"
+        $startDate = Get-Date
+
+        #/lab.local/_Governed/Accounts/User
+        $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+    }
+
+    PROCESS {
+    
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
+function Configure-GroupMembershipTestAccount {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Test Account"
+        $startDate = Get-Date
+
+        #/lab.local/_Governed/Accounts/User
+        $testAccount = get-aduser -SearchBase "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+    }
+
+    PROCESS {
+    
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+}
+
+function Set-ADDelegation {
+    <#
+    .SYNOPSIS
+
+    .DESCRIPTION
+    written by AI  
+
+    .PARAMETER OuPath
+
+    .PARAMETER GroupName
+
+    .EXAMPLE
+
+    .EXAMPLE
+
+    .LINK
+    https://sysjam.wordpress.com/2015/04/08/modifying-permissions-on-an-active-directory-with-powershell/
+
+    .LINK
+    https://blogs.technet.microsoft.com/joec/2013/04/25/active-directory-delegation-via-powershell/
+
+    .LINK
+    https://social.technet.microsoft.com/Forums/Lync/en-US/df3bfd33-c070-4a9c-be98-c4da6e591a0a/forum-faq-using-powershell-to-assign-permissions-on-active-directory-objects?forum=winserverpowershell
+
+    .LINK
+    http://msdn.microsoft.com/en-us/library/system.directoryservices.activedirectoryrights(v=vs.110).aspx
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$OUPath,
+
+        [Parameter(Mandatory=$true)]
+        [string]$GroupName
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Set AD delegation - $($OUPath) - $($GroupName)"
+        $startDate = Get-Date
+    }
+
+    PROCESS {
+        # Navigate to the AD drive
+        cd ad:
+
+        # Get a reference to the RootDSE of the current domain
+        $rootdse = Get-ADRootDSE
+
+        # Create a hashtable to store the GUID value of each schema class and attribute
+        $guidmap = @{}
+        Get-ADObject -SearchBase $rootdse.SchemaNamingContext -LDAPFilter "(schemaidguid=*)" -Properties lDAPDisplayName,schemaIDGUID | ForEach-Object {
+            $guidmap[$_.lDAPDisplayName] = [System.GUID]$_.schemaIDGUID
+        }
+
+        # Create a hashtable to store the GUID value of each extended right in the forest
+        $extendedrightsmap = @{}
+        Get-ADObject -SearchBase $rootdse.ConfigurationNamingContext -LDAPFilter "(&(objectclass=controlAccessRight)(rightsguid=*))" -Properties displayName,rightsGuid | ForEach-Object {
+            $extendedrightsmap[$_.displayName] = [System.GUID]$_.rightsGuid
+        }
+
+        # Get a reference to the OU we want to delegate
+        $ou = Get-ADOrganizationalUnit -Identity $OUPath
+
+        # Get the SID of the group we wish to delegate access to
+        $groupSID = (Get-ADGroup $GroupName).SID
+
+        # Get a copy of the current DACL on the OU
+        $acl = Get-Acl -Path ("AD:\" + $ou.DistinguishedName)
+
+        # Create an Access Control Entry for new permission we wish to add
+        # Allow the group to write all properties of descendent user objects
+        $ace = New-Object System.DirectoryServices.ActiveDirectoryAccessRule (
+            $groupSID,                              # Identity
+            "GenericAll",                           # AccessMask
+            "Allow",                                # InheritanceType
+            "Descendents",                          # ObjectTypeGuid
+            $guidmap["user"]                        # SchemaIDGUID for the user class
+        )
+        
+        # Add the Access Control Entry to the ACL
+        $acl.AddAccessRule($ace)
+
+        # Apply the modified ACL back to the OU
+        Set-Acl -AclObject $acl -Path ("AD:\" + $ou.DistinguishedName) -Verbose
     }
 
     END {
             $endDate = Get-Date
             Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
-    }    
+    }
 }
+
+function Configure-ADDelegation {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$OUPath,
+
+        [Parameter(Mandatory=$true)]
+        [string]$GroupName
+    )
+
+    BEGIN {
+        # Each time there is an OU added into the structure
+        # it needs to be reflected with a Service ad group
+        # when Service group arise then it should be added into the AD Delegation towards it's OU
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure AD Delegation"
+        $startDate = Get-Date
+    }
+
+    PROCESS {
+        Set-ADDelegation -OUPath "ou=APPV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -GroupName 'Service-L-MS-MGMT-OU'
+        
+        Set-ADDelegation -GroupName 'Service-L-MS-MGMT-OU' -OUPath "ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-ADCS-OU' -OUPath "ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-DHCP-OU' -OUPath "ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-FileServer-OU' -OUPath "ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-SQL-OU' -OUPath "ou=SQL,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-MS-APPV-OU' -OUPath "ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local"
+
+        Set-ADDelegation -GroupName 'Service-L-Hypervisor-OU' -OUPath "ou=Hypervisor,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-NetScaler-OU' -OUPath "ou=NetScaler,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+
+        Set-ADDelegation -GroupName 'Service-L-CVAD-AppLayering-OU' -OUPath "ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-Broker-OU' -OUPath "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-Director-OU' -OUPath "ou=Director,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-FAS-OU' -OUPath "ou=FAS,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-LIC-OU' -OUPath "ou=LIC,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-PVS-OU' -OUPath "ou=PVS,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-StoreFront-OU' -OUPath "ou=StoreFront,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        Set-ADDelegation -GroupName 'Service-L-CVAD-WEM-OU' -OUPath "ou=WEM,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+    }
+
+    END {
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    }
+
+}
+
+#endregion
+
+$ADDomain = 'lab'
+$TLD = 'local'
 
 $password = 'Password1!'
 $CryptoPwd = (ConvertTo-SecureString -AsPlainText $password -Force)
 
-Create-Ou -ADDomain 'lab' -TLD 'local' -Verbose
-Create-DelegationGroup -ADDomain 'lab' -TLD 'local' -Verbose
-Create-RoleBasedGroup -ADDomain 'lab' -TLD 'local' -Verbose
-Create-ApplicationGroup -ADDomain 'lab' -TLD 'local' -Verbose
-Create-ComputerObject -ADDomain 'lab' -TLD 'local' -Verbose
-Create-AdminAndUserObject -ADDomain 'lab' -TLD 'local' -Verbose
-Create-ServiceAccount -ADDomain 'lab' -TLD 'local' -Verbose
-Configure-GroupMemebrship -ADDomain 'lab' -TLD 'local' -Verbose
+Create-Ou -ADDomain $ADDomain -TLD $TLD -Verbose
+Create-DelegationGroup -ADDomain $ADDomain -TLD $TLD -Verbose
+
+Create-RoleBasedGroupAdmin -ADDomain $ADDomain -TLD $TLD -Verbose
+Create-RoleBasedGroupUser -ADDomain $ADDomain -TLD $TLD -Verbose
+
+Create-ApplicationGroup -ADDomain $ADDomain -TLD $TLD -Verbose
+Create-ComputerObject -ADDomain $ADDomain -TLD $TLD -Verbose
+
+Create-AdminUserObject -ADDomain $ADDomain -TLD $TLD -Verbose
+Create-TestUserObject -ADDomain $ADDomain -TLD $TLD -Verbose
+Create-UserObject -ADDomain $ADDomain -TLD $TLD -Verbose
+
+Create-ServiceAccount -ADDomain $ADDomain -TLD $TLD -Verbose
+Configure-GroupMemberShipServiceAccount -ADDomain $ADDomain -TLD $TLD -Verbose
+Configure-GroupMembershipAdminAccount -ADDomain $ADDomain -TLD $TLD -Verbose
+Configure-GroupMembershipUserAccount -ADDomain $ADDomain -TLD $TLD -Verbose
+Configure-GroupMembershipTestAccount -ADDomain $ADDomain -TLD $TLD -Verbose
+
+Configure-ADDelegation -Verbose
