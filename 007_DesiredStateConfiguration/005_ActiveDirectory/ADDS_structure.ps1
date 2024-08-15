@@ -35,12 +35,30 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'Accounts' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin,Service and User accounts' -ProtectedFromAccidentalDeletion $true
         #/lab.local/_Governed/Accounts/Admin
         New-ADOrganizationalUnit -Name 'Admin' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Admin/CVAD
+        New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Admin/MS
+        New-ADOrganizationalUnit -Name 'MS' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Admin/Test
+        New-ADOrganizationalUnit -Name 'TEST' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/Service
         New-ADOrganizationalUnit -Name 'Service' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Service accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/User
         New-ADOrganizationalUnit -Name 'User' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for User accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/User/CVAD
+        New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/User/MS
+        New-ADOrganizationalUnit -Name 'MS' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/User/Test
+        New-ADOrganizationalUnit -Name 'TEST' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/Test
         New-ADOrganizationalUnit -Name 'Test' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Test accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Test/CVAD
+        New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Test/MS
+        New-ADOrganizationalUnit -Name 'MS' -Path "ou=TEst,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Accounts/Test/TEST
+        New-ADOrganizationalUnit -Name 'TEST' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
 
         ##/lab.local/_Governed/Groups
         New-ADOrganizationalUnit -Name 'Groups' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Application, Admin and User accounts' -ProtectedFromAccidentalDeletion $true
@@ -366,9 +384,19 @@ function Create-DelegationGroup
         New-ADGroup -Name 'Service-L-NetScaler-OU' -SamAccountName 'Service-L-NetScaler-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-NetScaler-OU' -Path "ou=NetScaler,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - NetScaler OU and Policies'
 
         #"ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
-        ## those two are not needed as there are: /lab.local/_Governed/Groups/Admin
-        ##New-ADGroup -Name 'Service-G-CVAD-HelpDeskAdmin' -SamAccountName 'Service-G-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - HelpDesk Administrators'
-        ##New-ADGroup -Name 'Service-L-CVAD-HelpDeskAdmin' -SamAccountName 'Service-L-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - HelpDesk Administrators'
+        #CVAD-Admin - should have the a_ admins as members
+        #CVAD-Admin - should be member of Service-G-CVAD-Admin and Service-L-CVAD-OU
+        #CVAD OU Security should grant Service-L-CVAD-OU group
+
+        New-ADGroup -Name 'Service-G-CVAD-Admin' -SamAccountName 'Service-G-CVAD-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-Admin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Full Permissions - Citrix AppLayering'
+        New-ADGroup -Name 'Service-L-CVAD-Admin' -SamAccountName 'Service-L-CVAD-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Admin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Full Permissions - Citrix AppLayering'
+        New-ADGroup -Name 'Service-G-CVAD-CustomAdmin' -SamAccountName 'Service-G-CVAD-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-CustomAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Constrained Permissions - Citrix AppLayering Administrators'
+        New-ADGroup -Name 'Service-L-CVAD-CustomAdmin' -SamAccountName 'Service-L-CVAD-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-CustomAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Constrained Permissions - Citrix AppLayering Administrators'
+        New-ADGroup -Name 'Service-L-CVAD-OU' -SamAccountName 'Service-L-CVAD-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-OU' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - Citrix AppLayering OU and Policies'
+
+        ## those two are not needed as there are: /lab.local/_Governed/Groups/Admin - CVAD-HelpDeskAdmin
+        #New-ADGroup -Name 'Service-G-CVAD-HelpDeskAdmin' -SamAccountName 'Service-G-CVAD-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-HelpDeskAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - HelpDesk Administrators'
+        #New-ADGroup -Name 'Service-L-CVAD-HelpDeskAdmin' -SamAccountName 'Service-L-CVAD-HelpDeskAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-HelpDeskAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - HelpDesk Administrators'
 
         ##"ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-CVAD-AppLayering-Admin' -SamAccountName 'Service-G-CVAD-AppLayering-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-AppLayering-Admin' -Path "ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Full Permissions - Citrix AppLayering'
@@ -500,10 +528,19 @@ function Create-RoleBasedGroupAdmin
     New-ADGroup -Name 'NetScaler-CustomAdmin' -SamAccountName 'NetScaler-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'NetScaler-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - NetScaler - grants Constrained Admin Permissions'
     
        
+    New-ADGroup -Name 'CVAD-CloudAdmin' -SamAccountName 'CVAD-CloudAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-CloudAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD DaaS - grants Cloud Admin Permissions'
     New-ADGroup -Name 'CVAD-Admin' -SamAccountName 'CVAD-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Full Admin Permissions'
-    New-ADGroup -Name 'CVAD-CustomAdmin' -SamAccountName 'CVAD-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Constrained Admin Permissions'
+    New-ADGroup -Name 'CVAD-ReadOnlyAdmin' -SamAccountName 'CVAD-ReadOnlyAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-ReadOnlyAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants ReadOnly Permissions'
     New-ADGroup -Name 'CVAD-HelpDeskAdmin' -SamAccountName 'CVAD-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-HelpDeskAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants HelpDeskAdmin Permissions'
+    New-ADGroup -Name 'CVAD-MachineCatalogAdmin' -SamAccountName 'CVAD-MachineCatalogAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-MachineCatalogAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Machine Catalog Admin Permissions'
+    New-ADGroup -Name 'CVAD-DeliveryGroupAdmin' -SamAccountName 'CVAD-DeliveryGroupAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-DeliveryGroupAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Delivery Group Admin Permissions'
+    New-ADGroup -Name 'CVAD-HostAdmin' -SamAccountName 'CVAD-HostAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-HostAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Host Admin Permissions'
+    New-ADGroup -Name 'CVAD-SessionAdmin' -SamAccountName 'CVAD-SessionAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-SessionAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Session Admin Permissions'
+    New-ADGroup -Name 'CVAD-MonitorAdmin' -SamAccountName 'CVAD-MonitorAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-MonitorAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Full Monitor Admin Permissions'
+    New-ADGroup -Name 'CVAD-ProbeAgentAdmin' -SamAccountName 'CVAD-ProbeAgentAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-ProbeAgentAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Probe Agent Admin Permissions'
 
+    New-ADGroup -Name 'CVAD-CustomAdmin' -SamAccountName 'CVAD-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD - grants Constrained Admin Permissions'
+    
     New-ADGroup -Name 'CVAD-AppLayering-Admin' -SamAccountName 'CVAD-AppLayering-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-AppLayering-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD AppLayering - grants Admin Permissions'
     New-ADGroup -Name 'CVAD-AppLayering-CustomAdmin' -SamAccountName 'CVAD-AppLayering-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'CVAD-Layering-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - CVAD AppLayering - grants Constrained Admin Permissions'
 
@@ -701,19 +738,19 @@ function Create-AdminUserObject
         
         #admin account
         #/lab.local/_Governed/Accounts/Admin
-        New-ADUser -Name 'a_labber' `
+        New-ADUser -Name 'a_test' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'Admin' `
         -Surname 'Labber' `
         -Description 'tireless sculptor - Admin' `
-        -DisplayName 'a_labber' `
+        -DisplayName 'a_test' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
-        -SamAccountName 'a_labber' `
-        -UserPrincipalName "a_labber@$ADDomain.$TLD"
+        -Path "ou=TEST,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -SamAccountName 'a_test' `
+        -UserPrincipalName "a_test@$ADDomain.$TLD"
 
         New-ADUser -Name 'a_andrzej' `
         -AccountPassword $CryptoPwd `
@@ -753,7 +790,7 @@ function Create-AdminUserObject
         -DisplayName 'a_temp' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=TEST,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'a_temp' `
         -UserPrincipalName "a_temp@$ADDomain.$TLD"
 
@@ -767,7 +804,7 @@ function Create-AdminUserObject
         -DisplayName 'a_cvad' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'a_cvad' `
         -UserPrincipalName "a_cvad@$ADDomain.$TLD"
 
@@ -781,7 +818,7 @@ function Create-AdminUserObject
         -DisplayName 'a_cvad-cpm' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'a_cvad-cpm' `
         -UserPrincipalName "a_cvad-cpm@$ADDomain.$TLD"
 
@@ -795,23 +832,23 @@ function Create-AdminUserObject
         -DisplayName 'a_rds' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=MS,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'a_rds' `
         -UserPrincipalName "a_rds@$ADDomain.$TLD"
 
-        New-ADUser -Name 'a_ms-fslogix' `
+        New-ADUser -Name 'a_fslogix' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'User' `
         -Surname 'FSLogix Admin' `
         -Description '' `
-        -DisplayName 'a_ms-fslogix' `
+        -DisplayName 'a_fslogix' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
-        -SamAccountName 'a_ms-fslogix' `
-        -UserPrincipalName "a_ms-fslogix@$ADDomain.$TLD"
+        -Path "ou=MS,ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'a_fslogix' `
+        -UserPrincipalName "a_fslogix@$ADDomain.$TLD"
     }
 
     END {
@@ -849,19 +886,19 @@ function Create-TestUserObject {
     PROCESS {
         #/lab.local/_Governed/Accounts/User
         #test account
-        New-ADUser -Name 't_labber' `
+        New-ADUser -Name 't_test' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'Tester' `
         -Surname 'Labber' `
         -Description 'tireless sculptor - Tester' `
-        -DisplayName 't_labber' `
+        -DisplayName 't_test' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
-        -SamAccountName 't_labber' `
-        -UserPrincipalName "t_labber@$ADDomain.$TLD"
+        -Path "ou=TEST,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -SamAccountName 't_test' `
+        -UserPrincipalName "t_test@$ADDomain.$TLD"
 
         New-ADUser -Name 't_andrzej' `
         -AccountPassword $CryptoPwd `
@@ -901,7 +938,7 @@ function Create-TestUserObject {
         -DisplayName 't_temp' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=TEST,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 't_temp' `
         -UserPrincipalName "t_temp@$ADDomain.$TLD"
 
@@ -915,7 +952,7 @@ function Create-TestUserObject {
         -DisplayName 't_cvad' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 't_cvad' `
         -UserPrincipalName "t_cvad@$ADDomain.$TLD"
 
@@ -929,7 +966,7 @@ function Create-TestUserObject {
         -DisplayName 't_cvad-cpm' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 't_cvad-cpm' `
         -UserPrincipalName "t_cvad-cpm@$ADDomain.$TLD"
 
@@ -943,23 +980,23 @@ function Create-TestUserObject {
         -DisplayName 't_rds' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=MS,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 't_rds' `
         -UserPrincipalName "t_rds@$ADDomain.$TLD"
 
-        New-ADUser -Name 't_ms-fslogix' `
+        New-ADUser -Name 't_fslogix' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'Tester' `
         -Surname 'FSLogix - Tester' `
         -Description '' `
-        -DisplayName 't_ms-fslogix' `
+        -DisplayName 't_fslogix' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
-        -SamAccountName 't_ms-fslogix' `
-        -UserPrincipalName "t_ms-fslogix@$ADDomain.$TLD"
+        -Path "ou=MS,ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 't_fslogix' `
+        -UserPrincipalName "t_fslogix@$ADDomain.$TLD"
     }
 
     END {
@@ -997,19 +1034,19 @@ function Create-UserObject {
     PROCESS {
         #/lab.local/_Governed/Accounts/User
         #user account
-        New-ADUser -Name 'u_labber' `
+        New-ADUser -Name 'u_test' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'User' `
         -Surname 'Labber' `
         -Description 'tireless sculptor - User' `
-        -DisplayName 't_labber' `
+        -DisplayName 't_test' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
-        -SamAccountName 'u_labber' `
-        -UserPrincipalName "u_labber@$ADDomain.$TLD"
+        -Path "ou=TEST,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
+        -SamAccountName 'u_test' `
+        -UserPrincipalName "u_test@$ADDomain.$TLD"
 
         New-ADUser -Name 'u_andrzej' `
         -AccountPassword $CryptoPwd `
@@ -1049,7 +1086,7 @@ function Create-UserObject {
         -DisplayName 'u_temp' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=TEST,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'u_temp' `
         -UserPrincipalName "u_temp@$ADDomain.$TLD"
 
@@ -1063,7 +1100,7 @@ function Create-UserObject {
         -DisplayName 'u_cvad' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'u_cvad' `
         -UserPrincipalName "u_cvad@$ADDomain.$TLD"
 
@@ -1077,7 +1114,7 @@ function Create-UserObject {
         -DisplayName 'u_cvad-cpm' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=CVAD,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'u_cvad-cpm' `
         -UserPrincipalName "u_cvad-cpm@$ADDomain.$TLD"
 
@@ -1091,23 +1128,23 @@ function Create-UserObject {
         -DisplayName 'u_rds' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -Path "ou=MS,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
         -SamAccountName 'u_rds' `
         -UserPrincipalName "u_rds@$ADDomain.$TLD"
 
-        New-ADUser -Name 'u_ms-fslogix' `
+        New-ADUser -Name 'u_fslogix' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
         -ChangePasswordAtLogon $False `
         -GivenName 'User' `
         -Surname 'FSLogix - User' `
         -Description '' `
-        -DisplayName 'u_ms-fslogix' `
+        -DisplayName 'u_fslogix' `
         -Enabled $True `
         -PasswordNeverExpires $True `
-        -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
-        -SamAccountName 'u_ms-fslogix' `
-        -UserPrincipalName "u_ms-fslogix@$ADDomain.$TLD"
+        -Path "ou=MS,ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD"  `
+        -SamAccountName 'u_fslogix' `
+        -UserPrincipalName "u_fslogix@$ADDomain.$TLD"
     }
 
     END {
@@ -1368,12 +1405,12 @@ function Configure-GroupMembershipAdminAccount {
         Add-ADGroupMember -Identity 'Service-L-NetScaler-OU' -Members 'NetScaler-Admin'
 
         #CVAD-Admin
-        #Add-ADGroupMember -Identity 'CVAD-Admin' -Members $adminAccount
+        Add-ADGroupMember -Identity 'CVAD-Admin' -Members $adminAccount
 
-        #Add-ADGroupMember -Identity 'Service-G-CVAD-Admin' -Members 'CVAD-Admin'
-        #Add-ADGroupMember -Identity 'Service-G-CVAD-CustomAdmin' -Members 'CVAD-CustomAdmin'
-        #Add-ADGroupMember -Identity 'Service-L-CVAD-Admin' -Members 'Service-G-CVAD-Admin'
-        #Add-ADGroupMember -Identity 'Service-L-CVAD-OU' -Members 'CVAD-Admin'
+        Add-ADGroupMember -Identity 'Service-G-CVAD-Admin' -Members 'CVAD-Admin'
+        Add-ADGroupMember -Identity 'Service-G-CVAD-CustomAdmin' -Members 'CVAD-CustomAdmin'
+        Add-ADGroupMember -Identity 'Service-L-CVAD-Admin' -Members 'Service-G-CVAD-Admin'
+        Add-ADGroupMember -Identity 'Service-L-CVAD-OU' -Members 'CVAD-Admin'
 
         #CVAD-HelpDeskAdmin
         #Add-ADGroupMember -Identity 'CVAD-HelpDeskAdmin' -Members $adminAccount
@@ -1382,6 +1419,14 @@ function Configure-GroupMembershipAdminAccount {
         #Add-ADGroupMember -Identity 'Service-G-CVAD-CustomAdmin' -Members 'CVAD-CustomAdmin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-Admin' -Members 'Service-G-CVAD-Admin'
         #Add-ADGroupMember -Identity 'Service-L-CVAD-OU' -Members 'CVAD-Admin'
+
+        #CVAD-AppLayering-Admin
+        Add-ADGroupMember -Identity 'CVAD-AppLayering-Admin' -Members $adminAccount
+
+        Add-ADGroupMember -Identity 'Service-G-CVAD-AppLayering-Admin' -Members 'CVAD-AppLayering-Admin'
+        Add-ADGroupMember -Identity 'Service-G-CVAD-AppLayering-CustomAdmin' -Members 'CVAD-AppLayering-CustomAdmin'
+        Add-ADGroupMember -Identity 'Service-L-CVAD-AppLayering-Admin' -Members 'Service-G-CVAD-AppLayering-Admin'
+        Add-ADGroupMember -Identity 'Service-L-CVAD-AppLayering-OU' -Members 'CVAD-AppLayering-Admin'
 
         #CVAD-Broker-Admin
         Add-ADGroupMember -Identity 'CVAD-Broker-Admin' -Members $adminAccount
@@ -1648,8 +1693,7 @@ function Configure-ADDelegation {
     }
 
     PROCESS {
-        Set-ADDelegation -OUPath "ou=APPV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -GroupName 'Service-L-MS-MGMT-OU'
-        
+        Set-ADDelegation -GroupName 'Service-L-MS-APPV-OU' -OUPath "ou=APPV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         Set-ADDelegation -GroupName 'Service-L-MS-MGMT-OU' -OUPath "ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         Set-ADDelegation -GroupName 'Service-L-MS-ADCS-OU' -OUPath "ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         Set-ADDelegation -GroupName 'Service-L-MS-DHCP-OU' -OUPath "ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
@@ -1659,6 +1703,9 @@ function Configure-ADDelegation {
 
         Set-ADDelegation -GroupName 'Service-L-Hypervisor-OU' -OUPath "ou=Hypervisor,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         Set-ADDelegation -GroupName 'Service-L-NetScaler-OU' -OUPath "ou=NetScaler,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+
+        # TODO: apply this logic to RDS OU
+        Set-ADDelegation -GroupName 'Service-L-CVAD-OU' -OUPath "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
         Set-ADDelegation -GroupName 'Service-L-CVAD-AppLayering-OU' -OUPath "ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         Set-ADDelegation -GroupName 'Service-L-CVAD-Broker-OU' -OUPath "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
@@ -1704,4 +1751,4 @@ Configure-GroupMembershipAdminAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 Configure-GroupMembershipUserAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 Configure-GroupMembershipTestAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 
-Configure-ADDelegation -Verbose
+Configure-ADDelegation
