@@ -22,7 +22,8 @@ function Create-Ou
     )
 
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Ou"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -247,7 +248,8 @@ function Create-Ou
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 
     
@@ -279,6 +281,8 @@ function Create-DelegationGroup
     BEGIN {
         #TODO: Add AD group nesting, this way: Add-ADGroupMember -Identity 'Service-L-MS-SQL-Admin' -Members 'Service-G-MS-SQL-Admin'
         #TODO: Add AD group nesting, this way: Add-ADGroupMember -Identity 'Service-L-MS-SQL-Admin' -Members 'Service-G-MS-SQL-Admin'
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create DelegationGroup"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -426,7 +430,8 @@ function Create-DelegationGroup
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -454,7 +459,8 @@ function Create-RoleBasedGroup
     )
 
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create RoleBasedGroup"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -527,7 +533,8 @@ function Create-RoleBasedGroup
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -555,7 +562,8 @@ function Create-ApplicationGroup
     )
 
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Application Group"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -568,7 +576,8 @@ function Create-ApplicationGroup
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 
 }
@@ -596,7 +605,8 @@ function Create-ComputerObject
     )
 
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Computer Object"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -613,7 +623,8 @@ function Create-ComputerObject
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -640,7 +651,8 @@ function Create-AdminAndUserObject
         $TLD
     )
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Admin and User Object"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -697,7 +709,8 @@ function Create-AdminAndUserObject
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -725,7 +738,8 @@ function Create-ServiceAccount
     )
 
     BEGIN {
-
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create Service Account"
+        $startDate = Get-Date
     }
 
     PROCESS {
@@ -788,7 +802,7 @@ function Create-ServiceAccount
         -PasswordNeverExpires $True `
         -Path "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" `
         -SamAccountName 'svc-CVAD-Director' `
-        –UserPrincipalName "svc-CVAD-Director@$ADDomain.$TLD"
+        -UserPrincipalName "svc-CVAD-Director@$ADDomain.$TLD"
 
         #ADCS / PKI
         New-ADUser -Name 'svc-MS-ADCS' `
@@ -805,7 +819,8 @@ function Create-ServiceAccount
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
     
@@ -832,6 +847,9 @@ function Configure-GroupMemebrship {
     )
 
     BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership"
+        $startDate = Get-Date
+
         #/lab.local/_Governed/Accounts/Admin
         $adminAccount = get-aduser -searchbase "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
         
@@ -1006,7 +1024,8 @@ function Configure-GroupMemebrship {
     }
 
     END {
-
+            $endDate = Get-Date
+            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }    
 }
 
