@@ -57,15 +57,17 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'Broker' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Broker related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/Director
         New-ADOrganizationalUnit -Name 'Director' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Director related Admin groups' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Groups/Admin/Services/CVAD/FAS
+        New-ADOrganizationalUnit -Name 'FAS' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Federated Authentication Services related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/LIC
         New-ADOrganizationalUnit -Name 'LIC' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for License Server related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/PVS
         New-ADOrganizationalUnit -Name 'PVS' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Citrix Provisioning Services related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/CVAD/StoreFront
         New-ADOrganizationalUnit -Name 'StoreFront' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for StoreFront related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/FAS
-        New-ADOrganizationalUnit -Name 'FAS' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Federated Authentication Services related Admin groups' -ProtectedFromAccidentalDeletion $false
-        
+        #/lab.local/_Governed/Groups/Admin/Services/CVAD/WEM
+        New-ADOrganizationalUnit -Name 'WEM' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Federated Authentication Services related Admin groups' -ProtectedFromAccidentalDeletion $false
+
         ##/lab.local/_Governed/Groups/Admin/Services/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Functional Services related Admin groups' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Groups/Admin/Services/MS/MGMT
@@ -361,6 +363,9 @@ function Create-DelegationGroup
         New-ADGroup -Name 'Service-L-NetScaler-OU' -SamAccountName 'Service-L-NetScaler-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-NetScaler-OU' -Path "ou=NetScaler,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - NetScaler OU and Policies'
 
         #"ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
+        ## those two are not needed as there are: /lab.local/_Governed/Groups/Admin
+        ##New-ADGroup -Name 'Service-G-CVAD-HelpDeskAdmin' -SamAccountName 'Service-G-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - HelpDesk Administrators'
+        ##New-ADGroup -Name 'Service-L-CVAD-HelpDeskAdmin' -SamAccountName 'Service-L-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - HelpDesk Administrators'
 
         ##"ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-CVAD-AppLayering-Admin' -SamAccountName 'Service-G-CVAD-AppLayering-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-AppLayering-Admin' -Path "ou=AppLayering,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Full Permissions - Citrix AppLayering'
@@ -374,8 +379,6 @@ function Create-DelegationGroup
         New-ADGroup -Name 'Service-L-CVAD-Broker-Admin' -SamAccountName 'Service-L-CVAD-Broker-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-Admin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Full Permissions - Citrix Broker'
         New-ADGroup -Name 'Service-G-CVAD-Broker-CustomAdmin' -SamAccountName 'Service-G-CVAD-Broker-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-Broker-CustomAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Constrained Permissions - Citrix Broker Administrators'
         New-ADGroup -Name 'Service-L-CVAD-Broker-CustomAdmin' -SamAccountName 'Service-L-CVAD-Broker-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-CustomAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Constrained Permissions - Citrix Broker Administrators'
-        New-ADGroup -Name 'Service-G-CVAD-Broker-HelpDeskAdmin' -SamAccountName 'Service-G-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - HelpDesk Administrators'
-        New-ADGroup -Name 'Service-L-CVAD-Broker-HelpDeskAdmin' -SamAccountName 'Service-L-CVAD-Broker-HelpDeskAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-HelpDeskAdmin' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - HelpDesk Administrators'
         New-ADGroup -Name 'Service-L-CVAD-Broker-OU' -SamAccountName 'Service-L-CVAD-Broker-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-Broker-OU' -Path "ou=Broker,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - Citrix Broker OU and Policies'
 
         ##"ou=Director,ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
