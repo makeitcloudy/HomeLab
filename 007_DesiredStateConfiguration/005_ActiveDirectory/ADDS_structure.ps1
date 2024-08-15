@@ -472,11 +472,11 @@ function Create-RoleBasedGroupAdmin
 
     #/lab.local/_Governed/Groups/Admin
     #MS-MGMT-Admin - role Group for Management Server Administrators with Full Permissions
-    New-ADGroup -Name 'MS-MGMT-Admin' -SamAccountName 'MS-MGMT-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MGMT-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Layer - grants Admin Permissions'
+    New-ADGroup -Name 'MS-MGMT-Admin' -SamAccountName 'MS-MGMT-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MGMT-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Plane - grants Admin Permissions'
     
     #/lab.local/_Governed/Groups/Admin
     #MS-MgmtNode-CustomAdmin - Role Group for Management Server Administrators with Restricted set of privileges
-    New-ADGroup -Name 'MS-MgmtNode-CustomAdmin' -SamAccountName 'MS-MgmtNode-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MgmtNode-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Node - grants Constrained Admin Permissions'
+    New-ADGroup -Name 'MS-MGMT-CustomAdmin' -SamAccountName 'MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MGMT-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Plane - grants Constrained Admin Permissions'
     
     New-ADGroup -Name 'MS-ADCS-Admin' -SamAccountName 'MS-ADCS-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-ADCS-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - ADCS/PKI - grants Admin Permissions'
     New-ADGroup -Name 'MS-ADCS-CustomAdmin' -SamAccountName 'MS-ADCS-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-ADCS-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - ADCS/PKI - grants Constrained Admin Permissions'
