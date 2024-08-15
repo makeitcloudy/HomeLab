@@ -56,7 +56,7 @@ function Create-Ou
         #/lab.local/_Governed/Accounts/Test/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/Test/MS
-        New-ADOrganizationalUnit -Name 'MS' -Path "ou=TEst,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
+        New-ADOrganizationalUnit -Name 'MS' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Accounts/Test/TEST
         New-ADOrganizationalUnit -Name 'TEST' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
 
@@ -133,8 +133,10 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'Director' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Director computer objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Citrix/CVAD/FAS
         New-ADOrganizationalUnit -Name 'FAS' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Fas computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/LicenseServer
-        New-ADOrganizationalUnit -Name 'LicenseServer' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD LicenseServer computer objects' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Infra/Citrix/CVAD/LIC
+        New-ADOrganizationalUnit -Name 'LIC' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD LicenseServer computer objects' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Infra/Citrix/CVAD/PVS
+        New-ADOrganizationalUnit -Name 'PVS' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD LicenseServer computer objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Citrix/CVAD/StoreFront
         New-ADOrganizationalUnit -Name 'StoreFront' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD StoreFront computer objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Citrix/CVAD/WEM
@@ -198,6 +200,8 @@ function Create-Ou
         New-ADOrganizationalUnit -Name 'DHCP' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for DHCP infra objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Microsoft/FileServer
         New-ADOrganizationalUnit -Name 'FileServer' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for File Server infra objects' -ProtectedFromAccidentalDeletion $false
+        #/lab.local/_Governed/Infra/Microsoft/MGMT
+        New-ADOrganizationalUnit -Name 'MGMT' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Management Plane infra objects' -ProtectedFromAccidentalDeletion $false
         #/lab.local/_Governed/Infra/Microsoft/SQL
         New-ADOrganizationalUnit -Name 'SQL' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for SQL infra objects' -ProtectedFromAccidentalDeletion $false
 
@@ -1728,28 +1732,31 @@ function Configure-ADDelegation {
 
 function Create-GPO {
     param (
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,Position=0)]
+        [ValidateNotNullOrEmpty()]
         [string]$GpoName,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,Position=1)]
+        [ValidateNotNullOrEmpty()]
         [string]$Ou,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,Position=2)]
+        [ValidateNotNullOrEmpty()]
         [string]$AdGroup,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true,Position=3)]
+        [ValidateNotNullOrEmpty()]
         [ValidateSet(0, 1, 2, 3, 4)]
-        [int]$Permissions
+        [int]$Permissions,
+
+        [Parameter(Mandatory=$true,Position=4)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Comment
     )
 
     try {
         # Create the GPO
-        New-Gpo -Name $GpoName -Comment "This is a test GPO v1.0"
-        #Write-Host "GPO '$temp_GPO_NAME' created successfully."
-
-        # Link the GPO to the OU
-        New-GPLink -Name $GpoName -Target $Ou -LinkEnabled Yes
-        #Write-Host "GPO linked to OU '$OU_PATH' successfully."
+        New-Gpo -Name $GpoName -Comment $Comment | New-GPLink -Target $Ou -LinkEnabled Yes | Out-Null
 
         # Set GPO permissions based on the provided level
         switch ($Permissions) {
@@ -1799,4 +1806,13 @@ Configure-GroupMembershipTestAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 
 Configure-ADDelegation
 
-Create-GPO -GpoName 'test' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4
+#/lab.local/_Governed/Infra/Citrix/CVAD
+## GPO: Citrix VDA Computer Settings -> User configuration settings disabled
+## GPO: Citrix VDA Users All (including Admins) -> Computer configuration settings disabled
+## GPO: Citrix VDA USers Non-Admins (lockdown) -> Computer configuration settings disabled
+
+# https://www.carlstalhood.com/group-policy-objects-vda-computer-settings/
+
+Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
+Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'Computer configuration settings disabled'
+Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'Computer configuration settings disabled'
