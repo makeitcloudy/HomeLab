@@ -1724,13 +1724,27 @@ function Configure-ADDelegation {
     }
 
     END {
-            $endDate = Get-Date
-            Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 
 }
 
 function Create-GPO {
+    <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER GpoName
+    .PARAMETER Ou
+    .PARAMETER AdGroup
+    .PARAMETER Permission
+    .PARAMETER Comment
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true,Position=0)]
         [ValidateNotNullOrEmpty()]
@@ -1747,35 +1761,43 @@ function Create-GPO {
         [Parameter(Mandatory=$true,Position=3)]
         [ValidateNotNullOrEmpty()]
         [ValidateSet(0, 1, 2, 3, 4)]
-        [int]$Permissions,
+        [int]$Permission,
 
         [Parameter(Mandatory=$true,Position=4)]
         [ValidateNotNullOrEmpty()]
         [string]$Comment
     )
 
-    try {
-        # Create the GPO
-        New-Gpo -Name $GpoName -Comment $Comment | New-GPLink -Target $Ou -LinkEnabled Yes | Out-Null
-
-        # Set GPO permissions based on the provided level
-        switch ($Permissions) {
-            0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group }
-            1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group }
-            2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group }
-            3 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEdit -TargetName $AdGroup -TargetType Group }
-            4 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEditDeleteModifySecurity -TargetName $AdGroup -TargetType Group }
-        }
-        #Write-Host "Permissions set successfully for group '$AD_GROUP'."
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Create GPO, and link it to the OU"
+        $startDate = Get-Date
     }
-    catch {
-        Write-Error "An error occurred: $_"
+
+    PROCESS {
+        try {
+            # Create the GPO
+            New-Gpo -Name $GpoName -Comment $Comment | New-GPLink -Target $Ou -LinkEnabled Yes | Out-Null
+    
+            # Set GPO permissions based on the provided level
+            switch ($Permissions) {
+                0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group }
+                1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group }
+                2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group }
+                3 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEdit -TargetName $AdGroup -TargetType Group }
+                4 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEditDeleteModifySecurity -TargetName $AdGroup -TargetType Group }
+            }
+            #Write-Host "Permissions set successfully for group '$AD_GROUP'."
+        }
+        catch {
+            Write-Error "An error occurred: $_"
+        }
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
-
-# Example execution:
-# Create-GPO -GPO_NAME "TestGPO" -OU_PATH "OU=TestOU,DC=domain,DC=com" -AD_GROUP "TestGroup" -PERMISSIONS_ON_GPO_FOR_THAT_GROUP 2
-
 
 #endregion
 
@@ -1813,6 +1835,6 @@ Configure-ADDelegation
 
 # https://www.carlstalhood.com/group-policy-objects-vda-computer-settings/
 
-Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
-Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'Computer configuration settings disabled'
-Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4 -Comment 'Computer configuration settings disabled'
+Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
+Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
+Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
