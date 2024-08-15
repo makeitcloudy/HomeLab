@@ -1781,7 +1781,7 @@ function Create-GPO {
             New-Gpo -Name $GpoName -Comment $Comment | New-GPLink -Target $Ou -LinkEnabled Yes | Out-Null
     
             # Set GPO permissions based on the provided level
-            switch ($Permissions) {
+            switch ($Permission) {
                 0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group }
                 1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group }
                 2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group }
