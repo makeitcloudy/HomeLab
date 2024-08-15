@@ -670,19 +670,11 @@ function Create-ApplicationGroup
     }
 
 }
-    
+
+<#
 function Create-ComputerObject
 {
-    <#
-    .SYNOPSIS
-    .DESCRIPTION
-    .PARAMETER ADDomain
-    .PARAMETER TLD
-    .EXAMPLE
-    .EXAMPLE
-    .LINK
-    #>
-
+    [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
         [ValidateNotNullOrEmpty()]
@@ -716,6 +708,8 @@ function Create-ComputerObject
             Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
     }
 }
+#>
+
 
 function Create-AdminUserObject
 {
@@ -1302,7 +1296,7 @@ function Configure-GroupMemberShipServiceAccount {
         $startDate = Get-Date
 
         #/lab.local/_Governed/Accounts/Service
-        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+        $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -SearchScope OneLevel -Filter *
     }
 
     PROCESS {
@@ -1342,7 +1336,8 @@ function Configure-GroupMembershipAdminAccount {
         $startDate = Get-Date
 
         #/lab.local/_Governed/Accounts/Admin
-        $adminAccount = get-aduser -searchbase "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+        # only from this OU, not subOU's
+        $adminAccount = Get-ADUser -SearchBase "OU=Admin,OU=Accounts,OU=_Governed,DC=$ADDomain,DC=$TLD" -SearchScope OneLevel -Filter *
     }
 
     PROCESS {
@@ -1503,6 +1498,66 @@ function Configure-GroupMembershipAdminAccount {
     }    
 }
 
+function Configure-GroupMembershipSecurityAccount {
+   <#
+    .SYNOPSIS
+    .DESCRIPTION
+    .PARAMETER ADDomain
+    .PARAMETER TLD
+    .EXAMPLE
+    .EXAMPLE
+    .LINK
+    #>
+        
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true,Position=0,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $ADDomain,
+
+        [Parameter(Mandatory=$true,Position=1,ValueFromPipelineByPropertyName=$true)]
+        [ValidateNotNullOrEmpty()]
+        $TLD
+    )
+
+    BEGIN {
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Admin account"
+        $startDate = Get-Date
+
+        #/lab.local/_Governed/Accounts/Admin
+        # only from this OU, not subOU's
+        $adminAccount = Get-ADUser -SearchBase "OU=Admin,OU=Accounts,OU=_Governed,DC=$ADDomain,DC=$TLD" -SearchScope OneLevel -Filter *
+    }
+
+    PROCESS {
+        # 1. Users are placed into Global Groups
+        # 2. Global Groups are placed into Domain Local Groups
+        # 3. Domain Local Groups are assigned permissions to resources
+
+        #Security-L-Administrators
+        # GPO should grant Security-L-Administrators permissions of Administrators on target nodes, then anyone who is a member of Security-L-Administrators
+        # automatically becomes local administrator on the target VM
+        Add-ADGroupMember -Identity 'Security-L-Administrators' -Members 'Security-G-Administrators'
+
+        #Security-G-Administrators
+        # CVAD-Admin are members of local administrators on the target nodes
+        Add-ADGroupMember -Identity 'Security-G-Administrators' -Members 'CVAD-Admin'
+
+        #Security-L-RemoteDesktopUsers
+        # GPO should grant Security-L-RemoteDesktopUsers permissions of Remote Desktop Users on target nodes, then anyone who is a member of Security-L-RemoteDesktopUsers
+        # have enough privileges to login to the target VM via RDP
+        Add-ADGroupMember -Identity 'Security-L-RemoteDesktopUsers' -Members 'Security-G-RemoteDesktopUsers'
+
+        #Security-G-RemoteDesktopUsers
+        Add-ADGroupMember -Identity 'Security-G-RemoteDesktopUsers' -Members 'CVAD-User'
+    }
+
+    END {
+        $endDate = Get-Date
+        Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Time taken: $("{0:%d}d:{0:%h}h:{0:%m}m:{0:%s}s" -f ((New-TimeSpan -Start $startDate -End $endDate)))"
+    } 
+}
+
 function Configure-GroupMembershipUserAccount {
     <#
     .SYNOPSIS
@@ -1530,11 +1585,15 @@ function Configure-GroupMembershipUserAccount {
         $startDate = Get-Date
 
         #/lab.local/_Governed/Accounts/User
-        $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
+        $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -SearchScope OneLevel -Filter *
     }
 
     PROCESS {
-    
+        #CVAD-Admin
+        # it adds each user 
+        # CVAD-User - belongs to Security-G-RemoteDesktopUsers
+        # Security-G-RemoteDesktopUsers - should be configured on the GPO level to become a member of the Remote Desktop Users on the target VM
+        Add-ADGroupMember -Identity 'CVAD-User' -Members $userAccount    
     }
 
     END {
@@ -1782,11 +1841,11 @@ function Create-GPO {
     
             # Set GPO permissions based on the provided level
             switch ($Permission) {
-                0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group }
-                1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group }
-                2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group }
-                3 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEdit -TargetName $AdGroup -TargetType Group }
-                4 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEditDeleteModifySecurity -TargetName $AdGroup -TargetType Group }
+                0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group | Out-Null}
+                1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group | Out-Null}
+                2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group | Out-Null}
+                3 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEdit -TargetName $AdGroup -TargetType Group | Out-Null}
+                4 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEditDeleteModifySecurity -TargetName $AdGroup -TargetType Group | Out-Null}
             }
             #Write-Host "Permissions set successfully for group '$AD_GROUP'."
         }
@@ -1816,7 +1875,7 @@ Create-RoleBasedGroupAdmin -ADDomain $ADDomain -TLD $TLD -Verbose
 Create-RoleBasedGroupUser -ADDomain $ADDomain -TLD $TLD -Verbose
 
 Create-ApplicationGroup -ADDomain $ADDomain -TLD $TLD -Verbose
-Create-ComputerObject -ADDomain $ADDomain -TLD $TLD -Verbose
+#Create-ComputerObject -ADDomain $ADDomain -TLD $TLD -Verbose
 
 Create-AdminUserObject -ADDomain $ADDomain -TLD $TLD -Verbose
 Create-TestUserObject -ADDomain $ADDomain -TLD $TLD -Verbose
@@ -1837,6 +1896,15 @@ Configure-ADDelegation
 
 # https://www.carlstalhood.com/group-policy-objects-vda-computer-settings/
 
-Create-GPO -GpoName 'Citrix VDA Computer Settings' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs'
-Create-GPO -GpoName 'Citrix VDA Users All (including Admins)' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
-Create-GPO -GpoName 'Citrix VDA USers Non-Admins (lockdown)' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-G-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled'
+## Service-L-CVAD-Admin - contains all groups agregating Citrix Admins
+## CVAD-Admin - contains all users who should become Citrix Admins
+
+Create-GPO -GpoName 'Citrix VDA - C - Computer Settings' -Ou "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-L-CVAD-Admin' -Permission 4 -Comment 'This particular GPO usually applies to all Delivery Groups, and thus should be linked to the parent OU. Or you can link it to Delivery Group-specific sub-OUs' -Verbose
+Create-GPO -GpoName 'Citrix VDA - U - Users All (including Admins)' -Ou "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-L-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled' -Verbose
+Create-GPO -GpoName 'Citrix VDA - U -Users Non-Admins (lockdown)' -Ou "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-L-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled' -Verbose
+
+Create-GPO -GpoName 'Citrix Infra - C - Computer Settings' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-L-CVAD-Admin' -Permission 4 -Comment 'User configuration settings disabled' -Verbose
+Create-GPO -GpoName 'Citrix Infra - U - User Settings' -Ou "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -AdGroup 'Service-L-CVAD-Admin' -Permission 4 -Comment 'Computer configuration settings disabled' -Verbose
+
+Write-Output "1. configure GPO so the Security-L-RemoteDesktopUsers - becomes the member of Remote Desktop Users group on the target nodes"
+Write-Output "2. configure GPO so the Security-L-Administrators - becomes the member of local Administrators group on the target nodes"
