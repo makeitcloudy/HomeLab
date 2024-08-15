@@ -1726,6 +1726,50 @@ function Configure-ADDelegation {
 
 }
 
+function Create-GPO {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$GpoName,
+
+        [Parameter(Mandatory=$true)]
+        [string]$Ou,
+
+        [Parameter(Mandatory=$true)]
+        [string]$AdGroup,
+
+        [Parameter(Mandatory=$true)]
+        [ValidateSet(0, 1, 2, 3, 4)]
+        [int]$Permissions
+    )
+
+    try {
+        # Create the GPO
+        New-Gpo -Name $GpoName -Comment "This is a test GPO v1.0"
+        #Write-Host "GPO '$temp_GPO_NAME' created successfully."
+
+        # Link the GPO to the OU
+        New-GPLink -Name $GpoName -Target $Ou -LinkEnabled Yes
+        #Write-Host "GPO linked to OU '$OU_PATH' successfully."
+
+        # Set GPO permissions based on the provided level
+        switch ($Permissions) {
+            0 { Set-GPPermission -Name $GpoName -PermissionLevel None -TargetName $AdGroup -TargetType Group }
+            1 { Set-GPPermission -Name $GpoName -PermissionLevel GpoRead -TargetName $AdGroup -TargetType Group }
+            2 { Set-GPPermission -Name $GpoName -PermissionLevel GpoApply -TargetName $AdGroup -TargetType Group }
+            3 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEdit -TargetName $AdGroup -TargetType Group }
+            4 { Set-GPPermission -Name $GpoName -PermissionLevel GpoEditDeleteModifySecurity -TargetName $AdGroup -TargetType Group }
+        }
+        #Write-Host "Permissions set successfully for group '$AD_GROUP'."
+    }
+    catch {
+        Write-Error "An error occurred: $_"
+    }
+}
+
+# Example execution:
+# Create-GPO -GPO_NAME "TestGPO" -OU_PATH "OU=TestOU,DC=domain,DC=com" -AD_GROUP "TestGroup" -PERMISSIONS_ON_GPO_FOR_THAT_GROUP 2
+
+
 #endregion
 
 $ADDomain = 'lab'
@@ -1754,3 +1798,5 @@ Configure-GroupMembershipUserAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 Configure-GroupMembershipTestAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 
 Configure-ADDelegation
+
+Create-GPO -GpoName 'test' -Ou 'ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD' -AdGroup 'Service-G-CVAD-Admin' -Permissions 4
