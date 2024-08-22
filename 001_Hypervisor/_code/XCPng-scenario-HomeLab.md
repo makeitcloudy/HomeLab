@@ -131,6 +131,12 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 
 ## ADCS
 
+### Windows - Server OS - 1x Web Server - Core
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:16' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_WebServer_CDP_AIA'
+```
+
 ### Windows - Server OS - 1x ADCS Root - DesktopExperience | 1x ADCS Sub - Core
 
 ```bash
