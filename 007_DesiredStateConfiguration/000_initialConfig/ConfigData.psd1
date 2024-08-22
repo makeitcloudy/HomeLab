@@ -58,6 +58,14 @@
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
+        @{
+            Role                        = 'CertificationServices'
+            NodeName                    = 'adcsws'
+            IPV4Address                 = '10.2.134.16/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            #DomainName                  = 'lab.local'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
         # File Server
         #ISCSI
         @{
