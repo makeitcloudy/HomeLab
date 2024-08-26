@@ -134,7 +134,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 ### Windows - Server OS - 1x Web Server - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:16' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_WebServer_CDP_AIA'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:16' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_WebEnrollment'
 ```
 
 ### Windows - Server OS - 1x ADCS Root - DesktopExperience | 1x ADCS Sub - Core
@@ -142,7 +142,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 ```bash
 /opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:18' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:17' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_SubCA'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:17' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_IssuingCA'
 
 ```
 
@@ -150,6 +150,9 @@ Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
+xe vm-cd-eject vm='c1_adcsWS'
+xe vm-cd-insert vm='c1_adcsWS' cd-name='Citrix_Hypervisor_821_tools.iso'
+
 xe vm-cd-eject vm='c1_adcsR'
 xe vm-cd-insert vm='c1_adcsR' cd-name='Citrix_Hypervisor_821_tools.iso'
 
@@ -167,6 +170,7 @@ Then follow up with (initial configuration - VMTools installation script, which 
 
 
 ```bash
+xe vm-cd-eject vm='c1_adcsWS'
 xe vm-cd-eject vm='c1_adcsR'
 xe vm-cd-eject vm='c1_adcsS'
 
@@ -176,6 +180,7 @@ Proceed with the code
 
 * adcsR - is a root CA - do not add it to the domain
 * adcsS - is subCA - add it to the domain
+* adcsWS - is Web Enrollment - add it to the domain
 
 ```powershell
 https://makeitcloudy.pl/windows-DSC/
