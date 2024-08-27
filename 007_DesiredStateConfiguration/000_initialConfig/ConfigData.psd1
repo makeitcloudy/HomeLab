@@ -71,7 +71,7 @@
         @{
             Role                        = 'IscsiServer'
             NodeName                    = 'iscsi'
-            IPV4Address                 = '10.2.134.29/24'
+            IPV4Address                 = '10.2.134.21/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -92,7 +92,7 @@
         @{
             Role                        = 'FileServer'
             NodeName                    = 'fs01'
-            IPV4Address                 = '10.2.134.21/24'
+            IPV4Address                 = '10.2.134.22/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -105,7 +105,7 @@
         @{
             Role                        = 'FileServer'
             NodeName                    = 'fs02'
-            IPV4Address                 = '10.2.134.22/24'
+            IPV4Address                 = '10.2.134.23/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
