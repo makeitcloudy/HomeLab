@@ -2,6 +2,12 @@
 
 This vm is for the situation where there is no NAS which can serve the iscsi for the clusters built on top
 
+1. provision iscsi, fs01, fs02
+2. install vmtools
+3. add missing disks
+4. add to the domain (first remove existing computer object if the object has been moved to different ou)
+5. push the DSC configuration
+
 ## ToDo
 
 The file servers forms a cluster, so the disks added to the vm should not be initialized and formated.  
@@ -234,8 +240,8 @@ if ($interface) {
 ```powershell
 # run on the management node - under privileged account
 # the fs01,fs02, iscsi are domain joined
-# iscsi storage interface = 10.0.0.3
-# fs01,fs02 storage interface = 10.0.0.1 , 10.0.0.2
+# iscsi storage interface = 10.47.42.21
+# fs01,fs02 storage interface = 10.47.42.22 , 10.47.42.22
 
 # once the disk is added to the iscsi node - do NOT initialize the disk, do NOT format it
 # do it only when it is added to the cluster
