@@ -3,65 +3,50 @@
 This vm is for the situation where there is no NAS which can serve the iscsi for the clusters built on top
 
 1. provision iscsi, fs01, fs02
-2. install vmtools
+2. eject installation media, install vmtools, eject vmtools media
+
+```code
+#copy the content of the code and run it over RDP on the target node
+https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1
+```
 3. add missing disks
-4. add to the domain (first remove existing computer object if the object has been moved to different ou)
-5. push the DSC configuration
+
+```code
+https://github.com/makeitcloudy/HomeLab/blob/feature/001_Hypervisor/_code/XCPng-scenario-HomeLab.md#file-services
+```
+
+4. push the DSC configuration - add to the domain (first remove existing computer object if the object has been moved to different ou)
+
+```powershell
+#run code on the target node
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+```
+
+5*. firewall openings for the management node - mmc etc - group policy update does not work by default from mgmt node towards filers like it does for the adcs infra where the firewall openings are done
 
 ## ToDo
 
-The file servers forms a cluster, so the disks added to the vm should not be initialized and formated.  
-The initialization and bringing them online, should take place from the management server.  
-Then later on those should be formated from the clustering console it seems.
+* The file servers forms a cluster, so the disks added to the vm should not be initialized and formated.  
+* The initialization and bringing them online, should take place from the management server.  
+* Then later on those should be formated from the clustering console it seems.
+* The firewall openings - arrange them with Desired State Configuration - during the initial configuration
+* integrate the code to change the ip address based on mac address -into the AutomatedLab module
 
 ## Assumption
 
 * The iscsi, fs01, fs02 are already in the domain
 
-1. The configuration takes place on the management node
-2. From the management node via Invoke-Command against the target nodes (all in the domain) the actuall configuration take place
-3. 
-
-https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1
-
-```powershell
-#Start-Process PowerShell_ISE -Verb RunAs
-# run in elevated PowerShell session
-#region initialize variables
-$scriptName     = 'InitialConfig.ps1'
-$uri            = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode',$scriptName -join '/'
-$path           = "$env:USERPROFILE\Documents"
-$outFile        = Join-Path -Path $path -ChildPath $scriptName
-
-
-# set the execution policy
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Bypass -Force
-
-#region download function Get-GitModule.ps1
-Set-Location -Path $path
-Invoke-WebRequest -Uri $uri -OutFile $outFile -Verbose
-#psedit $outFile
-
-# load function into memory
-. $outFile
-#psedit $outfile
-Set-InitialConfiguration -Verbose
-
-```
-
-Join the machine to the domain
-
-```powershell
-$domainName = 'lab.local'  #FIXME
-Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
-```
-
 ## FS01, FS02 - Networking
+
+* add network interfaces on XCP-ng for Storage and cluster network traffic
 
 ### FS01 - Networking - Storage
 
 ```code
+# images are stored within this location
 # /home/piotrek/Git/Private/LabTrainings/plural/path_server_2019/chapter0-iscsi-fileCluster/
+# todo - those should be synchronized
 ```
 
 ```powershell
@@ -235,7 +220,7 @@ if ($interface) {
 }
 ```
 
-
+Run code on management node
 
 ```powershell
 # run on the management node - under privileged account
@@ -257,8 +242,8 @@ Install-WindowsFeature -ComputerName iscsi FS-FileServer,FS-iSCSITarget-Server -
 Invoke-Command -ComputerName fs01,fs02 -ScriptBlock {Set-Service msiscsi -StartupType Automatic; Start-Service msiscsi}
 Invoke-Command -ComputerName fs01,fs02 -ScriptBlock {Get-InitiatorPort}
 #copy NodeAddress to clipboard
-iqn.1991-05.com.microsoft:fs01.lab.local
-iqn.1991-05.com.microsoft:fs02.lab.local
+## iqn.1991-05.com.microsoft:fs01.lab.local
+##iqn.1991-05.com.microsoft:fs02.lab.local
 #NodeAddress
 
 #storage network interface on iscsi node IP address equals to 10.47.42.29
@@ -283,3 +268,15 @@ Invoke-Command -ComputerName fs01,fs02 -ScriptBlock {Get-IscsiSession | Register
 
 
 ```
+
+2024.08.27 - once this is done continue with the Server Manager
+as shown on the pictures: /home/piotrek/Git/Private/LabTrainings/plural/path_server_2019/chapter0-iscsi-fileCluster/
+
+and plural: https://app.pluralsight.com/ilx/video-courses/c033d707-4404-49d0-ac5e-30a417b93c3c/c4b345d5-9b07-4c2f-a6d1-e40900a8a2a1/6c32b6b9-4428-4331-869e-1a6e862fce31
+
+here comes the screens from: /home/piotrek/Git/Private/LabTrainings/plural/path_server_2019/chapter0-iscsi-fileCluster/attempt_1/  
+not sure about the fact that on the second filer, it is not read only  
+
+## Create Cluster
+
+https://app.pluralsight.com/ilx/video-courses/c033d707-4404-49d0-ac5e-30a417b93c3c/c4b345d5-9b07-4c2f-a6d1-e40900a8a2a1/d70279d0-787e-46eb-b2d0-ad3b2866afff
