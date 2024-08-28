@@ -18,6 +18,7 @@
 * *Citrx License Server* - **not supported** on server core
 * *Citrix Storefront* - **not supported** on server core, requires desktop experience
 * Citrix Broker, Director, WEM - **supported** on server core
+* [Running Citrix on Windows Server Core](https://xenappblog.com/2018/citrix-windows-server-core/) - xenappblog
 * [Citrix WEM on Server core](https://jkindon.com/citrix-wem-on-windows-server-core/) - JKindon
 * [Deployment Guide: Citrix Workspace Environment Management](https://community.citrix.com/tech-zone/build/deployment-guides/citrix-workspace-environment-management/) - citrix community
 
