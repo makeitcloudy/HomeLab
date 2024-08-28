@@ -12,3 +12,14 @@
 * https://stevenlemonier.fr/citrix-logon-simulator/ -  #cirix logon simulator
 
 * [Invuika](https://www.inuvika.com/free-trial/) - Citrix alternative
+
+## Notes
+
+* *Citrx License Server* - **not supported** on server core
+* *Citrix Storefront* - **not supported** on server core, requires desktop experience
+* Citrix Broker, Director, WEM - **supported** on server core
+* [Citrix WEM on Server core](https://jkindon.com/citrix-wem-on-windows-server-core/) - JKindon
+* [Deployment Guide: Citrix Workspace Environment Management](https://community.citrix.com/tech-zone/build/deployment-guides/citrix-workspace-environment-management/) - citrix community
+
+* [IT Support Skills LAB: Setup Office 365 LAB & Connect On-Prem Active Directory](https://www.youtube.com/watch?v=MdynjUdKQvU)
+* [FSLogix RDS](https://woshub.com/fslogix-profiles-windows-server-rds/)
