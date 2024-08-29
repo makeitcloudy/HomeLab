@@ -18,9 +18,17 @@
 * *Citrx License Server* - **not supported** on server core
 * *Citrix Storefront* - **not supported** on server core, requires desktop experience
 * Citrix Broker, Director, WEM - **supported** on server core
+* Citrix PVS Server - 2203 CU5 and later - supported on server core
+* [PVS 2203 CU5 - supported on server core](https://docs.citrix.com/en-us/provisioning/2203-ltsr/whats-new/cumulative-update-5.html)
+* [PVS Unattended installation](https://dennisspan.com/citrix-provisioning-server-unattended-installation/) - Dennis Span
 * [Running Citrix on Windows Server Core](https://xenappblog.com/2018/citrix-windows-server-core/) - xenappblog
 * [Citrix WEM on Server core](https://jkindon.com/citrix-wem-on-windows-server-core/) - JKindon
 * [Deployment Guide: Citrix Workspace Environment Management](https://community.citrix.com/tech-zone/build/deployment-guides/citrix-workspace-environment-management/) - citrix community
 
 * [IT Support Skills LAB: Setup Office 365 LAB & Connect On-Prem Active Directory](https://www.youtube.com/watch?v=MdynjUdKQvU)
 * [FSLogix RDS](https://woshub.com/fslogix-profiles-windows-server-rds/)
+
+### Citrix - Hypervisor
+
+* [CTX131239 - Supported Hypervisors for CVAD - MCS - PVS](https://support.citrix.com/s/article/CTX131239-supported-hypervisors-for-citrix-virtual-apps-and-desktops-mcs-and-citrix-provisioning-pvs?language=en_US)
+

@@ -1,5 +1,8 @@
 # Unattended Way
 
+
+* [Another Media Tool release, this one with USB support](https://oofhours.com/2024/08/29/another-media-tool-release-this-one-with-usb-support/) - Out of Office Hours
+
 ## Links
 
 * **Windows Customized default by Aaron Parker** - https://twitter.com/stealthpuppy/status/1470912249464197128
