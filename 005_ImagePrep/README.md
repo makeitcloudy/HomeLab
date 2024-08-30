@@ -2,6 +2,7 @@
 
 
 * [Another Media Tool release, this one with USB support](https://oofhours.com/2024/08/29/another-media-tool-release-this-one-with-usb-support/) - Out of Office Hours
+* [OSDBuilder – Reference Image on Steroids](https://citrixguyblog.com/2019/03/19/osdbuilder-reference-image-on-steroids/) - citrixguyblog - **MDT** workbench on top
 
 ## Links
 
