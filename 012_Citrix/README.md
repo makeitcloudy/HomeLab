@@ -13,6 +13,20 @@
 
 * [Invuika](https://www.inuvika.com/free-trial/) - Citrix alternative
 
+## SQL
+
+* https://www.derekseaman.com/2014/09/sql-2014-always-ag-pt-1-introduction.html
+* * https://www.derekseaman.com/2014/09/sql-2014-always-ag-pt-3-service-accounts.html - SQL 2014 Always On AG - gMSA
+
+## gMSA
+
+* https://www.carlwebster.com/provisioning-services-7-and-server-2012-group-managed-service-account/
+* https://magicalyak.wordpress.com/2016/03/01/citrix-pvs-and-managed-service-accounts-gmsa/
+
+## FSLogix
+
+* https://woshub.com/fslogix-profiles-windows-server-rds/
+
 ## Notes
 
 * *Citrx License Server* - **not supported** on server core
