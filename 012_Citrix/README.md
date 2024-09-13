@@ -23,6 +23,8 @@
 * https://www.carlwebster.com/provisioning-services-7-and-server-2012-group-managed-service-account/
 * https://magicalyak.wordpress.com/2016/03/01/citrix-pvs-and-managed-service-accounts-gmsa/
 
+Logon credentials to studio, have sysadmin permissions to SQL, dbs will be created automatically.
+
 ## FSLogix
 
 * https://woshub.com/fslogix-profiles-windows-server-rds/
@@ -41,6 +43,15 @@
 
 * [IT Support Skills LAB: Setup Office 365 LAB & Connect On-Prem Active Directory](https://www.youtube.com/watch?v=MdynjUdKQvU)
 * [FSLogix RDS](https://woshub.com/fslogix-profiles-windows-server-rds/)
+
+### Citrix license server - clustering (IIS Clustering)
+
+* https://learn.microsoft.com/en-us/troubleshoot/developer/webapps/iis/www-authentication-authorization/configure-w3svc-wsfc
+
+### Master Image cration
+
+* https://www.meinekleinefarm.net/my-first-time-citrix-machine-creation-services-mcs/
+* [MCS Catalog Creation Process Overview](https://app.pluralsight.com/ilx/video-courses/5cf70ef5-fd22-4724-a8e4-18644a8612e7/606cbb62-a727-4e4c-afdf-79b9efc8f1d9/97b23079-5e6f-4228-8692-5368f06acad3)
 
 ### Citrix - Hypervisor
 
