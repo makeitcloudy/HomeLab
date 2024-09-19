@@ -1,10 +1,8 @@
 # Storage
 
-Consider splitting your regular network for the VM traffic, that you end up with different possible scenarios for deployment (especially if you are interested with ending up with more than one site), and some specific use cases.
+Consider splitting your regular network for the VM traffic, that you end up with different possible scenarios for deployment (especially if you are interested with ending up with more than one site), and some specific use cases.  
+Centos is used for NFS and SMB share, as well as the place where the self signed certificates will be created.  
 
-Centos is used for NFS and SMB share, as well as the place where the self signed certificates will be created.
-
-## Storage
 + Once the XCP-ng or XenServer is installed (XCP-ng in context of Citrix will give you the benefit of straight access to the hypervisor API) to take the benefit of the MCS (Machine Creation Services), apart from that XCP-ng is free of charge. The only drawback I can imagine at the moment is the fact that by default, XCP-ng does not come with the XenTools for windows, so you have deal with it by utilizing the one prepared by Citrix.
 
 ## Storage for your ISO

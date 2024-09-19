@@ -17,27 +17,3 @@ To get some deeper network skills, you may support yourself with:
 As it goes for the firewall the pfsense will do the trick, it can be virtualized, the only drawback is that it is fully GUI based, and I'm not aware about configuring it via console, so you have to click to make it work. But the firewall configuration in home lab does not tend to be extremely dynamic, so you'll survive. The benefits are there, for instance it can terminate your VPN, as with the Citrix ADC Freemium, if I'm not wrong you'll get option to setup 5 VPN SSL connections, where with pfsense you can get the OpenVPN, and other functionalities which comes with the plugins or are available out of the box.<br>
 There are people who are towards OPNSense and there is also other groups who opt for VyOS or IpFire.<br>
 Choise is your's, for a starting point you may rely on a firewall built into the operating system, and have it configured with DSC, which is very convinient way of managing the rules.
-
-## Links
-
-* https://help.mikrotik.com/docs/
-* https://mikrotik.com/support
-* https://wiki.mikrotik.com/wiki/Main_Page
-
-### Links - Azure VPN
-
-* https://cloudtips.nl/configuring-azure-vpn-s2s-on-mikrotik-hex-s-0ab5ed0bea6e
-* https://github.com/brianveldman/azure-bicep
-
-```code
-https://forum.mikrotik.com/viewtopic.php?t=203943
-I have a slightly different setup, my local public Ip is a dynamic adress, is it also possible to connect a site-to-site vpn with azure?
-I'd probably suggest a different solution, like running CHR in Azure and using L2TP/IPSEC rather than using Azure VPN Gateway.
-```
-
-## Firewall
-
-* OpenBSD FAQ - https://www.openbsd.org/faq/pf/
-* Lawrence - pfsense playlist - https://www.youtube.com/watch?v=fsdm5uc_LsU&list=PLjGQNuuUzvmsuXCoj6g6vm1N-ZeLJso6o
-
-very much of this can be applied to the homelab, especially when there is no physical devices and the functions like firewall, routing, VPN are virtualized.
