@@ -36,7 +36,7 @@ Node (Desktop) used to manage the environment and author DSC configurations - St
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'c1_w10mgmt_MgmtNode'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:19' --StorageName 'node4_ssd_sdg' --VmDescription 'c1_w10mgmt_MgmtNode'
 
 # After installation eject CD
 # Run on XCP-ng
@@ -80,10 +80,10 @@ Set-InitialConfigDsc -NewComputerName $NodeName -Option Domain -Verbose
 
 ```bash
 # First domain controller - server core
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dc01_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dc01_ADDS_core'
 
 # Second domain controller - server core
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dc02_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dc02_ADDS_core'
 
 ```
 
@@ -134,15 +134,15 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/006_CoreServices/
 ### Windows - Server OS - 1x Web Server - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:16' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_WebEnrollment'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:16' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_WebEnrollment'
 ```
 
 ### Windows - Server OS - 1x ADCS Root - DesktopExperience | 1x ADCS Sub - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:18' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:18' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_adcsR_ADCS_RootCA'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:17' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_IssuingCA'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:17' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsS_ADCS_IssuingCA'
 
 ```
 
@@ -202,9 +202,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:11' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:11' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCP_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:12' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:12' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCP_core'
 
 ```
 
@@ -251,7 +251,7 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ### Windows - Server OS - 1x File Server - iSCSI target - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:29' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_iscsi_Filer'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:29' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_iscsi_Filer'
 
 ```
 
@@ -320,9 +320,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ### Windows - Server OS - 2x File Server - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_fs01_Filer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_fs01_Filer_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_fs02_Filer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_fs02_Filer_core'
 
 ```
 
@@ -394,9 +394,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019'
 
 ```
 
@@ -539,9 +539,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 SQL Server can be installed on Windows Server Core.
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:31' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_sql01_SQL2019_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:32' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_sql02_SQL2019_core'
 
 ```
 
@@ -553,7 +553,7 @@ Node (Desktop) used to update the Desktop Based image OS'es
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdD' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_osdD_imageFactory'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdD' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:48' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_osdD_imageFactory'
 
 # After installation eject CD
 # Run on XCP-ng
@@ -573,7 +573,7 @@ Node (Desktop) used to update the Server Based image OS'es
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_osdS_imageFactory'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_osdS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:47' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_osdS_imageFactory'
 
 # After installation eject CD
 # Run on XCP-ng
@@ -592,7 +592,7 @@ xe vm-cd-insert vm='c1_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 ### Windows - Server OS - 1x cloud connector - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_cc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cc01_cloudConnector'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_cc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cc01_cloudConnector'
 
 ```
 
@@ -604,7 +604,7 @@ Node (Server) used to test the DSC code for joining the domain
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_tst00' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:C1:00:24' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_Tst'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_tst00' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:C1:00:24' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_Tst'
 
 # After installation eject CD
 # Run on XCP-ng
@@ -623,7 +623,7 @@ Node (Server) used to test the DSC code for joining the domain
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'c1_tst00c' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1 - VLAN1342 untagged - up' --Mac '2A:47:41:D9:00:25' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_Tst_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'c1_tst00c' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:D9:00:25' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22_Tst_core'
 
 # After installation eject CD
 # Run on XCP-ng
