@@ -17,7 +17,7 @@
             #Thumbprint          = 'EF280FE58AC3E1B8BC211122866248282B44E7D8'          # The thumbprint of the Encryption Certificate used to decrypt the credentials on target node. The value of the thumbprint changes each time the Self Signed Certificate is generated
 
         },
-        # DHCP Server
+        # MGMT Node
         @{
             Role                        = 'MgmtNode'
             NodeName                    = 'w10mgmt'
@@ -29,14 +29,15 @@
         @{
             Role                        = 'DHCPServer'
             NodeName                    = 'dhcp01'
-            IPV4Address                 = '10.2.134.11/24'
+            IPV4Address                 = '10.2.134.6/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
+        # DHCP Server
         @{
             Role                        = 'DHCPServer'
             NodeName                    = 'dhcp02'
-            IPV4Address                 = '10.2.134.12/24'
+            IPV4Address                 = '10.2.134.7/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
@@ -46,14 +47,14 @@
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'adcsr'
-            IPV4Address                 = '10.2.134.18/24'
+            IPV4Address                 = '10.2.134.3/24'
             DefaultGatewayAddress       = '10.2.134.254'            
             #JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'adcss'
-            IPV4Address                 = '10.2.134.17/24'
+            IPV4Address                 = '10.2.134.4/24'
             DefaultGatewayAddress       = '10.2.134.254'
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -61,7 +62,7 @@
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'adcsws'
-            IPV4Address                 = '10.2.134.16/24'
+            IPV4Address                 = '10.2.134.5/24'
             DefaultGatewayAddress       = '10.2.134.254'
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -71,7 +72,7 @@
         @{
             Role                        = 'IscsiServer'
             NodeName                    = 'iscsi'
-            IPV4Address                 = '10.2.134.29/24'
+            IPV4Address                 = '10.2.134.13/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -92,7 +93,7 @@
         @{
             Role                        = 'FileServer'
             NodeName                    = 'fs01'
-            IPV4Address                 = '10.2.134.21/24'
+            IPV4Address                 = '10.2.134.11/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -105,7 +106,7 @@
         @{
             Role                        = 'FileServer'
             NodeName                    = 'fs02'
-            IPV4Address                 = '10.2.134.22/24'
+            IPV4Address                 = '10.2.134.12/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -121,7 +122,7 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql01'
-            IPV4Address            = '10.2.134.31/24'
+            IPV4Address            = '10.2.134.8/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
 
@@ -149,7 +150,7 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'sql02'
-            IPV4Address            = '10.2.134.32/24'
+            IPV4Address            = '10.2.134.9/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
