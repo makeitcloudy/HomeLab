@@ -1,5 +1,10 @@
 # Unattended
 
+```powershell
+# show if vm is bios (legacy) or uefi
+$env:firmware_type
+```
+
 ## Links
 
 #unattended xml files for the LTSC iso's which can be downloaded from the microsoft webpage
