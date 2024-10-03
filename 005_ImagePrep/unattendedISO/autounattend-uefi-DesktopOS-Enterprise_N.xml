@@ -2,8 +2,8 @@
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
     <!--
     This unattended file was tested on
-	Windows 10 - Enterprise
-	It is BIOS.
+	Windows 10 - Enterprise N
+	It is UEFI.
 	For more information about unattended.xml please refer too
     http://technet.microsoft.com/en-us/library/cc722132(v=ws.10).aspx
 	to decode the password use following url
@@ -25,43 +25,49 @@
                 <Disk wcm:action="add">
                     <CreatePartitions>
                         <CreatePartition wcm:action="add">
-                            <Type>Primary</Type>
-                            <Size>512</Size>
                             <Order>1</Order>
-                        </CreatePartition>
-                        <CreatePartition wcm:action="add">
-                            <Extend>false</Extend>
+                            <Size>500</Size>
                             <Type>Primary</Type>
-                            <Size>1024</Size>
-                            <Order>2</Order>
                         </CreatePartition>
                         <CreatePartition wcm:action="add">
+                            <Order>2</Order>
+                            <Size>100</Size>
+                            <Type>EFI</Type>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Order>3</Order>
+                            <Size>16</Size>
+                            <Type>MSR</Type>
+                        </CreatePartition>
+                        <CreatePartition wcm:action="add">
+                            <Order>4</Order>
                             <Extend>true</Extend>
                             <Type>Primary</Type>
-                            <Order>3</Order>
                         </CreatePartition>
                     </CreatePartitions>
                     <ModifyPartitions>
                         <ModifyPartition wcm:action="add">
-                            <Active>true</Active>
                             <Format>NTFS</Format>
-                            <Label>System</Label>
-                            <Extend>false</Extend>
+                            <Label>WinRE</Label>
                             <Order>1</Order>
                             <PartitionID>1</PartitionID>
+                            <TypeID>DE94BBA4-06D1-4D40-A16A-BFD50179D6AC</TypeID>
                         </ModifyPartition>
                         <ModifyPartition wcm:action="add">
-                            <Format>NTFS</Format>
-                            <TypeID>0x27</TypeID>
-                            <Label>Recovery</Label>
+                            <Format>FAT32</Format>
+                            <Label>System</Label>
                             <Order>2</Order>
                             <PartitionID>2</PartitionID>
                         </ModifyPartition>
                         <ModifyPartition wcm:action="add">
-                            <Format>NTFS</Format>
-                            <Letter>C</Letter>
                             <Order>3</Order>
                             <PartitionID>3</PartitionID>
+                        </ModifyPartition>
+                        <ModifyPartition wcm:action="add">
+                            <Order>4</Order>
+                            <PartitionID>4</PartitionID>
+                            <Format>NTFS</Format>
+                            <Letter>C</Letter>
                             <Label>Windows</Label>
                         </ModifyPartition>
                     </ModifyPartitions>
@@ -74,18 +80,16 @@
                 <OSImage>
                     <InstallTo>
                         <DiskID>0</DiskID>
-                        <PartitionID>3</PartitionID>
+                        <PartitionID>4</PartitionID>
                     </InstallTo>
                 </OSImage>
             </ImageInstall>
             <UserData>
                 <ProductKey>
                     <!-- 
-                    KMS activation key: https://docs.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys
-                    Windows Enterprise N LTSC and LTSB 2021,2019: 92NFX-8DJQP-P6BBQ-THF9C-7CG2H
-                    Windows Enterprise N 10 Semi-Annual Channel : DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4
-                    <Key>92NFX-8DJQP-P6BBQ-THF9C-7CG2H</Key>-->
-                    <Key>NPPR9-FWDCX-D2C8J-H872K-2YT43</Key>
+					KMS activation key: https://docs.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys
+					-->
+					<Key>DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</Key>
                 </ProductKey>
                 <AcceptEula>true</AcceptEula>
                 <Organization>lab</Organization>
@@ -96,7 +100,7 @@
         <component name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <TimeZone>Central European Standard Time</TimeZone>
         </component>
-        <component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<component name="Microsoft-Windows-TerminalServices-LocalSessionManager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <fDenyTSConnections>false</fDenyTSConnections>
         </component>
         <component name="Networking-MPSSVC-Svc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
@@ -112,7 +116,7 @@
             <SecurityLayer>2</SecurityLayer>
             <UserAuthentication>1</UserAuthentication>
         </component>
-        <component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+		<component name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
         </component>
     </settings>
@@ -136,13 +140,17 @@
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Password>
-                            <Value>Password1$</Value>
-                            <PlainText>true</PlainText>
+							<!--
+							AutoLogon user: labUser
+							Based64bit encoded Password: labUser1!
+							-->
+                            <Value>bABhAGIAVQBzAGUAcgAxACEAUABhAHMAcwB3AG8AcgBkAA==</Value>
+                            <PlainText>false</PlainText>
                         </Password>
-                        <Description>labuser</Description>
-                        <DisplayName>labuser</DisplayName>
+                        <Description>labUser</Description>
+                        <DisplayName>labUser</DisplayName>
                         <Group>Administrators</Group>
-                        <Name>labuser</Name>
+                        <Name>labUser</Name>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>

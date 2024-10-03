@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <unattend xmlns="urn:schemas-microsoft-com:unattend">
-    <!--
-    This unattended file was tested on
-	Windows 10
-	It is UEFI.
-	For more information about unattended.xml please refer too
-    http://technet.microsoft.com/en-us/library/cc722132(v=ws.10).aspx
-	to decode the password use following url
-	https://www.base64decode.org/
-    -->
     <settings pass="windowsPE">
         <component name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
             <SetupUILanguage>
@@ -85,12 +76,6 @@
                 </OSImage>
             </ImageInstall>
             <UserData>
-                <ProductKey>
-                    <!-- 
-					KMS activation key: https://docs.microsoft.com/en-us/windows-server/get-started/kms-client-activation-keys
-					-->
-					<Key>DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</Key>
-                </ProductKey>
                 <AcceptEula>true</AcceptEula>
                 <Organization>lab</Organization>
             </UserData>
@@ -140,17 +125,13 @@
                 <LocalAccounts>
                     <LocalAccount wcm:action="add">
                         <Password>
-							<!--
-							AutoLogon user: labUser
-							Based64bit encoded Password: labUser1!
-							-->
-                            <Value>bABhAGIAVQBzAGUAcgAxACEAUABhAHMAcwB3AG8AcgBkAA==</Value>
-                            <PlainText>false</PlainText>
+                            <Value>Password1$</Value>
+                            <PlainText>true</PlainText>
                         </Password>
                         <Description>labUser</Description>
                         <DisplayName>labUser</DisplayName>
                         <Group>Administrators</Group>
-                        <Name>labUser</Name>
+                        <Name>labuser</Name>
                     </LocalAccount>
                 </LocalAccounts>
             </UserAccounts>

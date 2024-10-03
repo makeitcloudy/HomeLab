@@ -608,52 +608,76 @@ xe vm-cd-insert vm='b2_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-## Misc
+## Image Factory - Testing VM against the prepared ISO files
 
-### Windows - Server OS - Initial Configuration - Testing Node - Desktop Experience
-
-Node (Server) used to test the DSC code for joining the domain
-
-```bash
-# Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_tst00' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:24' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_Tst'
-
-# After installation eject CD
-# Run on XCP-ng
-# eject installation media
-xe vm-cd-eject vm=c1_Tst00
-
-## Add Disk
-# run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'b2_tst00' --storageName 'node4_hdd_sdc_lsi' --diskName 'b2_Tst00_dataDrive' --deviceId 4 --diskGB 20  --description 'w2k22_dataDrive'
-
-```
-
-### Windows - Desktop OS - Testing Node - w10 - UEFI
-
-Node (Server) used to test the DSC code for joining the domain
+### Windows - Server OS - Core - Testing Node - w2k22 - BIOS
 
 ```bash
 # Run on XCP-ng
 #Windows 10 (64-bit)
 #Windows Server 2022 (64-bit)
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_w10Test' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'Win10 x64 21H2 19044.2604.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:25' --StorageName 'node4_ssd_sdg' --VmDescription 'w10_2410_updates_uefi'
-
-# After installation eject CD
-# Run on XCP-ng
-# eject installation media
-xe vm-cd-eject vm=b2_w10Test
-
-## Add Disk
-# run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'b2_tst00c' --storageName 'node4_hdd_sdc_lsi' --diskName 'b2_tst00c_dataDrive' --deviceId 4 --diskGB 20  --description 'w2k22_dataDrive'
-
+/opt/scripts/vm_create_bios.sh --VmName 'b2_w2k22cb' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_core_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22dtc_2410_core_untd_nprmpt_bios'
 ```
 
-### Windows - Desktop OS - Testing Node - w10 - BIOS
+### Windows - Server OS - Core - Testing Node - w2k22 - UEFI
 
 ```bash
-/opt/scripts/vm_create_bios.sh --VmName 'b2_w10BTest' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'Win10 x64 21H2 19044.2604_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:24' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_2410_updates_bios'
-````
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w2k22cu' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:22' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22dtc_2410_core_untd_nprmpt_uefi'
+```
 
-/opt/scripts/vm_create_bios.sh --VmName 'b2_w10BBTest' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'Win10 x64 21H2 19044.2604_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w10_2410_updates_bios'
+### Windows - Server OS - Desktop Experience - w2k22 - BIOS
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_bios.sh --VmName 'b2_w2k22db' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:23' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22dtc_2410_desktopExperience_untd_nprmpt_bios'
+```
+
+### Windows - Server OS - Desktop Experience - w2k22 - UEFI
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w2k22du' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:24' --StorageName 'node4_ssd_sdg' --VmDescription 'w2k22dtc_2410_desktopExperience_untd_nprmpt_bios'
+```
+
+### Windows - Desktop OS - w10 - 22H2 - BIOS
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_bios.sh --VmName 'b2_w10b22H2' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_22H2_2410_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:25' --StorageName 'node4_ssd_sdd' --VmDescription 'w10_22H2_2410_updates_bios'
+```
+
+### Windows - Desktop OS - w10 - 22H2 - UEFI
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w10u22H2' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_22H2_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:26' --StorageName 'node4_ssd_sde' --VmDescription 'w10_22H2_2410_updates_uefi'
+```
+
+### Windows - Desktop OS - w10 - 21H2 - BIOS
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_bios.sh --VmName 'b2_w10b21H2' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'Win10 x64 21H2 19044.2604_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:27' --StorageName 'node4_ssd_sdd' --VmDescription 'w10-21H2_2410_updates_bios'
+```
+
+### Windows - Desktop OS - w10 - 21H2 - UEFI
+
+```bash
+# Run on XCP-ng
+#Windows 10 (64-bit)
+#Windows Server 2022 (64-bit)
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w10u21H2' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'Win10 x64 21H2 19044.2604_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:28' --StorageName 'node4_ssd_sde' --VmDescription 'w10-21H2_2410_updates_uefi'
+```

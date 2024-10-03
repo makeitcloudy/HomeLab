@@ -5,6 +5,10 @@
 $env:firmware_type
 ```
 
+## XenTools
+
+* [XenTools, XenCenter](https://www.xenserver.com/downloads) - downloads
+
 ## Links
 
 #unattended xml files for the LTSC iso's which can be downloaded from the microsoft webpage
