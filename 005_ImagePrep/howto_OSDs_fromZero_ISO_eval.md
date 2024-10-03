@@ -78,6 +78,9 @@ Get-Module -Name OSDBuilder,OSD,OSDSUS -ListAvailable | Select-Object Version,Na
 New-Item -ItemType Directory -Path 'O:\ISO\notUpdated_evalCenter\w2k19'
 New-Item -ItemType Directory -Path 'O:\ISO\notUpdated_evalCenter\w2k22'
 
+# grab the windows server iso
+#https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022
+
 New-Item -ItemType Directory -Path 'O:\ISO\updated_unattended\w2k19'
 New-Item -ItemType Directory -Path 'O:\ISO\updated_unattended\w2k22'
 
