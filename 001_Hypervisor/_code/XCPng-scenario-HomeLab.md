@@ -610,7 +610,7 @@ xe vm-cd-insert vm='b2_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ## Image Factory - Testing VM against the prepared ISO files
 
-### Windows - Server OS - Core - Testing Node - w2k22 - BIOS
+### Windows - Server OS - Core - w2k22 - BIOS
 
 ```bash
 # Run on XCP-ng
@@ -619,7 +619,7 @@ xe vm-cd-insert vm='b2_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 /opt/scripts/vm_create_bios.sh --VmName 'b2_w2k22cb' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_core_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:21' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22dtc_2410_core_untd_nprmpt_bios'
 ```
 
-### Windows - Server OS - Core - Testing Node - w2k22 - UEFI
+### Windows - Server OS - Core  - w2k22 - UEFI
 
 ```bash
 # Run on XCP-ng

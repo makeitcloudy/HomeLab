@@ -69,6 +69,8 @@ function Set-InitialConfiguration {
         # https://support.citrix.com/article/CTX222533/install-xenserver-tools-silently
         # https://forums.lawrencesystems.com/t/xcp-ng-installing-citrix-agent-for-windows-via-powershell-script/13855
 
+        
+
         $PackageName = 'managementagent-9.3.3-x64'
         $InstallerType = 'msi'
 
@@ -78,7 +80,11 @@ function Set-InitialConfiguration {
         Get-ChildItem -Path $opticalDriveLetter
         #$Source = "$($PackageName)" + "." + "$($InstallerType)"
         $UnattendedArgs = "/i $(Join-Path -Path $opticalDriveLetter -ChildPath $($PackageName,$InstallerType -join '.')) ALLUSERS=1 /Lv $LogApp /quiet /norestart ADDLOCAL=ALL"
-
+        
+        # https://docs.xenserver.com/en-us/citrix-hypervisor/vms/windows/vm-tools.html
+        #$PackageName = 'managementagentx64'
+        #$UnattendedArgs = "/i $(Join-Path -Path $opticalDriveLetter -ChildPath $($PackageName,$InstallerType -join '.')) ALLUSERS=1 /Lv $LogApp /quiet /norestart ADDLOCAL=ALL ALLOWAUTOUPDATE=YES ALLOWDRIVERINSTALL=YES ALLOWDRIVERUPDATE=NO IDENTIFYAUTOUPDATE=NO"
+        
         # should throw 0
         (Start-Process msiexec.exe -ArgumentList $UnattendedArgs -Wait -Passthru).ExitCode
         #Invoke-Item -Path $LogApp
