@@ -21,23 +21,7 @@
         @{
             Role                        = 'MgmtNode'
             NodeName                    = 'w10mgmt'
-            IPV4Address                 = '10.2.134.19/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        },
-        # DHCP Server
-        @{
-            Role                        = 'DHCPServer'
-            NodeName                    = 'dhcp01'
-            IPV4Address                 = '10.2.134.6/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        },
-        # DHCP Server
-        @{
-            Role                        = 'DHCPServer'
-            NodeName                    = 'dhcp02'
-            IPV4Address                 = '10.2.134.7/24'
+            IPV4Address                 = '10.2.134.249/24'                            # IP address should go hand in hand with Firewall rules for the remote management, otherwise it wont work
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
@@ -67,54 +51,21 @@
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
-        # File Server
-        #ISCSI
+        # DHCP Server
         @{
-            Role                        = 'IscsiServer'
-            NodeName                    = 'iscsi'
-            IPV4Address                 = '10.2.134.13/24'
+            Role                        = 'DHCPServer'
+            NodeName                    = 'dhcp01'
+            IPV4Address                 = '10.2.134.6/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-
-            #storage - quorum drive
-            QuorumDriveQDiskId          = 1                #order in which the drives are added to the target node ipacts Id
-            QuorumDriveQLetter          = 'Q'
-            QuorumDriveQFSFormat        = 'NTFS'
-            QuorumDriveQFSLabel         = 'Quorum'
-            QuorumDriveQPartitionStyle  = 'GPT'
-
-            #storage - vhdx drive - for cluster setup
-            VhdxDriveZDiskId            = 2
-            VhdxDriveZLetter            = 'Z'
-            VhdxDriveZFSFormat          = 'NTFS'
-            VhdxDriveZFSLabel           = 'Storage_vhdx'
-            VhdxDriveZPartitionStyle    = 'GPT'
         },
+        # DHCP Server
         @{
-            Role                        = 'FileServer'
-            NodeName                    = 'fs01'
-            IPV4Address                 = '10.2.134.11/24'
+            Role                        = 'DHCPServer'
+            NodeName                    = 'dhcp02'
+            IPV4Address                 = '10.2.134.7/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-
-            DataDrivePDiskId            = 1    #Profile Disk
-            DataDrivePLetter            = 'P'  #Profile Disk Letter
-            DataDrivePFSFormat          = 'NTFS'
-            DataDrivePFSLabel           = 'Profiles'
-            DataDrivePPartitionStyle    = 'GPT'
-        },
-        @{
-            Role                        = 'FileServer'
-            NodeName                    = 'fs02'
-            IPV4Address                 = '10.2.134.12/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-
-            DataDrivePDiskId            = 1    #Profile Disk
-            DataDrivePLetter            = 'P'  #Profile Disk Letter
-            DataDrivePFSFormat          = 'NTFS'
-            DataDrivePFSLabel           = 'Profiles'
-            DataDrivePPartitionStyle    = 'GPT'
         },
         # SQL Server
         @{
@@ -170,6 +121,55 @@
             SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
             InstallManagementTools = $False
             CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
-        }        
+        }
+        # File Server
+        @{
+            Role                        = 'FileServer'
+            NodeName                    = 'fs01'
+            IPV4Address                 = '10.2.134.11/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
+            DataDrivePDiskId            = 1    #Profile Disk
+            DataDrivePLetter            = 'P'  #Profile Disk Letter
+            DataDrivePFSFormat          = 'NTFS'
+            DataDrivePFSLabel           = 'Profiles'
+            DataDrivePPartitionStyle    = 'GPT'
+        },
+        @{
+            Role                        = 'FileServer'
+            NodeName                    = 'fs02'
+            IPV4Address                 = '10.2.134.12/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
+            DataDrivePDiskId            = 1    #Profile Disk
+            DataDrivePLetter            = 'P'  #Profile Disk Letter
+            DataDrivePFSFormat          = 'NTFS'
+            DataDrivePFSLabel           = 'Profiles'
+            DataDrivePPartitionStyle    = 'GPT'
+        },
+        #ISCSI
+        @{
+            Role                        = 'IscsiServer'
+            NodeName                    = 'iscsi'
+            IPV4Address                 = '10.2.134.13/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+
+            #storage - quorum drive
+            QuorumDriveQDiskId          = 1                #order in which the drives are added to the target node ipacts Id
+            QuorumDriveQLetter          = 'Q'
+            QuorumDriveQFSFormat        = 'NTFS'
+            QuorumDriveQFSLabel         = 'Quorum'
+            QuorumDriveQPartitionStyle  = 'GPT'
+
+            #storage - vhdx drive - for cluster setup
+            VhdxDriveZDiskId            = 2
+            VhdxDriveZLetter            = 'Z'
+            VhdxDriveZFSFormat          = 'NTFS'
+            VhdxDriveZFSLabel           = 'Storage_vhdx'
+            VhdxDriveZPartitionStyle    = 'GPT'
+        }
     )
 }
