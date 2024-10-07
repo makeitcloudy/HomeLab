@@ -188,15 +188,94 @@
         },
         #endregion
 
-        #region - 'Role = CtxMisc'
-        #CTX01 - lic server, broker, director, storefront
+        #region - 'Role = ctxBroker'
         @{
-            Role                        = 'ctxMisc'
-            NodeName                    = 'b2-ctx01'
+            Role                        = 'ctxBroker'
+            NodeName                    = 'b2-ctx01B'
+            IPV4Address                 = '10.2.134.33/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxBroker'
+            NodeName                    = 'b2-ctx02B'
+            IPV4Address                 = '10.2.134.34/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        #endregion
+
+        #region - 'Role = ctxFas'
+        @{
+            Role                        = 'ctxFas'
+            NodeName                    = 'b2-ctx01F'
+            IPV4Address                 = '10.2.134.37/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxFas'
+            NodeName                    = 'b2-ctx02F'
+            IPV4Address                 = '10.2.134.38/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        #endregion
+
+        #region - 'Role = ctxLicenseServer'
+        @{
+            Role                        = 'ctxLicenseServer'
+            NodeName                    = 'b2-ctx01L'
             IPV4Address                 = '10.2.134.31/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxLicenseServer'
+            NodeName                    = 'b2-ctx02L'
+            IPV4Address                 = '10.2.134.32/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        #endregion
+
+        #region - 'Role = ctxProvisioningServer'
+        @{
+            Role                        = 'ctxProvisioningServer'
+            NodeName                    = 'b2-ctx01P'
+            IPV4Address                 = '10.2.134.41/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxProvisioningServer'
+            NodeName                    = 'b2-ctx02P'
+            IPV4Address                 = '10.2.134.42/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        #endregion
+
+        #region - 'Role = ctxStoreFront'
+        @{
+            Role                        = 'ctxStoreFront'
+            NodeName                    = 'b2-ctx01S'
+            IPV4Address                 = '10.2.134.35/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxStoreFront'
+            NodeName                    = 'b2-ctx02S'
+            IPV4Address                 = '10.2.134.36/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         }
         #endregion
-    )
+        )
 }

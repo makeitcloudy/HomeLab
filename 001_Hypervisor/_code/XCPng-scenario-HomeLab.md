@@ -597,16 +597,6 @@ xe vm-cd-insert vm='b2_osdS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-## Cloud Connector
-
-### Windows - Server OS - 1x cloud connector - Desktop Experience
-
-```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_cc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:14' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cc01_cloudConnector'
-
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_cc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:15' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_cc02_cloudConnector'
-
-```
 
 ## Image Factory - Testing VM against the prepared ISO files
 
