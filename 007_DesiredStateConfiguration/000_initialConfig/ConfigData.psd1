@@ -59,7 +59,7 @@
         #region - 'Role = DHCPServer'
         @{
             Role                        = 'DHCPServer'
-            NodeName                    = 'dhcp01'
+            NodeName                    = 'b2-dhcp01'
             IPV4Address                 = '10.2.134.6/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -67,7 +67,7 @@
         # DHCP Server
         @{
             Role                        = 'DHCPServer'
-            NodeName                    = 'dhcp02'
+            NodeName                    = 'b2-dhcp02'
             IPV4Address                 = '10.2.134.7/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -79,7 +79,7 @@
             DomainName             = 'lab.local'                      #FIXME: your domain FQDN
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
-            NodeName               = 'sql01'
+            NodeName               = 'b2-sql01'
             IPV4Address            = '10.2.134.8/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
@@ -110,7 +110,7 @@
             DomainName             = 'lab.local'                      #FIXME: your domain FQDN
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
-            NodeName               = 'sql02'
+            NodeName               = 'b2-sql02'
             IPV4Address            = '10.2.134.9/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
@@ -137,7 +137,7 @@
         #region - 'Role = File Server'
         @{
             Role                        = 'FileServer'
-            NodeName                    = 'fs01'
+            NodeName                    = 'b2-fs01'
             IPV4Address                 = '10.2.134.11/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -150,7 +150,7 @@
         },
         @{
             Role                        = 'FileServer'
-            NodeName                    = 'fs02'
+            NodeName                    = 'b2-fs02'
             IPV4Address                 = '10.2.134.12/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -167,7 +167,7 @@
         #ISCSI
         @{
             Role                        = 'IscsiServer'
-            NodeName                    = 'iscsi'
+            NodeName                    = 'b2-iscsi'
             IPV4Address                 = '10.2.134.13/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'

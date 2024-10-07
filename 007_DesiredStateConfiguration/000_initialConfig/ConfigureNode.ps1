@@ -624,7 +624,7 @@ Configuration NodeInitialConfigDomain {
                     RetryCount       = 10
                 }
 
-                Disk VolumeProfile
+                Disk VolumeDB
                 {
                     DiskId      = $Node.DataDriveSDiskId
                     DriveLetter = $Node.DataDriveSLetter
