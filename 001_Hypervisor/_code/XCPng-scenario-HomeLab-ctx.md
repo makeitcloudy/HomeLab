@@ -29,9 +29,9 @@
 #### Windows - Server OS - PVS
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_ctx01P' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:41' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k2_PVS'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_ctx01P' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:41' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k2_PVS'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_ctx02P' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:42' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_PVS'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_ctx02P' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:42' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_PVS'
 ```
 
 #### Windows - Server OS - StoreFront
@@ -114,11 +114,20 @@ xe vm-cd-eject vm='b2_ctx02P'
 xe vm-cd-eject vm='b2_ctx02S'
 ```
 
+### CTX - VM Provisioning - Extra Steps
+
+#### CTX - VM Provisioning - PVS - Add Disk
+
+```bash
+## Add Disk - Install XCP-ng tools upfront
+# run over SSH
+/opt/scripts/vm_add_disk.sh --vmName 'b2_ctx01P' --storageName 'node4_hdd_sdb' --diskName 'b2_ctx01P_PVSStoreDrive' --deviceId 4 --diskGB 300  --description 'b2_S_dataDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'b2_ctx02P' --storageName 'node4_hdd_sdb' --diskName 'b2_ctx02P_PVSStoreDrive' --deviceId 4 --diskGB 300  --description 'b2_S_dataDrive'
+```
+
 ### CTX - Initial Setup - Domain Join
 
 https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialconfigdsc_domainps1
-
-
 
 It:
 * It initialize all variables for succesfull code execution
