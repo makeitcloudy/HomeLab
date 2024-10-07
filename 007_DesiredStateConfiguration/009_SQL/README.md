@@ -20,7 +20,7 @@ https://www.microsoft.com/en-us/evalcenter/download-sql-server-2017-rtm
 https://www.microsoft.com/en-us/evalcenter/download-sql-server-2019
 https://www.microsoft.com/en-us/evalcenter/download-sql-server-2022
 
-### 1. SQL - DefaultInstance -  VM provisioning
+### 1. SQL - Default Instance -  VM provisioning
 
 ```bash
 # Provision VM
@@ -32,13 +32,13 @@ https://www.microsoft.com/en-us/evalcenter/download-sql-server-2022
 Do not have to initialize the drive with PowerShell. Desired State resource from StorageDsc module handles that.
 
 
-### 2. SQL - DefaultInstance - VMTools installation
+### 2. SQL - Default Instance - VMTools installation
 
 ```
 
 ```
 
-### 3. SQL - DefaultInstance - Mount SQL
+### 3. SQL - Default Instance - Mount SQL
 
 ```bash
 xe vm-cd-insert vm='a_sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
@@ -46,15 +46,9 @@ xe vm-cd-insert vm='a_sql01_dexp' cd-name='SQLServer2019-x64-ENU.iso'
 
 Unmount disk, after installation.
 
+### 4. SQL - Default Instance - Blog post - Initial Testing
 
-### 4. On MGMT Node - install SMSS
-
-https://www.sqlservercentral.com/articles/install-ssms-using-powershell-dsc
-SSMS-Setup-ENU.msi - 20.1.10.0 - msi available on the fileshare
-
-[https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases](SSMS earlier versions)
-
-## X. Blog post - Initial Testing
+Create a blog post out of it
 
 ```powershell
 #Start-Process PowerShell_ISE -Verb RunAs
@@ -65,12 +59,45 @@ Set-Location -Path "$env:USERPROFILE\Documents"
 #$sqlDefaultInstanceSetup = 'SQL_defaultInstance_setup.ps1'
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/009_SQL/SQL_defaultInstance_configuration.ps1' -OutFile "$env:USERPROFILE\Documents\SQL_defaultInstance_configuration.ps1" -Verbose
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/009_SQL/SQL_defaultInstance_setup.ps1' -OutFile "$env:USERPROFILE\Documents\SQL_defaultInstance_setup.ps1" -Verbose
+
+./SQL_defaultInstance_setup.ps1
 #psedit "$env:USERPROFILE\Documents\SQL_defaultInstance_setup.ps1"
 #psedit "$env:USERPROFILE\Documents\SQL_defaultInstance_configuration.ps1"
 
 # at this stage the computername is already renamed and it's name is : dc01
 #. "$env:USERPROFILE\Documents\ActiveDirectory_demo.ps1" -ComputerName $env:Computername
 ```
+
+Despite the sqlbrowser stopped and disabled automated start, SSMS can reach the db instance.
+
+### 5. On MGMT Node - install SMSS
+
+https://www.sqlservercentral.com/articles/install-ssms-using-powershell-dsc
+SSMS-Setup-ENU.msi - 20.1.10.0 - msi available on the fileshare
+
+[https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#previous-ssms-releases](SSMS earlier versions)
+
+```powershell
+# https://learn.microsoft.com/en-us/sql/ssms/release-notes-ssms?view=sql-server-ver16#1653
+
+https://go.microsoft.com/fwlink/?linkid=2257624&clcid=0x409 #2024 - 19.3
+https://go.microsoft.com/fwlink/?linkid=2199013&clcid=0x409 #2022 - 18.12.1
+https://go.microsoft.com/fwlink/?linkid=2043154&clcid=0x409 #2018 - 17.9.1
+```
+
+#### 4.1 SSMS - Unattended installation
+
+```powershell
+#https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16#unattended-install
+
+$media_path = "$env:USERPROFILE\Downloads\SSMS-Setup-ENU_2017_17_9_1.exe"
+$install_path = "C:\Program Files\SSMS"
+$params = " /Install /Quiet SSMSInstallRoot=$install_path"
+
+Start-Process -FilePath $media_path -ArgumentList $params -Wait
+```
+
+
 
 
 ## XX. Installation

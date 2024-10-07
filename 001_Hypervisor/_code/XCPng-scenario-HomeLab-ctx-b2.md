@@ -175,6 +175,87 @@ xe vm-cd-insert vm='b2_ctx02P' cd-name='Citrix_Provisioning_1912.iso'
 
 ### CTX - Citrix Installation Media - Eject
 
+```bash
+xe vm-cd-eject vm='b2_ctx01B'
+xe vm-cd-eject vm='b2_ctx01F'
+xe vm-cd-eject vm='b2_ctx01L'
+xe vm-cd-eject vm='b2_ctx01S'
+
+xe vm-cd-eject vm='b2_ctx01P'
+
+```
+
+#### CTX - Citrix Installation Media - 02
+
+```bash
+xe vm-cd-eject vm='b2_ctx02B'
+xe vm-cd-eject vm='b2_ctx02F'
+xe vm-cd-eject vm='b2_ctx02L'
+xe vm-cd-eject vm='b2_ctx02S'
+
+xe vm-cd-eject vm='b2_ctx02P'
+
+```
+
+### CTX - Target VM Provisioning - MCS
+
+#### CTX - Target VM Provisioning - MCS - Server OS - w2k22 - UEFI
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName '_imgMCSw10u' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:30' --StorageName 'node4_nvme' --VmDescription 'w2k22_gold_MCS_uefi'
+```
+
+#### CTX - Target VM Provisioning - MCS - Desktop - w10 - BIOS
+
+```bash
+# 2024.10.07 - iso for BIOS is not ready
+
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSw10b' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:33' --StorageName 'node4_nvme' --VmDescription 'w10_gold_MCS_bios'
+```
+
+#### CTX - Target VM Provisioning - MCS - Desktop - w10 - UEFI
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSw10u' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:34' --StorageName 'node4_nvme' --VmDescription 'w10_gold_MCS_uefi'
+```
+
+### CTX - Target VM Provisioning - PVS
+
+#### CTX - Target VM Provisioning - PVS - ServerOS - w2k22 - BIOS
+
+```bash
+#2024.10.07 - the iso is not prepared for this usecase - yet
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSb' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:35' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_target_PVS_bios'
+```
+
+#### CTX - Target VM Provisioning - PVS - ServerOS - w2k22 - UEFI
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSu' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:36' --StorageName 'node4_nvme' --VmDescription 'w2k22_target_PVS_uefi'
+```
+
+#### CTX - Target VM Provisioning - PVS - Desktop - w10 - BIOS
+
+```bash
+# 2024.10.07 - iso for BIOS is not ready
+
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSw10b' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2410_untd_nprmpt_bios.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:37' --StorageName 'node4_nvme' --VmDescription 'w10_target_PVS_bios'
+```
+
+#### CTX - Target VM Provisioning - PVS - Desktop - w10 - UEFI
+
+```bash
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSw10u' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:38' --StorageName 'node4_nvme' --VmDescription 'w10_target_PVS_uefi'
+```
+
+#### CTX - Target VM Provisioning - PVS - Desktop - w11 - UEFI
+
+```bash
+# 2024.10.07 - upload w11 ISO
+
+/opt/scripts/vm_create_uefi.sh --VmName '_imgPVSw11u' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows 10 (64-bit)' --IsoName '_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:39' --StorageName 'node4_nvme' --VmDescription 'w11_target_PVS_uefi'
+```
+
 ## DaaS Extension
 
 ### Cloud Connector
