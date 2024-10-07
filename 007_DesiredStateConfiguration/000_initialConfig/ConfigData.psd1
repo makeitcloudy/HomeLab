@@ -193,7 +193,7 @@
         @{
             Role                        = 'ctxMisc'
             NodeName                    = 'b2-ctx01'
-            IPV4Address                 = '10.2.134.21/24'
+            IPV4Address                 = '10.2.134.31/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         }
