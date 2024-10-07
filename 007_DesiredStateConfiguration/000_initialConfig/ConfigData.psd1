@@ -250,11 +250,11 @@
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
-            DataDrivePDiskId            = 1    #PVS Store Disk
-            DataDrivePLetter            = 'S'  #PVS Store Disk Letter
-            DataDrivePFSFormat          = 'NTFS'
-            DataDrivePFSLabel           = 'PVS-Store'
-            DataDrivePPartitionStyle    = 'GPT'
+            DataDriveSDiskId            = 1    #PVS Store Disk
+            DataDriveSLetter            = 'S'  #PVS Store Disk Letter
+            DataDriveSFSFormat          = 'NTFS'
+            DataDriveSFSLabel           = 'Store-PVS'
+            DataDriveSPartitionStyle    = 'GPT'
         },
 
         @{
@@ -267,7 +267,7 @@
             DataDriveSDiskId            = 1    #PVS Store Disk
             DataDriveSLetter            = 'S'  #PVS Store Disk Letter
             DataDriveSFSFormat          = 'NTFS'
-            DataDriveSFSLabel           = 'PVS-Store'
+            DataDriveSFSLabel           = 'Store-PVS'
             DataDriveSPartitionStyle    = 'GPT'
         },
         #endregion

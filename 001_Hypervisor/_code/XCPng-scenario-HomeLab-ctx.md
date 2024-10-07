@@ -70,13 +70,13 @@ xe vm-cd-eject vm='b2_ctx02B'
 xe vm-cd-insert vm='b2_ctx02B' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='b2_ctx02F'
-xe vm-cd-insert vm='b2_ctx02P' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-insert vm='b2_ctx02F' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='b2_ctx02L'
 xe vm-cd-insert vm='b2_ctx02L' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='b2_ctx02P'
-xe vm-cd-insert vm='b2_ctx02F' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-insert vm='b2_ctx02P' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 xe vm-cd-eject vm='b2_ctx02S'
 xe vm-cd-insert vm='b2_ctx02S' cd-name='Citrix_Hypervisor_821_tools.iso'
@@ -137,6 +137,43 @@ It configures the LCM
 It starts the actual configuration of the node
 
 * it does what is listed in paragraph 3.0 - https://makeitcloudy.pl/windows-DSC/
+
+### CTX - Citrix Installation Media - Inject
+
+#### CTX - Citrix Installation Media - 01
+
+```bash
+xe vm-cd-eject vm='b2_ctx01B'
+xe vm-cd-insert vm='b2_ctx01B' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx01F'
+xe vm-cd-insert vm='b2_ctx01F' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx01L'
+xe vm-cd-insert vm='b2_ctx01L' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx01S'
+xe vm-cd-insert vm='b2_ctx01S' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+
+xe vm-cd-eject vm='b2_ctx01P'
+xe vm-cd-insert vm='b2_ctx01P' cd-name='Citrix_Provisioning_1912.iso'
+
+```
+
+#### CTX - Citrix Installation Media - 02
+
+```bash
+xe vm-cd-eject vm='b2_ctx02B'
+xe vm-cd-insert vm='b2_ctx02B' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx02F'
+xe vm-cd-insert vm='b2_ctx02F' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx02L'
+xe vm-cd-insert vm='b2_ctx02L' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+xe vm-cd-eject vm='b2_ctx02S'
+xe vm-cd-insert vm='b2_ctx02S' cd-name='Citrix_Virtual_Apps_and_Desktops_7_1912.iso'
+
+xe vm-cd-eject vm='b2_ctx02P'
+xe vm-cd-insert vm='b2_ctx02P' cd-name='Citrix_Provisioning_1912.iso'
+```
+
+### CTX - Citrix Installation Media - Eject
 
 ## DaaS Extension
 
