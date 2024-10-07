@@ -17,7 +17,7 @@
             #Thumbprint          = 'EF280FE58AC3E1B8BC211122866248282B44E7D8'          # The thumbprint of the Encryption Certificate used to decrypt the credentials on target node. The value of the thumbprint changes each time the Self Signed Certificate is generated
 
         },
-        # MGMT Node
+        #region - Role = 'MgmtNode' - MGMT Node
         @{
             Role                        = 'MgmtNode'
             NodeName                    = 'w10mgmt'
@@ -25,6 +25,9 @@
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
+        #endregion
+
+        #region - 'Role = CertificationServices'
         # Active Directory Certification Services
         # ADCS Root - not added to the domain
         # ADCS Sub - domain joined
@@ -51,7 +54,9 @@
             #DomainName                  = 'lab.local'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
-        # DHCP Server
+        #endregion
+
+        #region - 'Role = DHCPServer'
         @{
             Role                        = 'DHCPServer'
             NodeName                    = 'dhcp01'
@@ -67,7 +72,9 @@
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
-        # SQL Server
+        #endregion
+
+        #region - 'Role = SQLServer'
         @{
             DomainName             = 'lab.local'                      #FIXME: your domain FQDN
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
@@ -96,6 +103,9 @@
             InstallManagementTools = $False
             CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         },
+        #endregion
+
+        #region - 'Role = SQLServer'
         @{
             DomainName             = 'lab.local'                      #FIXME: your domain FQDN
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
@@ -121,8 +131,10 @@
             SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
             InstallManagementTools = $False
             CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
-        }
-        # File Server
+        },
+        #endregion
+
+        #region - 'Role = File Server'
         @{
             Role                        = 'FileServer'
             NodeName                    = 'fs01'
@@ -149,6 +161,9 @@
             DataDrivePFSLabel           = 'Profiles'
             DataDrivePPartitionStyle    = 'GPT'
         },
+        #endregion
+
+        #region - 'Role = IscsiServer'
         #ISCSI
         @{
             Role                        = 'IscsiServer'
@@ -170,6 +185,18 @@
             VhdxDriveZFSFormat          = 'NTFS'
             VhdxDriveZFSLabel           = 'Storage_vhdx'
             VhdxDriveZPartitionStyle    = 'GPT'
+        },
+        #endregion
+
+        #region - 'Role = CtxMisc'
+        #CTX01 - lic server, broker, director, storefront
+        @{
+            Role                        = 'ctxMisc'
+            NodeName                    = 'b2-ctx01'
+            IPV4Address                 = '10.2.134.21/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         }
+        #endregion
     )
 }
