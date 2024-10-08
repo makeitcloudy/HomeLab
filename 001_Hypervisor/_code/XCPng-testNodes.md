@@ -2,13 +2,13 @@
 
 ## Management Node
 
-### Windows - Desktop OS - Initial Configuration - Management Node - w10mgmt
+### Windows - Desktop OS - 
 
 Node (Desktop) used to manage the environment and author DSC configurations - Starting Point
 
 ```bash
 # Run on XCP-ng
-/opt/scripts/vm_create_uefi.sh --VmName 'a_w10mgmt' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '2A:47:41:D9:00:49' --StorageName 'node4_ssd_sdg' --VmDescription 'w10mgmt'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_w10dhcp' --VCpu 4 --CoresPerSocket 2 --MemoryGB 8 --DiskGB 40 --ActivationExpiration 90 --TemplateName 'Windows 10 (64-bit)' --IsoName 'w10ent_21H2_2410_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1442' --Mac '12:B2:14:42:02:53' --StorageName 'node4_ssd_sdg' --VmDescription 'b2_w10dhcp'
 
 # After installation eject CD
 # Run on XCP-ng

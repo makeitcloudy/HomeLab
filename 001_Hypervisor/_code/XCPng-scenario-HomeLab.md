@@ -212,9 +212,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:06' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_dhcp01_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:06' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_DHCP_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-vlan1342' --Mac '12:B2:13:42:02:07' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_dhcp02_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:07' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_DHCP_core'
 
 ```
 
@@ -255,6 +255,97 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 
 Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```
+
+### Configure subsequent network interfaces
+
+```bash
+# the initial network interface was 0
+# each subsequent network interface increases by 1
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'eth1-B2-vlan1442' --Mac '12:B2:14:42:02:06' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'eth1-B2-vlan1542' --Mac '12:B2:15:42:02:06' --Device '2'
+```
+
+```powershell
+$dhcp_interface_vlan1442 = @{
+    Mac       = '12:B2:14:42:02:06'
+    #Mac       = '12-B2-14-42-02-06'
+    Name      = 'vlan1442'
+    IPAddress = '10.2.144.6'
+    Mask      = '24'
+}
+
+$dhcp_interface_vlan1542 = @{
+    Mac       = '12:B2:15:42:02:06'
+    #Mac       = '12-B2-15-42-02-06'
+    Name      = 'vlan1542'
+    IPAddress = '10.2.154.6'
+    Mask      = '24'
+}
+
+#function Set-PLNetAdapter is part of the AutomatedLabModule
+Set-PLNetAdapter @dhcp_interface_vlan1442
+Set-PLNetAdapter @dhcp_interface_vlan1542
+```
+
+### Configure DHCP Scopes
+
+Makes use of the MMC console.  
+Alternatively craft powershell code.  
+
+```powershell
+$scope_vlan1442 = @{
+    Name          = 'b2_vlan1442'
+    #ScopeId       = '10.2.144.0' # The network address for the scope
+    StartRange    = '10.2.144.201' # Starting IP address of the range
+    EndRange      = '10.2.144.253' # Ending IP address of the range
+    SubnetMask    = '255.255.255.0' # Subnet mask
+    #LeaseDuration = '1.00:00:00' # Lease duration (1 days)
+    LeaseDuration = '04:00:00' # Lease duration (4 hours)
+}
+
+$scope_vlan1542 = @{
+    Name          = 'b2_vlan1542'
+    #ScopeId       = '10.2.154.0' # The network address for the scope
+    StartRange    = '10.2.154.201' # Starting IP address of the range
+    EndRange      = '10.2.154.253' # Ending IP address of the range
+    SubnetMask    = '255.255.255.0' # Subnet mask
+    #LeaseDuration = '1.00:00:00' # Lease duration (1 days)
+    LeaseDuration = '04:00:00' # Lease duration (4 hours)
+}
+
+# Create the DHCP scope
+Add-DhcpServerv4Scope @scope_vlan1442
+Add-DhcpServerv4Scope @scope_vlan1542
+
+
+$ReservationName = "Lab - B2 - "
+$IPAddress = "10.2.144.253" # The reserved IP address
+$MacAddress = "12:B2:14:42:02:53" # The MAC address to be reserved
+$ScopeId = "10.2.144.0" # The network address for the scope
+
+# Add a static reservation
+Add-DhcpServerv4Reservation -ScopeId $ScopeId -IPAddress $IPAddress -ClientId $MacAddress -Name $ReservationName
+
+
+# Define the DHCP server and scope
+$DhcpServer = "YourDhcpServerName"  # Replace with your DHCP server name
+$ScopeId = "10.0.0.0"                # Replace with your DHCP scope ID
+
+# Set the gateway and DNS servers
+$Gateway = "10.0.0.1"                 # Replace with your gateway IP
+$DnsServer1 = "8.8.8.8"               # Replace with your primary DNS IP
+$DnsServer2 = "8.8.4.4"               # Replace with your secondary DNS IP
+
+# Add the DHCP option for the gateway
+Set-DhcpServerv4OptionValue -DnsServer $DnsServer1, $DnsServer2 -ScopeId $ScopeId -DhcpServer $DhcpServer
+Set-DhcpServerv4OptionValue -Router $Gateway -ScopeId $ScopeId -DhcpServer $DhcpServer
+
+
+Get-Service -Name DHCPserver | Restart-Service
+# once done the red flag should dissapear from the IPv4
+```
+
+###
 
 ## File Services
 
