@@ -20,7 +20,7 @@
         #region - Role = 'MgmtNode' - MGMT Node
         @{
             Role                        = 'MgmtNode'
-            NodeName                    = 'w10mgmt'
+            NodeName                    = 'b2-w10mgmt'
             IPV4Address                 = '10.2.134.249/24'                            # IP address should go hand in hand with Firewall rules for the remote management, otherwise it wont work
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
@@ -40,7 +40,7 @@
         },
         @{
             Role                        = 'CertificationServices'
-            NodeName                    = 'adcss'
+            NodeName                    = 'b2-adcss'
             IPV4Address                 = '10.2.134.4/24'
             DefaultGatewayAddress       = '10.2.134.254'
             #DomainName                  = 'lab.local'
@@ -48,7 +48,7 @@
         },
         @{
             Role                        = 'CertificationServices'
-            NodeName                    = 'adcsws'
+            NodeName                    = 'b2-adcsws'
             IPV4Address                 = '10.2.134.5/24'
             DefaultGatewayAddress       = '10.2.134.254'
             #DomainName                  = 'lab.local'
