@@ -344,7 +344,7 @@ PROCESS
              }
 
             @{
-                NodeName                    = 'dc01'                           #FIXME:
+                NodeName                    = 'b2-dc01'                           #FIXME:
                 Role                        = 'RootDomainController'
                 IPV4Address                 = '10.2.134.1/24'                #FIXME:
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
@@ -369,7 +369,7 @@ PROCESS
             }
 
             @{
-                NodeName                    = 'dc02'                           #FIXME: additional DC
+                NodeName                    = 'b2-dc02'                           #FIXME: additional DC
                 Role                        = 'MemberDomainController'
                 IPV4Address                 = '10.2.134.2/24'                #FIXME: additional DC IP
                 DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
@@ -390,7 +390,7 @@ PROCESS
     # load the configuration into memory for it's execution
     . $dscConfigLocalhostADDS_ps1_FullPath
 
-    if ($ENV:ComputerName -match 'dc01')
+    if ($ENV:ComputerName -match 'b2-dc01')
     {
         Write-Output "$env:ComputerName - Role: RootDomainController"
         #^ Generate configuration MOF files for the first DC

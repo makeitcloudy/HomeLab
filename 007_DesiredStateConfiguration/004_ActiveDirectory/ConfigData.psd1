@@ -37,7 +37,7 @@
         @{
             Nodename              = '10.2.134.201'
             Role                  = 'PrimaryDomainController'
-            ComputerName          = 'dc01'
+            ComputerName          = 'b2-dc01'
             IPV4Address           = '10.2.134.201/24'
             DefaultGatewayAddress = '10.2.134.254'
             DNSServers            = @('127.0.0.1')
@@ -49,7 +49,7 @@
         @{
             Nodename              = '10.2.134.202'
             Role                  = 'SubsequentDomainController'
-            ComputerName          = 'dc02'
+            ComputerName          = 'b2-dc02'
             IPV4Address           = '10.2.134.202/24'
             DefaultGatewayAddress = '10.2.134.254'
             DNSServers            = @('10.2.134.201')
