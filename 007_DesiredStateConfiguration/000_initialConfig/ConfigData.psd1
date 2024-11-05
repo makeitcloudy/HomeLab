@@ -188,18 +188,18 @@
         },
         #endregion
 
-        #region - 'Role = ctxLicenseServer'
+        #region - 'Role = ctxLicenseServer' Director
         @{
-            Role                        = 'ctxLicenseServer'
-            NodeName                    = 'b2-ctx01L'
+            Role                        = 'ctxLicenseDirector'
+            NodeName                    = 'b2-ctx01LD'
             IPV4Address                 = '10.2.134.31/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
 
         @{
-            Role                        = 'ctxLicenseServer'
-            NodeName                    = 'b2-ctx02L'
+            Role                        = 'ctxLicenseDirector'
+            NodeName                    = 'b2-ctx02LD'
             IPV4Address                 = '10.2.134.32/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'

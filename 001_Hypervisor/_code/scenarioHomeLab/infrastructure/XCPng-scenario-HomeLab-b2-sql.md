@@ -129,7 +129,8 @@ It is assumed that mamanagement tools are installed on the mgmt node.
 Proceed with the SQL installation
 
 ```powershell
-
+https://makeitcloudy.pl/windows-server-sql/
+# paragraph 1.6.
 ```
 
 
