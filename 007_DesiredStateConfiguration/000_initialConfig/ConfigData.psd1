@@ -91,7 +91,7 @@
             DataDriveSPartitionStyle = 'GPT'
 
             SQLInstallSourcePath   = 'D:\'                          # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive           = 'C:\'                          # TODO: change this to S:\ - drive designated for SQL db
+            SQLDataDrive           = 'S:\'                          # TODO: change this to S:\ - drive designated for SQL db - dependency on the drive to be added to the VM first during the provisiong process
             Instances = @(
                 @{
                     Name           = 'MSSQLSERVER'

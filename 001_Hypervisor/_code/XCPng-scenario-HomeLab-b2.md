@@ -252,23 +252,10 @@ The IP reservation on the DHCP server in the subnet are done, otherwise login to
 
 Then follow up with (initial configuration - VMTools installation script, which also rename the machine and reboots it)
 
-### ADCS - Initial Configuration
+### ADCS - Initial Configuration - adcsR, adcsS, adcsWS
 
 On adcsr, adcss, adcsws - run 
 * [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1) - details about the code are described in the blog post [windows-preparation](https://makeitcloudy.pl/windows-preparation/) - paragraph 2.0.2
-
-```powershell
-#once done run following core
-Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
-```
-
-
-```bash
-xe vm-cd-eject vm='b2_adcsWS'
-xe vm-cd-eject vm='b2_adcsR'
-xe vm-cd-eject vm='b2_adcsS'
-
-```
 
 Proceed with the code
 
@@ -286,7 +273,32 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 # and goes hand in hand with the IP addresses of the domain controllers 
 https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1
 
-Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+```
+
+### ADCS - Initial Configuration - adcsR
+
+```powershell
+#once done run following code
+Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
+```
+
+### ADCS - Initial Configuration - adcsS, adcsWS
+
+```powershell
+#once done run following code
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+```
+
+### ADCS - Eject vmTools media
+
+```bash
+xe vm-cd-eject vm='b2_adcsWS'
+xe vm-cd-eject vm='b2_adcsR'
+xe vm-cd-eject vm='b2_adcsS'
+
 ```
 
 ## DHCP
@@ -314,10 +326,17 @@ xe vm-cd-insert vm='b2_dhcp02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.
-Note: Machine should have access to the internet to grab the content from github.
-
 Then follow up with
+
+* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1) - it ask for the new name of the vm,
+* once done and VM is rebooted, run the following
+
+```powershell
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+```
+
+### DHCP - Eject vmTools
 
 ```bash
 xe vm-cd-eject vm='b2_dhcp01'
@@ -340,7 +359,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```
 
-### Configure subsequent network interfaces
+### DHCP - dhcp01 - Configure subsequent network interfaces
 
 ```bash
 # the initial network interface was 0
@@ -363,6 +382,37 @@ $dhcp_interface_vlan1542 = @{
     #Mac       = '12-B2-15-42-02-06'
     Name      = 'vlan1542'
     IPAddress = '10.2.154.6'
+    Mask      = '24'
+}
+
+#function Set-PLNetAdapter is part of the AutomatedLabModule
+Set-PLNetAdapter @dhcp_interface_vlan1442
+Set-PLNetAdapter @dhcp_interface_vlan1542
+```
+
+### DHCP - dhcp02 - Configure subsequent network interfaces
+
+```bash
+# the initial network interface was 0
+# each subsequent network interface increases by 1
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp02' --NetworkName 'eth1-B2-vlan1442' --Mac '12:B2:14:42:02:07' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp02' --NetworkName 'eth1-B2-vlan1542' --Mac '12:B2:15:42:02:07' --Device '2'
+```
+
+```powershell
+$dhcp_interface_vlan1442 = @{
+    Mac       = '12:B2:14:42:02:07'
+    #Mac       = '12-B2-14-42-02-07'
+    Name      = 'vlan1442'
+    IPAddress = '10.2.144.7'
+    Mask      = '24'
+}
+
+$dhcp_interface_vlan1542 = @{
+    Mac       = '12:B2:15:42:02:07'
+    #Mac       = '12-B2-15-42-02-07'
+    Name      = 'vlan1542'
+    IPAddress = '10.2.154.7'
     Mask      = '24'
 }
 
@@ -424,7 +474,6 @@ $DnsServer2 = "8.8.4.4"               # Replace with your secondary DNS IP
 Set-DhcpServerv4OptionValue -DnsServer $DnsServer1, $DnsServer2 -ScopeId $ScopeId -DhcpServer $DhcpServer
 Set-DhcpServerv4OptionValue -Router $Gateway -ScopeId $ScopeId -DhcpServer $DhcpServer
 
-
 Get-Service -Name DHCPserver | Restart-Service
 # once done the red flag should dissapear from the IPv4
 ```
@@ -449,6 +498,10 @@ xe vm-cd-insert vm='b2_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
+Then follow up with
+
+* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialsetupps1) - it asks for the new name of the vm, reboots the VM. Now it's time to add extra disk, so the DSC can succesfully executes.  
+
 Windows Server (regardsless if it is desktop experience or core) needs a reboot for the PV drivers to become available in the OS, then the disk can be added on the XCP-ng terminal. That's why it's a good time to install VMTools, which requires restart anyway.  
 Add Disk.  
 
@@ -467,7 +520,14 @@ Add Disk.
 # * storage network
 ```
 
-Eject installation media
+* once the disks are added, run
+
+```powershell
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+```
+
+### File Services - iscsi - Eject installation media
 
 ```bash
 xe vm-cd-eject vm='b2_iscsi'
@@ -523,9 +583,13 @@ xe vm-cd-insert vm='b2_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
-Windows Server (regardsless if it is desktop experience or core) needs a reboot for the PV drivers to become available in the OS, then the disk can be added on the XCP-ng terminal. That's why it's a good time to install VMTools, which requires restart anyway.
+Then follow up with
+
+* [run_initialSetup.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.mb2-d#run_initialsetupps1) - it ask for the new name of the vm, then the VM will be rebooted.  
+
+Windows Server (regardless if it is desktop experience or core) needs a reboot for the PV drivers to become available in the OS, then the disk can be added on the XCP-ng terminal. That's why it's a good time to install VMTools, which requires restart anyway.  
 Add Disk.  
-Current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.
+Current DSC configuration configures the Filers as member servers, with no clustering and redudancy, so each drive has it's separate profile drive.  
 
 ```bash
 ## the code works provided the vmtools are already installed, without PV drivers, it wont work
@@ -534,6 +598,13 @@ Current DSC configuration configures the Filers as member servers, with no clust
 /opt/scripts/vm_add_disk.sh --vmName 'b2_fs01' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 120  --description 'fs01_ProfileDrive'
 /opt/scripts/vm_add_disk.sh --vmName 'b2_fs02' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 120  --description 'fs02_ProfileDrive'
 
+```
+
+* once the disks are added, run the following
+
+```powershell
+$domainName = 'lab.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
 ```
 
 The IP reservation on the DHCP server in the subnet are done, so get the IP address is known, otherwise login to the VM via XCP-ng console (no clipboard available) and get the IP address. Connect to the machine via RDP.

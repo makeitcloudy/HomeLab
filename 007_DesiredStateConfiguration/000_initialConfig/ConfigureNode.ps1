@@ -378,8 +378,8 @@ Configuration NodeInitialConfigDomain {
                 WaitforDisk QuorumDrive
                 {
                     DiskId           = $Node.QuorumDriveQDiskId
-                    RetryIntervalSec = 60
-                    RetryCount       = 10
+                    RetryIntervalSec = 30
+                    RetryCount       = 4
                 }
 
                 # Q - quorum drive
@@ -509,8 +509,8 @@ Configuration NodeInitialConfigDomain {
                 WaitforDisk DataDriveProfile
                 {
                     DiskId           = $Node.DataDrivePDiskId
-                    RetryIntervalSec = 60
-                    RetryCount       = 10
+                    RetryIntervalSec = 30
+                    RetryCount       = 4
                 }
 
                 Disk VolumeProfile
@@ -620,8 +620,8 @@ Configuration NodeInitialConfigDomain {
                 WaitforDisk DataDriveSqlDb
                 {
                     DiskId           = $Node.DataDriveSDiskId
-                    RetryIntervalSec = 60
-                    RetryCount       = 10
+                    RetryIntervalSec = 30
+                    RetryCount       = 4
                 }
 
                 Disk VolumeDB
@@ -731,8 +731,8 @@ Configuration NodeInitialConfigDomain {
                 WaitforDisk PVSStoreDrive
                 {
                     DiskId           = $Node.DataDriveSDiskId
-                    RetryIntervalSec = 60
-                    RetryCount       = 10
+                    RetryIntervalSec = 30
+                    RetryCount       = 4
                 }
 
                 Disk VolumeProfile
