@@ -239,7 +239,7 @@
             IPV4Address                 = '10.2.134.36/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        }
+        },
         #endregion
 
         #region - 'Role = ctxFas'
@@ -287,7 +287,7 @@
             DataDriveSFSFormat          = 'NTFS'
             DataDriveSFSLabel           = 'Store-PVS'
             DataDriveSPartitionStyle    = 'GPT'
-        },
+        }
         #endregion
 
         )
