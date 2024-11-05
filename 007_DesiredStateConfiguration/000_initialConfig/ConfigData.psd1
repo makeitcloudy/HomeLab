@@ -33,7 +33,7 @@
         # ADCS Sub - domain joined
         @{
             Role                        = 'CertificationServices'
-            NodeName                    = 'adcsr'
+            NodeName                    = 'b2-adcsr'
             IPV4Address                 = '10.2.134.3/24'
             DefaultGatewayAddress       = '10.2.134.254'            
             #JoinOu                      = 'OU=Computers,DC=lab,DC=local'
