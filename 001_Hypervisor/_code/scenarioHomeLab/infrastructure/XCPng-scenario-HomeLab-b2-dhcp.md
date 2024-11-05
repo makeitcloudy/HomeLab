@@ -181,10 +181,8 @@ Get-Service -Name DHCPserver | Restart-Service
 
 ```
 Get-NetAdapterBinding -ComponentID ms_tcpip6
-$interfaceName = @('Ethernet','vlan1442','vlan1542')
+$interfaceName = @('Eth0','vlan1442','vlan1542')
 
-$interfaceName.foreach(
-    Disable-NetAdapterBinding -Name $_ -ComponentID ms_tcpip6
-)
+$interfaceName.foreach({Disable-NetAdapterBinding -Name $_ -ComponentID ms_tcpip6})
 
 ```
