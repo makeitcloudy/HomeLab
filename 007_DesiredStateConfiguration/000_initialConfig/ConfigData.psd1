@@ -80,7 +80,7 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'b2-sql01'
-            IPV4Address            = '10.2.134.8/24'
+            IPV4Address            = '10.2.134.18/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
 
@@ -111,7 +111,7 @@
             DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
             Role                   = 'SQLServer'
             NodeName               = 'b2-sql02'
-            IPV4Address            = '10.2.134.9/24'
+            IPV4Address            = '10.2.134.19/24'
             DefaultGatewayAddress  = '10.2.134.254'
             JoinOu                 = 'OU=Computers,DC=lab,DC=local'
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
@@ -188,6 +188,24 @@
         },
         #endregion
 
+        #region - 'Role = ctxLicenseServer'
+        @{
+            Role                        = 'ctxLicenseServer'
+            NodeName                    = 'b2-ctx01L'
+            IPV4Address                 = '10.2.134.31/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxLicenseServer'
+            NodeName                    = 'b2-ctx02L'
+            IPV4Address                 = '10.2.134.32/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+        #endregion
+
         #region - 'Role = ctxBroker'
         @{
             Role                        = 'ctxBroker'
@@ -206,6 +224,24 @@
         },
         #endregion
 
+        #region - 'Role = ctxStoreFront'
+        @{
+            Role                        = 'ctxStoreFront'
+            NodeName                    = 'b2-ctx01S'
+            IPV4Address                 = '10.2.134.35/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        },
+
+        @{
+            Role                        = 'ctxStoreFront'
+            NodeName                    = 'b2-ctx02S'
+            IPV4Address                 = '10.2.134.36/24'
+            DefaultGatewayAddress       = '10.2.134.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+        }
+        #endregion
+
         #region - 'Role = ctxFas'
         @{
             Role                        = 'ctxFas'
@@ -219,24 +255,6 @@
             Role                        = 'ctxFas'
             NodeName                    = 'b2-ctx02F'
             IPV4Address                 = '10.2.134.38/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        },
-        #endregion
-
-        #region - 'Role = ctxLicenseServer'
-        @{
-            Role                        = 'ctxLicenseServer'
-            NodeName                    = 'b2-ctx01L'
-            IPV4Address                 = '10.2.134.31/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        },
-
-        @{
-            Role                        = 'ctxLicenseServer'
-            NodeName                    = 'b2-ctx02L'
-            IPV4Address                 = '10.2.134.32/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
@@ -272,22 +290,5 @@
         },
         #endregion
 
-        #region - 'Role = ctxStoreFront'
-        @{
-            Role                        = 'ctxStoreFront'
-            NodeName                    = 'b2-ctx01S'
-            IPV4Address                 = '10.2.134.35/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        },
-
-        @{
-            Role                        = 'ctxStoreFront'
-            NodeName                    = 'b2-ctx02S'
-            IPV4Address                 = '10.2.134.36/24'
-            DefaultGatewayAddress       = '10.2.134.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
-        }
-        #endregion
         )
 }
