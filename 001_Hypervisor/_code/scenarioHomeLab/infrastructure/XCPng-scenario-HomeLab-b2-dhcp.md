@@ -1,5 +1,13 @@
 ## DHCP
 
+Two DHCP servers split between Sites. At the moment there is one DHCP server in each site. Sites are split by network interfaces on the MKT and Xen.  
+Each DHCP server ends up with 3 network interfaces.  
+default gateway is in vlan1342 - prod - b2  
+second network interfaces which serves the DHCP leases in - vlan1332  
+third network interfaces which serves the DHCP leases in - vlan1352  
+
+**TODO:** cluster the DHCP within site.
+
 ### Windows - Server OS - 2x DHCP Server - Core
 
 File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
@@ -61,30 +69,30 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```bash
 # the initial network interface was 0
 # each subsequent network interface increases by 1
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'eth1-B2-vlan1442' --Mac '12:B2:14:42:02:06' --Device '1'
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'eth1-B2-vlan1542' --Mac '12:B2:15:42:02:06' --Device '2'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'prod-A2-vlan1332' --Mac '16:A2:13:32:02:06' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'prod-C2-vlan1352' --Mac '16:C2:13:52:02:06' --Device '2'
 ```
 
 ```powershell
-$dhcp_interface_vlan1442 = @{
-    Mac       = '12:B2:14:42:02:06'
-    #Mac       = '12-B2-14-42-02-06'
-    Name      = 'vlan1442'
-    IPAddress = '10.2.144.6'
+$dhcp_interface_vlan1332 = @{
+    Mac       = '16:A2:13:32:02:06'
+    #Mac       = '16-A2-13-32-02-06'
+    Name      = 'vlan1332'
+    IPAddress = '10.2.133.6'
     Mask      = '24'
 }
 
-$dhcp_interface_vlan1542 = @{
-    Mac       = '12:B2:15:42:02:06'
-    #Mac       = '12-B2-15-42-02-06'
-    Name      = 'vlan1542'
-    IPAddress = '10.2.154.6'
+$dhcp_interface_vlan1352 = @{
+    Mac       = '16:C2:13:52:02:06'
+    #Mac       = '16-C2-13-52-02-06'
+    Name      = 'vlan1352'
+    IPAddress = '10.2.135.6'
     Mask      = '24'
 }
 
 #function Set-PLNetAdapter is part of the AutomatedLabModule
-Set-PLNetAdapter @dhcp_interface_vlan1442
-Set-PLNetAdapter @dhcp_interface_vlan1542
+Set-PLNetAdapter @dhcp_interface_vlan1332
+Set-PLNetAdapter @dhcp_interface_vlan1352
 ```
 
 ### DHCP - dhcp02 - Configure subsequent network interfaces
@@ -92,30 +100,30 @@ Set-PLNetAdapter @dhcp_interface_vlan1542
 ```bash
 # the initial network interface was 0
 # each subsequent network interface increases by 1
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp02' --NetworkName 'eth1-B2-vlan1442' --Mac '12:B2:14:42:02:07' --Device '1'
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp02' --NetworkName 'eth1-B2-vlan1542' --Mac '12:B2:15:42:02:07' --Device '2'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b3_dhcp02' --NetworkName 'prod-A3-vlan1333' --Mac '26:A3:13:33:02:07' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'b3_dhcp02' --NetworkName 'prod-C3-vlan1353' --Mac '26:C3:13:53:02:07' --Device '2'
 ```
 
 ```powershell
-$dhcp_interface_vlan1442 = @{
-    Mac       = '12:B2:14:42:02:07'
-    #Mac       = '12-B2-14-42-02-07'
-    Name      = 'vlan1442'
-    IPAddress = '10.2.144.7'
+$dhcp_interface_vlan1333 = @{
+    Mac       = '26:A3:13:33:02:07'
+    #Mac       = '26-A3-13-33-02-07'
+    Name      = 'vlan1333'
+    IPAddress = '10.3.133.7'
     Mask      = '24'
 }
 
-$dhcp_interface_vlan1542 = @{
-    Mac       = '12:B2:15:42:02:07'
-    #Mac       = '12-B2-15-42-02-07'
-    Name      = 'vlan1542'
-    IPAddress = '10.2.154.7'
+$dhcp_interface_vlan1353 = @{
+    Mac       = '26:C3:13:53:02:07'
+    #Mac       = '26-C3-13-53-02-07'
+    Name      = 'vlan1353'
+    IPAddress = '10.3.135.7'
     Mask      = '24'
 }
 
 #function Set-PLNetAdapter is part of the AutomatedLabModule
-Set-PLNetAdapter @dhcp_interface_vlan1442
-Set-PLNetAdapter @dhcp_interface_vlan1542
+Set-PLNetAdapter @dhcp_interface_vlan1333
+Set-PLNetAdapter @dhcp_interface_vlan1353
 ```
 
 ### Configure DHCP Scopes
@@ -124,35 +132,35 @@ Makes use of the MMC console.
 Alternatively craft powershell code.  
 
 ```powershell
-$scope_vlan1442 = @{
-    Name          = 'b2_vlan1442'
-    #ScopeId       = '10.2.144.0' # The network address for the scope
-    StartRange    = '10.2.144.201' # Starting IP address of the range
-    EndRange      = '10.2.144.253' # Ending IP address of the range
+$scope_vlan1332 = @{
+    Name          = 'a2_vlan1332'
+    #ScopeId       = '10.2.133.0' # The network address for the scope
+    StartRange    = '10.2.133.201' # Starting IP address of the range
+    EndRange      = '10.2.133.253' # Ending IP address of the range
     SubnetMask    = '255.255.255.0' # Subnet mask
     #LeaseDuration = '1.00:00:00' # Lease duration (1 days)
     LeaseDuration = '04:00:00' # Lease duration (4 hours)
 }
 
-$scope_vlan1542 = @{
-    Name          = 'b2_vlan1542'
-    #ScopeId       = '10.2.154.0' # The network address for the scope
-    StartRange    = '10.2.154.201' # Starting IP address of the range
-    EndRange      = '10.2.154.253' # Ending IP address of the range
+$scope_vlan1352 = @{
+    Name          = 'b2_vlan1352'
+    #ScopeId       = '10.2.135.0' # The network address for the scope
+    StartRange    = '10.2.135.201' # Starting IP address of the range
+    EndRange      = '10.2.135.253' # Ending IP address of the range
     SubnetMask    = '255.255.255.0' # Subnet mask
     #LeaseDuration = '1.00:00:00' # Lease duration (1 days)
     LeaseDuration = '04:00:00' # Lease duration (4 hours)
 }
 
 # Create the DHCP scope
-Add-DhcpServerv4Scope @scope_vlan1442
-Add-DhcpServerv4Scope @scope_vlan1542
+Add-DhcpServerv4Scope @scope_vlan1332
+Add-DhcpServerv4Scope @scope_vlan11352
 
 
-$ReservationName = "Lab - B2 - "
-$IPAddress = "10.2.144.253" # The reserved IP address
-$MacAddress = "12:B2:14:42:02:53" # The MAC address to be reserved
-$ScopeId = "10.2.144.0" # The network address for the scope
+$ReservationName = "Lab - A2 - "
+$IPAddress = "10.2.133.253" # The reserved IP address
+$MacAddress = "26:A2:13:32:02:53" # The MAC address to be reserved
+$ScopeId = "10.2.133.0" # The network address for the scope
 
 # Add a static reservation
 Add-DhcpServerv4Reservation -ScopeId $ScopeId -IPAddress $IPAddress -ClientId $MacAddress -Name $ReservationName
