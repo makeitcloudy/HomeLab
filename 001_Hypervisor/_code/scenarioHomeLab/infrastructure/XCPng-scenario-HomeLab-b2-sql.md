@@ -7,9 +7,9 @@
 SQL Server can be installed on Windows Server Core.
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:18' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_sql01_SQL2019_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:18' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_SQL2019_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:19' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_sql02_SQL2019_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:19' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_SQL2019_core'
 
 ```
 
@@ -18,9 +18,9 @@ SQL Server can be installed on Windows Server Core.
 Node (Server) used to test the DSC code for Active Directory Domain Setup - Desktop Experience
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:18' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_sql01_SQL2019'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_sql01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:18' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_sql01_SQL2019'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:19' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_sql02_SQL2019'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_sql02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:19' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_sql02_SQL2019'
 
 ```
 
@@ -29,11 +29,11 @@ Once VM's are ready, hit yes for the autodiscovery, pick No for the PV restart.
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='b2_sql01'
-xe vm-cd-insert vm='b2_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_sql01'
+xe vm-cd-insert vm='p_b2_sql01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_sql02'
-xe vm-cd-insert vm='b2_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_sql02'
+xe vm-cd-insert vm='p_b2_sql02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -47,16 +47,16 @@ The step mentioned above is described in the [https://makeitcloudy.pl/windows-pr
 Eject VMTools installation media. Run bash code (XCP-ng terminal over SSH)
 
 ```bash
-xe vm-cd-eject vm='b2_sql01'
-xe vm-cd-eject vm='b2_sql02'
+xe vm-cd-eject vm='p_b2_sql01'
+xe vm-cd-eject vm='p_b2_sql02'
 
 ```
 
 Add extra disk for the database storage
 
 ```bash
-/opt/scripts/vm_add_disk.sh --vmName 'b2_sql01' --storageName 'node4_ssd_sdd' --diskName 'b2_sql01_Sdrive' --deviceId 5 --diskGB 30  --description 'Sdrive_SQLDBdrive'
-/opt/scripts/vm_add_disk.sh --vmName 'b2_sql02' --storageName 'node4_ssd_sde' --diskName 'b2_sql02_Sdrive' --deviceId 5 --diskGB 30  --description 'Sdrive_SQLDBdrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_sql01' --storageName 'node4_ssd_sdd' --diskName 'p_b2_sql01_Sdrive' --deviceId 5 --diskGB 30  --description 'Sdrive_SQLDBdrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_sql02' --storageName 'node4_ssd_sde' --diskName 'p_b2_sql02_Sdrive' --deviceId 5 --diskGB 30  --description 'Sdrive_SQLDBdrive'
 
 ```
 
@@ -117,10 +117,10 @@ It:
 Mount SQL Server 2019 installation media
 
 ```bash
-xe vm-cd-eject vm='b2_sql01'
-xe vm-cd-insert vm='b2_sql01' cd-name='SQLServer2019-x64-ENU.iso'
-xe vm-cd-eject vm='b2_sql02'
-xe vm-cd-insert vm='b2_sql02' cd-name='SQLServer2019-x64-ENU.iso'
+xe vm-cd-eject vm='p_b2_sql01'
+xe vm-cd-insert vm='p_b2_sql01' cd-name='SQLServer2019-x64-ENU.iso'
+xe vm-cd-eject vm='p_b2_sql02'
+xe vm-cd-insert vm='p_b2_sql02' cd-name='SQLServer2019-x64-ENU.iso'
 
 ```
 

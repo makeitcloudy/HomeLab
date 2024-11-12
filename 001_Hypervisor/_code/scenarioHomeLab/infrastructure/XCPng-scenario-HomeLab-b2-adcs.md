@@ -5,30 +5,30 @@
 ### Windows - Server OS - 1x ADCS Root - DesktopExperience | 1x ADCS Sub - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:03' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_adcsR_ADCS_RootCA'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_adcsR' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 40 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:03' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_ADCS_RootCA'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:04' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_adcsS_ADCS_IssuingCA'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_adcsS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:04' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_ADCS_IssuingCA'
 
 ```
 
 ### Windows - Server OS - 1x Web Server - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:05' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_adcsR_ADCS_WebEnrollment'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_adcsWS' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:05' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_ADCS_WebEnrollment'
 ```
 
 Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='b2_adcsWS'
-xe vm-cd-insert vm='b2_adcsWS' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_adcsR'
+xe vm-cd-insert vm='p_b2_adcsR' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_adcsR'
-xe vm-cd-insert vm='b2_adcsR' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_adcsS'
+xe vm-cd-insert vm='p_b2_adcsS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_adcsS'
-xe vm-cd-insert vm='b2_adcsS' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_adcsWS'
+xe vm-cd-insert vm='p_b2_adcsWS' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -80,8 +80,8 @@ Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainNa
 ### ADCS - Eject vmTools media
 
 ```bash
-xe vm-cd-eject vm='b2_adcsWS'
-xe vm-cd-eject vm='b2_adcsR'
-xe vm-cd-eject vm='b2_adcsS'
+xe vm-cd-eject vm='p_b2_adcsWS'
+xe vm-cd-eject vm='p_b2_adcsR'
+xe vm-cd-eject vm='p_b2_adcsS'
 
 ```

@@ -13,9 +13,9 @@ third network interfaces which serves the DHCP leases in - vlan1352
 File Server - cluster - 'w2k22dtc_2302_untd_nprmpt_uefi.iso'
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:06' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_dhcp01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:06' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_DHCP_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:07' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_DHCP_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_dhcp02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:07' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_DHCP_core'
 
 ```
 
@@ -23,11 +23,11 @@ Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='b2_dhcp01'
-xe vm-cd-insert vm='b2_dhcp01' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_dhcp01'
+xe vm-cd-insert vm='p_b2_dhcp01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_dhcp02'
-xe vm-cd-insert vm='b2_dhcp02' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_dhcp02'
+xe vm-cd-insert vm='p_b2_dhcp02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -44,8 +44,8 @@ Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainNa
 ### DHCP - Eject vmTools
 
 ```bash
-xe vm-cd-eject vm='b2_dhcp01'
-xe vm-cd-eject vm='b2_dhcp02'
+xe vm-cd-eject vm='p_b2_dhcp01'
+xe vm-cd-eject vm='p_b2_dhcp02'
 
 ```
 
@@ -69,8 +69,8 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ```bash
 # the initial network interface was 0
 # each subsequent network interface increases by 1
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'prod-A2-vlan1332' --Mac '16:A2:13:32:02:06' --Device '1'
-/opt/scripts/vm_add_network_interface.sh --VmName 'b2_dhcp01' --NetworkName 'prod-C2-vlan1352' --Mac '16:C2:13:52:02:06' --Device '2'
+/opt/scripts/vm_add_network_interface.sh --VmName 'p_b2_dhcp01' --NetworkName 'prod-A2-vlan1332' --Mac '16:A2:13:32:02:06' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'p_b2_dhcp01' --NetworkName 'prod-C2-vlan1352' --Mac '16:C2:13:52:02:06' --Device '2'
 ```
 
 ```powershell
@@ -100,8 +100,8 @@ Set-PLNetAdapter @dhcp_interface_vlan1352
 ```bash
 # the initial network interface was 0
 # each subsequent network interface increases by 1
-/opt/scripts/vm_add_network_interface.sh --VmName 'b3_dhcp02' --NetworkName 'prod-A3-vlan1333' --Mac '26:A3:13:33:02:07' --Device '1'
-/opt/scripts/vm_add_network_interface.sh --VmName 'b3_dhcp02' --NetworkName 'prod-C3-vlan1353' --Mac '26:C3:13:53:02:07' --Device '2'
+/opt/scripts/vm_add_network_interface.sh --VmName 'p_b2_dhcp02' --NetworkName 'prod-A3-vlan1333' --Mac '26:A3:13:33:02:07' --Device '1'
+/opt/scripts/vm_add_network_interface.sh --VmName 'p_b2_dhcp02' --NetworkName 'prod-C3-vlan1353' --Mac '26:C3:13:53:02:07' --Device '2'
 ```
 
 ```powershell
@@ -128,12 +128,13 @@ Set-PLNetAdapter @dhcp_interface_vlan1353
 
 ### Configure DHCP Scopes
 
+#### dhcp01
 Makes use of the MMC console.  
 Alternatively craft powershell code.  
 
 ```powershell
 $scope_vlan1332 = @{
-    Name          = 'a2_vlan1332'
+    Name          = 'prod_a2_vlan1332'
     #ScopeId       = '10.2.133.0' # The network address for the scope
     StartRange    = '10.2.133.201' # Starting IP address of the range
     EndRange      = '10.2.133.253' # Ending IP address of the range
@@ -143,7 +144,7 @@ $scope_vlan1332 = @{
 }
 
 $scope_vlan1352 = @{
-    Name          = 'b2_vlan1352'
+    Name          = 'prod_b2_vlan1352'
     #ScopeId       = '10.2.135.0' # The network address for the scope
     StartRange    = '10.2.135.201' # Starting IP address of the range
     EndRange      = '10.2.135.253' # Ending IP address of the range
@@ -157,7 +158,7 @@ Add-DhcpServerv4Scope @scope_vlan1332
 Add-DhcpServerv4Scope @scope_vlan11352
 
 
-$ReservationName = "Lab - A2 - "
+$ReservationName = "prod - A2 - "
 $IPAddress = "10.2.133.253" # The reserved IP address
 $MacAddress = "26:A2:13:32:02:53" # The MAC address to be reserved
 $ScopeId = "10.2.133.0" # The network address for the scope

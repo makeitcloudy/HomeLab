@@ -98,7 +98,7 @@ BEGIN
     $SafemodeAdministratorCred                 = New-Object System.Management.Automation.PSCredential ($SafemodeAdministratorUserName, $SafemodeAdministratorPasswordSecureString)
 
 
-    $domainAdministratorUserName               = 'lab.local\Administrator'
+    $domainAdministratorUserName               = 'd.local\Administrator'
     $domainAdministratorPassword               = 'Password1$'
     $domainAdministratorPasswordSecureString   = ConvertTo-SecureString $domainAdministratorPassword -AsPlainText -Force
     $domainAdministratorCred                   = New-Object System.Management.Automation.PSCredential ($domainAdministratorUserName, $domainAdministratorPasswordSecureString)
@@ -188,7 +188,7 @@ BEGIN
     #endregion
 
     #region Initialize Variables - Configuration - ADDS
-    $dscConfigLocalhostADDS_ps1_FileName       = 'ADDS_configuration.ps1'
+    $dscConfigLocalhostADDS_ps1_FileName       = 'ADDS-dev_configuration.ps1'
 
     $dscConfigLocalhostADDS_GithubUrl          = 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory'
     $dscConfigLocalhostADDS_ps1_GithubUrl      = $dscConfigLocalhostADDS_GithubUrl,$dscConfigLocalhostADDS_ps1_FileName -join '/'
@@ -329,11 +329,11 @@ PROCESS
             @{
                 NodeName                    = '*'
                 
-                ManagementNodeIPv4Address   = '10.2.134.249'
+                ManagementNodeIPv4Address   = '10.2.154.249'
                 InterfaceAlias              = 'Eth0'
 
-                DomainName                  = 'lab.local'                      #FIXME: your domain FQDN
-                DomainNetbiosName           = 'mot'                            #FIXME: your domain NetBIOS
+                DomainName                  = 'd.local'                      #FIXME: your domain FQDN
+                DomainNetbiosName           = 'd'                            #FIXME: your domain NetBIOS
                 Thumbprint                  = $selfSignedCertificateThumbprint
                 CertificateFile             = $dscSelfSignedCerCertificate_FullPath
                 NTDSPath                    = 'C:\Windows\NTDS'
@@ -346,21 +346,21 @@ PROCESS
             @{
                 NodeName                    = 'b2-dc01'                           #FIXME:
                 Role                        = 'RootDomainController'
-                IPV4Address                 = '10.2.134.1/24'                #FIXME:
-                DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
+                IPV4Address                 = '10.2.154.1/24'                #FIXME:
+                DefaultGatewayAddress       = '10.2.154.254'                   #FIXME:
                 # both domain controllers are configured at the same point of time
                 # if only one DC is configured then the DNS settings should be configured this way
-                #DNSServers                  = '10.2.134.201','127.0.0.1'
+                #DNSServers                  = '10.2.154.201','127.0.0.1'
                 # Carl Webster in his Webster Lab v2.1 documents state that the DNS should be configured
                 # on first DC this way that
                 # first DNS entry : points to itself by IP address
                 # second DNS entry: points to the second DC
                 # third DNS entry: points to the IPv4 loopback address
-                DNSServers                  = '10.2.134.1','10.2.134.2','127.0.0.1'
+                DNSServers                  = '10.2.154.1','10.2.154.2','127.0.0.1'
                 # # domain settings -->
                 ComplexityEnabled           = $false
                 MinPasswordLength           = 8
-                FirstSite                   = 'Lab-Site'                       #FIXME: your first site's name
+                FirstSite                   = 'D-B2'                       #FIXME: your first site's name
                 #AdditionalSites             = @('Lab-SH', 'Lab-HQ', 'Lab-BR') #FIXME: additional sites
                 #SitelinkPrimaryMembers      = @('Lab-OY', 'Lab-SH', 'Lab-HQ') #FIXME: optional
                 #SitelinkSecondaryMembers    = @('Lab-SH', 'Lab-OY', 'Lab-BR') #FIXME: optional
@@ -371,14 +371,14 @@ PROCESS
             @{
                 NodeName                    = 'b2-dc02'                           #FIXME: additional DC
                 Role                        = 'MemberDomainController'
-                IPV4Address                 = '10.2.134.2/24'                #FIXME: additional DC IP
-                DefaultGatewayAddress       = '10.2.134.254'                   #FIXME:
+                IPV4Address                 = '10.2.154.2/24'                #FIXME: additional DC IP
+                DefaultGatewayAddress       = '10.2.154.254'                   #FIXME:
                 # Carl Webster in his Webster Lab v2.1 documents state that the DNS should be configured
                 # on second DC this way
                 # first DNS entry : points to first DC  IP address
                 # second DNS entry: points to the the second DC itself by IP address
                 # third DNS entry: points to the IPv4 loopback address
-                DNSServers                  = '10.2.134.1','10.2.134.2','127.0.0.1'      #first DC + loopback
+                DNSServers                  = '10.2.154.1','10.2.154.2','127.0.0.1'      #first DC + loopback
                 Site                        = 'Lab-Site'                       #FIXME: any valid site created on the first DC
                 IsGlobalCatalog             = $true
                 NTPServer                   = '0.pl.pool.ntp.org'              #FIXME: prefered NTP server

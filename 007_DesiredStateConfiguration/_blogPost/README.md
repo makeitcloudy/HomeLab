@@ -49,6 +49,28 @@ Restart-Computer -Force
 
 ## windows-dsc
 
+### run_adds-dev.ps1
+
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+
+```powershell
+#Start-Process PowerShell_ISE -Verb RunAs
+# run in elevated PowerShell session
+Set-Location -Path "$env:USERPROFILE\Documents"
+
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory-dev_demo.ps1' -OutFile "$env:USERPROFILE\Documents\ActiveDirectory-dev_demo.ps1" -Verbose
+#psedit "$env:USERPROFILE\Documents\ActiveDirectory-dev_demo.ps1"
+
+# at this stage the computername is already renamed and it's name is : b2-dc01
+. "$env:USERPROFILE\Documents\ActiveDirectory-dev_demo.ps1" -ComputerName $env:Computername
+
+```
+
+* [run_adds-dev.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds-dev.ps1) - GitHub
+* [run_adds-dev.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_adds-dev.ps1) - GitHub raw
+* [ActiveDirectory-dev_demo.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/005_ActiveDirectory-dev_demo.ps1) - GitHub
+* [ActiveDirectory-dev_demo.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory-dev_demo.ps1) - GitHub raw
+
 ### run_adds.ps1
 
 Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:

@@ -6,17 +6,17 @@
 
 ```bash
 # First domain controller - server core
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_b2_dc01_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_dc01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:01' --StorageName 'node4_ssd_sdd' --VmDescription 'w2k22_ADDS_core'
 
 # Second domain controller - server core
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_b2_dc02_ADDS_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_dc02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:02' --StorageName 'node4_ssd_sde' --VmDescription 'w2k22_ADDS_core'
 
 # mount vmTools
-xe vm-cd-eject vm='b2_dc01'
-xe vm-cd-insert vm='b2_dc01' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_dc01'
+xe vm-cd-insert vm='p_b2_dc01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_dc02'
-xe vm-cd-insert vm='b2_dc02' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_dc02'
+xe vm-cd-insert vm='p_b2_dc02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -38,8 +38,8 @@ https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfigurati
 ### Windows - Server OS - ADDS - Eject VMTools
 
 ```bash
-xe vm-cd-eject vm='b2_dc01'
-xe vm-cd-eject vm='b2_dc02'
+xe vm-cd-eject vm='p_b2_dc01'
+xe vm-cd-eject vm='p_b2_dc02'
 ```
 
 ### Windows - Server OS - ADDS - Role Setup

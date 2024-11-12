@@ -5,7 +5,7 @@
 ### Windows - Server OS - 1x File Server - iSCSI target - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:13' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_iscsi_Filer'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_iscsi' --VCpu 4 --CoresPerSocket 2 --MemoryGB 2 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:13' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_iscsi_Filer'
 
 ```
 
@@ -13,8 +13,8 @@ Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='b2_iscsi'
-xe vm-cd-insert vm='b2_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_iscsi'
+xe vm-cd-insert vm='p_b2_iscsi' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -32,8 +32,8 @@ Add Disk.
 # once the VM is installed, and vmTools with the PVdrivers are there, add drives
 # do not initialize them - do that from the failover cluster console
 
-/opt/scripts/vm_add_disk.sh --vmName 'b2_iscsi' --storageName 'node4_hdd_sdc_lsi' --diskName 'b2_iscsi_quorumDrive' --deviceId 5 --diskGB 20  --description 'w2k22_quorumDrive'
-/opt/scripts/vm_add_disk.sh --vmName 'b2_iscsi' --storageName 'node4_hdd_sdc_lsi' --diskName 'b2_iscsi_vhdxClusterStorageDrive' --deviceId 6 --diskGB 100  --description 'w2k22_vhdxClusterStorageDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_iscsi' --storageName 'node4_hdd_sdc_lsi' --diskName 'p_b2_iscsi_quorumDrive' --deviceId 5 --diskGB 20  --description 'w2k22_quorumDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_iscsi' --storageName 'node4_hdd_sdc_lsi' --diskName 'p_b2_iscsi_vhdxClusterStorageDrive' --deviceId 6 --diskGB 100  --description 'w2k22_vhdxClusterStorageDrive'
 
 # add network interfaces to the VM
 # * cluster network
@@ -50,7 +50,7 @@ Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainNa
 ### File Services - iscsi - Eject installation media
 
 ```bash
-xe vm-cd-eject vm='b2_iscsi'
+xe vm-cd-eject vm='p_b2_iscsi'
 
 ```
 
@@ -85,9 +85,9 @@ Set-InitialConfigDsc -NewComputerName $env:ComputerName -Option Domain -Verbose
 ### Windows - Server OS - 2x File Server - Core
 
 ```bash
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:11' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_fs01_Filer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_fs01' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:11' --StorageName 'node4_ssd_sdb' --VmDescription 'w2k22_Filer_core'
 
-/opt/scripts/vm_create_uefi.sh --VmName 'b2_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'eth1-B2-vlan1342' --Mac '12:B2:13:42:02:12' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_fs02_Filer_core'
+/opt/scripts/vm_create_uefi.sh --VmName 'p_b2_fs02' --VCpu 4 --CoresPerSocket 2 --MemoryGB 4 --DiskGB 32 --ActivationExpiration 180 --TemplateName 'Windows Server 2022 (64-bit)' --IsoName 'w2k22dtc_2302_core_untd_nprmpt_uefi.iso' --IsoSRName 'node4_nfs' --NetworkName 'prod-B2-vlan1342' --Mac '16:B2:13:42:02:12' --StorageName 'node4_ssd_sdf' --VmDescription 'w2k22_Filer_core'
 
 ```
 
@@ -95,11 +95,11 @@ Once the OS is installed, execute the code to mount the VMTools
 
 ```bash
 # it will work - provided there is only one iso on SR with such name
-xe vm-cd-eject vm='b2_fs01'
-xe vm-cd-insert vm='b2_fs01' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_fs01'
+xe vm-cd-insert vm='p_b2_fs01' cd-name='Citrix_Hypervisor_821_tools.iso'
 
-xe vm-cd-eject vm='b2_fs02'
-xe vm-cd-insert vm='b2_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
+xe vm-cd-eject vm='p_b2_fs02'
+xe vm-cd-insert vm='p_b2_fs02' cd-name='Citrix_Hypervisor_821_tools.iso'
 
 ```
 
@@ -115,8 +115,8 @@ Current DSC configuration configures the Filers as member servers, with no clust
 ## the code works provided the vmtools are already installed, without PV drivers, it wont work
 ## Add Disk - this should be added only when the file servers plays role of the member servers and there is no clustering
 # run over SSH
-/opt/scripts/vm_add_disk.sh --vmName 'b2_fs01' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs01_PDrive' --deviceId 4 --diskGB 120  --description 'fs01_ProfileDrive'
-/opt/scripts/vm_add_disk.sh --vmName 'b2_fs02' --storageName 'node4_hdd_sdc_lsi' --diskName 'fs02_PDrive' --deviceId 4 --diskGB 120  --description 'fs02_ProfileDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_fs01' --storageName 'node4_hdd_sdc_lsi' --diskName 'p_fs01_PDrive' --deviceId 4 --diskGB 120  --description 'p_b2_fs01_ProfileDrive'
+/opt/scripts/vm_add_disk.sh --vmName 'p_b2_fs02' --storageName 'node4_hdd_sdc_lsi' --diskName 'p_fs02_PDrive' --deviceId 4 --diskGB 120  --description 'p_b2_fs02_ProfileDrive'
 
 ```
 
@@ -140,8 +140,8 @@ https://makeitcloudy.pl/windows-preparation/
 ```
 
 ```bash
-xe vm-cd-eject vm='b2_fs01'
-xe vm-cd-eject vm='b2_fs02'
+xe vm-cd-eject vm='p_b2_fs01'
+xe vm-cd-eject vm='p_b2_fs02'
 
 ```
 
