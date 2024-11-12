@@ -80,7 +80,7 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 # https://makeitcloudy.pl/windows-role-active-directory/
 # continue with paragraph 1.1.5 - Initial Configuration - ADDS
 # it leads to run_adds_initialconfig.ps1
-# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds_initialconfigps1
+# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds_initialconfig-devps1
 
 # it launches the domain is setup by running the file _ad_carlWebster_structure.ps1
 https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds-dev_initialConfig.ps1
@@ -89,13 +89,13 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_De
 # though this will be rewritten to the DSC configuration at some point anyway
 ```
 
-#### run_adds_structure.ps1
+#### run_adds-dev_structure.ps1
 
 ```powershell
 # https://makeitcloudy.pl/windows-role-active-directory/
 # continue with paragraph 1.1.6 - Initial Logical Structure - ADDS
-# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds_structureps1
+# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds-dev_structureps1
 
 # it leads to run_adds_structure.ps1
-# https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_structure.ps1
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds-dev_structure.ps1
 ```

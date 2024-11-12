@@ -1862,7 +1862,7 @@ function Create-GPO {
 
 #endregion
 
-$ADDomain = 'lab'
+$ADDomain = 'd'
 $TLD = 'local'
 
 $password = 'Password1!'
