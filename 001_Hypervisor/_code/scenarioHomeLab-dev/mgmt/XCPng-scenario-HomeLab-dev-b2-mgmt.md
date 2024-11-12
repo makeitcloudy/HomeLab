@@ -56,14 +56,24 @@ For the domain join usecase - proceed with the code (provided the domain control
 https://makeitcloudy.pl/windows-DSC/
 # proceed with the code from paragraph 2.2
 # the code available in that paragraph runs the Set-InitialConfigDsc function which triggers the the code 
-https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1
+https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_initialconfigdsc_domain-devps1
+
+# which runs:
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc-dev.ps1
 
 # scenario - workgroup - run first
-Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
+Set-InitialConfigDevDsc -NewComputerName $NodeName -Option Workgroup -Verbose
 # scenario - domain - when the domain is already configured
 $domainName = 'd.local'  #FIXME
-Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+Set-InitialConfigDevDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
 
 # when the VM is provisioned login via XCP-ng console unless you know the IP address
 # Restart-Computer for the succesfull installation of the PV-Tools
+```
+
+## continue with the software installation
+
+```powershell
+https://makeitcloudy.pl/windows-preparation/ 
+# paragraph 4
 ```
