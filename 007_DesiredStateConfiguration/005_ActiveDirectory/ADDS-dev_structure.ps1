@@ -28,254 +28,254 @@ function Create-Ou
     }
 
     PROCESS {
-        ##/lab.local/_Governed
+        ##/d.local/_Governed
         New-ADOrganizationalUnit -Name '_Governed' -Path "dc=$ADDomain,dc=$TLD" -Description 'Placeholder for lab objects' -ProtectedFromAccidentalDeletion $true
         
-        ##/lab.local/_Governed/Accounts
+        ##/d.local/_Governed/Accounts
         New-ADOrganizationalUnit -Name 'Accounts' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin,Service and User accounts' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Accounts/Admin
+        #/d.local/_Governed/Accounts/Admin
         New-ADOrganizationalUnit -Name 'Admin' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Admin/CVAD
+        #/d.local/_Governed/Accounts/Admin/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Admin/MS
+        #/d.local/_Governed/Accounts/Admin/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Admin/Test
+        #/d.local/_Governed/Accounts/Admin/Test
         New-ADOrganizationalUnit -Name 'TEST' -Path "ou=Admin,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Service
+        #/d.local/_Governed/Accounts/Service
         New-ADOrganizationalUnit -Name 'Service' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Service accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/User
+        #/d.local/_Governed/Accounts/User
         New-ADOrganizationalUnit -Name 'User' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for User accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/User/CVAD
+        #/d.local/_Governed/Accounts/User/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/User/MS
+        #/d.local/_Governed/Accounts/User/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/User/Test
+        #/d.local/_Governed/Accounts/User/Test
         New-ADOrganizationalUnit -Name 'TEST' -Path "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Test
+        #/d.local/_Governed/Accounts/Test
         New-ADOrganizationalUnit -Name 'Test' -Path "ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Test accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Test/CVAD
+        #/d.local/_Governed/Accounts/Test/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Test/MS
+        #/d.local/_Governed/Accounts/Test/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Accounts/Test/TEST
+        #/d.local/_Governed/Accounts/Test/TEST
         New-ADOrganizationalUnit -Name 'TEST' -Path "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin accounts' -ProtectedFromAccidentalDeletion $false
 
-        ##/lab.local/_Governed/Groups
+        ##/d.local/_Governed/Groups
         New-ADOrganizationalUnit -Name 'Groups' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Application, Admin and User accounts' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Groups/Admin
+        #/d.local/_Governed/Groups/Admin
         New-ADOrganizationalUnit -Name 'Admin' -Path "ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin groups' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Groups/Admin/Services
+        #/d.local/_Governed/Groups/Admin/Services
         New-ADOrganizationalUnit -Name 'Services' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Admin groups of Infrastructure Services' -ProtectedFromAccidentalDeletion $true
         
-        #/lab.local/_Governed/Groups/Admin/Services/Hypervisor
+        #/d.local/_Governed/Groups/Admin/Services/Hypervisor
         New-ADOrganizationalUnit -Name 'Hypervisor' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Hypervisor related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/NetScaler
+        #/d.local/_Governed/Groups/Admin/Services/NetScaler
         New-ADOrganizationalUnit -Name 'NetScaler' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for NetScaler related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD
+        #/d.local/_Governed/Groups/Admin/Services/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/AppLayering
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/AppLayering
         New-ADOrganizationalUnit -Name 'AppLayering' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for AppLayering related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/Broker
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/Broker
         New-ADOrganizationalUnit -Name 'Broker' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Broker related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/Director
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/Director
         New-ADOrganizationalUnit -Name 'Director' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Director related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/FAS
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/FAS
         New-ADOrganizationalUnit -Name 'FAS' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Federated Authentication Services related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/LIC
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/LIC
         New-ADOrganizationalUnit -Name 'LIC' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for License Server related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/PVS
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/PVS
         New-ADOrganizationalUnit -Name 'PVS' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Citrix Provisioning Services related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/StoreFront
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/StoreFront
         New-ADOrganizationalUnit -Name 'StoreFront' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for StoreFront related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/CVAD/WEM
+        #/d.local/_Governed/Groups/Admin/Services/CVAD/WEM
         New-ADOrganizationalUnit -Name 'WEM' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Federated Authentication Services related Admin groups' -ProtectedFromAccidentalDeletion $false
 
-        ##/lab.local/_Governed/Groups/Admin/Services/MS
+        ##/d.local/_Governed/Groups/Admin/Services/MS
         New-ADOrganizationalUnit -Name 'MS' -Path "ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Functional Services related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/MGMT
+        #/d.local/_Governed/Groups/Admin/Services/MS/MGMT
         New-ADOrganizationalUnit -Name 'MGMT' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Management Plane (jumphost,mgmtNode) Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/ADCS
+        #/d.local/_Governed/Groups/Admin/Services/MS/ADCS
         New-ADOrganizationalUnit -Name 'ADCS' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for ADCS/PKI related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/DHCP
+        #/d.local/_Governed/Groups/Admin/Services/MS/DHCP
         New-ADOrganizationalUnit -Name 'DHCP' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for DHCP related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/FileServer
+        #/d.local/_Governed/Groups/Admin/Services/MS/FileServer
         New-ADOrganizationalUnit -Name 'FileServer' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for FileServer related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/SQL
+        #/d.local/_Governed/Groups/Admin/Services/MS/SQL
         New-ADOrganizationalUnit -Name 'SQL' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for SQL related Admin groups' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Groups/Admin/Services/MS/AppV
+        #/d.local/_Governed/Groups/Admin/Services/MS/AppV
         New-ADOrganizationalUnit -Name 'AppV' -Path "ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for APP-V related Admin groups' -ProtectedFromAccidentalDeletion $false
         
-        ##/lab.local/_Governed/Groups/User
+        ##/d.local/_Governed/Groups/User
         New-ADOrganizationalUnit -Name 'User' -Path "ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for User groups' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Groups/Application
+        #/d.local/_Governed/Groups/Application
         New-ADOrganizationalUnit -Name 'Application' -Path "ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Application groups' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Groups/Policy
+        #/d.local/_Governed/Groups/Policy
         New-ADOrganizationalUnit -Name 'Policy' -Path "ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Groups/Security
+        #/d.local/_Governed/Groups/Security
         New-ADOrganizationalUnit -Name 'Security' -Path "ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for' -ProtectedFromAccidentalDeletion $true
         
-        ##/lab.local/_Governed/Infra
+        ##/d.local/_Governed/Infra
         New-ADOrganizationalUnit -Name 'Infra' -Path "ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for infra objects' -ProtectedFromAccidentalDeletion $true
         
-        ##/lab.local/_Governed/Infra/Citrix
+        ##/d.local/_Governed/Infra/Citrix
         New-ADOrganizationalUnit -Name 'Citrix' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Citrix infra objects' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Infra/Citrix/CVAD
+        #/d.local/_Governed/Infra/Citrix/CVAD
         New-ADOrganizationalUnit -Name 'CVAD' -Path "ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD infra objects' -ProtectedFromAccidentalDeletion $true
         ## GPO: Citrix VDA Computer Settings -> User configuration settings disabled
         ## GPO: Citrix VDA Users All (including Admins) -> Computer configuration settings disabled
         ## GPO: Citrix VDA USers Non-Admins (lockdown) -> Computer configuration settings disabled
         
-        #/lab.local/_Governed/Infra/Citrix/CVAD/AppLayering
+        #/d.local/_Governed/Infra/Citrix/CVAD/AppLayering
         New-ADOrganizationalUnit -Name 'AppLayering' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD AppLayering computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/Broker
+        #/d.local/_Governed/Infra/Citrix/CVAD/Broker
         New-ADOrganizationalUnit -Name 'Broker' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Broker computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/Director
+        #/d.local/_Governed/Infra/Citrix/CVAD/Director
         New-ADOrganizationalUnit -Name 'Director' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Director computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/FAS
+        #/d.local/_Governed/Infra/Citrix/CVAD/FAS
         New-ADOrganizationalUnit -Name 'FAS' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Fas computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/LIC
+        #/d.local/_Governed/Infra/Citrix/CVAD/LIC
         New-ADOrganizationalUnit -Name 'LIC' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD LicenseServer computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/PVS
+        #/d.local/_Governed/Infra/Citrix/CVAD/PVS
         New-ADOrganizationalUnit -Name 'PVS' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD LicenseServer computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/StoreFront
+        #/d.local/_Governed/Infra/Citrix/CVAD/StoreFront
         New-ADOrganizationalUnit -Name 'StoreFront' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD StoreFront computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/WEM
+        #/d.local/_Governed/Infra/Citrix/CVAD/WEM
         New-ADOrganizationalUnit -Name 'WEM' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD StoreFront computer objects' -ProtectedFromAccidentalDeletion $false
 
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/
         New-ADOrganizationalUnit -Name '_TEMPLATE' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD Template computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2008R2
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2008R2
         New-ADOrganizationalUnit -Name '2008R2' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2012R2
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2012R2
         New-ADOrganizationalUnit -Name '2012R2' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2016
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2016
         New-ADOrganizationalUnit -Name '2016' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2019
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2019
         New-ADOrganizationalUnit -Name '2019' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2022
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2022
         New-ADOrganizationalUnit -Name '2022' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2025
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/2025
         New-ADOrganizationalUnit -Name '2025' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win11
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win11
         New-ADOrganizationalUnit -Name 'Win11' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win10
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win10
         New-ADOrganizationalUnit -Name 'Win10' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win7
+        #/d.local/_Governed/Infra/Citrix/CVAD/_TEMPLATE/Win7
         New-ADOrganizationalUnit -Name 'Win7' -Path "ou=_TEMPLATE,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
         
         
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/
         New-ADOrganizationalUnit -Name '_VDA' -Path "ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD VDA computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2008R2
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2008R2
         New-ADOrganizationalUnit -Name '2008R2' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2012R2
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2012R2
         New-ADOrganizationalUnit -Name '2012R2' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2016
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2016
         New-ADOrganizationalUnit -Name '2016' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2019
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2019
         New-ADOrganizationalUnit -Name '2019' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2022
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2022
         New-ADOrganizationalUnit -Name '2022' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/2025
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/2025
         New-ADOrganizationalUnit -Name '2025' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/Win11
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/Win11
         New-ADOrganizationalUnit -Name 'Win11' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/Win10
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/Win10
         New-ADOrganizationalUnit -Name 'Win10' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Citrix/CVAD/_VDA/Win7
+        #/d.local/_Governed/Infra/Citrix/CVAD/_VDA/Win7
         New-ADOrganizationalUnit -Name 'Win7' -Path "ou=_VDA,ou=CVAD,ou=Citrix,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for CVAD computer objects' -ProtectedFromAccidentalDeletion $false
 
-        ##/lab.local/_Governed/Infra/Hypervisor
+        ##/d.local/_Governed/Infra/Hypervisor
         New-ADOrganizationalUnit -Name 'Hypervisor' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Hypervisor objects' -ProtectedFromAccidentalDeletion $true
 
-        #/lab.local/_Governed/Infra/Microsoft
+        #/d.local/_Governed/Infra/Microsoft
         New-ADOrganizationalUnit -Name 'Microsoft' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Microsoft infra objects' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Infra/Microsoft/ADCS
+        #/d.local/_Governed/Infra/Microsoft/ADCS
         New-ADOrganizationalUnit -Name 'ADCS' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Active Directory Certification Services infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/APPV
+        #/d.local/_Governed/Infra/Microsoft/APPV
         New-ADOrganizationalUnit -Name 'APPV' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Active Directory Certification Services infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/DHCP
+        #/d.local/_Governed/Infra/Microsoft/DHCP
         New-ADOrganizationalUnit -Name 'DHCP' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for DHCP infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/FileServer
+        #/d.local/_Governed/Infra/Microsoft/FileServer
         New-ADOrganizationalUnit -Name 'FileServer' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for File Server infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/MGMT
+        #/d.local/_Governed/Infra/Microsoft/MGMT
         New-ADOrganizationalUnit -Name 'MGMT' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Management Plane infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/SQL
+        #/d.local/_Governed/Infra/Microsoft/SQL
         New-ADOrganizationalUnit -Name 'SQL' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for SQL infra objects' -ProtectedFromAccidentalDeletion $false
 
-        ##/lab.local/_Governed/Infra/NetScaler
+        ##/d.local/_Governed/Infra/NetScaler
         New-ADOrganizationalUnit -Name 'NetScaler' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for NetScaler objects' -ProtectedFromAccidentalDeletion $true
 
-        #/lab.local/_Governed/Infra/Microsoft/RDS
+        #/d.local/_Governed/Infra/Microsoft/RDS
         New-ADOrganizationalUnit -Name 'RDS' -Path "ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services infra objects' -ProtectedFromAccidentalDeletion $true
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2
         New-ADOrganizationalUnit -Name '2012R2' -Path "ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services 2012$2 infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2/RDGW
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2/RDGW
         New-ADOrganizationalUnit -Name 'RDGW' -Path "ou=2012R2,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Gateway infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2/RDCB
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2/RDCB
         New-ADOrganizationalUnit -Name 'RDCB' -Path "ou=2012R2,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Broker infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2/RDWI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2/RDWI
         New-ADOrganizationalUnit -Name 'RDWI' -Path "ou=2012R2,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Web Interface infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2/RDSH
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2/RDSH
         New-ADOrganizationalUnit -Name 'RDSH' -Path "ou=2012R2,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Session Hosts infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2012R2/VDI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2012R2/VDI
         New-ADOrganizationalUnit -Name 'VDI' -Path "ou=2012R2,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS VDI infra objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016
         New-ADOrganizationalUnit -Name '2016' -Path "ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services 2016 infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016/RDGW
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016/RDGW
         New-ADOrganizationalUnit -Name 'RDGW' -Path "ou=2016,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Gateway infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016/RDCB
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016/RDCB
         New-ADOrganizationalUnit -Name 'RDCB' -Path "ou=2016,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Broker infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016/RDWI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016/RDWI
         New-ADOrganizationalUnit -Name 'RDWI' -Path "ou=2016,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Web Interface infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016/RDSH
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016/RDSH
         New-ADOrganizationalUnit -Name 'RDSH' -Path "ou=2016,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Session Hosts infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2016/VDI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2016/VDI
         New-ADOrganizationalUnit -Name 'VDI' -Path "ou=2016,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS VDI infra objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019
         New-ADOrganizationalUnit -Name '2019' -Path "ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services 2019 infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019/RDGW
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019/RDGW
         New-ADOrganizationalUnit -Name 'RDGW' -Path "ou=2019,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Gateway infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019/RDCB
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019/RDCB
         New-ADOrganizationalUnit -Name 'RDCB' -Path "ou=2019,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Broker infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019/RDWI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019/RDWI
         New-ADOrganizationalUnit -Name 'RDWI' -Path "ou=2019,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Web Interface infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019/RDSH
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019/RDSH
         New-ADOrganizationalUnit -Name 'RDSH' -Path "ou=2019,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Session Hosts infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2019/VDI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2019/VDI
         New-ADOrganizationalUnit -Name 'VDI' -Path "ou=2019,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS VDI infra objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022
         New-ADOrganizationalUnit -Name '2022' -Path "ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services 2022 infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022/RDGW
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022/RDGW
         New-ADOrganizationalUnit -Name 'RDGW' -Path "ou=2022,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Gateway infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022/RDCB
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022/RDCB
         New-ADOrganizationalUnit -Name 'RDCB' -Path "ou=2022,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Broker infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022/RDWI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022/RDWI
         New-ADOrganizationalUnit -Name 'RDWI' -Path "ou=2022,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Web Interface infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022/RDSH
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022/RDSH
         New-ADOrganizationalUnit -Name 'RDSH' -Path "ou=2022,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Session Hosts infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2022/VDI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2022/VDI
         New-ADOrganizationalUnit -Name 'VDI' -Path "ou=2022,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS VDI infra objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025
         New-ADOrganizationalUnit -Name '2025' -Path "ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Remote Desktop Services 2025 infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025/RDGW
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025/RDGW
         New-ADOrganizationalUnit -Name 'RDGW' -Path "ou=2025,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Gateway infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025/RDCB
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025/RDCB
         New-ADOrganizationalUnit -Name 'RDCB' -Path "ou=2025,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Broker infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025/RDWI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025/RDWI
         New-ADOrganizationalUnit -Name 'RDWI' -Path "ou=2025,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Web Interface infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025/RDSH
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025/RDSH
         New-ADOrganizationalUnit -Name 'RDSH' -Path "ou=2025,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS Session Hosts infra objects' -ProtectedFromAccidentalDeletion $false
-        #/lab.local/_Governed/Infra/Microsoft/RDS/2025/VDI
+        #/d.local/_Governed/Infra/Microsoft/RDS/2025/VDI
         New-ADOrganizationalUnit -Name 'VDI' -Path "ou=2025,ou=RDS,ou=Microsoft,ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for RDS VDI infra objects' -ProtectedFromAccidentalDeletion $false
         
-        #/lab.local/_Governed/Infra/Parallels
+        #/d.local/_Governed/Infra/Parallels
         New-ADOrganizationalUnit -Name 'Parallels' -Path "ou=Infra,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for Parallels infra objects' -ProtectedFromAccidentalDeletion $true
     }
 
@@ -318,11 +318,11 @@ function Create-DelegationGroup
     }
 
     PROCESS {
-        #/lab.local/_Governed/Groups/Policy
+        #/d.local/_Governed/Groups/Policy
         New-ADGroup -Name 'Policy-G-AllowRegedit' -SamAccountName 'Policy-G-AllowRegedit' -GroupCategory Security -GroupScope Global -DisplayName 'Policy-G-AllowRegedit' -Path "ou=Policy,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Scope - Global - Allow making use of regedit'
         New-ADGroup -Name 'Policy-L-AllowRegedit' -SamAccountName 'Policy-L-AllowRegedit' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Policy-L-AllowRegedit' -Path "ou=Policy,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Scope - Domain Local - Allow making use of regedit'
 
-        #/lab.local/_Governed/Groups/Security
+        #/d.local/_Governed/Groups/Security
         New-AdGroup -Name 'Security-G-Administrators' -SamAccountName 'Sec-G-Administrators' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-Administrators' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
         New-AdGroup -Name 'Security-G-BackupOperators' -SamAccountName 'Sec-G-BackupOperators' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-BackupOperators' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
         New-AdGroup -Name 'Security-G-PowerUsers' -SamAccountName 'Sec-G-PowerUsers' -GroupCategory Security -GroupScope Global -DisplayName 'Sec-G-PowerUsers' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description ''
@@ -333,36 +333,36 @@ function Create-DelegationGroup
         New-AdGroup -Name 'Security-L-PowerUsers' -SamAccountName 'Security-L-PowerUsers' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Security-L-PowerUsers' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Provides Power User Permissions'
         New-AdGroup -Name 'Security-L-RemoteDesktopUser' -SamAccountName 'Secucity-L-RemoteDesktopUser' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Secucity-L-RemoteDesktopUser' -Path "ou=Security,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Provides Remote Desktop Logon Permissions'
 
-        #/lab.local/_Governed/Groups/Admin/Services/XX
+        #/d.local/_Governed/Groups/Admin/Services/XX
         #"ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
 
         #"ou=MgmtLayer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-MS-MGMT-Admin' -SamAccountName 'Service-G-MS-MGMT-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-MGMT-Admin' -Path "ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'ADCS - DomainGlobal - Full Administrators'
-        New-ADGroup -Name 'Service-G-MS-MGMT-CustomAdmin' -SamAccountName 'Service-G-MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-MGMT-CustomAdmin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Restricted Administrators Delegated Domain Global Group'
-        New-ADGroup -Name 'Service-L-MS-MGMT-Admin' -SamAccountName 'Service-L-MS-MGMT-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-Admin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Full Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-MGMT-CustomAdmin' -SamAccountName 'Service-L-MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-CustomAdmin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Restricted Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-MGMT-OU' -SamAccountName 'Service-L-MS-MGMT-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-OU' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'Full Control Rights Delegation - ADCS OU and Policies'
+        New-ADGroup -Name 'Service-G-MS-MGMT-CustomAdmin' -SamAccountName 'Service-G-MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-MGMT-CustomAdmin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Restricted Administrators Delegated Domain Global Group'
+        New-ADGroup -Name 'Service-L-MS-MGMT-Admin' -SamAccountName 'Service-L-MS-MGMT-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-Admin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Full Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-MGMT-CustomAdmin' -SamAccountName 'Service-L-MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-CustomAdmin' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Restricted Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-MGMT-OU' -SamAccountName 'Service-L-MS-MGMT-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-MGMT-OU' -Path 'ou=MGMT,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'Full Control Rights Delegation - ADCS OU and Policies'
 
         #"ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-MS-ADCS-Admin' -SamAccountName 'Service-G-MS-ADCS-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-ADCS-Admin' -Path "ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'ADCS - DomainGlobal - Full Administrators'
-        New-ADGroup -Name 'Service-G-MS-ADCS-CustomAdmin' -SamAccountName 'Service-G-MS-ADCS-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-ADCS-CustomAdmin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Restricted Administrators Delegated Domain Global Group'
-        New-ADGroup -Name 'Service-L-MS-ADCS-Admin' -SamAccountName 'Service-L-MS-ADCS-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-Admin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Full Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-ADCS-CustomAdmin' -SamAccountName 'Service-L-MS-ADCS-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-CustomAdmin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'ADCS Service Restricted Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-ADCS-OU' -SamAccountName 'Service-L-MS-ADCS-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-OU' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'Full Control Rights Delegation - ADCS OU and Policies'
+        New-ADGroup -Name 'Service-G-MS-ADCS-CustomAdmin' -SamAccountName 'Service-G-MS-ADCS-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-ADCS-CustomAdmin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Restricted Administrators Delegated Domain Global Group'
+        New-ADGroup -Name 'Service-L-MS-ADCS-Admin' -SamAccountName 'Service-L-MS-ADCS-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-Admin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Full Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-ADCS-CustomAdmin' -SamAccountName 'Service-L-MS-ADCS-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-CustomAdmin' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'ADCS Service Restricted Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-ADCS-OU' -SamAccountName 'Service-L-MS-ADCS-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-ADCS-OU' -Path 'ou=ADCS,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'Full Control Rights Delegation - ADCS OU and Policies'
 
         #"ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-MS-DHCP-Admin' -SamAccountName 'Service-G-MS-DHCP-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-DHCP-Admin' -Path "ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'DHCP - DomainGlobal - Full Administrators'
-        New-ADGroup -Name 'Service-G-MS-DHCP-CustomAdmin' -SamAccountName 'Service-G-MS-DHCP-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-DHCP-CustomAdmin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'DHCP Service Restricted Administrators Delegated Domain Global Group'
-        New-ADGroup -Name 'Service-L-MS-DHCP-Admin' -SamAccountName 'Service-L-MS-DHCP-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-Admin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'DHCP Service Full Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-DHCP-CustomAdmin' -SamAccountName 'Service-L-MS-DHCP-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-CustomAdmin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'DHCP Service Restricted Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-DHCP-OU' -SamAccountName 'Service-L-MS-DHCP-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-OU' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'Full Control Rights Delegation - DHCP OU and Policies'
+        New-ADGroup -Name 'Service-G-MS-DHCP-CustomAdmin' -SamAccountName 'Service-G-MS-DHCP-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-DHCP-CustomAdmin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'DHCP Service Restricted Administrators Delegated Domain Global Group'
+        New-ADGroup -Name 'Service-L-MS-DHCP-Admin' -SamAccountName 'Service-L-MS-DHCP-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-Admin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'DHCP Service Full Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-DHCP-CustomAdmin' -SamAccountName 'Service-L-MS-DHCP-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-CustomAdmin' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'DHCP Service Restricted Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-DHCP-OU' -SamAccountName 'Service-L-MS-DHCP-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-DHCP-OU' -Path 'ou=DHCP,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'Full Control Rights Delegation - DHCP OU and Policies'
 
         #"ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-MS-FileServer-Admin' -SamAccountName 'Service-G-MS-FileServer-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-FileServer-Admin' -Path "ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'FileServer - DomainGlobal - Full Administrators'
-        New-ADGroup -Name 'Service-G-MS-FileServer-CustomAdmin' -SamAccountName 'Service-G-MS-FileServer-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-FileServer-CustomAdmin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'FileServer Service Restricted Administrators Delegated Domain Global Group'
-        New-ADGroup -Name 'Service-L-MS-FileServer-Admin' -SamAccountName 'Service-L-MS-FileServer-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-Admin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'FileServer Service Full Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-FileServer-CustomAdmin' -SamAccountName 'Service-L-MS-FileServer-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-CustomAdmin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'FileServer Service Restricted Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-FileServer-OU' -SamAccountName 'Service-L-MS-FileServer-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-OU' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'Full Control Rights Delegation - FileServer OU and Policies'
+        New-ADGroup -Name 'Service-G-MS-FileServer-CustomAdmin' -SamAccountName 'Service-G-MS-FileServer-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-FileServer-CustomAdmin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'FileServer Service Restricted Administrators Delegated Domain Global Group'
+        New-ADGroup -Name 'Service-L-MS-FileServer-Admin' -SamAccountName 'Service-L-MS-FileServer-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-Admin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'FileServer Service Full Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-FileServer-CustomAdmin' -SamAccountName 'Service-L-MS-FileServer-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-CustomAdmin' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'FileServer Service Restricted Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-FileServer-OU' -SamAccountName 'Service-L-MS-FileServer-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-FileServer-OU' -Path 'ou=FileServer,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'Full Control Rights Delegation - FileServer OU and Policies'
 
         ##"ou=SQL,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-MS-SQL-Admin' -SamAccountName 'Service-G-MS-SQL-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-SQL-Admin' -Path "ou=SQL,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Full Permissions - SQL Administrator'
@@ -376,10 +376,10 @@ function Create-DelegationGroup
 
         #TODO: RENAME DESCRIPTION OF THE GROUPS ######################################################################
         New-ADGroup -Name 'Service-G-MS-APPV-Admin' -SamAccountName 'Service-G-MS-APPV-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-APPV-Admin' -Path "ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'App-V - DomainGlobal - Full Administrators'
-        New-ADGroup -Name 'Service-G-MS-APPV-CustomAdmin' -SamAccountName 'Service-G-MS-APPV-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-APPV-CustomAdmin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'App-V Service Restricted Administrators Delegated Domain Global Group'
-        New-ADGroup -Name 'Service-L-MS-APPV-Admin' -SamAccountName 'Service-L-MS-APPV-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-Admin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'App-V Service Full Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-APPV-CustomAdmin' -SamAccountName 'Service-L-MS-APPV-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-CustomAdmin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'App-V Service Restricted Administrators Delegated Domain Local Group'
-        New-ADGroup -Name 'Service-L-MS-APPV-OU' -SamAccountName 'Service-L-MS-APPV-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-OU' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=lab,dc=local' -Description 'Full Control Rights Delegation - APP-V OU and Policies'
+        New-ADGroup -Name 'Service-G-MS-APPV-CustomAdmin' -SamAccountName 'Service-G-MS-APPV-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-MS-APPV-CustomAdmin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'App-V Service Restricted Administrators Delegated Domain Global Group'
+        New-ADGroup -Name 'Service-L-MS-APPV-Admin' -SamAccountName 'Service-L-MS-APPV-Admin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-Admin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'App-V Service Full Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-APPV-CustomAdmin' -SamAccountName 'Service-L-MS-APPV-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-CustomAdmin' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'App-V Service Restricted Administrators Delegated Domain Local Group'
+        New-ADGroup -Name 'Service-L-MS-APPV-OU' -SamAccountName 'Service-L-MS-APPV-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-MS-APPV-OU' -Path 'ou=AppV,ou=MS,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD' -Description 'Full Control Rights Delegation - APP-V OU and Policies'
 
         #"ou=Hypervisor,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD"
         New-ADGroup -Name 'Service-G-Hypervisor-Admin' -SamAccountName 'Service-G-Hypervisor-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-Hypervisor-Admin' -Path "ou=Hypervisor,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - Full Permissions - Hypervisor'
@@ -406,7 +406,7 @@ function Create-DelegationGroup
         New-ADGroup -Name 'Service-L-CVAD-CustomAdmin' -SamAccountName 'Service-L-CVAD-CustomAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-CustomAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - Constrained Permissions - Citrix AppLayering Administrators'
         New-ADGroup -Name 'Service-L-CVAD-OU' -SamAccountName 'Service-L-CVAD-OU' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-OU' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Full Control Rights Delegation - Citrix AppLayering OU and Policies'
 
-        ## those two are not needed as there are: /lab.local/_Governed/Groups/Admin - CVAD-HelpDeskAdmin
+        ## those two are not needed as there are: /d.local/_Governed/Groups/Admin - CVAD-HelpDeskAdmin
         #New-ADGroup -Name 'Service-G-CVAD-HelpDeskAdmin' -SamAccountName 'Service-G-CVAD-HelpDeskAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'Service-G-CVAD-HelpDeskAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Global - HelpDesk Administrators'
         #New-ADGroup -Name 'Service-L-CVAD-HelpDeskAdmin' -SamAccountName 'Service-L-CVAD-HelpDeskAdmin' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'Service-L-CVAD-HelpDeskAdmin' -Path "ou=CVAD,ou=Services,ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Domain Local - HelpDesk Administrators'
 
@@ -502,7 +502,7 @@ function Create-RoleBasedGroupAdmin
     }
 
     PROCESS {
-    #/lab.local/_Governed/Groups/Admin
+    #/d.local/_Governed/Groups/Admin
     # SOAP, stream service to run - those accounts should become admins on PVS servers
     # admins are member of those ROLE groups
     
@@ -510,11 +510,11 @@ function Create-RoleBasedGroupAdmin
     #CVAD-Admin  - should be added to AccountOperators AD group - otherwise you will not be able to provision Machines via MCS
     # https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-groups#account-operators
 
-    #/lab.local/_Governed/Groups/Admin
+    #/d.local/_Governed/Groups/Admin
     #MS-MGMT-Admin - role Group for Management Server Administrators with Full Permissions
     New-ADGroup -Name 'MS-MGMT-Admin' -SamAccountName 'MS-MGMT-Admin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MGMT-Admin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Plane - grants Admin Permissions'
     
-    #/lab.local/_Governed/Groups/Admin
+    #/d.local/_Governed/Groups/Admin
     #MS-MgmtNode-CustomAdmin - Role Group for Management Server Administrators with Restricted set of privileges
     New-ADGroup -Name 'MS-MGMT-CustomAdmin' -SamAccountName 'MS-MGMT-CustomAdmin' -GroupCategory Security -GroupScope Global -DisplayName 'MS-MGMT-CustomAdmin' -Path "ou=Admin,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - MGMT Plane - grants Constrained Admin Permissions'
     
@@ -613,7 +613,7 @@ function Create-RoleBasedGroupUser
     }
 
     PROCESS {
-        #/lab.local/_Governed/Groups/User
+        #/d.local/_Governed/Groups/User
         New-ADGroup -Name 'MS-RDS-User' -SamAccountName 'MS-RDS-User' -GroupCategory Security -GroupScope Global -DisplayName 'MS-RDS-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of Remote Desktop Services'
         New-ADGroup -Name 'MS-FSLogix-User' -SamAccountName 'MS-FSLogix-User' -GroupCategory Security -GroupScope Global -DisplayName 'MS-FSLogix-User' -Path "ou=User,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users making use of MS FSLogix'
 
@@ -656,7 +656,7 @@ function Create-ApplicationGroup
     }
 
     PROCESS {
-        #/lab.local/_Governed/Groups/Application
+        #/d.local/_Governed/Groups/Application
         New-ADGroup -Name 'App-G-AcrobatReader' -SamAccountName 'App-G-AcrobatReader' -GroupCategory Security -GroupScope Global -DisplayName 'App-G-AcrobatReader' -Path "ou=Application,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Placeholder for users - Members of this group can make use of Acrobat Reader App'
         New-ADGroup -Name 'App-L-AcrobatReader' -SamAccountName 'App-L-AcrobatReader' -GroupCategory Security -GroupScope DomainLocal -DisplayName 'App-L-AcrobatReader' -Path "ou=Application,ou=Groups,ou=_Governed,dc=$ADDomain,dc=$TLD" -Description 'Members of this group can make use of Acrobat Reader App'
 
@@ -694,7 +694,7 @@ function Create-ComputerObject
     #ADCS Root is outside of the domain  - adcsr
         #ADCS Sub is domain joined           - adcss
         
-        #/lab.local/_Governed/Infra/Citrix/CVAD/Broker
+        #/d.local/_Governed/Infra/Citrix/CVAD/Broker
         1..2 | Foreach-Object {
             $temp = $_.ToString("$('ddc')00")
             $tempName = $_.ToString("CVAD - Broker Server 00")
@@ -739,11 +739,11 @@ function Create-AdminUserObject
     }
 
     PROCESS {
-        #/lab.local/_Governed/Accounts/Admin
+        #/d.local/_Governed/Accounts/Admin
         #EUC Admin and User Accounts
         
         #admin account
-        #/lab.local/_Governed/Accounts/Admin
+        #/d.local/_Governed/Accounts/Admin
         New-ADUser -Name 'a_test' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
@@ -890,7 +890,7 @@ function Create-TestUserObject {
     }
 
     PROCESS {
-        #/lab.local/_Governed/Accounts/User
+        #/d.local/_Governed/Accounts/User
         #test account
         New-ADUser -Name 't_test' `
         -AccountPassword $CryptoPwd `
@@ -1038,7 +1038,7 @@ function Create-UserObject {
     }
 
     PROCESS {
-        #/lab.local/_Governed/Accounts/User
+        #/d.local/_Governed/Accounts/User
         #user account
         New-ADUser -Name 'u_test' `
         -AccountPassword $CryptoPwd `
@@ -1188,7 +1188,7 @@ function Create-ServiceAccount
     }
 
     PROCESS {
-        #/lab.local/_Governed/Accounts/Service
+        #/d.local/_Governed/Accounts/Service
         New-ADUser -Name 'svc-Hypervisor' `
         -AccountPassword $CryptoPwd `
         -CannotChangePassword $True `
@@ -1295,7 +1295,7 @@ function Configure-GroupMemberShipServiceAccount {
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - service account"
         $startDate = Get-Date
 
-        #/lab.local/_Governed/Accounts/Service
+        #/d.local/_Governed/Accounts/Service
         $serviceAccount = get-aduser -searchbase "ou=Service,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -SearchScope OneLevel -Filter *
     }
 
@@ -1335,7 +1335,7 @@ function Configure-GroupMembershipAdminAccount {
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Admin account"
         $startDate = Get-Date
 
-        #/lab.local/_Governed/Accounts/Admin
+        #/d.local/_Governed/Accounts/Admin
         # only from this OU, not subOU's
         $adminAccount = Get-ADUser -SearchBase "OU=Admin,OU=Accounts,OU=_Governed,DC=$ADDomain,DC=$TLD" -SearchScope OneLevel -Filter *
     }
@@ -1524,7 +1524,7 @@ function Configure-GroupMembershipSecurityAccount {
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Admin account"
         $startDate = Get-Date
 
-        #/lab.local/_Governed/Accounts/Admin
+        #/d.local/_Governed/Accounts/Admin
         # only from this OU, not subOU's
         $adminAccount = Get-ADUser -SearchBase "OU=Admin,OU=Accounts,OU=_Governed,DC=$ADDomain,DC=$TLD" -SearchScope OneLevel -Filter *
     }
@@ -1584,7 +1584,7 @@ function Configure-GroupMembershipUserAccount {
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - User Account"
         $startDate = Get-Date
 
-        #/lab.local/_Governed/Accounts/User
+        #/d.local/_Governed/Accounts/User
         $userAccount = get-aduser -SearchBase "ou=User,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -SearchScope OneLevel -Filter *
     }
 
@@ -1628,7 +1628,7 @@ function Configure-GroupMembershipTestAccount {
         Write-Verbose "$env:COMPUTERNAME - $($MyInvocation.MyCommand) - Configure Group Membership - Test Account"
         $startDate = Get-Date
 
-        #/lab.local/_Governed/Accounts/User
+        #/d.local/_Governed/Accounts/User
         $testAccount = get-aduser -SearchBase "ou=Test,ou=Accounts,ou=_Governed,dc=$ADDomain,dc=$TLD" -filter *
     }
 
@@ -1889,7 +1889,7 @@ Configure-GroupMembershipTestAccount -ADDomain $ADDomain -TLD $TLD -Verbose
 
 Configure-ADDelegation
 
-#/lab.local/_Governed/Infra/Citrix/CVAD
+#/d.local/_Governed/Infra/Citrix/CVAD
 ## GPO: Citrix VDA Computer Settings -> User configuration settings disabled
 ## GPO: Citrix VDA Users All (including Admins) -> Computer configuration settings disabled
 ## GPO: Citrix VDA USers Non-Admins (lockdown) -> Computer configuration settings disabled
