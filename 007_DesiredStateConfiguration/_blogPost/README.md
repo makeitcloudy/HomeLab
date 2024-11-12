@@ -93,6 +93,26 @@ Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/makeitcloudy/HomeLab/f
 * [ActiveDirectory_demo.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub
 * [ActiveDirectory_demo.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory_demo.ps1) - GitHub raw
 
+### run_initialConfigDSC_domain-dev.ps1
+
+Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:
+
+```powershell
+$domainName = 'd.local'  #FIXME
+Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+
+```
+
+Refences used in the function above:
+
+* [run_initialConfigDSC_domain-dev.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_domain-dev.ps1) - GitHub
+* [run_initialConfigDSC_domain-dev.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/_blogPost/windows-DSC/run_initialConfigDsc_domain-dev.ps1) - GitHub raw
+* [InitialConfigDsc.ps1](https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1) - GitHub
+* [InitialConfigDsc.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_targetNode/InitialConfigDsc.ps1) - GitHub raw
+* [ConfigData-dev.psd1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData-dev.psd1)
+* [ConfigureLCM.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigureLCM.ps1)
+* [ConfigureNode.ps1](https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigureNode.ps1)
+
 ### run_initialConfigDSC_domain.ps1
 
 Current code is a duplicate (anytime the source is updated, those changes should be reflected here in README.md) of:

@@ -54,7 +54,7 @@ https://makeitcloudy.pl/windows-role-active-directory/
 https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds-devps1
 
 # run the configuration on DC02 - once the DC01 is available again after the reboot
-# even if the the group policy client can take up some time (5min) - it stuck on the LogonUI.exe process for the logon to the machine
+# even if the the group policy client can take up some time (5min) - it stucks on the LogonUI.exe process for the logon to the machine
 # the DSC configuration on DC02 can be run in parallel and the replication takes place properly
 
 # again follow up with the steps described here: https://makeitcloudy.pl/windows-role-active-directory/ 15paragraph 1.1.3, run code:
@@ -69,5 +69,33 @@ https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfigurati
 # data available in the ADDS_setup.ps1 file
 
 # the DSC configuration is available in this file, configurationData is in ADDS_setup.ps1
-https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/ADDS-dev_configuration.ps1
+https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/005_ActiveDirectory/ADDS_configuration.ps1
+```
+
+### Windows - Server OS - ADDS - Structure and configuration
+
+#### run_adds-dev_initialConfig.ps1
+
+```powershell
+# https://makeitcloudy.pl/windows-role-active-directory/
+# continue with paragraph 1.1.5 - Initial Configuration - ADDS
+# it leads to run_adds_initialconfig.ps1
+# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds-dev_initialconfigps1
+
+# it launches the domain is setup by running the file _ad_carlWebster_structure.ps1
+https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds-dev_initialConfig.ps1
+# everything apart from the Site configuration
+# as of 2024.08.07 - still some users / groups needs fixes
+# though this will be rewritten to the DSC configuration at some point anyway
+```
+
+#### run_adds_structure.ps1
+
+```powershell
+# https://makeitcloudy.pl/windows-role-active-directory/
+# continue with paragraph 1.1.6 - Initial Logical Structure - ADDS
+# https://github.com/makeitcloudy/HomeLab/blob/feature/007_DesiredStateConfiguration/_blogPost/README.md#run_adds_structureps1
+
+# it leads to run_adds_structure.ps1
+# https://raw.githubusercontent.com/makeitcloudy/HomeLab/refs/heads/feature/007_DesiredStateConfiguration/_blogPost/windows-role-active-directory/run_adds_structure.ps1
 ```
