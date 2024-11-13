@@ -74,63 +74,21 @@
         },
         #endregion
 
-        #region - 'Role = SQLServer'
+        #region IIS
         @{
-            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
-            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
-            Role                   = 'SQLServer'
-            NodeName               = 'b2-sql01'
-            IPV4Address            = '10.2.134.18/24'
-            DefaultGatewayAddress  = '10.2.134.254'
-            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
-
-            DataDriveSDiskId       = 1                                                   # SQL Data Disk
-            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
-            DataDriveSFSFormat     = 'NTFS'
-            DataDriveSFSLabel      = 'sqlDB'
-            DataDriveSPartitionStyle = 'GPT'
-
-            SQLInstallSourcePath   = 'D:\'                          # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive           = 'S:\'                          # TODO: change this to S:\ - drive designated for SQL db - dependency on the drive to be added to the VM first during the provisiong process
-            Instances = @(
-                @{
-                    Name           = 'MSSQLSERVER'
-                    Features       = 'SQLENGINE,AS'
-                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
-                }
-            )            
-            SQLAdminAccount        = 'Administrator'
-            InstallManagementTools = $False
-            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
+            Role                        = 'IIS'
+            NodeName                    = 'b2-iis01'
+            IPV4Address                 = '10.2.154.8/24'
+            DefaultGatewayAddress       = '10.2.154.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
-        #endregion
 
-        #region - 'Role = SQLServer'
         @{
-            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
-            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
-            Role                   = 'SQLServer'
-            NodeName               = 'b2-sql02'
-            IPV4Address            = '10.2.134.19/24'
-            DefaultGatewayAddress  = '10.2.134.254'
-            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
-            DataDriveSDiskId       = 1                                                   # SQL Data Disk
-            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
-            DataDriveSFSFormat     = 'NTFS'
-            DataDriveSFSLabel      = 'sqlDB'
-            DataDriveSPartitionStyle = 'GPT'
-            SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
-            SQLDataDrive           = 'C:\'
-            Instances = @(
-                @{
-                    Name           = 'MSSQLSERVER'
-                    Features       = 'SQLENGINE,AS'
-                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
-                }
-            )            
-            SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
-            InstallManagementTools = $False
-            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
+            Role                        = 'IIS'
+            NodeName                    = 'b2-iis02'
+            IPV4Address                 = '10.2.154.9/24'
+            DefaultGatewayAddress       = '10.2.154.254'
+            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
         },
         #endregion
 
@@ -168,7 +126,7 @@
         @{
             Role                        = 'IscsiServer'
             NodeName                    = 'b2-iscsi'
-            IPV4Address                 = '10.2.134.13/24'
+            IPV4Address                 = '10.2.134.19/24'
             DefaultGatewayAddress       = '10.2.134.254'
             JoinOu                      = 'OU=Computers,DC=lab,DC=local'
 
@@ -185,6 +143,66 @@
             VhdxDriveZFSFormat          = 'NTFS'
             VhdxDriveZFSLabel           = 'Storage_vhdx'
             VhdxDriveZPartitionStyle    = 'GPT'
+        },
+        #endregion
+
+        #region - 'Role = SQLServer'
+        @{
+            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
+            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
+            Role                   = 'SQLServer'
+            NodeName               = 'b2-sql01'
+            IPV4Address            = '10.2.134.21/24'
+            DefaultGatewayAddress  = '10.2.134.254'
+            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+
+            DataDriveSDiskId       = 1                                                   # SQL Data Disk
+            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            DataDriveSFSFormat     = 'NTFS'
+            DataDriveSFSLabel      = 'sqlDB'
+            DataDriveSPartitionStyle = 'GPT'
+
+            SQLInstallSourcePath   = 'D:\'                          # SQL  -defaultInstance - SQL ISO is mounted here
+            SQLDataDrive           = 'S:\'                          # TODO: change this to S:\ - drive designated for SQL db - dependency on the drive to be added to the VM first during the provisiong process
+            Instances = @(
+                @{
+                    Name           = 'MSSQLSERVER'
+                    Features       = 'SQLENGINE,AS'
+                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                }
+            )            
+            SQLAdminAccount        = 'Administrator'
+            InstallManagementTools = $False
+            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
+        },
+        #endregion
+
+        #region - 'Role = SQLServer'
+        @{
+            DomainName             = 'lab.local'                      #FIXME: your domain FQDN
+            DomainNetbiosName      = 'mot'                            #FIXME: your domain NetBIOS
+            Role                   = 'SQLServer'
+            NodeName               = 'b2-sql02'
+            IPV4Address            = '10.2.134.22/24'
+            DefaultGatewayAddress  = '10.2.134.254'
+            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+            DataDriveSDiskId       = 1                                                   # SQL Data Disk
+            DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
+            DataDriveSFSFormat     = 'NTFS'
+            DataDriveSFSLabel      = 'sqlDB'
+            DataDriveSPartitionStyle = 'GPT'
+            SQLInstallSourcePath   = 'D:\'                                               # SQL  -defaultInstance - SQL ISO is mounted here
+            SQLDataDrive           = 'C:\'
+            Instances = @(
+                @{
+                    Name           = 'MSSQLSERVER'
+                    Features       = 'SQLENGINE,AS'
+                    #Features       = 'SQLENGINE,FULLTEXT,RS,AS,IS'
+                }
+            )            
+            SQLAdminAccount        = 'Administrator'  # TODO: there should be a domain account/group existing already, during AD setup - at this stage (2024.07.15) - domain admin is also the SQL administrator
+            InstallManagementTools = $False
+            CertificateFile        = 'C:\dsc\certificate\dscSelfSignedCertificate.cer'   # The path to the .cer file containing the public key of the Encryption Certificate used to encrypt credentials for this node.
         },
         #endregion
 
