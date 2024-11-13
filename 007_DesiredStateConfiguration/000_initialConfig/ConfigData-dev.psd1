@@ -23,7 +23,7 @@
             NodeName                    = 'b2-w10mgmt'
             IPV4Address                 = '10.2.154.249/24'                            # IP address should go hand in hand with Firewall rules for the remote management, otherwise it wont work
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -36,23 +36,23 @@
             NodeName                    = 'b2-adcsr'
             IPV4Address                 = '10.2.154.3/24'
             DefaultGatewayAddress       = '10.2.154.254'            
-            #JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            #JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'b2-adcss'
             IPV4Address                 = '10.2.154.4/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            #DomainName                  = 'lab.local'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            #DomainName                  = 'd.local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         @{
             Role                        = 'CertificationServices'
             NodeName                    = 'b2-adcsws'
             IPV4Address                 = '10.2.154.5/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            #DomainName                  = 'lab.local'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            #DomainName                  = 'd.local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -62,7 +62,7 @@
             NodeName                    = 'b2-dhcp01'
             IPV4Address                 = '10.2.154.6/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         # DHCP Server
         @{
@@ -70,7 +70,7 @@
             NodeName                    = 'b2-dhcp02'
             IPV4Address                 = '10.2.154.7/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -80,7 +80,7 @@
             NodeName                    = 'b2-iis01'
             IPV4Address                 = '10.2.154.8/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
 
         @{
@@ -88,7 +88,7 @@
             NodeName                    = 'b2-iis02'
             IPV4Address                 = '10.2.154.9/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -98,7 +98,7 @@
             NodeName                    = 'b2-fs01'
             IPV4Address                 = '10.2.154.11/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
 
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
@@ -111,7 +111,7 @@
             NodeName                    = 'b2-fs02'
             IPV4Address                 = '10.2.154.12/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
 
             DataDrivePDiskId            = 1    #Profile Disk
             DataDrivePLetter            = 'P'  #Profile Disk Letter
@@ -128,7 +128,7 @@
             NodeName                    = 'b2-iscsi'
             IPV4Address                 = '10.2.154.19/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
 
             #storage - quorum drive
             QuorumDriveQDiskId          = 1                #order in which the drives are added to the target node ipacts Id
@@ -154,7 +154,7 @@
             NodeName               = 'b2-sql01'
             IPV4Address            = '10.2.154.21/24'
             DefaultGatewayAddress  = '10.2.154.254'
-            JoinOu                 = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                 = 'OU=Computers,DC=d,DC=local'
 
             DataDriveSDiskId       = 1                                                   # SQL Data Disk
             DataDriveSLetter       = 'S'                                                 # SQL Data Disk Letter
@@ -212,7 +212,7 @@
             NodeName                    = 'b2-ctx01LD'
             IPV4Address                 = '10.2.154.31/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
 
         @{
@@ -220,7 +220,7 @@
             NodeName                    = 'b2-ctx02LD'
             IPV4Address                 = '10.2.154.32/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -230,7 +230,7 @@
             NodeName                    = 'b2-ctx01B'
             IPV4Address                 = '10.2.154.33/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
 
         @{
@@ -238,7 +238,7 @@
             NodeName                    = 'b2-ctx02B'
             IPV4Address                 = '10.2.154.34/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -248,7 +248,7 @@
             NodeName                    = 'b2-ctx01S'
             IPV4Address                 = '10.2.154.35/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
 
         @{
@@ -256,7 +256,7 @@
             NodeName                    = 'b2-ctx02S'
             IPV4Address                 = '10.2.154.36/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -266,7 +266,7 @@
             NodeName                    = 'b2-ctx01F'
             IPV4Address                 = '10.2.154.37/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
 
         @{
@@ -274,7 +274,7 @@
             NodeName                    = 'b2-ctx02F'
             IPV4Address                 = '10.2.154.38/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
         },
         #endregion
 
@@ -284,7 +284,7 @@
             NodeName                    = 'b2-ctx01P'
             IPV4Address                 = '10.2.154.41/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
 
             DataDriveSDiskId            = 1    #PVS Store Disk
             DataDriveSLetter            = 'S'  #PVS Store Disk Letter
@@ -298,7 +298,7 @@
             NodeName                    = 'b2-ctx02P'
             IPV4Address                 = '10.2.154.42/24'
             DefaultGatewayAddress       = '10.2.154.254'
-            JoinOu                      = 'OU=Computers,DC=lab,DC=local'
+            JoinOu                      = 'OU=Computers,DC=d,DC=local'
 
             DataDriveSDiskId            = 1    #PVS Store Disk
             DataDriveSLetter            = 'S'  #PVS Store Disk Letter
