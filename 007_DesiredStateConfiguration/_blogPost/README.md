@@ -99,7 +99,7 @@ Current code is a duplicate (anytime the source is updated, those changes should
 
 ```powershell
 $domainName = 'd.local'  #FIXME
-Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+Set-InitialConfigDevDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
 
 ```
 

@@ -58,23 +58,23 @@ https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateC
 # and goes hand in hand with the IP addresses of the domain controllers 
 https://raw.githubusercontent.com/makeitcloudy/HomeLab/feature/007_DesiredStateConfiguration/000_initialConfig/ConfigData.psd1
 
-$domainName = 'lab.local'  #FIXME
-Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+$domainName = 'd.local'  #FIXME
+Set-InitialConfigDevDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
 ```
 
 ### ADCS - Initial Configuration - adcsR
 
 ```powershell
 #once done run following code
-Set-InitialConfigDsc -NewComputerName $NodeName -Option Workgroup -Verbose
+Set-InitialConfigDevDsc -NewComputerName $env:ComputerName -Option Workgroup -Verbose
 ```
 
 ### ADCS - Initial Configuration - adcsS, adcsWS
 
 ```powershell
 #once done run following code
-$domainName = 'lab.local'  #FIXME
-Set-InitialConfigDsc -NewComputerName $env:computername -Option Domain -DomainName $domainName -Verbose
+$domainName = 'd.local'  #FIXME
+Set-InitialConfigDevDsc -NewComputerName $env:ComputerName -Option Domain -DomainName $domainName -Verbose
 ```
 
 ### ADCS - Eject vmTools media
