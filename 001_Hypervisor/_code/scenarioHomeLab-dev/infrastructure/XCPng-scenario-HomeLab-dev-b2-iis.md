@@ -2,7 +2,7 @@
 
 ## Internet Information Services
 
-### Windows - Server OS - ADDS - 2x IIS - Server Core
+### Windows - Server OS - 2x IIS - Server Core
 
 ```bash
 # First domain controller - server core
